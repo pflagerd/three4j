@@ -1,17 +1,55 @@
 package net.three4j;
 
+import javax.swing.text.html.HTMLDocument;
+
 public class THREE {
+	public static final Window window = new Window("");
+	public static final HTMLDocument document = new HTMLDocument();
+	
 //	import './polyfills.js';
-//
+	public static class OpenGL11Renderer {
+		public OpenGL11Renderer(KV... kvs) {
+			
+		}
+		
+		public OpenGL11Renderer setSize(double width, double height) {			
+			return this;
+		}
+
+		public void render(Scene scene, PerspectiveCamera camera /*, WebGLRenderTarget webGLRenderTarget, boolean forceClear*/) {	
+		}
+		
+		public interface AnimationLoopFunc {
+			void animate(double time);
+		}
+
+		public void setAnimationLoop(AnimationLoopFunc animationLoopFun) {
+			
+		}
+		
+	}
+
 //	export { WebGLRenderTargetCube } from './renderers/WebGLRenderTargetCube.js';
 //	export { WebGLRenderTarget } from './renderers/WebGLRenderTarget.js';
 //	export { WebGLRenderer } from './renderers/WebGLRenderer.js';
 	public static class WebGLRenderer {
+		public WebGLRenderer(KV... kvs) {
+			
+		}
+		
 		public WebGLRenderer setSize(double width, double height) {			
 			return this;
 		}
 
 		public void render(Scene scene, PerspectiveCamera camera /*, WebGLRenderTarget webGLRenderTarget, boolean forceClear*/) {	
+		}
+		
+		public interface AnimationLoopFunc {
+			void animate(double time);
+		}
+
+		public void setAnimationLoop(AnimationLoopFunc animationLoopFun) {
+			
 		}
 		
 	}
@@ -65,6 +103,8 @@ public class THREE {
 	public static class KV {
 		public KV(String key, int value) {			
 		}
+		public KV(String key, boolean value) {			
+		}
 	}		
 	
 //	export * from './materials/Materials.js';
@@ -80,6 +120,20 @@ public class THREE {
 		}
 		
 		public MeshBasicMaterial(KV[] kvs) {
+//			super(kvs);
+		}
+	}
+	
+	public static class MeshNormalMaterial extends Material {
+		public MeshNormalMaterial() {
+			super();
+		}
+		
+		public MeshNormalMaterial(int color) {
+//			super( new KV[] { new KV("color", color) });
+		}
+		
+		public MeshNormalMaterial(KV[] kvs) {
 //			super(kvs);
 		}
 	}
