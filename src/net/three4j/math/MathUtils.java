@@ -109,24 +109,20 @@ public class MathUtils {
 		return radians * RAD2DEG;
 	};
 
-//		isPowerOfTwo: function ( value ) {
-//	
-//			return ( value & ( value - 1 ) ) === 0 && value !== 0;
-//	
-//		},
-//	
-//		ceilPowerOfTwo: function ( value ) {
-//	
-//			return Math.pow( 2, Math.ceil( Math.log( value ) / Math.LN2 ) );
-//	
-//		},
-//	
-//		floorPowerOfTwo: function ( value ) {
-//	
-//			return Math.pow( 2, Math.floor( Math.log( value ) / Math.LN2 ) );
-//	
-//		},
-//	
+	boolean isPowerOfTwo(double value) {
+		return ( (long)value & (long)( value - 1 ) ) == 0 && value != 0;
+	};
+
+	private static final double LN2 = Math.log(2);
+	
+	double ceilPowerOfTwo(double value) {
+		return Math.pow( 2, Math.ceil( Math.log( value ) / LN2 ) );
+	};
+
+	double floorPowerOfTwo(double value) {
+		return Math.pow( 2, Math.floor( Math.log( value ) / LN2 ) );
+	};
+
 //		setQuaternionFromProperEuler: function ( q, a, b, c, order ) {
 //	//	const _lut = [];
 //	
