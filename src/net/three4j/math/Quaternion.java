@@ -39,66 +39,66 @@ public class Quaternion {
 		return qm.copy( qa ).slerp( qb, t );
 	}
 
-//	static slerpFlat( dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t ) {
-//
-//		// fuzz-free, array-based Quaternion SLERP operation
-//
-//		let x0 = src0[ srcOffset0 + 0 ],
-//			y0 = src0[ srcOffset0 + 1 ],
-//			z0 = src0[ srcOffset0 + 2 ],
-//			w0 = src0[ srcOffset0 + 3 ];
-//
-//		const x1 = src1[ srcOffset1 + 0 ],
-//			y1 = src1[ srcOffset1 + 1 ],
-//			z1 = src1[ srcOffset1 + 2 ],
-//			w1 = src1[ srcOffset1 + 3 ];
-//
-//		if ( w0 !== w1 || x0 !== x1 || y0 !== y1 || z0 !== z1 ) {
-//
-//			let s = 1 - t;
-//			const cos = x0 * x1 + y0 * y1 + z0 * z1 + w0 * w1,
-//				dir = ( cos >= 0 ? 1 : - 1 ),
-//				sqrSin = 1 - cos * cos;
-//
-//			// Skip the Slerp for tiny steps to avoid numeric problems:
-//			if ( sqrSin > Number.EPSILON ) {
-//
-//				const sin = Math.sqrt( sqrSin ),
-//					len = Math.atan2( sin, cos * dir );
-//
-//				s = Math.sin( s * len ) / sin;
-//				t = Math.sin( t * len ) / sin;
-//
-//			}
-//
-//			const tDir = t * dir;
-//
-//			x0 = x0 * s + x1 * tDir;
-//			y0 = y0 * s + y1 * tDir;
-//			z0 = z0 * s + z1 * tDir;
-//			w0 = w0 * s + w1 * tDir;
-//
-//			// Normalize in case we just did a lerp:
-//			if ( s === 1 - t ) {
-//
-//				const f = 1 / Math.sqrt( x0 * x0 + y0 * y0 + z0 * z0 + w0 * w0 );
-//
-//				x0 *= f;
-//				y0 *= f;
-//				z0 *= f;
-//				w0 *= f;
-//
-//			}
-//
-//		}
-//
-//		dst[ dstOffset ] = x0;
-//		dst[ dstOffset + 1 ] = y0;
-//		dst[ dstOffset + 2 ] = z0;
-//		dst[ dstOffset + 3 ] = w0;
-//
-//	}
-//
+	public static Quaternion slerpFlat( double[] dst, int dstOffset, double[] src0, int srcOffset0, double[] src1, int srcOffset1, double t ) {
+
+		// fuzz-free, array-based Quaternion SLERP operation
+
+		double x0 = src0[ srcOffset0 + 0 ],
+			y0 = src0[ srcOffset0 + 1 ],
+			z0 = src0[ srcOffset0 + 2 ],
+			w0 = src0[ srcOffset0 + 3 ];
+
+		final double x1 = src1[ srcOffset1 + 0 ],
+			y1 = src1[ srcOffset1 + 1 ],
+			z1 = src1[ srcOffset1 + 2 ],
+			w1 = src1[ srcOffset1 + 3 ];
+
+		if ( w0 != w1 || x0 != x1 || y0 != y1 || z0 != z1 ) {
+
+			double s = 1 - t;
+			final double cos = x0 * x1 + y0 * y1 + z0 * z1 + w0 * w1,
+				dir = ( cos >= 0 ? 1 : - 1 ),
+				sqrSin = 1 - cos * cos;
+
+			// Skip the Slerp for tiny steps to avoid numeric problems:
+			if ( sqrSin > Math.ulp(sqrSin) ) {
+
+				final double sin = Math.sqrt( sqrSin ),
+					len = Math.atan2( sin, cos * dir );
+
+				s = Math.sin( s * len ) / sin;
+				t = Math.sin( t * len ) / sin;
+			}
+
+			final double tDir = t * dir;
+
+			x0 = x0 * s + x1 * tDir;
+			y0 = y0 * s + y1 * tDir;
+			z0 = z0 * s + z1 * tDir;
+			w0 = w0 * s + w1 * tDir;
+
+			// Normalize in case we just did a lerp:
+			if ( s == 1 - t ) {
+
+				final double f = 1 / Math.sqrt( x0 * x0 + y0 * y0 + z0 * z0 + w0 * w0 );
+
+				x0 *= f;
+				y0 *= f;
+				z0 *= f;
+				w0 *= f;
+
+			}
+
+		}
+
+		dst[ dstOffset ] = x0;
+		dst[ dstOffset + 1 ] = y0;
+		dst[ dstOffset + 2 ] = z0;
+		dst[ dstOffset + 3 ] = w0;
+
+		return new Quaternion(x0, y0, z0, w0); // DPP: Not sure about this.
+	}
+
 //	static multiplyQuaternionsFlat( dst, dstOffset, src0, srcOffset0, src1, srcOffset1 ) {
 //
 //		const x0 = src0[ srcOffset0 ];
