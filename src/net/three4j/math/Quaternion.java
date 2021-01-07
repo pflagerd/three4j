@@ -30,13 +30,15 @@ public class Quaternion {
 		this._z = z;
 		this._w = w;
 	}
+	
+	public Quaternion(Quaternion quaternion) {
+		quaternion.clone();
+	}
 
-//	static slerp( qa, qb, qm, t ) {
-//
-//		return qm.copy( qa ).slerp( qb, t );
-//
-//	}
-//
+	public static Quaternion slerp( Quaternion qa, Quaternion qb, Quaternion qm, double t ) {
+		return qm.copy( qa ).slerp( qb, t );
+	}
+
 //	static slerpFlat( dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t ) {
 //
 //		// fuzz-free, array-based Quaternion SLERP operation
@@ -118,58 +120,58 @@ public class Quaternion {
 //
 //	}
 //
-//	get x() {
-//
-//		return this._x;
-//
-//	}
-//
-//	set x( value ) {
-//
-//		this._x = value;
-//		this._onChangeCallback();
-//
-//	}
-//
-//	get y() {
-//
-//		return this._y;
-//
-//	}
-//
-//	set y( value ) {
-//
-//		this._y = value;
-//		this._onChangeCallback();
-//
-//	}
-//
-//	get z() {
-//
-//		return this._z;
-//
-//	}
-//
-//	set z( value ) {
-//
-//		this._z = value;
-//		this._onChangeCallback();
-//
-//	}
-//
-//	get w() {
-//
-//		return this._w;
-//
-//	}
-//
-//	set w( value ) {
-//
-//		this._w = value;
-//		this._onChangeCallback();
-//
-//	}
-//
+	double x() {
+
+		return this._x;
+
+	}
+
+	void x( double value ) {
+
+		this._x = value;
+		this._onChangeCallback();
+
+	}
+
+	double y() {
+
+		return this._y;
+
+	}
+
+	void y( double value ) {
+
+		this._y = value;
+		this._onChangeCallback();
+
+	}
+
+	double z() {
+
+		return this._z;
+
+	}
+
+	void z( double value ) {
+
+		this._z = value;
+		this._onChangeCallback();
+
+	}
+
+	double w() {
+
+		return this._w;
+
+	}
+
+	void w( double value ) {
+
+		this._w = value;
+		this._onChangeCallback();
+
+	}
+
 	Quaternion set(double x,double y,double z, double w) {
 		this._x = x;
 		this._y = y;
@@ -181,25 +183,22 @@ public class Quaternion {
 		return this;
 	}
 
-//	clone() {
-//
-//		return new this.constructor( this._x, this._y, this._z, this._w );
-//
-//	}
-//
-//	copy( quaternion ) {
-//
-//		this._x = quaternion.x;
-//		this._y = quaternion.y;
-//		this._z = quaternion.z;
-//		this._w = quaternion.w;
-//
-//		this._onChangeCallback();
-//
-//		return this;
-//
-//	}
-//
+	public Quaternion clone() {
+		return new Quaternion( this._x, this._y, this._z, this._w );
+	}
+
+	public Quaternion copy (Quaternion quaternion) {
+
+		this._x = quaternion._x;
+		this._y = quaternion._y;
+		this._z = quaternion._z;
+		this._w = quaternion._w;
+
+		this._onChangeCallback();
+
+		return this;
+	}
+
 //	setFromEuler( euler, update ) {
 //
 //		if ( ! ( euler && euler.isEuler ) ) {
@@ -399,248 +398,252 @@ public class Quaternion {
 //		return this.normalize();
 //
 //	}
-//
-//	angleTo( q ) {
-//
-//		return 2 * Math.acos( Math.abs( MathUtils.clamp( this.dot( q ), - 1, 1 ) ) );
-//
-//	}
-//
-//	rotateTowards( q, step ) {
-//
-//		const angle = this.angleTo( q );
-//
-//		if ( angle === 0 ) return this;
-//
-//		const t = Math.min( 1, step / angle );
-//
-//		this.slerp( q, t );
-//
-//		return this;
-//
-//	}
-//
-//	identity() {
-//
-//		return this.set( 0, 0, 0, 1 );
-//
-//	}
-//
-//	invert() {
-//
-//		// quaternion is assumed to have unit length
-//
-//		return this.conjugate();
-//
-//	}
-//
-//	conjugate() {
-//
-//		this._x *= - 1;
-//		this._y *= - 1;
-//		this._z *= - 1;
-//
-//		this._onChangeCallback();
-//
-//		return this;
-//
-//	}
-//
-//	dot( v ) {
-//
-//		return this._x * v._x + this._y * v._y + this._z * v._z + this._w * v._w;
-//
-//	}
-//
-//	lengthSq() {
-//
-//		return this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w;
-//
-//	}
-//
-//	length() {
-//
-//		return Math.sqrt( this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w );
-//
-//	}
-//
-//	normalize() {
-//
-//		let l = this.length();
-//
-//		if ( l === 0 ) {
-//
-//			this._x = 0;
-//			this._y = 0;
-//			this._z = 0;
-//			this._w = 1;
-//
-//		} else {
-//
-//			l = 1 / l;
-//
-//			this._x = this._x * l;
-//			this._y = this._y * l;
-//			this._z = this._z * l;
-//			this._w = this._w * l;
-//
-//		}
-//
-//		this._onChangeCallback();
-//
-//		return this;//	constructor( x = 0, y = 0, z = 0, w = 1 ) {
-	//
-//	Object.defineProperty( this, 'isQuaternion', { value: true } );
-//
-//	this._x = x;
-//	this._y = y;
-//	this._z = z;
-//	this._w = w;
-//
-//}
-//
 
-//
-//	}
-//
-//	multiply( q, p ) {
-//
-//		if ( p !== undefined ) {
-//
-//			console.warn( 'THREE.Quaternion: .multiply() now only accepts one argument. Use .multiplyQuaternions( a, b ) instead.' );
-//			return this.multiplyQuaternions( q, p );
-//
-//		}
-//
-//		return this.multiplyQuaternions( this, q );
-//
-//	}
-//
-//	premultiply( q ) {
-//
-//		return this.multiplyQuaternions( q, this );
-//
-//	}
-//
-//	multiplyQuaternions( a, b ) {
-//
-//		// from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
-//
-//		const qax = a._x, qay = a._y, qaz = a._z, qaw = a._w;
-//		const qbx = b._x, qby = b._y, qbz = b._z, qbw = b._w;
-//
-//		this._x = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
-//		this._y = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
-//		this._z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
-//		this._w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
-//
-//		this._onChangeCallback();
-//
-//		return this;
-//
-//	}
-//
-//	slerp( qb, t ) {
-//
-//		if ( t === 0 ) return this;
-//		if ( t === 1 ) return this.copy( qb );
-//
-//		const x = this._x, y = this._y, z = this._z, w = this._w;
-//
-//		// http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/slerp/
-//
-//		let cosHalfTheta = w * qb._w + x * qb._x + y * qb._y + z * qb._z;
-//
-//		if ( cosHalfTheta < 0 ) {
-//
-//			this._w = - qb._w;
-//			this._x = - qb._x;
-//			this._y = - qb._y;
-//			this._z = - qb._z;
-//
-//			cosHalfTheta = - cosHalfTheta;
-//
-//		} else {
-//
-//			this.copy( qb );
-//
-//		}
-//
-//		if ( cosHalfTheta >= 1.0 ) {
-//
-//			this._w = w;
-//			this._x = x;
-//			this._y = y;
-//			this._z = z;
-//
-//			return this;
-//
-//		}
-//
-//		const sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
-//
-//		if ( sqrSinHalfTheta <= Number.EPSILON ) {
-//
-//			const s = 1 - t;
-//			this._w = s * w + t * this._w;
-//			this._x = s * x + t * this._x;
-//			this._y = s * y + t * this._y;
-//			this._z = s * z + t * this._z;
-//
-//			this.normalize();
-//			this._onChangeCallback();
-//
-//			return this;
-//
-//		}
-//
-//		const sinHalfTheta = Math.sqrt( sqrSinHalfTheta );
-//		const halfTheta = Math.atan2( sinHalfTheta, cosHalfTheta );
-//		const ratioA = Math.sin( ( 1 - t ) * halfTheta ) / sinHalfTheta,
-//			ratioB = Math.sin( t * halfTheta ) / sinHalfTheta;
-//
-//		this._w = ( w * ratioA + this._w * ratioB );
-//		this._x = ( x * ratioA + this._x * ratioB );
-//		this._y = ( y * ratioA + this._y * ratioB );
-//		this._z = ( z * ratioA + this._z * ratioB );
-//
-//		this._onChangeCallback();
-//
-//		return this;
-//
-//	}
-//
-//	equals( quaternion ) {
-//
-//		return ( quaternion._x === this._x ) && ( quaternion._y === this._y ) && ( quaternion._z === this._z ) && ( quaternion._w === this._w );
-//
-//	}
-//
-//	fromArray( array, offset = 0 ) {
-//
-//		this._x = array[ offset ];
-//		this._y = array[ offset + 1 ];
-//		this._z = array[ offset + 2 ];
-//		this._w = array[ offset + 3 ];
-//
-//		this._onChangeCallback();
-//
-//		return this;
-//
-//	}
-//
-//	toArray( array = [], offset = 0 ) {
-//
-//		array[ offset ] = this._x;
-//		array[ offset + 1 ] = this._y;
-//		array[ offset + 2 ] = this._z;
-//		array[ offset + 3 ] = this._w;
-//
-//		return array;
-//
-//	}
-//
-//	fromBufferAttribute( attribute, index ) {
+	double angleTo( Quaternion q ) {
+
+		return 2 * Math.acos( Math.abs( MathUtils.clamp( this.dot( q ), - 1, 1 ) ) );
+
+	}
+
+	Quaternion rotateTowards( Quaternion q, double step ) {
+
+		final double angle = this.angleTo( q );
+
+		if ( angle == 0 ) return this;
+
+		final double t = Math.min( 1, step / angle );
+
+		this.slerp( q, t );
+
+		return this;
+
+	}
+
+	Quaternion identity() {
+
+		return this.set( 0, 0, 0, 1 );
+
+	}
+
+	Quaternion invert() {
+
+		// quaternion is assumed to have unit length
+
+		return this.conjugate();
+
+	}
+
+	Quaternion conjugate() {
+
+		this._x *= - 1;
+		this._y *= - 1;
+		this._z *= - 1;
+
+		this._onChangeCallback();
+
+		return this;
+
+	}
+
+	double dot( Quaternion q ) {
+
+		return this._x * q._x + this._y * q._y + this._z * q._z + this._w * q._w;
+
+	}
+
+	double lengthSq() {
+
+		return this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w;
+
+	}
+
+	double length() {
+
+		return Math.sqrt( this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w );
+
+	}
+
+	Quaternion normalize() {
+
+		double l = this.length();
+
+		if ( l == 0 ) {
+
+			this._x = 0;
+			this._y = 0;
+			this._z = 0;
+			this._w = 1;
+
+		} else {
+
+			l = 1 / l;
+
+			this._x = this._x * l;
+			this._y = this._y * l;
+			this._z = this._z * l;
+			this._w = this._w * l;
+
+		}
+
+		this._onChangeCallback();
+
+		return this;
+		
+	}
+
+	Quaternion multiply( Quaternion q) {
+		return this.multiplyQuaternions( this, q );		
+	}
+	
+	Quaternion multiply( Quaternion q, Quaternion p ) {
+
+		if ( p != null ) {
+
+			return this.multiplyQuaternions( q, p );
+
+		}
+
+		return this.multiplyQuaternions( this, q );
+
+	}
+
+	Quaternion premultiply( Quaternion q ) {
+		return this.multiplyQuaternions( q, this );
+	}
+
+	Quaternion multiplyQuaternions( Quaternion a, Quaternion b ) {
+
+		// from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
+
+		final double qax = a._x, qay = a._y, qaz = a._z, qaw = a._w;
+		final double qbx = b._x, qby = b._y, qbz = b._z, qbw = b._w;
+
+		this._x = qax * qbw + qaw * qbx + qay * qbz - qaz * qby;
+		this._y = qay * qbw + qaw * qby + qaz * qbx - qax * qbz;
+		this._z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
+		this._w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
+
+		this._onChangeCallback();
+
+		return this;
+
+	}
+
+	Quaternion slerp( Quaternion qb, double t ) {
+
+		if ( t == 0 ) 
+			return this;
+		
+		if ( t == 1 ) 
+			return this.copy( qb );
+
+		final double x = this._x, y = this._y, z = this._z, w = this._w;
+
+		// http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/slerp/
+		double cosHalfTheta = w * qb._w + x * qb._x + y * qb._y + z * qb._z;
+
+		if ( cosHalfTheta < 0 ) {
+
+			this._w = - qb._w;
+			this._x = - qb._x;
+			this._y = - qb._y;
+			this._z = - qb._z;
+
+			cosHalfTheta = - cosHalfTheta;
+
+		} else {
+
+			this.copy( qb );
+
+		}
+
+		if ( cosHalfTheta >= 1.0 ) {
+
+			this._w = w;
+			this._x = x;
+			this._y = y;
+			this._z = z;
+
+			return this;
+
+		}
+
+		final double sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
+
+		if ( sqrSinHalfTheta <= Math.ulp(sqrSinHalfTheta) ) {
+
+			final double s = 1 - t;
+			this._w = s * w + t * this._w;
+			this._x = s * x + t * this._x;
+			this._y = s * y + t * this._y;
+			this._z = s * z + t * this._z;
+
+			this.normalize();
+			this._onChangeCallback();
+
+			return this;
+
+		}
+
+		final double sinHalfTheta = Math.sqrt( sqrSinHalfTheta );
+		final double halfTheta = Math.atan2( sinHalfTheta, cosHalfTheta );
+		final double ratioA = Math.sin( ( 1 - t ) * halfTheta ) / sinHalfTheta,
+			ratioB = Math.sin( t * halfTheta ) / sinHalfTheta;
+
+		this._w = ( w * ratioA + this._w * ratioB );
+		this._x = ( x * ratioA + this._x * ratioB );
+		this._y = ( y * ratioA + this._y * ratioB );
+		this._z = ( z * ratioA + this._z * ratioB );
+
+		this._onChangeCallback();
+
+		return this;
+
+	}
+
+	boolean equals( Quaternion q ) {
+
+		return ( q._x == this._x ) && ( q._y == this._y ) && ( q._z == this._z ) && ( q._w == this._w );
+
+	}
+	
+	Quaternion fromArray(double[] array) {
+		return fromArray(array, 0);
+	}
+
+	Quaternion fromArray( double[] array, int offset) {
+
+		this._x = array[ offset ];
+		this._y = array[ offset + 1 ];
+		this._z = array[ offset + 2 ];
+		this._w = array[ offset + 3 ];
+
+		this._onChangeCallback();
+
+		return this;
+
+	}
+
+	double[] toArray() {
+		return new double[] { this._x, this._y, this._z, this._w};
+	}
+	
+	double[] toArray(double[] array) {
+		return toArray(array, 0);
+	}
+	
+	double[] toArray( double[] array, int offset ) {
+
+		array[ offset ] = this._x;
+		array[ offset + 1 ] = this._y;
+		array[ offset + 2 ] = this._z;
+		array[ offset + 3 ] = this._w;
+
+		return array;
+
+	}
+
+//	Quaternion fromBufferAttribute( Attribute attribute, int index ) {
 //
 //		this._x = attribute.getX( index );
 //		this._y = attribute.getY( index );
@@ -650,7 +653,7 @@ public class Quaternion {
 //		return this;
 //
 //	}
-//
+
 //	_onChange( callback ) {
 //
 //		this._onChangeCallback = callback;
