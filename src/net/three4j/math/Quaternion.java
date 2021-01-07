@@ -355,49 +355,49 @@ public class Quaternion {
 //		return this;
 //
 //	}
-//
-//	setFromUnitVectors( vFrom, vTo ) {
-//
-//		// assumes direction vectors vFrom and vTo are normalized
-//
-//		const EPS = 0.000001;
-//
-//		let r = vFrom.dot( vTo ) + 1;
-//
-//		if ( r < EPS ) {
-//
-//			r = 0;
-//
-//			if ( Math.abs( vFrom.x ) > Math.abs( vFrom.z ) ) {
-//
-//				this._x = - vFrom.y;
-//				this._y = vFrom.x;
-//				this._z = 0;
-//				this._w = r;
-//
-//			} else {
-//
-//				this._x = 0;
-//				this._y = - vFrom.z;
-//				this._z = vFrom.y;
-//				this._w = r;
-//
-//			}
-//
-//		} else {
-//
-//			// crossVectors( vFrom, vTo ); // inlined to avoid cyclic dependency on Vector3
-//
-//			this._x = vFrom.y * vTo.z - vFrom.z * vTo.y;
-//			this._y = vFrom.z * vTo.x - vFrom.x * vTo.z;
-//			this._z = vFrom.x * vTo.y - vFrom.y * vTo.x;
-//			this._w = r;
-//
-//		}
-//
-//		return this.normalize();
-//
-//	}
+
+	Quaternion setFromUnitVectors( Vector3 vFrom, Vector3 vTo ) {
+
+		// assumes direction vectors vFrom and vTo are normalized
+
+		final double EPS = 0.000001;
+
+		double r = vFrom.dot( vTo ) + 1;
+
+		if ( r < EPS ) {
+
+			r = 0;
+
+			if ( Math.abs( vFrom.x ) > Math.abs( vFrom.z ) ) {
+
+				this._x = - vFrom.y;
+				this._y = vFrom.x;
+				this._z = 0;
+				this._w = r;
+
+			} else {
+
+				this._x = 0;
+				this._y = - vFrom.z;
+				this._z = vFrom.y;
+				this._w = r;
+
+			}
+
+		} else {
+
+			// crossVectors( vFrom, vTo ); // inlined to avoid cyclic dependency on Vector3
+
+			this._x = vFrom.y * vTo.z - vFrom.z * vTo.y;
+			this._y = vFrom.z * vTo.x - vFrom.x * vTo.z;
+			this._z = vFrom.x * vTo.y - vFrom.y * vTo.x;
+			this._w = r;
+
+		}
+
+		return this.normalize();
+
+	}
 
 	double angleTo( Quaternion q ) {
 
