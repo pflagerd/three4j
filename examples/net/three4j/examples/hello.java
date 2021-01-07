@@ -38,4 +38,9 @@ class hello {
 
         renderer.render( scene, camera );
     }
+    
+    public static void main(String[] args) {
+    	new hello();
+    }
+    
 }
