@@ -99,27 +99,27 @@ public class Quaternion {
 		return new Quaternion(x0, y0, z0, w0); // DPP: Not sure about this.
 	}
 
-//	static multiplyQuaternionsFlat( dst, dstOffset, src0, srcOffset0, src1, srcOffset1 ) {
-//
-//		const x0 = src0[ srcOffset0 ];
-//		const y0 = src0[ srcOffset0 + 1 ];
-//		const z0 = src0[ srcOffset0 + 2 ];
-//		const w0 = src0[ srcOffset0 + 3 ];
-//
-//		const x1 = src1[ srcOffset1 ];
-//		const y1 = src1[ srcOffset1 + 1 ];
-//		const z1 = src1[ srcOffset1 + 2 ];
-//		const w1 = src1[ srcOffset1 + 3 ];
-//
-//		dst[ dstOffset ] = x0 * w1 + w0 * x1 + y0 * z1 - z0 * y1;
-//		dst[ dstOffset + 1 ] = y0 * w1 + w0 * y1 + z0 * x1 - x0 * z1;
-//		dst[ dstOffset + 2 ] = z0 * w1 + w0 * z1 + x0 * y1 - y0 * x1;
-//		dst[ dstOffset + 3 ] = w0 * w1 - x0 * x1 - y0 * y1 - z0 * z1;
-//
-//		return dst;
-//
-//	}
-//
+	public static double[] multiplyQuaternionsFlat( double[] dst, int dstOffset, double[] src0, int srcOffset0, double[] src1, int srcOffset1 ) {
+
+		final double x0 = src0[ srcOffset0 ];
+		final double y0 = src0[ srcOffset0 + 1 ];
+		final double z0 = src0[ srcOffset0 + 2 ];
+		final double w0 = src0[ srcOffset0 + 3 ];
+
+		final double x1 = src1[ srcOffset1 ];
+		final double y1 = src1[ srcOffset1 + 1 ];
+		final double z1 = src1[ srcOffset1 + 2 ];
+		final double w1 = src1[ srcOffset1 + 3 ];
+
+		dst[ dstOffset ] = x0 * w1 + w0 * x1 + y0 * z1 - z0 * y1;
+		dst[ dstOffset + 1 ] = y0 * w1 + w0 * y1 + z0 * x1 - x0 * z1;
+		dst[ dstOffset + 2 ] = z0 * w1 + w0 * z1 + x0 * y1 - y0 * x1;
+		dst[ dstOffset + 3 ] = w0 * w1 - x0 * x1 - y0 * y1 - z0 * z1;
+
+		return dst;
+
+	}
+
 	double x() {
 
 		return this._x;
