@@ -9,7 +9,7 @@ public class MathUtils {
 		}
 	}
 
-	private static final int _seed = 1234567;
+	private static double _seed = 1234567;
 
 	public final double DEG2RAD = Math.PI / 180;
 	public final double RAD2DEG = Math.PI;
@@ -55,7 +55,7 @@ public class MathUtils {
 	double smoothstep(double x, double min, double max) {
 		if (x <= min)
 			return 0;
-		
+
 		if (x >= max)
 			return 1;
 
@@ -67,7 +67,7 @@ public class MathUtils {
 	double smootherstep(double x, double min, double max) {
 		if (x <= min)
 			return 0;
-		
+
 		if (x >= max)
 			return 1;
 
@@ -76,44 +76,31 @@ public class MathUtils {
 		return x * x * x * (x * (x * 6 - 15) + 10);
 	};
 
-//		// Random integer from <low, high> interval
-//	
-//		randInt: function ( low, high ) {
-//	
-//			return low + Math.floor( Math.random() * ( high - low + 1 ) );
-//	
-//		},
-//	
-//		// Random float from <low, high> interval
-//	
-//		randFloat: function ( low, high ) {
-//	
-//			return low + Math.random() * ( high - low );
-//	
-//		},
-//	
-//		// Random float from <-range/2, range/2> interval
-//	
-//		randFloatSpread: function ( range ) {
-//	
-//			return range * ( 0.5 - Math.random() );
-//	
-//		},
-//	
-//		// Deterministic pseudo-random float in the interval [ 0, 1 ]
-//	
-//		seededRandom: function ( s ) {
-//	
-//			if ( s !== undefined ) _seed = s % 2147483647;
-//	
-//			// Park-Miller algorithm
-//	
-//			_seed = _seed * 16807 % 2147483647;
-//	
-//			return ( _seed - 1 ) / 2147483646;
-//	
-//		},
-//	
+	// Random integer from <low, high> interval
+	double randInt(double low, double high) {
+		return low + Math.floor(Math.random() * (high - low + 1));
+	};
+
+	// Random float from <low, high> interval
+	double randFloat(double low, double high) {
+		return low + Math.random() * (high - low);
+	};
+
+	// Random float from <-range/2, range/2> interval
+	double randFloatSpread(double range) {
+		return range * (0.5 - Math.random());
+	};
+
+	// Deterministic pseudo-random float in the interval [ 0, 1 ]
+	double seededRandom(double  s) {
+		_seed = s % 2147483647;
+
+		// Park-Miller algorithm
+		_seed = _seed * 16807 % 2147483647;
+
+		return ( _seed - 1 ) / 2147483646;
+	};
+
 //		degToRad: function ( degrees ) {
 //	
 //			return degrees * MathUtils.DEG2RAD;
