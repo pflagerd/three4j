@@ -5,7 +5,7 @@ public class MathUtils {
 
 	static {
 		for (int i = 0; i < 256; i++) {
-			_lut[i] = (i < 16 ? "0" : "" ) + Integer.toString(i, 16);
+			_lut[i] = (i < 16 ? "0" : "") + Integer.toString(i, 16);
 		}
 	}
 
@@ -17,63 +17,65 @@ public class MathUtils {
 	public String generateUUID() {
 		// http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
 
-		final int d0 = (int)(Math.random() * 0xffffffff);
-		final int d1 = (int)(Math.random() * 0xffffffff);
-		final int d2 = (int)(Math.random() * 0xffffffff);
-		final int d3 = (int)(Math.random() * 0xffffffff);
-		final String uuid = _lut[ d0 & 0xff ] + _lut[ d0 >> 8 & 0xff ] + _lut[ d0 >> 16 & 0xff ] + _lut[ d0 >> 24 & 0xff ] + '-' +
-				_lut[ d1 & 0xff ] + _lut[ d1 >> 8 & 0xff ] + '-' + _lut[ d1 >> 16 & 0x0f | 0x40 ] + _lut[ d1 >> 24 & 0xff ] + '-' +
-				_lut[ d2 & 0x3f | 0x80 ] + _lut[ d2 >> 8 & 0xff ] + '-' + _lut[ d2 >> 16 & 0xff ] + _lut[ d2 >> 24 & 0xff ] +
-				_lut[ d3 & 0xff ] + _lut[ d3 >> 8 & 0xff ] + _lut[ d3 >> 16 & 0xff ] + _lut[ d3 >> 24 & 0xff ];
+		final int d0 = (int) (Math.random() * 0xffffffff);
+		final int d1 = (int) (Math.random() * 0xffffffff);
+		final int d2 = (int) (Math.random() * 0xffffffff);
+		final int d3 = (int) (Math.random() * 0xffffffff);
+		final String uuid = _lut[d0 & 0xff] + _lut[d0 >> 8 & 0xff] + _lut[d0 >> 16 & 0xff] + _lut[d0 >> 24 & 0xff] + '-'
+				+ _lut[d1 & 0xff] + _lut[d1 >> 8 & 0xff] + '-' + _lut[d1 >> 16 & 0x0f | 0x40] + _lut[d1 >> 24 & 0xff]
+				+ '-' + _lut[d2 & 0x3f | 0x80] + _lut[d2 >> 8 & 0xff] + '-' + _lut[d2 >> 16 & 0xff]
+				+ _lut[d2 >> 24 & 0xff] + _lut[d3 & 0xff] + _lut[d3 >> 8 & 0xff] + _lut[d3 >> 16 & 0xff]
+				+ _lut[d3 >> 24 & 0xff];
 
 		// .toUpperCase() here flattens concatenated strings to save heap memory space.
 		return uuid.toUpperCase();
 	}
 
 	public double clamp(double value, double min, double max) {
-		return Math.max( min, Math.min( max, value ) );
+		return Math.max(min, Math.min(max, value));
 	}
 
 	// compute euclidian modulo of m % n
 	// https://en.wikipedia.org/wiki/Modulo_operation
 	double euclideanModulo(double n, double m) {
-		return ( ( n % m ) + m ) % m;
+		return ((n % m) + m) % m;
 	}
 
 	// Linear mapping from range <a1, a2> to range <b1, b2>
 	double mapLinear(double x, double a1, double a2, double b1, double b2) {
-		return b1 + ( x - a1 ) * ( b2 - b1 ) / ( a2 - a1 );
-	};
-	
-	// https://en.wikipedia.org/wiki/Linear_interpolation
-	double lerp(double x,double y,double t) {
-		return ( 1 - t ) * x + t * y;
+		return b1 + (x - a1) * (b2 - b1) / (a2 - a1);
 	};
 
-//		// http://en.wikipedia.org/wiki/Smoothstep
-//	
-//		smoothstep: function ( x, min, max ) {
-//	
-//			if ( x <= min ) return 0;
-//			if ( x >= max ) return 1;
-//	
-//			x = ( x - min ) / ( max - min );
-//	
-//			return x * x * ( 3 - 2 * x );
-//	
-//		},
-//	
-//		smootherstep: function ( x, min, max ) {
-//	
-//			if ( x <= min ) return 0;
-//			if ( x >= max ) return 1;
-//	
-//			x = ( x - min ) / ( max - min );
-//	
-//			return x * x * x * ( x * ( x * 6 - 15 ) + 10 );
-//	
-//		},
-//	
+	// https://en.wikipedia.org/wiki/Linear_interpolation
+	double lerp(double x, double y, double t) {
+		return (1 - t) * x + t * y;
+	};
+
+	// http://en.wikipedia.org/wiki/Smoothstep
+	double smoothstep(double x, double min, double max) {
+		if (x <= min)
+			return 0;
+		
+		if (x >= max)
+			return 1;
+
+		x = (x - min) / (max - min);
+
+		return x * x * (3 - 2 * x);
+	};
+
+	double smootherstep(double x, double min, double max) {
+		if (x <= min)
+			return 0;
+		
+		if (x >= max)
+			return 1;
+
+		x = (x - min) / (max - min);
+
+		return x * x * x * (x * (x * 6 - 15) + 10);
+	};
+
 //		// Random integer from <low, high> interval
 //	
 //		randInt: function ( low, high ) {
