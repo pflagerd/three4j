@@ -35,6 +35,12 @@ public class Vector3 {
 		this.z = z;
 	}
 	
+	public Vector3(final Vector3 vector3) {
+		this.x = vector3.x;
+		this.y = vector3.y;
+		this.z = vector3.z;
+	}
+	
 //
 //Object.assign( Vector3.prototype, {
 //
