@@ -10,7 +10,7 @@ package net.three4j.math;
 //import { _Math } from './Math.js';
 //import { Vector3 } from './Vector3.js';
 
-class Quaternion {
+public class Quaternion {
 	private double _x;
 	private double _y;
 	private double _z;
@@ -18,6 +18,10 @@ class Quaternion {
 	
 	public boolean isQuaternion() {
 		return true;
+	}
+	
+	public Quaternion() {
+		this(0, 0, 0, 0);
 	}
 
 	public Quaternion(double x, double y, double z, double w) {
