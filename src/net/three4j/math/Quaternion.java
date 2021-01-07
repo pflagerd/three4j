@@ -198,163 +198,158 @@ public class Quaternion {
 
 		return this;
 	}
+	
+	Quaternion setFromEuler( Euler euler) {
+		return setFromEuler(euler, true);
+	}
 
-//	setFromEuler( euler, update ) {
-//
-//		if ( ! ( euler && euler.isEuler ) ) {
-//
-//			throw new Error( 'THREE.Quaternion: .setFromEuler() now expects an Euler rotation rather than a Vector3 and order.' );
-//
-//		}
-//
-//		const x = euler._x, y = euler._y, z = euler._z, order = euler._order;
-//
-//		// http://www.mathworks.com/matlabcentral/fileexchange/
-//		// 	20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/
-//		//	content/SpinCalc.m
-//
-//		const cos = Math.cos;
-//		const sin = Math.sin;
-//
-//		const c1 = cos( x / 2 );
-//		const c2 = cos( y / 2 );
-//		const c3 = cos( z / 2 );
-//
-//		const s1 = sin( x / 2 );
-//		const s2 = sin( y / 2 );
-//		const s3 = sin( z / 2 );
-//
-//		switch ( order ) {
-//
-//			case 'XYZ':
-//				this._x = s1 * c2 * c3 + c1 * s2 * s3;
-//				this._y = c1 * s2 * c3 - s1 * c2 * s3;
-//				this._z = c1 * c2 * s3 + s1 * s2 * c3;
-//				this._w = c1 * c2 * c3 - s1 * s2 * s3;
-//				break;
-//
-//			case 'YXZ':
-//				this._x = s1 * c2 * c3 + c1 * s2 * s3;
-//				this._y = c1 * s2 * c3 - s1 * c2 * s3;
-//				this._z = c1 * c2 * s3 - s1 * s2 * c3;
-//				this._w = c1 * c2 * c3 + s1 * s2 * s3;
-//				break;
-//
-//			case 'ZXY':
-//				this._x = s1 * c2 * c3 - c1 * s2 * s3;
-//				this._y = c1 * s2 * c3 + s1 * c2 * s3;
-//				this._z = c1 * c2 * s3 + s1 * s2 * c3;
-//				this._w = c1 * c2 * c3 - s1 * s2 * s3;
-//				break;
-//
-//			case 'ZYX':
-//				this._x = s1 * c2 * c3 - c1 * s2 * s3;
-//				this._y = c1 * s2 * c3 + s1 * c2 * s3;
-//				this._z = c1 * c2 * s3 - s1 * s2 * c3;
-//				this._w = c1 * c2 * c3 + s1 * s2 * s3;
-//				break;
-//
-//			case 'YZX':
-//				this._x = s1 * c2 * c3 + c1 * s2 * s3;
-//				this._y = c1 * s2 * c3 + s1 * c2 * s3;
-//				this._z = c1 * c2 * s3 - s1 * s2 * c3;
-//				this._w = c1 * c2 * c3 - s1 * s2 * s3;
-//				break;
-//
-//			case 'XZY':
-//				this._x = s1 * c2 * c3 - c1 * s2 * s3;
-//				this._y = c1 * s2 * c3 - s1 * c2 * s3;
-//				this._z = c1 * c2 * s3 + s1 * s2 * c3;
-//				this._w = c1 * c2 * c3 + s1 * s2 * s3;
-//				break;
-//
-//			default:
-//				console.warn( 'THREE.Quaternion: .setFromEuler() encountered an unknown order: ' + order );
-//
-//		}
-//
-//		if ( update !== false ) this._onChangeCallback();
-//
-//		return this;
-//
-//	}
-//
-//	setFromAxisAngle( axis, angle ) {
-//
-//		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
-//
-//		// assumes axis is normalized
-//
-//		const halfAngle = angle / 2, s = Math.sin( halfAngle );
-//
-//		this._x = axis.x * s;
-//		this._y = axis.y * s;
-//		this._z = axis.z * s;
-//		this._w = Math.cos( halfAngle );
-//
-//		this._onChangeCallback();
-//
-//		return this;
-//
-//	}
-//
-//	setFromRotationMatrix( m ) {
-//
-//		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
-//
-//		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
-//
-//		const te = m.elements,
-//
-//			m11 = te[ 0 ], m12 = te[ 4 ], m13 = te[ 8 ],
-//			m21 = te[ 1 ], m22 = te[ 5 ], m23 = te[ 9 ],
-//			m31 = te[ 2 ], m32 = te[ 6 ], m33 = te[ 10 ],
-//
-//			trace = m11 + m22 + m33;
-//
-//		if ( trace > 0 ) {
-//
-//			const s = 0.5 / Math.sqrt( trace + 1.0 );
-//
-//			this._w = 0.25 / s;
-//			this._x = ( m32 - m23 ) * s;
-//			this._y = ( m13 - m31 ) * s;
-//			this._z = ( m21 - m12 ) * s;
-//
-//		} else if ( m11 > m22 && m11 > m33 ) {
-//
-//			const s = 2.0 * Math.sqrt( 1.0 + m11 - m22 - m33 );
-//
-//			this._w = ( m32 - m23 ) / s;
-//			this._x = 0.25 * s;
-//			this._y = ( m12 + m21 ) / s;
-//			this._z = ( m13 + m31 ) / s;
-//
-//		} else if ( m22 > m33 ) {
-//
-//			const s = 2.0 * Math.sqrt( 1.0 + m22 - m11 - m33 );
-//
-//			this._w = ( m13 - m31 ) / s;
-//			this._x = ( m12 + m21 ) / s;
-//			this._y = 0.25 * s;
-//			this._z = ( m23 + m32 ) / s;
-//
-//		} else {
-//
-//			const s = 2.0 * Math.sqrt( 1.0 + m33 - m11 - m22 );
-//
-//			this._w = ( m21 - m12 ) / s;
-//			this._x = ( m13 + m31 ) / s;
-//			this._y = ( m23 + m32 ) / s;
-//			this._z = 0.25 * s;
-//
-//		}
-//
-//		this._onChangeCallback();
-//
-//		return this;
-//
-//	}
+	Quaternion setFromEuler( Euler euler, boolean update ) {
+
+		final double x = euler._x, y = euler._y, z = euler._z; 
+		String order = euler.order();
+
+		// http://www.mathworks.com/matlabcentral/fileexchange/
+		// 	20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/
+		//	content/SpinCalc.m
+		final double c1 = Math.cos( x / 2 );
+		final double c2 = Math.cos( y / 2 );
+		final double c3 = Math.cos( z / 2 );
+
+		final double s1 = Math.sin( x / 2 );
+		final double s2 = Math.sin( y / 2 );
+		final double s3 = Math.sin( z / 2 );
+
+		switch ( order ) {
+
+			case "XYZ":
+				this._x = s1 * c2 * c3 + c1 * s2 * s3;
+				this._y = c1 * s2 * c3 - s1 * c2 * s3;
+				this._z = c1 * c2 * s3 + s1 * s2 * c3;
+				this._w = c1 * c2 * c3 - s1 * s2 * s3;
+				break;
+
+			case "YXZ":
+				this._x = s1 * c2 * c3 + c1 * s2 * s3;
+				this._y = c1 * s2 * c3 - s1 * c2 * s3;
+				this._z = c1 * c2 * s3 - s1 * s2 * c3;
+				this._w = c1 * c2 * c3 + s1 * s2 * s3;
+				break;
+
+			case "ZXY":
+				this._x = s1 * c2 * c3 - c1 * s2 * s3;
+				this._y = c1 * s2 * c3 + s1 * c2 * s3;
+				this._z = c1 * c2 * s3 + s1 * s2 * c3;
+				this._w = c1 * c2 * c3 - s1 * s2 * s3;
+				break;
+
+			case "ZYX":
+				this._x = s1 * c2 * c3 - c1 * s2 * s3;
+				this._y = c1 * s2 * c3 + s1 * c2 * s3;
+				this._z = c1 * c2 * s3 - s1 * s2 * c3;
+				this._w = c1 * c2 * c3 + s1 * s2 * s3;
+				break;
+
+			case "YZX":
+				this._x = s1 * c2 * c3 + c1 * s2 * s3;
+				this._y = c1 * s2 * c3 + s1 * c2 * s3;
+				this._z = c1 * c2 * s3 - s1 * s2 * c3;
+				this._w = c1 * c2 * c3 - s1 * s2 * s3;
+				break;
+
+			case "XZY":
+				this._x = s1 * c2 * c3 - c1 * s2 * s3;
+				this._y = c1 * s2 * c3 - s1 * c2 * s3;
+				this._z = c1 * c2 * s3 + s1 * s2 * c3;
+				this._w = c1 * c2 * c3 + s1 * s2 * s3;
+				break;
+
+			default:
+				throw new RuntimeException( "THREE.Quaternion: .setFromEuler() encountered an unknown order: " + order );
+
+		}
+
+		if ( update != false ) this._onChangeCallback();
+
+		return this;
+
+	}
+
+	Quaternion setFromAxisAngle( Vector3 axis, double angle ) {
+
+		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
+
+		// assumes axis is normalized
+
+		final double halfAngle = angle / 2, s = Math.sin( halfAngle );
+
+		this._x = axis.x * s;
+		this._y = axis.y * s;
+		this._z = axis.z * s;
+		this._w = Math.cos( halfAngle );
+
+		this._onChangeCallback();
+
+		return this;
+
+	}
+
+	Quaternion setFromRotationMatrix( Matrix4 m ) {
+
+		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
+
+		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
+
+		final double[] te = m.elements;
+
+		final double m11 = te[ 0 ], m12 = te[ 4 ], m13 = te[ 8 ],
+			m21 = te[ 1 ], m22 = te[ 5 ], m23 = te[ 9 ],
+			m31 = te[ 2 ], m32 = te[ 6 ], m33 = te[ 10 ],
+
+			trace = m11 + m22 + m33;
+
+		if ( trace > 0 ) {
+
+			final double s = 0.5 / Math.sqrt( trace + 1.0 );
+
+			this._w = 0.25 / s;
+			this._x = ( m32 - m23 ) * s;
+			this._y = ( m13 - m31 ) * s;
+			this._z = ( m21 - m12 ) * s;
+
+		} else if ( m11 > m22 && m11 > m33 ) {
+
+			final double s = 2.0 * Math.sqrt( 1.0 + m11 - m22 - m33 );
+
+			this._w = ( m32 - m23 ) / s;
+			this._x = 0.25 * s;
+			this._y = ( m12 + m21 ) / s;
+			this._z = ( m13 + m31 ) / s;
+
+		} else if ( m22 > m33 ) {
+
+			final double s = 2.0 * Math.sqrt( 1.0 + m22 - m11 - m33 );
+
+			this._w = ( m13 - m31 ) / s;
+			this._x = ( m12 + m21 ) / s;
+			this._y = 0.25 * s;
+			this._z = ( m23 + m32 ) / s;
+
+		} else {
+
+			final double s = 2.0 * Math.sqrt( 1.0 + m33 - m11 - m22 );
+
+			this._w = ( m21 - m12 ) / s;
+			this._x = ( m13 + m31 ) / s;
+			this._y = ( m23 + m32 ) / s;
+			this._z = 0.25 * s;
+
+		}
+
+		this._onChangeCallback();
+
+		return this;
+
+	}
 
 	Quaternion setFromUnitVectors( Vector3 vFrom, Vector3 vTo ) {
 
@@ -594,7 +589,6 @@ public class Quaternion {
 		this._x = ( x * ratioA + this._x * ratioB );
 		this._y = ( y * ratioA + this._y * ratioB );
 		this._z = ( z * ratioA + this._z * ratioB );
-
 		this._onChangeCallback();
 
 		return this;
