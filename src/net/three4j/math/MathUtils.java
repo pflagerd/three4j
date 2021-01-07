@@ -101,18 +101,14 @@ public class MathUtils {
 		return ( _seed - 1 ) / 2147483646;
 	};
 
-//		degToRad: function ( degrees ) {
-//	
-//			return degrees * MathUtils.DEG2RAD;
-//	
-//		},
-//	
-//		radToDeg: function ( radians ) {
-//	
-//			return radians * MathUtils.RAD2DEG;
-//	
-//		},
-//	
+	double degToRad( double degrees ) {
+		return degrees * DEG2RAD;
+	};
+
+	double radToDeg(double radians ) {
+		return radians * RAD2DEG;
+	};
+
 //		isPowerOfTwo: function ( value ) {
 //	
 //			return ( value & ( value - 1 ) ) === 0 && value !== 0;
