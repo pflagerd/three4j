@@ -76,13 +76,11 @@ public class Object3D extends EventDispatcher {
 		quaternion = new Quaternion();
 		scale = new Vector3( 1, 1, 1 );
 	}
-//
-//	function onRotationChange() {
-//
-//		quaternion.setFromEuler( rotation, false );
-//
-//	}
-//
+
+	void onRotationChange() {
+		quaternion.setFromEuler( rotation, false );
+	}
+
 //	function onQuaternionChange() {
 //
 //		rotation.setFromQuaternion( quaternion, undefined, false );
