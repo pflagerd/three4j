@@ -120,59 +120,59 @@ public class Quaternion {
 
 	}
 
-	double x() {
+	public double x() {
 
 		return this._x;
 
 	}
 
-	void x( double value ) {
+	public void x( double value ) {
 
 		this._x = value;
 		this._onChangeCallback();
 
 	}
 
-	double y() {
+	public double y() {
 
 		return this._y;
 
 	}
 
-	void y( double value ) {
+	public void y( double value ) {
 
 		this._y = value;
 		this._onChangeCallback();
 
 	}
 
-	double z() {
+	public double z() {
 
 		return this._z;
 
 	}
 
-	void z( double value ) {
+	public void z( double value ) {
 
 		this._z = value;
 		this._onChangeCallback();
 
 	}
 
-	double w() {
+	public double w() {
 
 		return this._w;
 
 	}
 
-	void w( double value ) {
+	public void w( double value ) {
 
 		this._w = value;
 		this._onChangeCallback();
 
 	}
 
-	Quaternion set(double x,double y,double z, double w) {
+	public Quaternion set(double x,double y,double z, double w) {
 		this._x = x;
 		this._y = y;
 		this._z = z;
@@ -199,11 +199,11 @@ public class Quaternion {
 		return this;
 	}
 	
-	Quaternion setFromEuler( Euler euler) {
+	public Quaternion setFromEuler( Euler euler) {
 		return setFromEuler(euler, true);
 	}
 
-	Quaternion setFromEuler( Euler euler, boolean update ) {
+	public Quaternion setFromEuler( Euler euler, boolean update ) {
 
 		final double x = euler._x, y = euler._y, z = euler._z; 
 		String order = euler.order();
@@ -274,7 +274,7 @@ public class Quaternion {
 
 	}
 
-	Quaternion setFromAxisAngle( Vector3 axis, double angle ) {
+	public Quaternion setFromAxisAngle( Vector3 axis, double angle ) {
 
 		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/angleToQuaternion/index.htm
 
@@ -293,7 +293,7 @@ public class Quaternion {
 
 	}
 
-	Quaternion setFromRotationMatrix( Matrix4 m ) {
+	public Quaternion setFromRotationMatrix( Matrix4 m ) {
 
 		// http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm
 
@@ -351,7 +351,7 @@ public class Quaternion {
 
 	}
 
-	Quaternion setFromUnitVectors( Vector3 vFrom, Vector3 vTo ) {
+	public Quaternion setFromUnitVectors( Vector3 vFrom, Vector3 vTo ) {
 
 		// assumes direction vectors vFrom and vTo are normalized
 
@@ -394,13 +394,13 @@ public class Quaternion {
 
 	}
 
-	double angleTo( Quaternion q ) {
+	public double angleTo( Quaternion q ) {
 
 		return 2 * Math.acos( Math.abs( MathUtils.clamp( this.dot( q ), - 1, 1 ) ) );
 
 	}
 
-	Quaternion rotateTowards( Quaternion q, double step ) {
+	public Quaternion rotateTowards( Quaternion q, double step ) {
 
 		final double angle = this.angleTo( q );
 
@@ -414,13 +414,13 @@ public class Quaternion {
 
 	}
 
-	Quaternion identity() {
+	public Quaternion identity() {
 
 		return this.set( 0, 0, 0, 1 );
 
 	}
 
-	Quaternion invert() {
+	public Quaternion invert() {
 
 		// quaternion is assumed to have unit length
 
@@ -428,7 +428,7 @@ public class Quaternion {
 
 	}
 
-	Quaternion conjugate() {
+	public Quaternion conjugate() {
 
 		this._x *= - 1;
 		this._y *= - 1;
@@ -440,25 +440,25 @@ public class Quaternion {
 
 	}
 
-	double dot( Quaternion q ) {
+	public double dot( Quaternion q ) {
 
 		return this._x * q._x + this._y * q._y + this._z * q._z + this._w * q._w;
 
 	}
 
-	double lengthSq() {
+	public double lengthSq() {
 
 		return this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w;
 
 	}
 
-	double length() {
+	public double length() {
 
 		return Math.sqrt( this._x * this._x + this._y * this._y + this._z * this._z + this._w * this._w );
 
 	}
 
-	Quaternion normalize() {
+	public Quaternion normalize() {
 
 		double l = this.length();
 
@@ -486,11 +486,11 @@ public class Quaternion {
 		
 	}
 
-	Quaternion multiply( Quaternion q) {
+	public Quaternion multiply( Quaternion q) {
 		return this.multiplyQuaternions( this, q );		
 	}
 	
-	Quaternion multiply( Quaternion q, Quaternion p ) {
+	public Quaternion multiply( Quaternion q, Quaternion p ) {
 
 		if ( p != null ) {
 
@@ -502,11 +502,11 @@ public class Quaternion {
 
 	}
 
-	Quaternion premultiply( Quaternion q ) {
+	public Quaternion premultiply( Quaternion q ) {
 		return this.multiplyQuaternions( q, this );
 	}
 
-	Quaternion multiplyQuaternions( Quaternion a, Quaternion b ) {
+	public Quaternion multiplyQuaternions( Quaternion a, Quaternion b ) {
 
 		// from http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm
 
@@ -524,7 +524,7 @@ public class Quaternion {
 
 	}
 
-	Quaternion slerp( Quaternion qb, double t ) {
+	public Quaternion slerp( Quaternion qb, double t ) {
 
 		if ( t == 0 ) 
 			return this;
@@ -595,17 +595,17 @@ public class Quaternion {
 
 	}
 
-	boolean equals( Quaternion q ) {
+	public boolean equals( Quaternion q ) {
 
 		return ( q._x == this._x ) && ( q._y == this._y ) && ( q._z == this._z ) && ( q._w == this._w );
 
 	}
 	
-	Quaternion fromArray(double[] array) {
+	public Quaternion fromArray(double[] array) {
 		return fromArray(array, 0);
 	}
 
-	Quaternion fromArray( double[] array, int offset) {
+	public Quaternion fromArray( double[] array, int offset) {
 
 		this._x = array[ offset ];
 		this._y = array[ offset + 1 ];
@@ -618,15 +618,15 @@ public class Quaternion {
 
 	}
 
-	double[] toArray() {
+	public double[] toArray() {
 		return new double[] { this._x, this._y, this._z, this._w};
 	}
 	
-	double[] toArray(double[] array) {
+	public double[] toArray(double[] array) {
 		return toArray(array, 0);
 	}
 	
-	double[] toArray( double[] array, int offset ) {
+	public double[] toArray( double[] array, int offset ) {
 
 		array[ offset ] = this._x;
 		array[ offset + 1 ] = this._y;
