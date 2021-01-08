@@ -26,26 +26,27 @@ import net.three4j.math.Euler;
 // */
 //
 import net.three4j.math.MathUtils;
+import net.three4j.math.Matrix3;
 import net.three4j.math.Matrix4;
 
 public class Object3D extends EventDispatcher {
 	// let _object3DId = 0;
 	static int _object3DId = 0;
 	
-//	const _v1 = new Vector3();
-//	const _q1 = new Quaternion();
-//	const _m1 = new Matrix4();
-//	const _target = new Vector3();
-//
-//	const _position = new Vector3();
+	private final Vector3 _v1 = new Vector3();
+	private final Quaternion _q1 = new Quaternion();
+	private final Matrix4 _m1 = new Matrix4();
+	private final Vector3 _target = new Vector3();
 
-//	const _scale = new Vector3();
-//	const _quaternion = new Quaternion();
-//
-//	const _xAxis = new Vector3( 1, 0, 0 );
-//	const _yAxis = new Vector3( 0, 1, 0 );
-//	const _zAxis = new Vector3( 0, 0, 1 );
-//
+	private final Vector3 _position = new Vector3();
+
+	private final Vector3 _scale = new Vector3();
+	private final Quaternion _quaternion = new Quaternion();
+
+	private final Vector3 _xAxis = new Vector3( 1, 0, 0 );
+	private final Vector3 _yAxis = new Vector3( 0, 1, 0 );
+	private final Vector3 _zAxis = new Vector3( 0, 0, 1 );
+
 //	const _addedEvent = { type: 'added' };
 //	const _removedEvent = { type: 'removed' };
 
@@ -61,6 +62,17 @@ public class Object3D extends EventDispatcher {
 	public Vector3 up;
 	public Matrix4 modelViewMatrix;
 	public Matrix3 normalMatrix;
+	public Matrix4 matrix;
+	public Matrix4 matrixWorld;
+	public boolean matrixAutoUpdate;
+	public boolean matrixWorldNeedsUpdate;
+	public boolean castShadow;
+	public boolean receiveShadow;
+	public boolean frustumCulled;
+	public int renderOrder;
+	public boolean visible;
+	public Layers layers;
+	
 	
 	public Object3D() {
 		id = _object3DId++;
@@ -78,6 +90,26 @@ public class Object3D extends EventDispatcher {
 		rotation = new Euler();
 		quaternion = new Quaternion();
 		scale = new Vector3( 1, 1, 1 );
+		
+		this.matrix = new Matrix4();
+		this.matrixWorld = new Matrix4();
+	
+		this.matrixAutoUpdate = DefaultMatrixAutoUpdate;
+		this.matrixWorldNeedsUpdate = false;
+	
+		this.layers = new Layers();
+		this.visible = true;
+	
+		this.castShadow = false;
+		this.receiveShadow = false;
+	
+		this.frustumCulled = true;
+		this.renderOrder = 0;
+	
+//		this.animations = [];
+//	
+//		this.userData = {};
+	
 	}
 
 	void onRotationChange() {
@@ -91,59 +123,11 @@ public class Object3D extends EventDispatcher {
 //	rotation._onChange( onRotationChange );
 //	quaternion._onChange( onQuaternionChange );
 
-//	Object.defineProperties( this, {
-//		position: {
-//			configurable: true,
-//			enumerable: true,current
-//			value: position
-//		},
-//		rotation: {
-//			configurable: true,
-//			enumerable: true,
-//			value: rotation
-//		},
-//		quaternion: {
-//			configurable: true,
-//			enumerable: true,
-//			value: quaternion
-//		},
-//		scale: {
-//			configurable: true,
-//			enumerable: true,
-//			value: scale
-//		},
-//		modelViewMatrix: {
-//			value: new Matrix4()
-//		},
-//		normalMatrix: {
-//			value: new Matrix3()
-//		}
-//	} );
-//
-//	this.matrix = new Matrix4();
-//	this.matrixWorld = new Matrix4();
-//
-//	this.matrixAutoUpdate = Object3D.DefaultMatrixAutoUpdate;
-//	this.matrixWorldNeedsUpdate = false;
-//
-//	this.layers = new Layers();
-//	this.visible = true;
-//
-//	this.castShadow = false;
-//	this.receiveShadow = false;
-//
-//	this.frustumCulled = true;
-//	this.renderOrder = 0;
-//
-//	this.animations = [];
-//
-//	this.userData = {};
-//
-//}
-//
 	static final Vector3 DefaultUp = new Vector3( 0, 1, 0 );
 	boolean DefaultMatrixAutoUpdate = true;
-//
+
+	public boolean isObject3D = true;
+
 //Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 //
 //	constructor: Object3D,
@@ -162,148 +146,133 @@ public class Object3D extends EventDispatcher {
 //		this.matrix.decompose( this.position, this.quaternion, this.scale );
 //
 //	},
-//
-//	applyQuaternion: function ( q ) {
-//
-//		this.quaternion.premultiply( q );
-//
-//		return this;
-//
-//	},
-//
-//	setRotationFromAxisAngle: function ( axis, angle ) {
-//
-//		// assumes axis is normalized
-//
-//		this.quaternion.setFromAxisAngle( axis, angle );
-//
-//	},
-//
-//	setRotationFromEuler: function ( euler ) {
-//
-//		this.quaternion.setFromEuler( euler, true );
-//
-//	},
-//
-//	setRotationFromMatrix: function ( m ) {
-//
-//		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
-//
-//		this.quaternion.setFromRotationMatrix( m );
-//
-//	},
-//
-//	setRotationFromQuaternion: function ( q ) {
-//
-//		// assumes q is normalized
-//
-//		this.quaternion.copy( q );
-//
-//	},
-//
-//	rotateOnAxis: function ( axis, angle ) {
-//
-//		// rotate object on axis in object space
-//		// axis is assumed to be normalized
-//
-//		_q1.setFromAxisAngle( axis, angle );
-//
-//		this.quaternion.multiply( _q1 );
-//
-//		return this;
-//
-//	},
-//
-//	rotateOnWorldAxis: function ( axis, angle ) {
-//
-//		// rotate object on axis in world space
-//		// axis is assumed to be normalized
-//		// method assumes no rotated parent
-//
-//		_q1.setFromAxisAngle( axis, angle );
-//
-//		this.quaternion.premultiply( _q1 );
-//
-//		return this;
-//
-//	},
-//
-//	rotateX: function ( angle ) {
-//
-//		return this.rotateOnAxis( _xAxis, angle );
-//
-//	},
-//
-//	rotateY: function ( angle ) {
-//
-//		return this.rotateOnAxis( _yAxis, angle );
-//
-//	},
-//
-//	rotateZ: function ( angle ) {
-//
-//		return this.rotateOnAxis( _zAxis, angle );
-//
-//	},
-//
-//	translateOnAxis: function ( axis, distance ) {
-//
-//		// translate object by distance along axis in object space
-//		// axis is assumed to be normalized
-//
+
+	Object3D applyQuaternion( Quaternion q ) {
+
+		this.quaternion.premultiply( q );
+
+		return this;
+	}
+
+	void setRotationFromAxisAngle(Vector3 axis, double angle ) {
+		// assumes axis is normalized
+		this.quaternion.setFromAxisAngle( axis, angle );
+	}
+
+	void setRotationFromEuler( Euler euler ) {
+
+		this.quaternion.setFromEuler( euler, true );
+
+	}
+
+	void setRotationFromMatrix( Matrix4 m ) {
+
+		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
+
+		this.quaternion.setFromRotationMatrix( m );
+
+	}
+
+	void setRotationFromQuaternion( Quaternion q ) {
+
+		// assumes q is normalized
+
+		this.quaternion.copy( q );
+
+	}
+
+	Object3D rotateOnAxis( Vector3 axis, double angle ) {
+
+		// rotate object on axis in object space
+		// axis is assumed to be normalized
+
+		_q1.setFromAxisAngle( axis, angle );
+
+		this.quaternion.multiply( _q1 );
+
+		return this;
+
+	}
+
+	Object3D rotateOnWorldAxis( Vector3 axis, double angle ) {
+		// rotate object on axis in world space
+		// axis is assumed to be normalized
+		// method assumes no rotated parent
+		_q1.setFromAxisAngle( axis, angle );
+		this.quaternion.premultiply( _q1 );
+		return this;
+	}
+
+	public Object3D rotateX( double angle ) {
+
+		return this.rotateOnAxis( _xAxis, angle );
+
+	}
+
+	public Object3D rotateY( double angle ) {
+
+		return this.rotateOnAxis( _yAxis, angle );
+
+	}
+
+	public Object3D rotateZ( double angle ) {
+
+		return this.rotateOnAxis( _zAxis, angle );
+
+	}
+
+	public Object3D translateOnAxis( Vector3 axis, double distance ) {
+
+		// translate object by distance along axis in object space
+		// axis is assumed to be normalized
+
 //		_v1.copy( axis ).applyQuaternion( this.quaternion );
 //
 //		this.position.add( _v1.multiplyScalar( distance ) );
+
+		return this;
+
+	}
+
+	public Object3D translateX( double distance ) {
+
+		return this.translateOnAxis( _xAxis, distance );
+
+	};
+
+	public Object3D translateY(double distance ) {
+
+		return this.translateOnAxis( _yAxis, distance );
+
+	};
+
+	public Object3D translateZ( double distance ) {
+
+		return this.translateOnAxis( _zAxis, distance );
+
+	};
+
+//	public Vector3 localToWorld( Vector3 vector ) {
 //
-//		return this;
+////		return vector.applyMatrix4( this.matrixWorld );
 //
-//	},
-//
-//	translateX: function ( distance ) {
-//
-//		return this.translateOnAxis( _xAxis, distance );
-//
-//	},
-//
-//	translateY: function ( distance ) {
-//
-//		return this.translateOnAxis( _yAxis, distance );
-//
-//	},
-//
-//	translateZ: function ( distance ) {
-//
-//		return this.translateOnAxis( _zAxis, distance );
-//
-//	},
-//
-//	localToWorld: function ( vector ) {
-//
-//		return vector.applyMatrix4( this.matrixWorld );
-//
-//	},
-//
-//	worldToLocal: function ( vector ) {
+//	}
+
+//	public Vector3 worldToLocal( Vector3 vector ) {
 //
 //		return vector.applyMatrix4( _m1.copy( this.matrixWorld ).invert() );
 //
-//	},
-//
-//	lookAt: function ( x, y, z ) {
+//	}
+	
+	void lookAt(Vector3 v) {
+		lookAt(v.x, v.y, v.z);
+	}
+
+	void lookAt(double x, double y, double z ) {
 //
 //		// This method does not support objects having non-uniformly-scaled parent(s)
 //
-//		if ( x.isVector3 ) {
-//
-//			_target.copy( x );
-//
-//		} else {
-//
-//			_target.set( x, y, z );
-//
-//		}
-//
-//		const parent = this.parent;
+//		_target.set( x, y, z );
 //
 //		this.updateWorldMatrix( true, false );
 //
@@ -321,60 +290,50 @@ public class Object3D extends EventDispatcher {
 //
 //		this.quaternion.setFromRotationMatrix( _m1 );
 //
-//		if ( parent ) {
+//		if ( this.parent != null ) {
 //
 //			_m1.extractRotation( parent.matrixWorld );
 //			_q1.setFromRotationMatrix( _m1 );
 //			this.quaternion.premultiply( _q1.invert() );
 //
 //		}
-//
-//	},
-//
-//	add: function ( object ) {
-//
-//		if ( arguments.length > 1 ) {
-//
-//			for ( let i = 0; i < arguments.length; i ++ ) {
-//
-//				this.add( arguments[ i ] );
-//
-//			}
-//
-//			return this;
-//
-//		}
-//
-//		if ( object === this ) {
-//
-//			console.error( 'THREE.Object3D.add: object can\'t be added as a child of itself.', object );
-//			return this;
-//
-//		}
-//
-//		if ( object && object.isObject3D ) {
-//
-//			if ( object.parent !== null ) {
-//
-//				object.parent.remove( object );
-//
-//			}
-//
-//			object.parent = this;
-//			this.children.push( object );
-//
-//			object.dispatchEvent( _addedEvent );
-//
-//		} else {
-//
-//			console.error( 'THREE.Object3D.add: object not an instance of THREE.Object3D.', object );
-//
-//		}
-//
-//		return this;
-//
-//	},
-//
+	};
+
+	Object3D add(Object3D... objects) {
+
+		for ( int i = 0; i < objects.length; i ++ ) {
+
+			if ( objects[i] == this ) {
+
+				throw new RuntimeException( "THREE.Object3D.add: object can't be added as a child of itself.");
+				return this;
+
+			}
+
+			if ( objects[i] != null && objects[i].isObject3D ) {
+
+				if ( objects[i].parent != null ) {
+
+//					objects[i].parent.remove( objects[i] );
+
+				}
+
+				objects[i].parent = this;
+//				this.children.push( objects[i] );
+
+//				objects.dispatchEvent( _addedEvent );
+
+			} else {
+				throw new RuntimeException( "THREE.Object3D.add: object not an instance of THREE.Object3D.");
+			}
+
+			this.add( objects[ i ] );
+
+		}
+
+		return this;
+	};
+
 //	remove: function ( object ) {
 //
 //		if ( arguments.length > 1 ) {
