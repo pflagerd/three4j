@@ -306,7 +306,6 @@ public class Object3D extends EventDispatcher {
 			if ( objects[i] == this ) {
 
 				throw new RuntimeException( "THREE.Object3D.add: object can't be added as a child of itself.");
-				return this;
 
 			}
 
