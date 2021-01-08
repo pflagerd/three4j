@@ -1,5 +1,8 @@
 package net.three4j.math;
 
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class MathUtils {
 	private static final String[] _lut = new String[256];
 
@@ -12,23 +15,10 @@ public class MathUtils {
 	private static double _seed = 1234567;
 
 	public static final double DEG2RAD = Math.PI / 180;
-	public static final double RAD2DEG = Math.PI;
+	public static final double RAD2DEG = 180 / Math.PI;
 
 	public static String generateUUID() {
-		// http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
-
-		final int d0 = (int) (Math.random() * 0xffffffff);
-		final int d1 = (int) (Math.random() * 0xffffffff);
-		final int d2 = (int) (Math.random() * 0xffffffff);
-		final int d3 = (int) (Math.random() * 0xffffffff);
-		final String uuid = _lut[d0 & 0xff] + _lut[d0 >> 8 & 0xff] + _lut[d0 >> 16 & 0xff] + _lut[d0 >> 24 & 0xff] + '-'
-				+ _lut[d1 & 0xff] + _lut[d1 >> 8 & 0xff] + '-' + _lut[d1 >> 16 & 0x0f | 0x40] + _lut[d1 >> 24 & 0xff]
-				+ '-' + _lut[d2 & 0x3f | 0x80] + _lut[d2 >> 8 & 0xff] + '-' + _lut[d2 >> 16 & 0xff]
-				+ _lut[d2 >> 24 & 0xff] + _lut[d3 & 0xff] + _lut[d3 >> 8 & 0xff] + _lut[d3 >> 16 & 0xff]
-				+ _lut[d3 >> 24 & 0xff];
-
-		// .toUpperCase() here flattens concatenated strings to save heap memory space.
-		return uuid.toUpperCase();
+		return UUID.randomUUID().toString().toUpperCase();
 	}
 
 	public static double clamp(double value, double min, double max) {
@@ -77,8 +67,8 @@ public class MathUtils {
 	};
 
 	// Random integer from <low, high> interval
-	public static double randInt(double low, double high) {
-		return low + Math.floor(Math.random() * (high - low + 1));
+	public static int randInt(double low, double high) {
+		return ThreadLocalRandom.current().nextInt((int)low, (int)high);
 	};
 
 	// Random float from <low, high> interval
@@ -88,7 +78,8 @@ public class MathUtils {
 
 	// Random float from <-range/2, range/2> interval
 	public static double randFloatSpread(double range) {
-		return range * (0.5 - Math.random());
+		return ThreadLocalRandom.current().nextDouble(-range/2, range/2);
+		//return range * (0.5 - Math.random());
 	};
 
 	// Deterministic pseudo-random float in the interval [ 0, 1 ]
