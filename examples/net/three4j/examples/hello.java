@@ -1,9 +1,9 @@
 package net.three4j.examples;
 
-import net.three4j.THREE;
 import static net.three4j.THREE.window;
-import static net.three4j.THREE.document;
-import static net.three4j.THREE.KV;
+
+import net.three4j.THREE;
+import net.three4j.THREE.KV;
 
 class hello {
 
