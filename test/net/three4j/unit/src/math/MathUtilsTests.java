@@ -81,35 +81,29 @@ public class MathUtilsTests {
 
 	@Test
 	public void randInt() {
+		int low = 1, high = 3;
+		int a = MathUtils.randInt(low, high);
 
-			int low = 1, high = 3;
-			int a = MathUtils.randInt( low, high );
-
-			assertTrue( a >= low, "Value equal to or higher than lower limit" );
-			assertTrue( a <= high, "Value equal to or lower than upper limit" );
-
-		}
+		assertTrue(a >= low, "Value equal to or higher than lower limit");
+		assertTrue(a <= high, "Value equal to or lower than upper limit");
+	}
 
 	@Test
 	public void randFloat() {
+		double low = 1, high = 3;
+		double a = MathUtils.randFloat(low, high);
 
-			double low = 1, high = 3;
-			double a = MathUtils.randFloat( low, high );
-
-			assertTrue( a >= low, "Value equal to or higher than lower limit" );
-			assertTrue( a <= high, "Value equal to or lower than upper limit" );
-
-		}
+		assertTrue(a >= low, "Value equal to or higher than lower limit");
+		assertTrue(a <= high, "Value equal to or lower than upper limit");
+	}
 
 	@Test
 	public void randFloatSpread() {
+		double a = MathUtils.randFloatSpread(3);
 
-			double a = MathUtils.randFloatSpread( 3 );
-
-			assertTrue( a > - 3 / 2, "Value higher than lower limit" );
-			assertTrue( a < 3 / 2, "Value lower than upper limit" );
-
-		}
+		assertTrue(a > -3 / 2, "Value higher than lower limit");
+		assertTrue(a < 3 / 2, "Value lower than upper limit");
+	}
 
 	@Test
 	public void degToRad() {
