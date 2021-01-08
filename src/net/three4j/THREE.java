@@ -61,6 +61,8 @@ public class THREE {
 //	export { Fog } from './scenes/Fog.js';
 //	export { Scene } from './scenes/Scene.js';
 	public static class Scene extends Object3D {
+		public void add(Mesh cube) {
+		}
 		public void add(Object3D cube) {
 		}
 	}
