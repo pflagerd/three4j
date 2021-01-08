@@ -4,11 +4,11 @@ package net.three4j.math;
 //
 public class Matrix4 {
 	
-	double[] elements;
+	public double[] elements;
 	
 	public final boolean isMatrix4 = true;
 
-	Matrix4() {
+	public Matrix4() {
 		this.elements = new double[] {
 			1, 0, 0, 0,
 			0, 1, 0, 0,
