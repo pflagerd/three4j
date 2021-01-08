@@ -26,6 +26,7 @@ import net.three4j.math.Euler;
 // */
 //
 import net.three4j.math.MathUtils;
+import net.three4j.math.Matrix4;
 
 public class Object3D extends EventDispatcher {
 	// let _object3DId = 0;
@@ -58,6 +59,8 @@ public class Object3D extends EventDispatcher {
 	public String name;
 	public Vector3 scale;
 	public Vector3 up;
+	public Matrix4 modelViewMatrix;
+	public Matrix3 normalMatrix;
 	
 	public Object3D() {
 		id = _object3DId++;
@@ -81,15 +84,13 @@ public class Object3D extends EventDispatcher {
 		quaternion.setFromEuler( rotation, false );
 	}
 
-//	function onQuaternionChange() {
-//
-//		rotation.setFromQuaternion( quaternion, undefined, false );
-//
-//	}
-//
+	public void onQuaternionChange() {
+		rotation.setFromQuaternion( quaternion, null, false );
+	}
+
 //	rotation._onChange( onRotationChange );
 //	quaternion._onChange( onQuaternionChange );
-//
+
 //	Object.defineProperties( this, {
 //		position: {
 //			configurable: true,
