@@ -118,11 +118,11 @@ public class Euler {
 		return this;
 	}
 
-	Euler setFromRotationMatrix( Matrix4 m, String order) {
+	public Euler setFromRotationMatrix( Matrix4 m, String order) {
 		return setFromRotationMatrix(m, order, true);
 	}
 	
-	Euler setFromRotationMatrix( Matrix4 m, String order, boolean update ) {
+	public Euler setFromRotationMatrix( Matrix4 m, String order, boolean update ) {
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
 
@@ -257,11 +257,11 @@ public class Euler {
 		return this;
 	}
 
-	Euler setFromQuaternion(Quaternion q, String order) {
+	public Euler setFromQuaternion(Quaternion q, String order) {
 		return setFromQuaternion(q, order, true);
 	}
 	
-	Euler setFromQuaternion( Quaternion q, String order, boolean update ) {
+	public Euler setFromQuaternion( Quaternion q, String order, boolean update ) {
 
 		_matrix.makeRotationFromQuaternion( q );
 
@@ -271,13 +271,13 @@ public class Euler {
 	
 	
 
-	Euler setFromVector3( Vector3 v, String order ) {
+	public Euler setFromVector3( Vector3 v, String order ) {
 
 		return this.set( v.x, v.y, v.z, order );
 
 	}
 
-	Euler reorder( String newOrder ) {
+	public Euler reorder( String newOrder ) {
 
 		// WARNING: this discards revolution information -bhouston
 
@@ -287,12 +287,12 @@ public class Euler {
 
 	}
 
-	boolean equals( Euler euler ) {
+	public boolean equals( Euler euler ) {
 
 		return ( euler._x == this._x ) && ( euler._y == this._y ) && ( euler._z == this._z ) && ( euler._order == this._order );
 	}
 
-	Euler fromArray( double[] array ) {
+	public Euler fromArray( double[] array ) {
 
 		this._x = array[ 0 ];
 		this._y = array[ 1 ];
@@ -306,15 +306,15 @@ public class Euler {
 
 	}
 	
-	double[] toArray() {
+	public double[] toArray() {
 		return toArray(new double[3], 0);
 	}
 
-	double[] toArray(double[] array) {
+	public double[] toArray(double[] array) {
 		return toArray(array, 0);
 	}
 
-	double[] toArray( double[] array, int offset) {
+	public double[] toArray( double[] array, int offset) {
 
 		array[ offset ] = this._x;
 		array[ offset + 1 ] = this._y;
@@ -347,7 +347,7 @@ public class Euler {
 //
 //	}
 
-	void _onChangeCallback() {}
+	public void _onChangeCallback() {}
 
 	public static final String DefaultOrder = "XYZ";
 	public static final String[] RotationOrders = new String[] { "XYZ", "YZX", "ZXY", "XZY", "YXZ", "ZYX" };
