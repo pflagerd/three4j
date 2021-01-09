@@ -270,15 +270,15 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public void lookAt(double x, double y, double z ) {
-//
-//		// This method does not support objects having non-uniformly-scaled parent(s)
-//
+
+		// This method does not support objects having non-uniformly-scaled parent(s)
+
 //		_target.set( x, y, z );
-//
-//		this.updateWorldMatrix( true, false );
-//
+
+		this.updateWorldMatrix( true, false );
+
 //		_position.setFromMatrixPosition( this.matrixWorld );
-//
+
 //		if ( this.isCamera || this.isLight ) {
 //
 //			_m1.lookAt( _position, _target, this.up );
@@ -288,16 +288,16 @@ public class Object3D extends EventDispatcher {
 //			_m1.lookAt( _target, _position, this.up );
 //
 //		}
-//
-//		this.quaternion.setFromRotationMatrix( _m1 );
-//
-//		if ( this.parent != null ) {
-//
+
+		this.quaternion.setFromRotationMatrix( _m1 );
+
+		if ( this.parent != null ) {
+
 //			_m1.extractRotation( parent.matrixWorld );
 //			_q1.setFromRotationMatrix( _m1 );
 //			this.quaternion.premultiply( _q1.invert() );
-//
-//		}
+
+		}
 	}
 
 	public Object3D add(Object3D... objects) {
@@ -424,13 +424,13 @@ public class Object3D extends EventDispatcher {
 		for ( int i = 0, l = this.children.size(); i < l; i ++ ) {
 
 			final Object3D child = this.children.get(i);
-//			final Object3D object = child.getObjectByProperty( name, value );
+			final Object3D object = child.getObjectByProperty( name, value );
 
-//			if ( object != undefined ) {
-//
-//				return object;
-//
-//			}
+			if ( object != null ) {
+
+				return object;
+
+			}
 
 		}
 
@@ -558,78 +558,78 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-//	public updateMatrixWorld: function ( force ) {
-//
-//		if ( this.matrixAutoUpdate ) this.updateMatrix();
-//
-//		if ( this.matrixWorldNeedsUpdate || force ) {
-//
-//			if ( this.parent === null ) {
-//
+	public void updateMatrixWorld() {
+		updateMatrixWorld(false);
+	}
+	
+	public void updateMatrixWorld( boolean force ) {
+
+		if ( this.matrixAutoUpdate ) 
+			this.updateMatrix();
+
+		if ( this.matrixWorldNeedsUpdate || force ) {
+
+			if ( this.parent == null ) {
+
 //				this.matrixWorld.copy( this.matrix );
-//
-//			} else {
-//
+
+			} else {
+
 //				this.matrixWorld.multiplyMatrices( this.parent.matrixWorld, this.matrix );
-//
-//			}
-//
-//			this.matrixWorldNeedsUpdate = false;
-//
-//			force = true;
-//
-//		}
-//
-//		// update children
-//
-//		const children = this.children;
-//
-//		for ( let i = 0, l = children.length; i < l; i ++ ) {
-//
-//			children[ i ].updateMatrixWorld( force );
-//
-//		}
-//
-//	},
-//
-//	public updateWorldMatrix: function ( updateParents, updateChildren ) {
-//
-//		const parent = this.parent;
-//
-//		if ( updateParents === true && parent !== null ) {
-//
-//			parent.updateWorldMatrix( true, false );
-//
-//		}
-//
-//		if ( this.matrixAutoUpdate ) this.updateMatrix();
-//
-//		if ( this.parent === null ) {
-//
+
+			}
+
+			this.matrixWorldNeedsUpdate = false;
+
+			force = true;
+
+		}
+
+		// update children
+
+		for ( int i = 0, l = children.size(); i < l; i ++ ) {
+
+			this.children.get(i).updateMatrixWorld( force );
+
+		}
+
+	}
+
+	public void updateWorldMatrix( boolean updateParents, boolean updateChildren ) {
+
+		if ( updateParents == true && parent != null ) {
+
+			parent.updateWorldMatrix( true, false );
+
+		}
+
+		if ( this.matrixAutoUpdate )
+			this.updateMatrix();
+
+		if ( this.parent == null ) {
+
 //			this.matrixWorld.copy( this.matrix );
-//
-//		} else {
-//
+
+		} else {
+
 //			this.matrixWorld.multiplyMatrices( this.parent.matrixWorld, this.matrix );
-//
-//		}
-//
-//		// update children
-//
-//		if ( updateChildren === true ) {
-//
-//			const children = this.children;
-//
-//			for ( let i = 0, l = children.length; i < l; i ++ ) {
-//
-//				children[ i ].updateWorldMatrix( false, true );
-//
-//			}
-//
-//		}
-//
-//	},
-//
+
+		}
+
+		// update children
+
+		if ( updateChildren == true ) {
+
+			for ( int i = 0, l = children.size(); i < l; i ++ ) {
+
+				children.get(i).updateWorldMatrix( false, true );
+
+			}
+
+		}
+
+	}
+
 //	public toJSON: function ( meta ) {
 //
 //		// meta is a string when called from JSON.stringify
