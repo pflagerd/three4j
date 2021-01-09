@@ -129,24 +129,18 @@ public class Object3D extends EventDispatcher {
 
 	public boolean isObject3D = true;
 
-//Object3D.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
-//
-//	constructor: Object3D,
-//
-//	isObject3D: true,
-//
 //	onBeforeRender: function () {},
 //	onAfterRender: function () {},
-//
-//	applyMatrix4: function ( matrix ) {
-//
-//		if ( this.matrixAutoUpdate ) this.updateMatrix();
-//
+
+	void applyMatrix4( Matrix4 matrix ) {
+		if ( this.matrixAutoUpdate )
+			this.updateMatrix();
+
 //		this.matrix.premultiply( matrix );
 //
 //		this.matrix.decompose( this.position, this.quaternion, this.scale );
-//
-//	},
+
+	}
 
 	public Object3D applyQuaternion( Quaternion q ) {
 
@@ -229,7 +223,7 @@ public class Object3D extends EventDispatcher {
 
 		_v1.copy( axis ).applyQuaternion( this.quaternion );
 
-//		this.position.add( _v1.multiplyScalar( distance ) );
+		this.position.add( _v1.multiplyScalar( distance ) );
 
 		return this;
 
@@ -253,11 +247,11 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-//	public Vector3 localToWorld( Vector3 vector ) {
-//
-////		return vector.applyMatrix4( this.matrixWorld );
-//
-//	}
+	public Vector3 localToWorld( Vector3 vector ) {
+
+		return vector.applyMatrix4( this.matrixWorld );
+
+	}
 
 //	public Vector3 worldToLocal( Vector3 vector ) {
 //
@@ -273,11 +267,11 @@ public class Object3D extends EventDispatcher {
 
 		// This method does not support objects having non-uniformly-scaled parent(s)
 
-//		_target.set( x, y, z );
+		_target.set( x, y, z );
 
 		this.updateWorldMatrix( true, false );
 
-//		_position.setFromMatrixPosition( this.matrixWorld );
+		_position.setFromMatrixPosition( this.matrixWorld );
 
 //		if ( this.isCamera || this.isLight ) {
 //
@@ -382,21 +376,21 @@ public class Object3D extends EventDispatcher {
 
 		// adds object as a child of this, while maintaining the object's world transform
 
-//		this.updateWorldMatrix( true, false );
-//
+		this.updateWorldMatrix( true, false );
+
 //		_m1.copy( this.matrixWorld ).invert();
 
 		if ( object.parent != null ) {
 
-//			object.parent.updateWorldMatrix( true, false );
-//
+			object.parent.updateWorldMatrix( true, false );
+
 //			_m1.multiply( object.parent.matrixWorld );
 
 		}
 
-//		object.applyMatrix4( _m1 );
-//
-//		object.updateWorldMatrix( false, false );
+		object.applyMatrix4( _m1 );
+
+		object.updateWorldMatrix( false, false );
 
 		this.add( object );
 
@@ -438,20 +432,20 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-//	public Vector3 getWorldPosition( Vector3 target ) {
-//
-//		if ( target == null ) {
-//
-//			console.warn( "THREE.Object3D: .getWorldPosition() target is now required" );
-//			target = new Vector3();
-//
-//		}
-//
-//		this.updateWorldMatrix( true, false );
-//
-//		return target.setFromMatrixPosition( this.matrixWorld );
-//
-//	}
+	public Vector3 getWorldPosition( Vector3 target ) {
+
+		if ( target == null ) {
+
+			console.warn( "THREE.Object3D: .getWorldPosition() target is now required" );
+			target = new Vector3();
+
+		}
+
+		this.updateWorldMatrix( true, false );
+
+		return target.setFromMatrixPosition( this.matrixWorld );
+
+	}
 
 	public Quaternion getWorldQuaternion( Quaternion target ) {
 
@@ -462,8 +456,8 @@ public class Object3D extends EventDispatcher {
 
 		}
 
-//		this.updateWorldMatrix( true, false );
-//
+		this.updateWorldMatrix( true, false );
+
 //		this.matrixWorld.decompose( _position, target, _scale );
 
 		return target;
@@ -479,30 +473,30 @@ public class Object3D extends EventDispatcher {
 
 		}
 
-//		this.updateWorldMatrix( true, false );
-//
+		this.updateWorldMatrix( true, false );
+
 //		this.matrixWorld.decompose( _position, _quaternion, target );
 
 		return target;
 
 	}
 
-//	public Vector3 getWorldDirection( Vector3 target ) {
-//
-//		if ( target == null ) {
-//
-//			console.warn( "THREE.Object3D: .getWorldDirection() target is now required" );
-//			target = new Vector3();
-//
-//		}
-//
-////		this.updateWorldMatrix( true, false );
-//
-//		final double[] e = this.matrixWorld.elements;
-//
-//		return target.set( e[ 8 ], e[ 9 ], e[ 10 ] ).normalize();
-//
-//	}
+	public Vector3 getWorldDirection( Vector3 target ) {
+
+		if ( target == null ) {
+
+			console.warn( "THREE.Object3D: .getWorldDirection() target is now required" );
+			target = new Vector3();
+
+		}
+
+		this.updateWorldMatrix( true, false );
+
+		final double[] e = this.matrixWorld.elements;
+
+		return target.set( e[ 8 ], e[ 9 ], e[ 10 ] ).normalize();
+
+	}
 
 //	public void raycast(Raycaster raycaster, Intersection[] intersections ) {}
 
@@ -864,9 +858,9 @@ public class Object3D extends EventDispatcher {
 
 		this.name = source.name;
 
-//		this.up.copy( source.up );
-//
-//		this.position.copy( source.position );
+		this.up.copy( source.up );
+
+		this.position.copy( source.position );
 //		this.rotation.order = source.rotation.order;
 //		this.quaternion.copy( source.quaternion );
 //		this.scale.copy( source.scale );
