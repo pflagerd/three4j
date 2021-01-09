@@ -2,6 +2,7 @@ package net.three4j.core;
 
 //import { Quaternion } from '../math/Quaternion.js';
 import net.three4j.math.Quaternion;
+import static net.three4j.THREE.console;
 //import { Vector3 } from '../math/Vector3.js';
 
 import net.three4j.math.Vector3;
@@ -54,7 +55,7 @@ public class Object3D extends EventDispatcher {
 	public final Vector3 position;
 	public Euler rotation;
 	public Object3D parent;
-	public Object3D[] children;
+	public ArrayList<Object3D> children;
 	public final String uuid;
 	public Quaternion quaternion;
 	public String name;
@@ -82,7 +83,7 @@ public class Object3D extends EventDispatcher {
 		this.name = "";
 	
 		this.parent = null;
-		this.children = new Object3D[0];
+		this.children = new ArrayList<>();
 	
 		this.up = new Vector3(DefaultUp);
 	
@@ -112,7 +113,7 @@ public class Object3D extends EventDispatcher {
 	
 	}
 
-	void onRotationChange() {
+	public void onRotationChange() {
 		quaternion.setFromEuler( rotation, false );
 	}
 
@@ -147,25 +148,25 @@ public class Object3D extends EventDispatcher {
 //
 //	},
 
-	Object3D applyQuaternion( Quaternion q ) {
+	public Object3D applyQuaternion( Quaternion q ) {
 
 		this.quaternion.premultiply( q );
 
 		return this;
 	}
 
-	void setRotationFromAxisAngle(Vector3 axis, double angle ) {
+	public void setRotationFromAxisAngle(Vector3 axis, double angle ) {
 		// assumes axis is normalized
 		this.quaternion.setFromAxisAngle( axis, angle );
 	}
 
-	void setRotationFromEuler( Euler euler ) {
+	public void setRotationFromEuler( Euler euler ) {
 
 		this.quaternion.setFromEuler( euler, true );
 
 	}
 
-	void setRotationFromMatrix( Matrix4 m ) {
+	public void setRotationFromMatrix( Matrix4 m ) {
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
 
@@ -173,7 +174,7 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-	void setRotationFromQuaternion( Quaternion q ) {
+	public void setRotationFromQuaternion( Quaternion q ) {
 
 		// assumes q is normalized
 
@@ -181,7 +182,7 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-	Object3D rotateOnAxis( Vector3 axis, double angle ) {
+	public Object3D rotateOnAxis( Vector3 axis, double angle ) {
 
 		// rotate object on axis in object space
 		// axis is assumed to be normalized
@@ -194,7 +195,7 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-	Object3D rotateOnWorldAxis( Vector3 axis, double angle ) {
+	public Object3D rotateOnWorldAxis( Vector3 axis, double angle ) {
 		// rotate object on axis in world space
 		// axis is assumed to be normalized
 		// method assumes no rotated parent
@@ -238,19 +239,19 @@ public class Object3D extends EventDispatcher {
 
 		return this.translateOnAxis( _xAxis, distance );
 
-	};
+	}
 
 	public Object3D translateY(double distance ) {
 
 		return this.translateOnAxis( _yAxis, distance );
 
-	};
+	}
 
 	public Object3D translateZ( double distance ) {
 
 		return this.translateOnAxis( _zAxis, distance );
 
-	};
+	}
 
 //	public Vector3 localToWorld( Vector3 vector ) {
 //
@@ -264,11 +265,11 @@ public class Object3D extends EventDispatcher {
 //
 //	}
 	
-	void lookAt(Vector3 v) {
+	public void lookAt(Vector3 v) {
 		lookAt(v.x, v.y, v.z);
 	}
 
-	void lookAt(double x, double y, double z ) {
+	public void lookAt(double x, double y, double z ) {
 //
 //		// This method does not support objects having non-uniformly-scaled parent(s)
 //
@@ -297,28 +298,26 @@ public class Object3D extends EventDispatcher {
 //			this.quaternion.premultiply( _q1.invert() );
 //
 //		}
-	};
+	}
 
-	Object3D add(Object3D... objects) {
+	public Object3D add(Object3D... objects) {
 
 		for ( int i = 0; i < objects.length; i ++ ) {
 
 			if ( objects[i] == this ) {
-
 				throw new RuntimeException( "THREE.Object3D.add: object can't be added as a child of itself.");
-
 			}
 
 			if ( objects[i] != null && objects[i].isObject3D ) {
 
 				if ( objects[i].parent != null ) {
 
-//					objects[i].parent.remove( objects[i] );
+					objects[i].parent.remove( objects[i] );
 
 				}
 
 				objects[i].parent = this;
-//				this.children.push( objects[i] );
+				this.children.add( objects[i] );
 
 //				objects.dispatchEvent( _addedEvent );
 
@@ -327,124 +326,123 @@ public class Object3D extends EventDispatcher {
 			}
 
 			this.add( objects[ i ] );
+		}
+
+		return this;
+	}
+
+	public Object3D remove( Object3D... objects ) {
+
+		if ( objects.length > 1 ) {
+
+			for ( int i = 0; i < objects.length; i ++ ) {
+
+				this.remove( objects[ i ] );
+
+			}
+
+			return this;
+
+		}
+
+		final int index = this.children.indexOf( objects[0] );
+
+		if ( index != - 1 ) {
+
+			objects[0].parent = null;
+			this.children.remove( index );
+
+//			object.dispatchEvent( _removedEvent );
 
 		}
 
 		return this;
-	};
 
-//	remove: function ( object ) {
-//
-//		if ( arguments.length > 1 ) {
-//
-//			for ( let i = 0; i < arguments.length; i ++ ) {
-//
-//				this.remove( arguments[ i ] );
-//
-//			}
-//
-//			return this;
-//
-//		}
-//
-//		const index = this.children.indexOf( object );
-//
-//		if ( index !== - 1 ) {
-//
-//			object.parent = null;
-//			this.children.splice( index, 1 );
-//
+	}
+
+	public Object3D clear() {
+
+		for ( int i = 0; i < this.children.size(); i ++ ) {
+
+			final Object3D object = this.children.get(i);
+
+			object.parent = null;
+
 //			object.dispatchEvent( _removedEvent );
-//
-//		}
-//
-//		return this;
-//
-//	},
-//
-//	clear: function () {
-//
-//		for ( let i = 0; i < this.children.length; i ++ ) {
-//
-//			const object = this.children[ i ];
-//
-//			object.parent = null;
-//
-//			object.dispatchEvent( _removedEvent );
-//
-//		}
-//
-//		this.children.length = 0;
-//
-//		return this;
-//
-//
-//	},
-//
-//	attach: function ( object ) {
-//
-//		// adds object as a child of this, while maintaining the object's world transform
-//
+
+		}
+
+		this.children.clear();
+
+		return this;
+
+	}
+
+	public Object3D attach( Object3D object ) {
+
+		// adds object as a child of this, while maintaining the object's world transform
+
 //		this.updateWorldMatrix( true, false );
 //
 //		_m1.copy( this.matrixWorld ).invert();
-//
-//		if ( object.parent !== null ) {
-//
+
+		if ( object.parent != null ) {
+
 //			object.parent.updateWorldMatrix( true, false );
 //
 //			_m1.multiply( object.parent.matrixWorld );
-//
-//		}
-//
+
+		}
+
 //		object.applyMatrix4( _m1 );
 //
 //		object.updateWorldMatrix( false, false );
-//
-//		this.add( object );
-//
-//		return this;
-//
-//	},
-//
-//	getObjectById: function ( id ) {
-//
-//		return this.getObjectByProperty( 'id', id );
-//
-//	},
-//
-//	getObjectByName: function ( name ) {
-//
-//		return this.getObjectByProperty( 'name', name );
-//
-//	},
-//
-//	getObjectByProperty: function ( name, value ) {
-//
-//		if ( this[ name ] === value ) return this;
-//
-//		for ( let i = 0, l = this.children.length; i < l; i ++ ) {
-//
-//			const child = this.children[ i ];
-//			const object = child.getObjectByProperty( name, value );
-//
-//			if ( object !== undefined ) {
+
+		this.add( object );
+
+		return this;
+
+	}
+
+//	public Object3D getObjectById( String id ) {
+
+//		return this.getObjectByProperty( "id", id );
+
+//	}
+
+//	public Object3D getObjectByName( String name ) {
+
+//		return this.getObjectByProperty( "name", name );
+
+//	}
+
+	public Object3D getObjectByProperty( String name, String value ) {
+
+//		if ( this[ name ] == value ) 
+//			return this;
+
+		for ( int i = 0, l = this.children.size(); i < l; i ++ ) {
+
+			final Object3D child = this.children.get(i);
+//			final Object3D object = child.getObjectByProperty( name, value );
+
+//			if ( object != undefined ) {
 //
 //				return object;
 //
 //			}
+
+		}
+
+		return null;
+
+	}
+
+//	public Vector3 getWorldPosition( Vector3 target ) {
 //
-//		}
+//		if ( target == null ) {
 //
-//		return undefined;
-//
-//	},
-//
-//	getWorldPosition: function ( target ) {
-//
-//		if ( target === undefined ) {
-//
-//			console.warn( 'THREE.Object3D: .getWorldPosition() target is now required' );
+//			console.warn( "THREE.Object3D: .getWorldPosition() target is now required" );
 //			target = new Vector3();
 //
 //		}
@@ -453,62 +451,62 @@ public class Object3D extends EventDispatcher {
 //
 //		return target.setFromMatrixPosition( this.matrixWorld );
 //
-//	},
-//
-//	getWorldQuaternion: function ( target ) {
-//
-//		if ( target === undefined ) {
-//
-//			console.warn( 'THREE.Object3D: .getWorldQuaternion() target is now required' );
-//			target = new Quaternion();
-//
-//		}
-//
+//	}
+
+	public Quaternion getWorldQuaternion( Quaternion target ) {
+
+		if ( target == null ) {
+
+			console.warn( "THREE.Object3D: .getWorldQuaternion() target is now required" );
+			target = new Quaternion();
+
+		}
+
 //		this.updateWorldMatrix( true, false );
 //
 //		this.matrixWorld.decompose( _position, target, _scale );
-//
-//		return target;
-//
-//	},
-//
-//	getWorldScale: function ( target ) {
-//
-//		if ( target === undefined ) {
-//
-//			console.warn( 'THREE.Object3D: .getWorldScale() target is now required' );
-//			target = new Vector3();
-//
-//		}
-//
+
+		return target;
+
+	}
+
+	public Vector3 getWorldScale( Vector3 target ) {
+
+		if ( target == null ) {
+
+			console.warn( "THREE.Object3D: .getWorldScale() target is now required" );
+			target = new Vector3();
+
+		}
+
 //		this.updateWorldMatrix( true, false );
 //
 //		this.matrixWorld.decompose( _position, _quaternion, target );
+
+		return target;
+
+	}
+
+//	public Vector3 getWorldDirection( Vector3 target ) {
 //
-//		return target;
+//		if ( target == null ) {
 //
-//	},
-//
-//	getWorldDirection: function ( target ) {
-//
-//		if ( target === undefined ) {
-//
-//			console.warn( 'THREE.Object3D: .getWorldDirection() target is now required' );
+//			console.warn( "THREE.Object3D: .getWorldDirection() target is now required" );
 //			target = new Vector3();
 //
 //		}
 //
-//		this.updateWorldMatrix( true, false );
+////		this.updateWorldMatrix( true, false );
 //
-//		const e = this.matrixWorld.elements;
+//		final double[] e = this.matrixWorld.elements;
 //
 //		return target.set( e[ 8 ], e[ 9 ], e[ 10 ] ).normalize();
 //
-//	},
-//
-//	raycast: function () {},
-//
-//	traverse: function ( callback ) {
+//	}
+
+//	public void raycast(Raycaster raycaster, Intersection[] intersections ) {}
+
+//	public void traverse( callback ) {
 //
 //		callback( this );
 //
@@ -520,9 +518,9 @@ public class Object3D extends EventDispatcher {
 //
 //		}
 //
-//	},
-//
-//	traverseVisible: function ( callback ) {
+//	}
+
+//	public traverseVisible: function ( callback ) {
 //
 //		if ( this.visible === false ) return;
 //
@@ -538,7 +536,7 @@ public class Object3D extends EventDispatcher {
 //
 //	},
 //
-//	traverseAncestors: function ( callback ) {
+//	public traverseAncestors: function ( callback ) {
 //
 //		const parent = this.parent;
 //
@@ -552,15 +550,15 @@ public class Object3D extends EventDispatcher {
 //
 //	},
 //
-//	updateMatrix: function () {
-//
+	void updateMatrix() {
+
 //		this.matrix.compose( this.position, this.quaternion, this.scale );
-//
-//		this.matrixWorldNeedsUpdate = true;
-//
-//	},
-//
-//	updateMatrixWorld: function ( force ) {
+
+		this.matrixWorldNeedsUpdate = true;
+
+	}
+
+//	public updateMatrixWorld: function ( force ) {
 //
 //		if ( this.matrixAutoUpdate ) this.updateMatrix();
 //
@@ -594,7 +592,7 @@ public class Object3D extends EventDispatcher {
 //
 //	},
 //
-//	updateWorldMatrix: function ( updateParents, updateChildren ) {
+//	public updateWorldMatrix: function ( updateParents, updateChildren ) {
 //
 //		const parent = this.parent;
 //
@@ -632,7 +630,7 @@ public class Object3D extends EventDispatcher {
 //
 //	},
 //
-//	toJSON: function ( meta ) {
+//	public toJSON: function ( meta ) {
 //
 //		// meta is a string when called from JSON.stringify
 //		const isRootObject = ( meta === undefined || typeof meta === 'string' );
@@ -847,17 +845,25 @@ public class Object3D extends EventDispatcher {
 //		}
 //
 //	},
-//
-//	clone: function ( recursive ) {
-//
-//		return new this.constructor().copy( this, recursive );
-//
-//	},
-//
-//	copy: function ( source, recursive = true ) {
-//
-//		this.name = source.name;
-//
+	
+	public Object3D clone() {
+		return clone(true);
+	}
+
+	public Object3D clone( boolean recursive ) {
+
+		return new Object3D().copy( this, recursive );
+
+	}
+	
+	public Object3D copy( Object3D source) {
+		return copy(source);
+	}
+
+	public Object3D copy( Object3D source, boolean recursive ) {
+
+		this.name = source.name;
+
 //		this.up.copy( source.up );
 //
 //		this.position.copy( source.position );
@@ -867,34 +873,34 @@ public class Object3D extends EventDispatcher {
 //
 //		this.matrix.copy( source.matrix );
 //		this.matrixWorld.copy( source.matrixWorld );
-//
-//		this.matrixAutoUpdate = source.matrixAutoUpdate;
-//		this.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
-//
+
+		this.matrixAutoUpdate = source.matrixAutoUpdate;
+		this.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
+
 //		this.layers.mask = source.layers.mask;
-//		this.visible = source.visible;
-//
-//		this.castShadow = source.castShadow;
-//		this.receiveShadow = source.receiveShadow;
-//
-//		this.frustumCulled = source.frustumCulled;
-//		this.renderOrder = source.renderOrder;
-//
+		this.visible = source.visible;
+
+		this.castShadow = source.castShadow;
+		this.receiveShadow = source.receiveShadow;
+
+		this.frustumCulled = source.frustumCulled;
+		this.renderOrder = source.renderOrder;
+
 //		this.userData = JSON.parse( JSON.stringify( source.userData ) );
-//
-//		if ( recursive === true ) {
-//
-//			for ( let i = 0; i < source.children.length; i ++ ) {
-//
-//				const child = source.children[ i ];
-//				this.add( child.clone() );
-//
-//			}
-//
-//		}
-//
-//		return this;
-//
-//	}
+
+		if ( recursive == true ) {
+
+			for ( int i = 0; i < source.children.size(); i ++ ) {
+
+				final Object3D child = source.children.get(i);
+				this.add( child.clone() );
+
+			}
+
+		}
+
+		return this;
+
+	}
 
 }
