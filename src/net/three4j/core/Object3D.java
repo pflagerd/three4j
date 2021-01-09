@@ -129,10 +129,10 @@ public class Object3D extends EventDispatcher {
 
 	public boolean isObject3D = true;
 
-//	onBeforeRender: function () {},
-//	onAfterRender: function () {},
+	public void onBeforeRender() {}
+	public void onAfterRender() {}
 
-	void applyMatrix4( Matrix4 matrix ) {
+	public void applyMatrix4( Matrix4 matrix ) {
 		if ( this.matrixAutoUpdate )
 			this.updateMatrix();
 
