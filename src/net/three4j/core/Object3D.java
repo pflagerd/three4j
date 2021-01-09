@@ -227,8 +227,8 @@ public class Object3D extends EventDispatcher {
 		// translate object by distance along axis in object space
 		// axis is assumed to be normalized
 
-//		_v1.copy( axis ).applyQuaternion( this.quaternion );
-//
+		_v1.copy( axis ).applyQuaternion( this.quaternion );
+
 //		this.position.add( _v1.multiplyScalar( distance ) );
 
 		return this;

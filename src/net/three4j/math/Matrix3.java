@@ -1,6 +1,8 @@
 package net.three4j.math;
 
 public class Matrix3 {
+	
+	public double[] elements;
 
 //	constructor() {
 //

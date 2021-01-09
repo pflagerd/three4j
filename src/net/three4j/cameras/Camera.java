@@ -1,34 +1,24 @@
 package net.three4j.cameras;
 
-/**
- * @author mrdoob / http://mrdoob.com/
- * @author mikael emtinger / http://gomo.se/
- * @author WestLangley / http://github.com/WestLangley
-*/
+import net.three4j.core.Object3D;
+import net.three4j.math.Matrix4;
 
 //import { Matrix4 } from '../math/Matrix4.js';
 //import { Object3D } from '../core/Object3D.js';
-import net.three4j.core.*;
 //import { Vector3 } from '../math/Vector3.js';
 //
-
 public class Camera extends Object3D {
-//function Camera() {
-//
-//	Object3D.call( this );
-//
-//	this.type = 'Camera';
-//
-//	this.matrixWorldInverse = new Matrix4();
-//
-//	this.projectionMatrix = new Matrix4();
-//	this.projectionMatrixInverse = new Matrix4();
-//
-//}
-	public Camera() {
-		
+	public Matrix4 matrixWorldInverse;
+	public Matrix4 projectionMatrix;
+	public Matrix4 projectionMatrixInverse;
+
+	public Camera() {	
+		this.matrixWorldInverse = new Matrix4();
+	
+		this.projectionMatrix = new Matrix4();
+		this.projectionMatrixInverse = new Matrix4();	
 	}
-//
+
 //Camera.prototype = Object.assign( Object.create( Object3D.prototype ), {
 //
 //	constructor: Camera,
@@ -57,9 +47,9 @@ public class Camera extends Object3D {
 //
 //		}
 //
-//		this.updateMatrixWorld( true );
+//		this.updateWorldMatrix( true, false );
 //
-//		var e = this.matrixWorld.elements;
+//		const e = this.matrixWorld.elements;
 //
 //		return target.set( - e[ 8 ], - e[ 9 ], - e[ 10 ] ).normalize();
 //
@@ -69,7 +59,15 @@ public class Camera extends Object3D {
 //
 //		Object3D.prototype.updateMatrixWorld.call( this, force );
 //
-//		this.matrixWorldInverse.getInverse( this.matrixWorld );
+//		this.matrixWorldInverse.copy( this.matrixWorld ).invert();
+//
+//	},
+//
+//	updateWorldMatrix: function ( updateParents, updateChildren ) {
+//
+//		Object3D.prototype.updateWorldMatrix.call( this, updateParents, updateChildren );
+//
+//		this.matrixWorldInverse.copy( this.matrixWorld ).invert();
 //
 //	},
 //
@@ -79,7 +77,5 @@ public class Camera extends Object3D {
 //
 //	}
 //
-//} );
-//
-//export { Camera };
 }
+//export { Camera };
