@@ -331,13 +331,12 @@ public class BufferAttribute {
 //		return this;
 //
 //	},
-//
-//	getW: function ( index ) {
-//
-//		return this.array[ index * this.itemSize + 3 ];
-//
-//	},
-//
+
+	public double getW( int index ) {
+		// return this.array[ index * this.itemSize + 3 ];
+		throw new UnsupportedOperationException("Not implemented yet: " + new Throwable().getStackTrace()[0].getMethodName() + ":" + new Throwable().getStackTrace()[0].getLineNumber());
+	}
+
 //	setW: function ( index, w ) {
 //
 //		this.array[ index * this.itemSize + 3 ] = w;

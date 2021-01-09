@@ -29,7 +29,6 @@ class hello {
         THREE.WebGLRenderer renderer = new THREE.WebGLRenderer(new KV("antialias", true));
         renderer.setSize( window.innerWidth, window.innerHeight );
         renderer.setAnimationLoop( this::animation );
-//        document.body.appendChild( renderer.domElement );
     }
 
     void animation( double time ) {

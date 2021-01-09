@@ -1,5 +1,7 @@
 package net.three4j.math;
 
+import net.three4j.core.BufferAttribute;
+
 /**
  * @author mikael emtinger / http://gomo.se/
  * @author alteredq / http://alteredqualia.com/
@@ -21,7 +23,7 @@ public class Quaternion {
 	}
 	
 	public Quaternion() {
-		this(0, 0, 0, 0);
+		this(0, 0, 0, 1);
 	}
 
 	public Quaternion(double x, double y, double z, double w) {
@@ -637,16 +639,21 @@ public class Quaternion {
 
 	}
 
-//	Quaternion fromBufferAttribute( Attribute attribute, int index ) {
-//
-//		this._x = attribute.getX( index );
-//		this._y = attribute.getY( index );
-//		this._z = attribute.getZ( index );
-//		this._w = attribute.getW( index );
-//
-//		return this;
-//
-//	}
+	Quaternion fromBufferAttribute( BufferAttribute attribute, int index ) {
+
+		this._x = attribute.getX( index );
+		this._y = attribute.getY( index );
+		this._z = attribute.getZ( index );
+		this._w = attribute.getW( index );
+
+		return this;
+
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " {x:" + _x + ", y:" + _y + ", z:" + _z + ", w:" + _w + "}";
+	}
 
 //	_onChange( callback ) {
 //

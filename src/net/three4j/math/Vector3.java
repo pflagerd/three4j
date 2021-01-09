@@ -737,7 +737,12 @@ public class Vector3 {
 		return this;
 
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " {x:" + x + ", y:" + y + ", z:" + z + "}";
+	}
 
-	private final Vector3 _vector = /*@__PURE__*/ new Vector3();
-	private final Quaternion _quaternion = /*@__PURE__*/ new Quaternion();
+	private final static Vector3 _vector = /*@__PURE__*/ new Vector3();
+	private final static Quaternion _quaternion = /*@__PURE__*/ new Quaternion();
 }
