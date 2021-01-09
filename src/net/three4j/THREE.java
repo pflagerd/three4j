@@ -5,6 +5,7 @@ import javax.swing.text.html.HTMLDocument;
 public class THREE {
 	public static final Window window = new Window("");
 	public static final HTMLDocument document = new HTMLDocument();
+	public static final Console console = new Console();
 	
 //	import './polyfills.js';
 	public static class OpenGL11Renderer {
