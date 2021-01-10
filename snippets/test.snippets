@@ -1,6 +1,11 @@
-package net.three4j.unit.src.math;
+package net.three4j.unit.src.core;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
 
 
 
@@ -12,7 +17,7 @@ sed -i -E -e's#([a-zA-Z$_][a-zA-Z0-9$_]+)\.([xyz]))#\1.\2\(\)#'
 sed -i -E -e's#(.*)var ([a-zA-Z$_][a-zA-Z0-9$_]*) = new ([a-zA-Z$_][a-zA-Z0-9$_]*)\((.*)\).*;#\1\3 \2 = new \3\(\4\);#' Vector3Tests.java
 sed -i -E -e's#//(.+}) \);#\1#' Vector3.java
 sed -i -E -e's#^.*QUnit\.test.*"(.*[a-zA-Z0-9_$]+)".+$#	@Test\n	public void \1() {#'
-sed -i -E -e's#^.*QUnit\.todo.+"([a-zA-Z0-9_$]+)".+$#	@Test\n	public void \1() {#'
+sed -i -E -e's#QUnit\.todo.*"([a-zA-Z0-9_$]+)".+#	@Test\n	public void \1() {#'
 sed -i -E -e's#assert.strictEqual#assertEquals#'
 sed -i -E -e's#} \);#}#'
 

@@ -1,53 +1,54 @@
 package net.three4j.core;
 
 public class Layers {
-//
-//	constructor() {
-//
-//		this.mask = 1 | 0;
-//
-//	}
-//
-//	set( channel ) {
-//
-//		this.mask = 1 << channel | 0;
-//
-//	}
-//
-//	enable( channel ) {
-//
-//		this.mask |= 1 << channel | 0;
-//
-//	}
-//
-//	enableAll() {
-//
-//		this.mask = 0xffffffff | 0;
-//
-//	}
-//
-//	toggle( channel ) {
-//
-//		this.mask ^= 1 << channel | 0;
-//
-//	}
-//
-//	disable( channel ) {
-//
-//		this.mask &= ~ ( 1 << channel | 0 );
-//
-//	}
-//
-//	disableAll() {
-//
-//		this.mask = 0;
-//
-//	}
-//
-//	test( layers ) {
-//
-//		return ( this.mask & layers.mask ) !== 0;
-//
-//	}
-//
+	
+	public int mask;
+
+	public Layers() {
+
+		this.mask = 1;
+
+	}
+
+	public Layers set( int channel ) {
+
+		this.mask = 1 << channel;
+		return this;
+	}
+
+	public Layers enable( int channel ) {
+
+		this.mask |= 1 << channel;
+		return this;
+	}
+
+	public Layers enableAll() {
+
+		this.mask = 0xffffffff;
+		return this;
+	}
+
+	public Layers toggle( int channel ) {
+
+		this.mask ^= 1 << channel;
+		return this;
+	}
+
+	public Layers disable( int channel ) {
+
+		this.mask &= ~ ( 1 << channel );
+		return this;
+	}
+
+	public Layers disableAll() {
+
+		this.mask = 0;
+		return this;
+	}
+
+	public boolean test( Layers layers ) {
+
+		return ( this.mask & layers.mask ) != 0;
+	}
+
 }
