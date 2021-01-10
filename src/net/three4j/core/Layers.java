@@ -50,5 +50,10 @@ public class Layers {
 
 		return ( this.mask & layers.mask ) != 0;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "() {mask:" + mask + "}";
+	}
 
 }
