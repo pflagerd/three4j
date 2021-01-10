@@ -999,8 +999,8 @@ public void multiply_divide() {
 	assertEquals( a.z, z * b.z, "multiply: check z" );
 
 	b.divide( c );
-	assertTrue( Math.abs( b.x - 0.5 ) <= eps, "divide: check z" );
-	assertTrue( Math.abs( b.y - 0.5 ) <= eps, "divide: check z" );
+	assertTrue( Math.abs( b.x - 0.5 ) <= eps, "divide: check x" );
+	assertTrue( Math.abs( b.y - 0.5 ) <= eps, "divide: check y" );
 	assertTrue( Math.abs( b.z - 0.5 ) <= eps, "divide: check z" );
 
 	a = new Vector3( x, y, z );

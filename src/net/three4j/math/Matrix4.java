@@ -1,6 +1,5 @@
 package net.three4j.math;
 
-//import { Vector3 } from './Vector3.js';
 import static net.three4j.THREE.console;
 
 public class Matrix4 {
@@ -805,11 +804,11 @@ public class Matrix4 {
 
 	}
 
-	double[] toArray( double[] array) {
+	public double[] toArray( double[] array) {
 		return toArray(array, 0);
 	}
 	
-	double[] toArray( double[] array, int offset ) {
+	public double[] toArray( double[] array, int offset ) {
 
 		final double[] te = this.elements;
 
@@ -835,6 +834,19 @@ public class Matrix4 {
 
 		return array;
 
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < elements.length; i++) {
+			if (i != 0) {
+				sb.append(", ");
+			}
+			sb.append(elements[i]);
+		}
+		
+		return super.toString() + " {" + sb.toString() + "}";
 	}
 
 	private static final Vector3 _v1 = /*@__PURE__*/ new Vector3();
