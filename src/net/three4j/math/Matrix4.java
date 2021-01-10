@@ -52,7 +52,7 @@ public class Matrix4 {
 
 	}
 
-	Matrix4 copy( Matrix4 m ) {
+	public Matrix4 copy( Matrix4 m ) {
 
 		final double[] te = this.elements;
 		final double[] me = m.elements;
@@ -653,7 +653,7 @@ public class Matrix4 {
 
 	}
 
-	Matrix4 compose( Vector3 position, Quaternion quaternion, Vector3 scale ) {
+	public Matrix4 compose( Vector3 position, Quaternion quaternion, Vector3 scale ) {
 
 		final double[] te = this.elements;
 

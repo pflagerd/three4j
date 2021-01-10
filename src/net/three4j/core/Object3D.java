@@ -1,31 +1,12 @@
 package net.three4j.core;
 
-//import { Quaternion } from '../math/Quaternion.js';
 import net.three4j.math.Quaternion;
 import static net.three4j.THREE.console;
-//import { Vector3 } from '../math/Vector3.js';
-
 import net.three4j.math.Vector3;
-
 import java.util.ArrayList;
-
-//import { Matrix4 } from '../math/Matrix4.js';
-//import { EventDispatcher } from './EventDispatcher.js';
 import net.three4j.core.EventDispatcher;
-//import { Euler } from '../math/Euler.js';
 import net.three4j.math.Euler;
 //import { Layers } from './Layers.js';
-//import { Matrix3 } from '../math/Matrix3.js';
-//import { _Math } from '../math/Math.js';
-//
-///**
-// * @author mrdoob / http://mrdoob.com/
-// * @author mikael emtinger / http://gomo.se/
-// * @author alteredq / http://alteredqualia.com/
-// * @author WestLangley / http://github.com/WestLangley
-// * @author elephantatwork / www.elephantatwork.ch
-// */
-//
 import net.three4j.math.MathUtils;
 import net.three4j.math.Matrix3;
 import net.three4j.math.Matrix4;
@@ -136,9 +117,9 @@ public class Object3D extends EventDispatcher {
 		if ( this.matrixAutoUpdate )
 			this.updateMatrix();
 
-//		this.matrix.premultiply( matrix );
-//
-//		this.matrix.decompose( this.position, this.quaternion, this.scale );
+		this.matrix.premultiply( matrix );
+
+		this.matrix.decompose( this.position, this.quaternion, this.scale );
 
 	}
 
@@ -253,11 +234,11 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-//	public Vector3 worldToLocal( Vector3 vector ) {
-//
-//		return vector.applyMatrix4( _m1.copy( this.matrixWorld ).invert() );
-//
-//	}
+	public Vector3 worldToLocal( Vector3 vector ) {
+
+		return vector.applyMatrix4( _m1.copy( this.matrixWorld ).invert() );
+
+	}
 	
 	public void lookAt(Vector3 v) {
 		lookAt(v.x, v.y, v.z);
@@ -282,14 +263,14 @@ public class Object3D extends EventDispatcher {
 //			_m1.lookAt( _target, _position, this.up );
 //
 //		}
-
+//
 		this.quaternion.setFromRotationMatrix( _m1 );
 
 		if ( this.parent != null ) {
 
-//			_m1.extractRotation( parent.matrixWorld );
-//			_q1.setFromRotationMatrix( _m1 );
-//			this.quaternion.premultiply( _q1.invert() );
+			_m1.extractRotation( parent.matrixWorld );
+			_q1.setFromRotationMatrix( _m1 );
+			this.quaternion.premultiply( _q1.invert() );
 
 		}
 	}
@@ -378,13 +359,13 @@ public class Object3D extends EventDispatcher {
 
 		this.updateWorldMatrix( true, false );
 
-//		_m1.copy( this.matrixWorld ).invert();
+		_m1.copy( this.matrixWorld ).invert();
 
 		if ( object.parent != null ) {
 
 			object.parent.updateWorldMatrix( true, false );
 
-//			_m1.multiply( object.parent.matrixWorld );
+			_m1.multiply( object.parent.matrixWorld );
 
 		}
 
@@ -398,22 +379,22 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-//	public Object3D getObjectById( String id ) {
+	public Object3D getObjectById( String id ) {
 
-//		return this.getObjectByProperty( "id", id );
+		return this.getObjectByProperty( "id", id );
 
-//	}
+	}
 
-//	public Object3D getObjectByName( String name ) {
+	public Object3D getObjectByName( String name ) {
 
-//		return this.getObjectByProperty( "name", name );
+		return this.getObjectByProperty( "name", name );
 
-//	}
+	}
 
 	public Object3D getObjectByProperty( String name, String value ) {
 
-//		if ( this[ name ] == value ) 
-//			return this;
+		if ( "getObjectByProperty".contentEquals(value) ) // DPP: Not sure about this.
+			return this;
 
 		for ( int i = 0, l = this.children.size(); i < l; i ++ ) {
 
@@ -458,7 +439,7 @@ public class Object3D extends EventDispatcher {
 
 		this.updateWorldMatrix( true, false );
 
-//		this.matrixWorld.decompose( _position, target, _scale );
+		this.matrixWorld.decompose( _position, target, _scale );
 
 		return target;
 
@@ -475,7 +456,7 @@ public class Object3D extends EventDispatcher {
 
 		this.updateWorldMatrix( true, false );
 
-//		this.matrixWorld.decompose( _position, _quaternion, target );
+		this.matrixWorld.decompose( _position, _quaternion, target );
 
 		return target;
 
@@ -546,7 +527,7 @@ public class Object3D extends EventDispatcher {
 //
 	void updateMatrix() {
 
-//		this.matrix.compose( this.position, this.quaternion, this.scale );
+		this.matrix.compose( this.position, this.quaternion, this.scale );
 
 		this.matrixWorldNeedsUpdate = true;
 
@@ -565,11 +546,11 @@ public class Object3D extends EventDispatcher {
 
 			if ( this.parent == null ) {
 
-//				this.matrixWorld.copy( this.matrix );
+				this.matrixWorld.copy( this.matrix );
 
 			} else {
 
-//				this.matrixWorld.multiplyMatrices( this.parent.matrixWorld, this.matrix );
+				this.matrixWorld.multiplyMatrices( this.parent.matrixWorld, this.matrix );
 
 			}
 
@@ -602,11 +583,11 @@ public class Object3D extends EventDispatcher {
 
 		if ( this.parent == null ) {
 
-//			this.matrixWorld.copy( this.matrix );
+			this.matrixWorld.copy( this.matrix );
 
 		} else {
 
-//			this.matrixWorld.multiplyMatrices( this.parent.matrixWorld, this.matrix );
+			this.matrixWorld.multiplyMatrices( this.parent.matrixWorld, this.matrix );
 
 		}
 
@@ -861,12 +842,12 @@ public class Object3D extends EventDispatcher {
 		this.up.copy( source.up );
 
 		this.position.copy( source.position );
-//		this.rotation.order = source.rotation.order;
-//		this.quaternion.copy( source.quaternion );
-//		this.scale.copy( source.scale );
-//
-//		this.matrix.copy( source.matrix );
-//		this.matrixWorld.copy( source.matrixWorld );
+		this.rotation.order(source.rotation.order());
+		this.quaternion.copy( source.quaternion );
+		this.scale.copy( source.scale );
+
+		this.matrix.copy( source.matrix );
+		this.matrixWorld.copy( source.matrixWorld );
 
 		this.matrixAutoUpdate = source.matrixAutoUpdate;
 		this.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
