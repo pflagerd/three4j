@@ -25,13 +25,6 @@ public class Vector3 {
 	
 	public final boolean isVector3 = true;
 	
-	//function Vector3( x, y, z ) {
-	//
-	//	this.x = x || 0;
-	//	this.y = y || 0;
-	//	this.z = z || 0;
-	//
-	//}
 	public Vector3() {
 		this.x = this.y = this.z = 0.0;
 	}
