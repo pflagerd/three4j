@@ -567,280 +567,281 @@ public class Matrix4 {
 
 	}
 
-//	makeRotationY( theta ) {
-//
-//		const c = Math.cos( theta ), s = Math.sin( theta );
-//
-//		this.set(
-//
-//			 c, 0, s, 0,
-//			 0, 1, 0, 0,
-//			- s, 0, c, 0,
-//			 0, 0, 0, 1
-//
-//		);
-//
-//		return this;
-//
-//	}
-//
-//	makeRotationZ( theta ) {
-//
-//		const c = Math.cos( theta ), s = Math.sin( theta );
-//
-//		this.set(
-//
-//			c, - s, 0, 0,
-//			s, c, 0, 0,
-//			0, 0, 1, 0,
-//			0, 0, 0, 1
-//
-//		);
-//
-//		return this;
-//
-//	}
-//
-//	makeRotationAxis( axis, angle ) {
-//
-//		// Based on http://www.gamedev.net/reference/articles/article1199.asp
-//
-//		const c = Math.cos( angle );
-//		const s = Math.sin( angle );
-//		const t = 1 - c;
-//		const x = axis.x, y = axis.y, z = axis.z;
-//		const tx = t * x, ty = t * y;
-//
-//		this.set(
-//
-//			tx * x + c, tx * y - s * z, tx * z + s * y, 0,
-//			tx * y + s * z, ty * y + c, ty * z - s * x, 0,
-//			tx * z - s * y, ty * z + s * x, t * z * z + c, 0,
-//			0, 0, 0, 1
-//
-//		);
-//
-//		return this;
-//
-//	}
-//
-//	makeScale( x, y, z ) {
-//
-//		this.set(
-//
-//			x, 0, 0, 0,
-//			0, y, 0, 0,
-//			0, 0, z, 0,
-//			0, 0, 0, 1
-//
-//		);
-//
-//		return this;
-//
-//	}
-//
-//	makeShear( x, y, z ) {
-//
-//		this.set(
-//
-//			1, y, z, 0,
-//			x, 1, z, 0,
-//			x, y, 1, 0,
-//			0, 0, 0, 1
-//
-//		);
-//
-//		return this;
-//
-//	}
-//
-	Matrix4 compose( Vector3 position, Quaternion quaternion, Vector3 scale ) {
+	public Matrix4 makeRotationY( double theta ) {
 
-//		const te = this.elements;
-//
-//		const x = quaternion._x, y = quaternion._y, z = quaternion._z, w = quaternion._w;
-//		const x2 = x + x,	y2 = y + y, z2 = z + z;
-//		const xx = x * x2, xy = x * y2, xz = x * z2;
-//		const yy = y * y2, yz = y * z2, zz = z * z2;
-//		const wx = w * x2, wy = w * y2, wz = w * z2;
-//
-//		const sx = scale.x, sy = scale.y, sz = scale.z;
-//
-//		te[ 0 ] = ( 1 - ( yy + zz ) ) * sx;
-//		te[ 1 ] = ( xy + wz ) * sx;
-//		te[ 2 ] = ( xz - wy ) * sx;
-//		te[ 3 ] = 0;
-//
-//		te[ 4 ] = ( xy - wz ) * sy;
-//		te[ 5 ] = ( 1 - ( xx + zz ) ) * sy;
-//		te[ 6 ] = ( yz + wx ) * sy;
-//		te[ 7 ] = 0;
-//
-//		te[ 8 ] = ( xz + wy ) * sz;
-//		te[ 9 ] = ( yz - wx ) * sz;
-//		te[ 10 ] = ( 1 - ( xx + yy ) ) * sz;
-//		te[ 11 ] = 0;
-//
-//		te[ 12 ] = position.x;
-//		te[ 13 ] = position.y;
-//		te[ 14 ] = position.z;
-//		te[ 15 ] = 1;
+		final double c = Math.cos( theta ), s = Math.sin( theta );
+
+		this.set(
+
+			 c, 0, s, 0,
+			 0, 1, 0, 0,
+			- s, 0, c, 0,
+			 0, 0, 0, 1
+
+		);
 
 		return this;
 
 	}
 
-//	decompose( position, quaternion, scale ) {
-//
-//		const te = this.elements;
-//
-//		let sx = _v1.set( te[ 0 ], te[ 1 ], te[ 2 ] ).length();
-//		const sy = _v1.set( te[ 4 ], te[ 5 ], te[ 6 ] ).length();
-//		const sz = _v1.set( te[ 8 ], te[ 9 ], te[ 10 ] ).length();
-//
-//		// if determine is negative, we need to invert one scale
-//		const det = this.determinant();
-//		if ( det < 0 ) sx = - sx;
-//
-//		position.x = te[ 12 ];
-//		position.y = te[ 13 ];
-//		position.z = te[ 14 ];
-//
-//		// scale the rotation part
-//		_m1.copy( this );
-//
-//		const invSX = 1 / sx;
-//		const invSY = 1 / sy;
-//		const invSZ = 1 / sz;
-//
-//		_m1.elements[ 0 ] *= invSX;
-//		_m1.elements[ 1 ] *= invSX;
-//		_m1.elements[ 2 ] *= invSX;
-//
-//		_m1.elements[ 4 ] *= invSY;
-//		_m1.elements[ 5 ] *= invSY;
-//		_m1.elements[ 6 ] *= invSY;
-//
-//		_m1.elements[ 8 ] *= invSZ;
-//		_m1.elements[ 9 ] *= invSZ;
-//		_m1.elements[ 10 ] *= invSZ;
-//
-//		quaternion.setFromRotationMatrix( _m1 );
-//
-//		scale.x = sx;
-//		scale.y = sy;
-//		scale.z = sz;
-//
-//		return this;
-//
-//	}
-//
-//	makePerspective( left, right, top, bottom, near, far ) {
-//
-//		if ( far == undefined ) {
-//
-//			console.warn( 'THREE.Matrix4: .makePerspective() has been redefined and has a new signature. Please check the docs.' );
-//
-//		}
-//
-//		const te = this.elements;
-//		const x = 2 * near / ( right - left );
-//		const y = 2 * near / ( top - bottom );
-//
-//		const a = ( right + left ) / ( right - left );
-//		const b = ( top + bottom ) / ( top - bottom );
-//		const c = - ( far + near ) / ( far - near );
-//		const d = - 2 * far * near / ( far - near );
-//
-//		te[ 0 ] = x;	te[ 4 ] = 0;	te[ 8 ] = a;	te[ 12 ] = 0;
-//		te[ 1 ] = 0;	te[ 5 ] = y;	te[ 9 ] = b;	te[ 13 ] = 0;
-//		te[ 2 ] = 0;	te[ 6 ] = 0;	te[ 10 ] = c;	te[ 14 ] = d;
-//		te[ 3 ] = 0;	te[ 7 ] = 0;	te[ 11 ] = - 1;	te[ 15 ] = 0;
-//
-//		return this;
-//
-//	}
-//
-//	makeOrthographic( left, right, top, bottom, near, far ) {
-//
-//		const te = this.elements;
-//		const w = 1.0 / ( right - left );
-//		const h = 1.0 / ( top - bottom );
-//		const p = 1.0 / ( far - near );
-//
-//		const x = ( right + left ) * w;
-//		const y = ( top + bottom ) * h;
-//		const z = ( far + near ) * p;final double
-//
-//		te[ 0 ] = 2 * w;	te[ 4 ] = 0;	te[ 8 ] = 0;	te[ 12 ] = - x;
-//		te[ 1 ] = 0;	te[ 5 ] = 2 * h;	te[ 9 ] = 0;	te[ 13 ] = - y;
-//		te[ 2 ] = 0;	te[ 6 ] = 0;	te[ 10 ] = - 2 * p;	te[ 14 ] = - z;
-//		te[ 3 ] = 0;	te[ 7 ] = 0;	te[ 11 ] = 0;	te[ 15 ] = 1;
-//
-//		return this;
-//
-//	}
-//
-//	equals( matrix ) {
-//
-//		const te = this.elements;
-//		const me = matrix.elements;
-//
-//		for ( let i = 0; i < 16; i ++ ) {
-//
-//			if ( te[ i ] != me[ i ] ) return false;
-//
-//		}
-//
-//		return true;
-//
-//	}
-//
-//	fromArray( array, offset = 0 ) {
-//
-//		for ( let i = 0; i < 16; i ++ ) {
-//
-//			this.elements[ i ] = array[ i + offset ];
-//
-//		}
-//
-//		return this;
-//
-//	}
-//
-//	toArray( array = [], offset = 0 ) {
-//
-//		const te = this.elements;
-//
-//		array[ offset ] = te[ 0 ];
-//		array[ offset + 1 ] = te[ 1 ];
-//		array[ offset + 2 ] = te[ 2 ];
-//		array[ offset + 3 ] = te[ 3 ];
-//
-//		array[ offset + 4 ] = te[ 4 ];
-//		array[ offset + 5 ] = te[ 5 ];
-//		array[ offset + 6 ] = te[ 6 ];
-//		array[ offset + 7 ] = te[ 7 ];
-//
-//		array[ offset + 8 ] = te[ 8 ];
-//		array[ offset + 9 ] = te[ 9 ];
-//		array[ offset + 10 ] = te[ 10 ];
-//		array[ offset + 11 ] = te[ 11 ];
-//
-//		array[ offset + 12 ] = te[ 12 ];
-//		array[ offset + 13 ] = te[ 13 ];
-//		array[ offset + 14 ] = te[ 14 ];
-//		array[ offset + 15 ] = te[ 15 ];
-//
-//		return array;
-//
-//	}
-//
-	static final Vector3 _v1 = /*@__PURE__*/ new Vector3();
-	static final Matrix4 _m1 = /*@__PURE__*/ new Matrix4();
-	static final Vector3 _zero = /*@__PURE__*/ new Vector3( 0, 0, 0 );
-	static final Vector3 _one = /*@__PURE__*/ new Vector3( 1, 1, 1 );
-	static final Vector3 _x = /*@__PURE__*/ new Vector3(1, 0, 0);
-	static final Vector3 _y = /*@__PURE__*/ new Vector3(0, 1, 0);
-	static final Vector3 _z = /*@__PURE__*/ new Vector3(0, 0, 1);
+	public Matrix4 makeRotationZ( double theta ) {
+
+		final double c = Math.cos( theta ), s = Math.sin( theta );
+
+		this.set(
+
+			c, - s, 0, 0,
+			s, c, 0, 0,
+			0, 0, 1, 0,
+			0, 0, 0, 1
+
+		);
+
+		return this;
+
+	}
+
+	public Matrix4 makeRotationAxis( Vector3 axis, double angle ) {
+
+		// Based on http://www.gamedev.net/reference/articles/article1199.asp
+
+		final double c = Math.cos( angle );
+		final double s = Math.sin( angle );
+		final double t = 1 - c;
+		final double x = axis.x, y = axis.y, z = axis.z;
+		final double tx = t * x, ty = t * y;
+
+		this.set(
+
+			tx * x + c, tx * y - s * z, tx * z + s * y, 0,
+			tx * y + s * z, ty * y + c, ty * z - s * x, 0,
+			tx * z - s * y, ty * z + s * x, t * z * z + c, 0,
+			0, 0, 0, 1
+
+		);
+
+		return this;
+
+	}
+
+	public Matrix4 makeScale( double x, double y, double z ) {
+
+		this.set(
+
+			x, 0, 0, 0,
+			0, y, 0, 0,
+			0, 0, z, 0,
+			0, 0, 0, 1
+
+		);
+
+		return this;
+
+	}
+
+	public Matrix4 makeShear( double x, double y, double z ) {
+
+		this.set(
+
+			1, y, z, 0,
+			x, 1, z, 0,
+			x, y, 1, 0,
+			0, 0, 0, 1
+
+		);
+
+		return this;
+
+	}
+
+	Matrix4 compose( Vector3 position, Quaternion quaternion, Vector3 scale ) {
+
+		final double[] te = this.elements;
+
+		final double x = quaternion.x(), y = quaternion.y(), z = quaternion.z(), w = quaternion.w();
+		final double x2 = x + x,	y2 = y + y, z2 = z + z;
+		final double xx = x * x2, xy = x * y2, xz = x * z2;
+		final double yy = y * y2, yz = y * z2, zz = z * z2;
+		final double wx = w * x2, wy = w * y2, wz = w * z2;
+
+		final double sx = scale.x, sy = scale.y, sz = scale.z;
+
+		te[ 0 ] = ( 1 - ( yy + zz ) ) * sx;
+		te[ 1 ] = ( xy + wz ) * sx;
+		te[ 2 ] = ( xz - wy ) * sx;
+		te[ 3 ] = 0;
+
+		te[ 4 ] = ( xy - wz ) * sy;
+		te[ 5 ] = ( 1 - ( xx + zz ) ) * sy;
+		te[ 6 ] = ( yz + wx ) * sy;
+		te[ 7 ] = 0;
+
+		te[ 8 ] = ( xz + wy ) * sz;
+		te[ 9 ] = ( yz - wx ) * sz;
+		te[ 10 ] = ( 1 - ( xx + yy ) ) * sz;
+		te[ 11 ] = 0;
+
+		te[ 12 ] = position.x;
+		te[ 13 ] = position.y;
+		te[ 14 ] = position.z;
+		te[ 15 ] = 1;
+
+		return this;
+
+	}
+
+	public Matrix4 decompose( Vector3 position, Quaternion quaternion, Vector3 scale ) {
+
+		final double[] te = this.elements;
+
+		double sx = _v1.set( te[ 0 ], te[ 1 ], te[ 2 ] ).length();
+		final double sy = _v1.set( te[ 4 ], te[ 5 ], te[ 6 ] ).length();
+		final double sz = _v1.set( te[ 8 ], te[ 9 ], te[ 10 ] ).length();
+
+		// if determine is negative, we need to invert one scale
+		final double det = this.determinant();
+		if ( det < 0 ) sx = - sx;
+
+		position.x = te[ 12 ];
+		position.y = te[ 13 ];
+		position.z = te[ 14 ];
+
+		// scale the rotation part
+		_m1.copy( this );
+
+		final double invSX = 1 / sx;
+		final double invSY = 1 / sy;
+		final double invSZ = 1 / sz;
+
+		_m1.elements[ 0 ] *= invSX;
+		_m1.elements[ 1 ] *= invSX;
+		_m1.elements[ 2 ] *= invSX;
+
+		_m1.elements[ 4 ] *= invSY;
+		_m1.elements[ 5 ] *= invSY;
+		_m1.elements[ 6 ] *= invSY;
+
+		_m1.elements[ 8 ] *= invSZ;
+		_m1.elements[ 9 ] *= invSZ;
+		_m1.elements[ 10 ] *= invSZ;
+
+		quaternion.setFromRotationMatrix( _m1 );
+
+		scale.x = sx;
+		scale.y = sy;
+		scale.z = sz;
+
+		return this;
+
+	}
+
+	public Matrix4 makePerspective( double left, double right, double top, double bottom, double near, double far ) {
+		final double[] te = this.elements;
+		final double x = 2 * near / ( right - left );
+		final double y = 2 * near / ( top - bottom );
+
+		final double a = ( right + left ) / ( right - left );
+		final double b = ( top + bottom ) / ( top - bottom );
+		final double c = - ( far + near ) / ( far - near );
+		final double d = - 2 * far * near / ( far - near );
+
+		te[ 0 ] = x;	te[ 4 ] = 0;	te[ 8 ] = a;	te[ 12 ] = 0;
+		te[ 1 ] = 0;	te[ 5 ] = y;	te[ 9 ] = b;	te[ 13 ] = 0;
+		te[ 2 ] = 0;	te[ 6 ] = 0;	te[ 10 ] = c;	te[ 14 ] = d;
+		te[ 3 ] = 0;	te[ 7 ] = 0;	te[ 11 ] = - 1;	te[ 15 ] = 0;
+
+		return this;
+
+	}
+
+	public Matrix4 makeOrthographic( double left, double right, double top, double bottom, double near, double far ) {
+
+		final double[] te = this.elements;
+		final double w = 1.0 / ( right - left );
+		final double h = 1.0 / ( top - bottom );
+		final double p = 1.0 / ( far - near );
+
+		final double x = ( right + left ) * w;
+		final double y = ( top + bottom ) * h;
+		final double z = ( far + near ) * p;
+
+		te[ 0 ] = 2 * w;	te[ 4 ] = 0;	te[ 8 ] = 0;	te[ 12 ] = - x;
+		te[ 1 ] = 0;	te[ 5 ] = 2 * h;	te[ 9 ] = 0;	te[ 13 ] = - y;
+		te[ 2 ] = 0;	te[ 6 ] = 0;	te[ 10 ] = - 2 * p;	te[ 14 ] = - z;
+		te[ 3 ] = 0;	te[ 7 ] = 0;	te[ 11 ] = 0;	te[ 15 ] = 1;
+
+		return this;
+
+	}
+
+	public boolean equals( Matrix4 matrix ) {
+
+		final double[] te = this.elements;
+		final double[] me = matrix.elements;
+
+		for ( int i = 0; i < 16; i ++ ) {
+
+			if ( te[ i ] != me[ i ] ) 
+				return false;
+
+		}
+
+		return true;
+	}
+
+	public Matrix4 fromArray(double[] array) {
+		return fromArray(array, 0);
+	}
+	
+	public Matrix4 fromArray( double[] array, int offset ) {
+
+		for ( int i = 0; i < 16; i ++ ) {
+
+			this.elements[ i ] = array[ i + offset ];
+
+		}
+
+		return this;
+
+	}
+
+	double[] toArray( double[] array) {
+		return toArray(array, 0);
+	}
+	
+	double[] toArray( double[] array, int offset ) {
+
+		final double[] te = this.elements;
+
+		array[ offset ] = te[ 0 ];
+		array[ offset + 1 ] = te[ 1 ];
+		array[ offset + 2 ] = te[ 2 ];
+		array[ offset + 3 ] = te[ 3 ];
+
+		array[ offset + 4 ] = te[ 4 ];
+		array[ offset + 5 ] = te[ 5 ];
+		array[ offset + 6 ] = te[ 6 ];
+		array[ offset + 7 ] = te[ 7 ];
+
+		array[ offset + 8 ] = te[ 8 ];
+		array[ offset + 9 ] = te[ 9 ];
+		array[ offset + 10 ] = te[ 10 ];
+		array[ offset + 11 ] = te[ 11 ];
+
+		array[ offset + 12 ] = te[ 12 ];
+		array[ offset + 13 ] = te[ 13 ];
+		array[ offset + 14 ] = te[ 14 ];
+		array[ offset + 15 ] = te[ 15 ];
+
+		return array;
+
+	}
+
+	private static final Vector3 _v1 = /*@__PURE__*/ new Vector3();
+	private static final Matrix4 _m1 = /*@__PURE__*/ new Matrix4();
+	private static final Vector3 _zero = /*@__PURE__*/ new Vector3( 0, 0, 0 );
+	private static final Vector3 _one = /*@__PURE__*/ new Vector3( 1, 1, 1 );
+	private static final Vector3 _x = /*@__PURE__*/ new Vector3(1, 0, 0);
+	private static final Vector3 _y = /*@__PURE__*/ new Vector3(0, 1, 0);
+	private static final Vector3 _z = /*@__PURE__*/ new Vector3(0, 0, 1);
 }

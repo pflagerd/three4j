@@ -1,5 +1,9 @@
 final double 
-final double[]
+final double[] 
 public Matrix4 
 Euler
 Vector3 
+double 
+Quaternion 
+
+double x, double y, double z
