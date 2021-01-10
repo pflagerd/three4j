@@ -163,7 +163,7 @@ export default QUnit.module( 'Maths', () => {
 		QUnit.test( "sub", ( assert ) => {
 
 			var a = new Vector3( x, y, z );
-			var b = new Vector3( - x, - y, - z );
+			var b = new Vector3( x, y, z );
 
 			a.sub( b );
 			assert.ok( a.x == 2 * x, "Passed!" );

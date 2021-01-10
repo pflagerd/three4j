@@ -23,6 +23,10 @@ public class Euler {
 		this._x = this._y = this._z = 0.0;
 		this._order = DefaultOrder;
 	}
+
+	public Euler(double x, double y, double z) {
+		this(x, y, z, DefaultOrder);
+	}
 	
 	public Euler(double x, double y, double z, String order) {
 		this._x = x;
