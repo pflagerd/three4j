@@ -1,4 +1,6 @@
-//import { WebGLRenderTarget } from './WebGLRenderTarget.js';
+package net.three4j.renderers;
+
+//import net.three4j.renderers.WebGLRenderTarget;
 //
 //function WebGLMultisampleRenderTarget( width, height, options ) {
 //
