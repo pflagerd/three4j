@@ -2,6 +2,7 @@ package net.three4j.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import static net.three4j.THREE.console;
 
 /**
  * https://github.com/mrdoob/eventdispatcher.js/
@@ -15,6 +16,10 @@ public class EventDispatcher {
 	}
 
 	public void addEventListener( String type, EventListener listener ) {
+		if (listener == null) {
+			console.warn("null listeners are not added");
+			return;
+		}
 
 		if ( listeners.get(type) == null ) {
 
