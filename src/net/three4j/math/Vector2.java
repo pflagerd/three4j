@@ -391,13 +391,13 @@ public class Vector2 {
 
 	}
 
-	double distanceTo( Vector2 v ) {
+	public double distanceTo( Vector2 v ) {
 
 		return Math.sqrt( this.distanceToSquared( v ) );
 
 	}
 
-	double distanceToSquared( Vector2 v ) {
+	public double distanceToSquared( Vector2 v ) {
 
 		final double dx = this.x - v.x, dy = this.y - v.y;
 		return dx * dx + dy * dy;
@@ -440,11 +440,11 @@ public class Vector2 {
 
 	}
 	
-	Vector2 fromArray(double[] array) {
+	public Vector2 fromArray(double[] array) {
 		return fromArray(array, 0);
 	}
 
-	Vector2 fromArray( double[] array, int offset ) {
+	public Vector2 fromArray( double[] array, int offset ) {
 
 		this.x = array[ offset ];
 		this.y = array[ offset + 1 ];
@@ -453,15 +453,15 @@ public class Vector2 {
 
 	}
 	
-	double[] toArray() {
+	public double[] toArray() {
 		return toArray(new double[2], 0);
 	}
 	
-	double[] toArray(double[] array) {
+	public double[] toArray(double[] array) {
 		return toArray(array, 0);
 	}
 
-	double[] toArray( double[] array, int offset ) {
+	public double[] toArray( double[] array, int offset ) {
 
 		array[ offset ] = this.x;
 		array[ offset + 1 ] = this.y;
@@ -478,7 +478,7 @@ public class Vector2 {
 		return this;
 	}
 
-	Vector2 rotateAround( Vector2 center, double angle ) {
+	public Vector2 rotateAround( Vector2 center, double angle ) {
 
 		final double c = Math.cos( angle ), s = Math.sin( angle );
 
@@ -492,7 +492,7 @@ public class Vector2 {
 
 	}
 
-	Vector2 random() {
+	public Vector2 random() {
 
 		this.x = Math.random();
 		this.y = Math.random();
