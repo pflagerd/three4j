@@ -4,6 +4,8 @@ import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
 import net.three4j.math.Vector4;
 
+import static net.three4j.THREE.console;
+
 //import { Color } from "../math/Color.js";
 import static net.three4j.constants.StaticDrawUsage;
 
@@ -177,33 +179,33 @@ public class BufferAttribute {
 //
 //	},
 //
-//	public BufferAttribute copyVector4sArray( vectors ) {
-//
-//		const array = this.array;
-//		let offset = 0;
-//
-//		for ( let i = 0, l = vectors.length; i < l; i ++ ) {
-//
-//			let vector = vectors[ i ];
-//
-//			if ( vector == undefined ) {
-//
-//				console.warn( "THREE.BufferAttribute.copyVector4sArray(): vector is undefined", i );
-//				vector = new Vector4();
-//
-//			}
-//
-//			array[ offset ++ ] = vector.x;
-//			array[ offset ++ ] = vector.y;
-//			array[ offset ++ ] = vector.z;
-//			array[ offset ++ ] = vector.w;
-//
-//		}
-//
-//		return this;
-//
-//	},
-//
+	public BufferAttribute copyVector4sArray( Vector4[] vectors ) {
+
+		double[] array = this.array;
+		int offset = 0;
+
+		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
+
+			Vector4 vector = vectors[ i ];
+
+			if ( vector == null ) {
+
+				console.warn( "THREE.BufferAttribute.copyVector4sArray(): vector is undefined " + i );
+				vector = new Vector4();
+
+			}
+
+			array[ offset ++ ] = vector.x();
+			array[ offset ++ ] = vector.y();
+			array[ offset ++ ] = vector.z();
+			array[ offset ++ ] = vector.w();
+
+		}
+
+		return this;
+
+	}
+
 //	public BufferAttribute applyMatrix3( m ) {
 //
 //		if ( this.itemSize == 2 ) {
