@@ -2,9 +2,9 @@ package net.three4j.core;
 
 import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
-//import net.three4j.math.Vector4;
+import net.three4j.math.Vector4;
 
-//import { Color } from '../math/Color.js';
+//import { Color } from "../math/Color.js";
 import static net.three4j.constants.StaticDrawUsage;
 
 import java.util.Arrays;
@@ -135,9 +135,9 @@ public class BufferAttribute {
 //
 //			let vector = vectors[ i ];
 //
-//			if ( vector === undefined ) {
+//			if ( vector == undefined ) {
 //
-//				console.warn( 'THREE.BufferAttribute.copyVector2sArray(): vector is undefined', i );
+//				console.warn( "THREE.BufferAttribute.copyVector2sArray(): vector is undefined", i );
 //				vector = new Vector2();
 //
 //			}
@@ -160,9 +160,9 @@ public class BufferAttribute {
 //
 //			let vector = vectors[ i ];
 //
-//			if ( vector === undefined ) {
+//			if ( vector == undefined ) {
 //
-//				console.warn( 'THREE.BufferAttribute.copyVector3sArray(): vector is undefined', i );
+//				console.warn( "THREE.BufferAttribute.copyVector3sArray(): vector is undefined", i );
 //				vector = new Vector3();
 //
 //			}
@@ -186,9 +186,9 @@ public class BufferAttribute {
 //
 //			let vector = vectors[ i ];
 //
-//			if ( vector === undefined ) {
+//			if ( vector == undefined ) {
 //
-//				console.warn( 'THREE.BufferAttribute.copyVector4sArray(): vector is undefined', i );
+//				console.warn( "THREE.BufferAttribute.copyVector4sArray(): vector is undefined", i );
 //				vector = new Vector4();
 //
 //			}
@@ -206,7 +206,7 @@ public class BufferAttribute {
 //
 //	public BufferAttribute applyMatrix3( m ) {
 //
-//		if ( this.itemSize === 2 ) {
+//		if ( this.itemSize == 2 ) {
 //
 //			for ( let i = 0, l = this.count; i < l; i ++ ) {
 //
@@ -217,7 +217,7 @@ public class BufferAttribute {
 //
 //			}
 //
-//		} else if ( this.itemSize === 3 ) {
+//		} else if ( this.itemSize == 3 ) {
 //
 //			for ( let i = 0, l = this.count; i < l; i ++ ) {
 //
@@ -415,7 +415,7 @@ public class BufferAttribute {
 //
 //	}
 //
-//} );
+//}
 //
 ////
 //
