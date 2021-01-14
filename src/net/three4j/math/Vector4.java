@@ -67,6 +67,38 @@ public class Vector4 {
 		return this;
 
 	}
+	
+	public double x() {
+		return this._x;
+	}
+
+	public double y() {
+		return this._y;
+	}
+
+	public double z() {
+		return this._z;
+	}
+
+	public double w() {
+		return this._w;
+	}
+	
+	public void x(double x) {
+		this._x = x;
+	}
+
+	public void y(double y) {
+		this._y = y;
+	}
+
+	public void z(double z) {
+		this._z = z;
+	}
+
+	public void w(double w) {
+		this._w = w;
+	}
 
 	public Vector4 setX( double x ) {
 
@@ -608,7 +640,7 @@ public class Vector4 {
 	}
 	
 	public double[] toArray(double[] array) {
-		return toArray(new double[4], 0);
+		return toArray(array, 0);
 	}
 	
 	public double[] toArray( double[] array, int offset ) {
