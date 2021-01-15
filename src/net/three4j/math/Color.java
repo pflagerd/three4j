@@ -242,7 +242,7 @@ public class Color {
 	}
 
 	public Color(String s) {
-		this.setHex(_colorKeywords.get(s));
+		this.setStyle(s);
 	}
 
 	public Color(int x) {

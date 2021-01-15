@@ -144,19 +144,19 @@ public class ColorTests {
 		assertTrue(hsl.l() == 0.75, "lightness: " + hsl.l());
 
 		a.setStyle("#F8A");
-		assertTrue(a.r() == 0xFF / 255, "Red: " + a.r());
-		assertTrue(a.g() == 0x88 / 255, "Green: " + a.g());
-		assertTrue(a.b() == 0xAA / 255, "Blue: " + a.b());
+		assertTrue(a.r() == 0xFF / 255., "Red: " + a.r());
+		assertTrue(a.g() == 0x88 / 255., "Green: " + a.g());
+		assertTrue(a.b() == 0xAA / 255., "Blue: " + a.b());
 
 		a.setStyle("#F8ABC1");
-		assertTrue(a.r() == 0xF8 / 255, "Red: " + a.r());
-		assertTrue(a.g() == 0xAB / 255, "Green: " + a.g());
-		assertTrue(a.b() == 0xC1 / 255, "Blue: " + a.b());
+		assertTrue(a.r() == 0xF8 / 255., "Red: " + a.r());
+		assertTrue(a.g() == 0xAB / 255., "Green: " + a.g());
+		assertTrue(a.b() == 0xC1 / 255., "Blue: " + a.b());
 
 		a.setStyle("aliceblue");
-		assertTrue(a.r() == 0xF0 / 255, "Red: " + a.r());
-		assertTrue(a.g() == 0xF8 / 255, "Green: " + a.g());
-		assertTrue(a.b() == 0xFF / 255, "Blue: " + a.b());
+		assertTrue(a.r() == 0xF0 / 255., "Red: " + a.r());
+		assertTrue(a.g() == 0xF8 / 255., "Green: " + a.g());
+		assertTrue(a.b() == 0xFF / 255., "Blue: " + a.b());
 
 	}
 
