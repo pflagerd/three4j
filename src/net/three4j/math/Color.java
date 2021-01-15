@@ -208,16 +208,16 @@ public class Color {
 
 	public static double hue2rgb(double p, double q, double t) {
 
-		if (t < 0)
-			t += 1;
-		if (t > 1)
-			t -= 1;
-		if (t < 1 / 6)
-			return p + (q - p) * 6 * t;
-		if (t < 1 / 2)
+		if (t < 0.)
+			t += 1.;
+		if (t > 1.)
+			t -= 1.;
+		if (t < 1 / 6.)
+			return p + (q - p) * 6. * t;
+		if (t < 1. / 2.)
 			return q;
-		if (t < 2 / 3)
-			return p + (q - p) * 6 * (2 / 3 - t);
+		if (t < 2. / 3.)
+			return p + (q - p) * 6. * (2. / 3. - t);
 		return p;
 	}
 
@@ -341,9 +341,9 @@ public class Color {
 	public Color setHSL(double h, double s, double l) {
 
 		// h,s,l ranges are in 0.0 - 1.0
-		h = MathUtils.euclideanModulo(h, 1);
-		s = MathUtils.clamp(s, 0, 1);
-		l = MathUtils.clamp(l, 0, 1);
+		h = MathUtils.euclideanModulo(h, 1.);
+		s = MathUtils.clamp(s, 0., 1.);
+		l = MathUtils.clamp(l, 0., 1.);
 
 		if (s == 0) {
 
@@ -351,12 +351,12 @@ public class Color {
 
 		} else {
 
-			final double p = l <= 0.5 ? l * (1 + s) : l + s - (l * s);
-			final double q = (2 * l) - p;
+			final double p = l <= 0.5 ? l * (1. + s) : l + s - (l * s);
+			final double q = (2. * l) - p;
 
-			this._r = hue2rgb(q, p, h + 1 / 3);
+			this._r = hue2rgb(q, p, h + 1. / 3.);
 			this._g = hue2rgb(q, p, h);
-			this._b = hue2rgb(q, p, h - 1 / 3);
+			this._b = hue2rgb(q, p, h - 1. / 3.);
 
 		}
 
@@ -650,7 +650,7 @@ public class Color {
 		final double r = this._r, g = this._g, b = this._b;
 
 		final double max = Math.max(r, Math.max(g, b));
-		final double min = Math.min(r, Math.max(g, b));
+		final double min = Math.min(r, Math.min(g, b));
 
 		double hue, saturation;
 		final double lightness = (min + max) / 2.0;
@@ -664,17 +664,17 @@ public class Color {
 
 			final double delta = max - min;
 
-			saturation = lightness <= 0.5 ? delta / (max + min) : delta / (2 - max - min);
+			saturation = lightness <= 0.5 ? delta / (max + min) : delta / (2. - max - min);
 
 			if (max == r) {
-				hue = (g - b) / delta + (g < b ? 6 : 0);
+				hue = (g - b) / delta + (g < b ? 6. : 0.);
 			} else if (max == g) {
-				hue = (b - r) / delta + 2;
+				hue = (b - r) / delta + 2.;
 			} else {
-				hue = (r - g) / delta + 4;
+				hue = (r - g) / delta + 4.;
 			}
 
-			hue /= 6;
+			hue /= 6.;
 
 		}
 

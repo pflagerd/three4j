@@ -121,11 +121,11 @@ public class ColorTests {
 
 		Color a = new Color();
 
-		Color b = new Color(8 / 255, 25 / 255, 178 / 255);
+		Color b = new Color(8 / 255., 25 / 255., 178 / 255.);
 		a.setStyle("rgb(8,25,178)");
 		assertTrue(a.equals(b), "Passed");
 
-		b = new Color(8 / 255, 25 / 255, 178 / 255);
+		b = new Color(8 / 255., 25 / 255., 178 / 255.);
 		a.setStyle("rgba(8,25,178,200)");
 		assertTrue(a.equals(b), "Passed");
 
@@ -269,7 +269,7 @@ public class ColorTests {
 
 		assertTrue(hsl.h() == 0.5, "hue: " + hsl.h());
 		assertTrue(hsl.s() == 1.0, "saturation: " + hsl.s());
-		assertTrue((Math.round((int) (hsl.l()) * 100) / 100) == 0.75, "lightness: " + hsl.l());
+		assertTrue(Math.round(hsl.l() * 100) / 100. == 0.75, "lightness: " + hsl.l());
 
 	}
 
