@@ -6,7 +6,10 @@ import net.three4j.math.Vector4;
 
 import static net.three4j.THREE.console;
 
-//import { Color } from "../math/Color.js";
+import net.three4j.math.Color;
+import net.three4j.math.Matrix3;
+import net.three4j.math.Matrix4;
+
 import static net.three4j.constants.StaticDrawUsage;
 
 import java.util.Arrays;
@@ -26,29 +29,34 @@ public class BufferAttribute {
 	}
 
 	public String name;
-	public double[] array;
 	public int itemSize;
 	public int count;
 	public boolean normalized;
 	public int usage;
 	public int version;
 	public UpdateRange updateRange;
-
-	public BufferAttribute(double[] array, int itemSize, boolean normalized) {
-
-		this.name = "";
-
-		this.array = array;
-		this.itemSize = itemSize;
-		this.count = array.length / itemSize;
-		this.normalized = normalized;
-
-		this.usage = StaticDrawUsage;
-		this.updateRange = new UpdateRange(0, -1);
-
-		this.version = 0;
-
+	
+	public BufferAttribute() {
+		name = "";
+		usage = StaticDrawUsage;
+		updateRange = new UpdateRange(0, 1);
 	}
+
+//	public BufferAttribute(double[] array, int itemSize, boolean normalized) {
+//
+//		this.name = "";
+//
+//		this.array = array;
+//		this.itemSize = itemSize;
+//		this.count = array.length / itemSize;
+//		this.normalized = normalized;
+//
+//		this.usage = StaticDrawUsage;
+//		this.updateRange = new UpdateRange(0, -1);
+//
+//		this.version = 0;
+//
+//	}
 	
 	public void needsUpdate(boolean needsUpdate) {
 		if (needsUpdate)
@@ -65,42 +73,42 @@ public class BufferAttribute {
 
 	}
 
-	public BufferAttribute copy( BufferAttribute source ) {
+//	public BufferAttribute copy( BufferAttribute source ) {
+//
+//		this.name = source.name;
+//		this.array = Arrays.copyOf( source.array, source.array.length );
+//		this.itemSize = source.itemSize;
+//		this.count = source.count;
+//		this.normalized = source.normalized;
+//
+//		this.usage = source.usage;
+//
+//		return this;
+//
+//	}
 
-		this.name = source.name;
-		this.array = Arrays.copyOf( source.array, source.array.length );
-		this.itemSize = source.itemSize;
-		this.count = source.count;
-		this.normalized = source.normalized;
+//	public BufferAttribute copyAt( int index1, BufferAttribute attribute, int index2 ) {
+//
+//		index1 *= this.itemSize;
+//		index2 *= attribute.itemSize;
+//
+//		for ( int i = 0, l = this.itemSize; i < l; i ++ ) {
+//
+//			this.array[ index1 + i ] = attribute.array[ index2 + i ];
+//
+//		}
+//
+//		return this;
+//
+//	}
 
-		this.usage = source.usage;
-
-		return this;
-
-	}
-
-	public BufferAttribute copyAt( int index1, BufferAttribute attribute, int index2 ) {
-
-		index1 *= this.itemSize;
-		index2 *= attribute.itemSize;
-
-		for ( int i = 0, l = this.itemSize; i < l; i ++ ) {
-
-			this.array[ index1 + i ] = attribute.array[ index2 + i ];
-
-		}
-
-		return this;
-
-	}
-
-	public BufferAttribute copyArray( double[] array ) {
-
-		this.array = Arrays.copyOf( array, array.length );
-
-		return this;
-
-	}
+//	public BufferAttribute copyArray( double[] array ) {
+//
+//		this.array = Arrays.copyOf( array, array.length );
+//
+//		return this;
+//
+//	}
 
 //	public BufferAttribute copyColorsArray( Color[] colors ) {
 //
@@ -118,9 +126,9 @@ public class BufferAttribute {
 //
 //			}
 //
-//			array[ offset ++ ] = color.r;
-//			array[ offset ++ ] = color.g;
-//			array[ offset ++ ] = color.b;
+//			array[ offset ++ ] = color.r();
+//			array[ offset ++ ] = color.g();
+//			array[ offset ++ ] = color.b();
 //
 //		}
 //
@@ -128,18 +136,18 @@ public class BufferAttribute {
 //
 //	}
 
-//	public BufferAttribute copyVector2sArray( vectors ) {
+//	public BufferAttribute copyVector2sArray( Vector2[] vectors ) {
 //
-//		const array = this.array;
-//		let offset = 0;
+//		double[] array = this.array;
+//		int offset = 0;
 //
-//		for ( let i = 0, l = vectors.length; i < l; i ++ ) {
+//		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
 //
-//			let vector = vectors[ i ];
+//			Vector2 vector = vectors[ i ];
 //
-//			if ( vector == undefined ) {
+//			if ( vector == null ) {
 //
-//				console.warn( "THREE.BufferAttribute.copyVector2sArray(): vector is undefined", i );
+//				console.warn( "THREE.BufferAttribute.copyVector2sArray(): vector is undefined " + i);
 //				vector = new Vector2();
 //
 //			}
@@ -151,18 +159,18 @@ public class BufferAttribute {
 //
 //		return this;
 //
-//	},
+//	}
+
+//	public BufferAttribute copyVector3sArray( Vector3[] vectors ) {
 //
-//	public BufferAttribute copyVector3sArray( vectors ) {
+//		final double[] array = this.array;
+//		int offset = 0;
 //
-//		const array = this.array;
-//		let offset = 0;
+//		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
 //
-//		for ( let i = 0, l = vectors.length; i < l; i ++ ) {
+//			Vector3 vector = vectors[ i ];
 //
-//			let vector = vectors[ i ];
-//
-//			if ( vector == undefined ) {
+//			if ( vector == null ) {
 //
 //				console.warn( "THREE.BufferAttribute.copyVector3sArray(): vector is undefined", i );
 //				vector = new Vector3();
@@ -177,40 +185,40 @@ public class BufferAttribute {
 //
 //		return this;
 //
-//	},
+//	}
+
+//	public BufferAttribute copyVector4sArray( Vector4[] vectors ) {
 //
-	public BufferAttribute copyVector4sArray( Vector4[] vectors ) {
+//		double[] array = this.array;
+//		int offset = 0;
+//
+//		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
+//
+//			Vector4 vector = vectors[ i ];
+//
+//			if ( vector == null ) {
+//
+//				console.warn( "THREE.BufferAttribute.copyVector4sArray(): vector is undefined " + i );
+//				vector = new Vector4();
+//
+//			}
+//
+//			array[ offset ++ ] = vector.x();
+//			array[ offset ++ ] = vector.y();
+//			array[ offset ++ ] = vector.z();
+//			array[ offset ++ ] = vector.w();
+//
+//		}
+//
+//		return this;
+//
+//	}
 
-		double[] array = this.array;
-		int offset = 0;
-
-		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
-
-			Vector4 vector = vectors[ i ];
-
-			if ( vector == null ) {
-
-				console.warn( "THREE.BufferAttribute.copyVector4sArray(): vector is undefined " + i );
-				vector = new Vector4();
-
-			}
-
-			array[ offset ++ ] = vector.x();
-			array[ offset ++ ] = vector.y();
-			array[ offset ++ ] = vector.z();
-			array[ offset ++ ] = vector.w();
-
-		}
-
-		return this;
-
-	}
-
-//	public BufferAttribute applyMatrix3( m ) {
+//	public BufferAttribute applyMatrix3( Matrix3 m ) {
 //
 //		if ( this.itemSize == 2 ) {
 //
-//			for ( let i = 0, l = this.count; i < l; i ++ ) {
+//			for ( int i = 0, l = this.count; i < l; i ++ ) {
 //
 //				_vector2.fromBufferAttribute( this, i );
 //				_vector2.applyMatrix3( m );
@@ -221,7 +229,7 @@ public class BufferAttribute {
 //
 //		} else if ( this.itemSize == 3 ) {
 //
-//			for ( let i = 0, l = this.count; i < l; i ++ ) {
+//			for ( int i = 0, l = this.count; i < l; i ++ ) {
 //
 //				_vector.fromBufferAttribute( this, i );
 //				_vector.applyMatrix3( m );
@@ -234,11 +242,11 @@ public class BufferAttribute {
 //
 //		return this;
 //
-//	},
+//	}
 //
-//	public BufferAttribute applyMatrix4( m ) {
+//	public BufferAttribute applyMatrix4( Matrix4 m ) {
 //
-//		for ( let i = 0, l = this.count; i < l; i ++ ) {
+//		for ( int i = 0, l = this.count; i < l; i ++ ) {
 //
 //			_vector.x = this.getX( i );
 //			_vector.y = this.getY( i );
@@ -252,11 +260,11 @@ public class BufferAttribute {
 //
 //		return this;
 //
-//	},
+//	}
 //
-//	public BufferAttribute applyNormalMatrix( m ) {
+//	public BufferAttribute applyNormalMatrix( Matrix3 m ) {
 //
-//		for ( let i = 0, l = this.count; i < l; i ++ ) {
+//		for ( int i = 0, l = this.count; i < l; i ++ ) {
 //
 //			_vector.x = this.getX( i );
 //			_vector.y = this.getY( i );
@@ -270,11 +278,11 @@ public class BufferAttribute {
 //
 //		return this;
 //
-//	},
+//	}
 //
-//	public BufferAttribute transformDirection( m ) {
+//	public BufferAttribute transformDirection( Matrix3 m ) {
 //
-//		for ( let i = 0, l = this.count; i < l; i ++ ) {
+//		for ( int i = 0, l = this.count; i < l; i ++ ) {
 //
 //			_vector.x = this.getX( i );
 //			_vector.y = this.getY( i );
@@ -288,22 +296,26 @@ public class BufferAttribute {
 //
 //		return this;
 //
-//	},
+//	}
 //
-//	public BufferAttribute set( value, offset = 0 ) {
+//	public BufferAttribute set( double value, int offset ) {
+//		set(value, 0);
+//	}
+//
+//	public BufferAttribute set( double value, int offset ) {
 //
 //		this.array.set( value, offset );
 //
 //		return this;
 //
-//	},
+//	}
 //
-	public double getX(int index) {
-
-		// return this.array[ index * this.itemSize ];
-		return 0;
-	}
-
+//	public double getX(int index) {
+//
+//		// return this.array[ index * this.itemSize ];
+//		return 0;
+//	}
+//
 //	public BufferAttribute setX( index, x ) {
 //
 //		this.array[ index * this.itemSize ] = x;
