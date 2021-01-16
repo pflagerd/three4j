@@ -361,64 +361,60 @@ public class BufferAttribute {
 
 	}
 
-//	public double getX(int index) {
-//
-//		// return this.array[ index * this.itemSize ];
-//		return 0;
-//	}
-//
-//	public BufferAttribute setX( index, x ) {
-//
-//		this.array[ index * this.itemSize ] = x;
-//
-//		return this;
-//
-//	},
-//
-	public double getY(int index) {
+	public double getX(int index) {
+		return ((Float32Array)this.array()).array()[ index * this._itemSize ];
+	}
 
-		// return this.array[ index * this.itemSize + 1 ];
-		return 0;
+	public BufferAttribute setX( int index, double x ) {
+
+		((Float32Array)this.array()).array()[ index * this._itemSize ] = x;
+
+		return this;
 
 	}
 
-//	public BufferAttribute setY( index, y ) {
-//
-//		this.array[ index * this.itemSize + 1 ] = y;
-//
-//		return this;
-//
-//	},
+	public double getY(int index) {
+
+		return ((Float32Array)this.array()).array()[ index * this._itemSize + 1 ];
+		
+	}
+
+	public BufferAttribute setY( int index, double y ) {
+
+		((Float32Array)this.array()).array()[ index * this._itemSize + 1 ] = y;
+
+		return this;
+
+	}
 
 	public double getZ(int index) {
 
-		// return this.array[ index * this.itemSize + 2 ];
-		return 0;
+		return ((Float32Array)this.array()).array()[ index * this._itemSize + 2 ];
+
 	}
 
-//	public BufferAttribute setZ( index, z ) {
-//
-//		this.array[ index * this.itemSize + 2 ] = z;
-//
-//		return this;
-//
-//	},
+	public BufferAttribute setZ( int index, double z ) {
+
+		((Float32Array)this.array()).array()[ index * this._itemSize + 2 ] = z;
+
+		return this;
+
+	}
 
 	public double getW(int index) {
-		// return this.array[ index * this.itemSize + 3 ];
-		throw new UnsupportedOperationException(
-				"Not implemented yet: " + new Throwable().getStackTrace()[0].getMethodName() + ":"
-						+ new Throwable().getStackTrace()[0].getLineNumber());
+		
+		return ((Float32Array)this.array()).array()[ index * this._itemSize + 3 ];
+
 	}
 
-//	public BufferAttribute setW( index, w ) {
-//
-//		this.array[ index * this.itemSize + 3 ] = w;
-//
-//		return this;
-//
-//	},
-//
+	public BufferAttribute setW( int index, double w ) {
+
+		((Float32Array)this.array()).array()[ index * this._itemSize + 3 ] = w;
+
+		return this;
+
+	}
+
 //	public BufferAttribute setXY( index, x, y ) {
 //
 //		index *= this.itemSize;

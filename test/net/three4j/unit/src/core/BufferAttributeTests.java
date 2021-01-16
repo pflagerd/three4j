@@ -29,7 +29,7 @@ public class BufferAttributeTests {
 //			assert.throws(
 //				function () {
 //
-//					BufferAttribute a = new BufferAttribute( [ 1, 2, 3, 4 ], 2, false );
+//					BufferAttribute a = new BufferAttribute( new double[] { 1, 2, 3, 4 }, 2, false );
 //
 //				},
 //				/array should be a Typed Array/,
@@ -92,7 +92,7 @@ public class BufferAttributeTests {
 		attr2.copyAt(2, attr, 0);
 
 		double[] i = ((Float32Array) attr.array()).array();
-		double[] i2 = ((Float32Array) attr2.array()).array(); // should be [4, 5, 6, 7, 8, 9, 1, 2, 3]
+		double[] i2 = ((Float32Array) attr2.array()).array(); // should be new double[] {4, 5, 6, 7, 8, 9, 1, 2, 3}
 
 		assertTrue(i2[0] == i[3] && i2[1] == i[4] && i2[2] == i[5], "chunck copied to correct place");
 		assertTrue(i2[3] == i[6] && i2[4] == i[7] && i2[5] == i[8], "chunck copied to correct place");
@@ -180,25 +180,25 @@ public class BufferAttributeTests {
 
 	@Test
 	public void get_set() {
-//			Float32Array f32a = new Float32Array( [ 1, 2, 3, 4, 5, 6, 7, 8 ] );
-//			BufferAttribute a = new BufferAttribute( f32a, 4, false );
-//			Float32Array expected = new Float32Array( [ 1, 2, - 3, - 4, - 5, - 6, 7, 8 ] );
-//
-//			a.setX( 1, a.getX( 1 ) * - 1 );
-//			a.setY( 1, a.getY( 1 ) * - 1 );
-//			a.setZ( 0, a.getZ( 0 ) * - 1 );
-//			a.setW( 0, a.getW( 0 ) * - 1 );
-//
-//			assert.deepEqual( a.array, expected, "Check all set* calls set the correct values" );
-//
+			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4, 5, 6, 7, 8 } );
+			BufferAttribute a = new BufferAttribute( f32a, 4, false );
+			Float32Array expected = new Float32Array( new double[] { 1, 2, - 3, - 4, - 5, - 6, 7, 8 } );
+
+			a.setX( 1, a.getX( 1 ) * - 1 );
+			a.setY( 1, a.getY( 1 ) * - 1 );
+			a.setZ( 0, a.getZ( 0 ) * - 1 );
+			a.setW( 0, a.getW( 0 ) * - 1 );
+
+			assertArrayEquals( expected.array(), ((Float32Array) a.array()).array(), "Check all set* calls set the correct values" );
+
 	}
 
 //	@Test
 //	public void setXY() {
 //
-//			Float32Array f32a = new Float32Array( [ 1, 2, 3, 4 ] );
+//			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4 } );
 //			BufferAttribute a = new BufferAttribute( f32a, 2, false );
-//			Float32Array expected = new Float32Array( [ - 1, - 2, 3, 4 ] );
+//			Float32Array expected = new Float32Array( new double[] { - 1, - 2, 3, 4 } );
 //
 //			a.setXY( 0, - 1, - 2 );
 //
@@ -209,9 +209,9 @@ public class BufferAttributeTests {
 //	@Test
 //	public void setXYZ() {
 //
-//			Float32Array f32a = new Float32Array( [ 1, 2, 3, 4, 5, 6 ] );
+//			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } );
 //			BufferAttribute a = new BufferAttribute( f32a, 3, false );
-//			Float32Array expected = new Float32Array( [ 1, 2, 3, - 4, - 5, - 6 ] );
+//			Float32Array expected = new Float32Array( new double[] { 1, 2, 3, - 4, - 5, - 6 } );
 //
 //			a.setXYZ( 1, - 4, - 5, - 6 );
 //
@@ -222,9 +222,9 @@ public class BufferAttributeTests {
 //	@Test
 //	public void setXYZW() {
 //
-//			Float32Array f32a = new Float32Array( [ 1, 2, 3, 4 ] );
+//			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4 } );
 //			BufferAttribute a = new BufferAttribute( f32a, 4, false );
-//			Float32Array expected = new Float32Array( [ - 1, - 2, - 3, - 4 ] );
+//			Float32Array expected = new Float32Array( new double[] { - 1, - 2, - 3, - 4 } );
 //
 //			a.setXYZW( 0, - 1, - 2, - 3, - 4 );
 //
@@ -247,13 +247,13 @@ public class BufferAttributeTests {
 //	@Test
 //	public void clone() {
 //
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( [ 1, 2, 3, 4, 0.12, - 12 ] ), 2 );
+//			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 0.12, - 12 } ), 2 );
 //			var attrCopy = attr.clone();
 //
 //			assertTrue( attr.array.length == attrCopy.array.length, "attribute was cloned" );
 //			for ( var i = 0; i < attr.array.length; i ++ ) {
 //
-//				assertTrue( attr.array[ i ] == attrCopy.array[ i ], "array item is equal" );
+//				assertTrue( attr.arraynew double[] { i } == attrCopy.array[ i ], "array item is equal" );
 //
 //			}
 //
@@ -264,7 +264,7 @@ public class BufferAttributeTests {
 //	public void count() {
 //
 //			assertTrue(
-//				new BufferAttribute( new Float32Array( [ 1, 2, 3, 4, 5, 6 ] ), 3 ).count == 2,
+//				new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } ), 3 ).count == 2,
 //				"count is equal to the number of chunks"
 //			);
 //
