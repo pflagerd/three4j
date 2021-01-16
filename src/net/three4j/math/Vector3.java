@@ -611,7 +611,7 @@ public class Vector3 {
 
 	public Vector3 setFromCylindrical( Cylindrical c ) {
 
-		return this.setFromCylindricalCoords( c.radius, c.theta, c.y );
+		return this.setFromCylindricalCoords( c.radius(), c.theta(), c.y() );
 
 	}
 

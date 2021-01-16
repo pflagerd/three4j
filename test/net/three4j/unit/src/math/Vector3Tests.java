@@ -19,26 +19,6 @@ import net.three4j.math.Vector3;
 import net.three4j.math.Vector4;
 import net.three4j.unit.utils.Float32Array;
 
-///* global QUnit */
-//
-//import { Vector3 } from '../../../../src/math/Vector3';
-//import { Vector4 } from '../../../../src/math/Vector4';
-//import { Matrix3 } from '../../../../src/math/Matrix3';
-//import { Matrix4 } from '../../../../src/math/Matrix4';
-//import { Spherical } from '../../../../src/math/Spherical';
-//import { Quaternion } from '../../../../src/math/Quaternion';
-//import { Euler } from '../../../../src/math/Euler';
-//import { Cylindrical } from '../../../../src/math/Cylindrical';
-//import { BufferAttribute } from '../../../../src/core/BufferAttribute';
-//import { PerspectiveCamera } from '../../../../src/cameras/PerspectiveCamera';
-//import {
-//	x,
-//	y,
-//	z,
-//	w,
-//	eps
-//} from './Constants.tests';
-
 import static net.three4j.unit.src.math.ConstantsTests.x;
 import static net.three4j.unit.src.math.ConstantsTests.y;
 import static net.three4j.unit.src.math.ConstantsTests.z;
@@ -708,19 +688,19 @@ public class Vector3Tests {
 	
 	}
 
-//@Test
-//public void setFromCylindrical() {
-//
-//	Vector3 a = new Vector3();
-//	Cylindrical cyl = new Cylindrical( 10, Math.PI * 0.125, 20 );
-//	Vector3 expected = new Vector3( 3.826834323650898, 20, 9.238795325112868 );
-//
-//	a.setFromCylindrical( cyl );
-//	assertTrue( Math.abs( a.x - expected.x ) <= eps, "Check x" );
-//	assertTrue( Math.abs( a.y - expected.y ) <= eps, "Check y" );
-//	assertTrue( Math.abs( a.z - expected.z ) <= eps, "Check z" );
-//
-//}
+	@Test
+	public void setFromCylindrical() {
+
+		Vector3 a = new Vector3();
+		Cylindrical cyl = new Cylindrical(10, Math.PI * 0.125, 20);
+		Vector3 expected = new Vector3(3.826834323650898, 20, 9.238795325112868);
+
+		a.setFromCylindrical(cyl);
+		assertTrue(Math.abs(a.x - expected.x) <= eps, "Check x");
+		assertTrue(Math.abs(a.y - expected.y) <= eps, "Check y");
+		assertTrue(Math.abs(a.z - expected.z) <= eps, "Check z");
+
+	}
 
 	@Test
 	public void setFromMatrixPosition() {
