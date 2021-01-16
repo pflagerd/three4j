@@ -187,30 +187,30 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute copyVector2sArray( Vector2[] vectors ) {
-//
-//		double[] array = this.array;
-//		int offset = 0;
-//
-//		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
-//
-//			Vector2 vector = vectors[ i ];
-//
-//			if ( vector == null ) {
-//
-//				console.warn( "THREE.BufferAttribute.copyVector2sArray(): vector is undefined " + i);
-//				vector = new Vector2();
-//
-//			}
-//
-//			array[ offset ++ ] = vector.x;
-//			array[ offset ++ ] = vector.y;
-//
-//		}
-//
-//		return this;
-//
-//	}
+	public BufferAttribute copyVector2sArray( Vector2[] vectors ) {
+
+		double[] array = ((Float32Array)this._array).array();
+		int offset = 0;
+
+		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
+
+			Vector2 vector = vectors[ i ];
+
+			if ( vector == null ) {
+
+				console.warn( "THREE.BufferAttribute.copyVector2sArray(): vector is undefined " + i);
+				vector = new Vector2();
+
+			}
+
+			array[ offset ++ ] = vector.x;
+			array[ offset ++ ] = vector.y;
+
+		}
+
+		return this;
+
+	}
 
 //	public BufferAttribute copyVector3sArray( Vector3[] vectors ) {
 //

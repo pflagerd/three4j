@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import net.three4j.core.BufferAttribute;
 import net.three4j.math.Color;
+import net.three4j.math.Vector2;
 import net.three4j.unit.utils.Float32Array;
 import net.three4j.unit.utils.TypedArray;
 
@@ -125,22 +126,22 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void copyVector2sArray() {
-//
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( 4 ), 2 );
-//
-//			attr.copyVector2sArray( [
-//				new Vector2( 1, 2 ),
-//				new Vector2( 4, 5 )
-//			] );
-//
-//			var i = attr.array;
-//			assertTrue( i[ 0 ] == 1 && i[ 1 ] == 2, "first vector was copied correctly" );
-//			assertTrue( i[ 2 ] == 4 && i[ 3 ] == 5, "second vector was copied correctly" );
-//
-//		}
-//
+	@Test
+	public void copyVector2sArray() {
+
+			BufferAttribute attr = new BufferAttribute( new Float32Array( 4 ), 2 );
+
+			attr.copyVector2sArray( new Vector2[] {
+				new Vector2( 1, 2 ),
+				new Vector2( 4, 5 )
+			} );
+
+			double[] i = ((Float32Array)attr.array()).array();
+			assertTrue( i[ 0 ] == 1 && i[ 1 ] == 2, "first vector was copied correctly" );
+			assertTrue( i[ 2 ] == 4 && i[ 3 ] == 5, "second vector was copied correctly" );
+
+		}
+
 //	@Test
 //	public void copyVector3sArray() {
 //
