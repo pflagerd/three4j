@@ -80,30 +80,16 @@ public class BufferAttribute {
 	
 	public BufferAttribute(Float32Array array, int itemSize) {
 		this(array, itemSize, false);
+		this._count = array.length / _itemSize;
 	}
 
 	public BufferAttribute(Float32Array array, int itemSize, boolean normalized) {
 		this._array = array;
 		this._itemSize = itemSize;
 		this._normalized = normalized;
+		this._count = array.length / _itemSize;
 	}
 
-//	public BufferAttribute(double[] array, int itemSize, boolean normalized) {
-//
-//		this.name = "";
-//
-//		this.array = array;
-//		this.itemSize = itemSize;
-//		this.count = array.length / itemSize;
-//		this.normalized = normalized;
-//
-//		this.usage = StaticDrawUsage;
-//		this.updateRange = new UpdateRange(0, -1);
-//
-//		this.version = 0;
-//
-//	}
-	
 	public void needsUpdate(boolean needsUpdate) {
 		if (needsUpdate)
 			this._version++;

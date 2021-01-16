@@ -259,17 +259,16 @@ public class BufferAttributeTests {
 
 		}
 
-		// OTHERS
-//	@Test
-//	public void count() {
-//
-//			assertTrue(
-//				new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } ), 3 ).count == 2,
-//				"count is equal to the number of chunks"
-//			);
-//
-//		}
-//
+	@Test
+	public void count() {
+
+			assertTrue(
+				new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } ), 3 ).count() == 2,
+				"count is equal to the number of chunks"
+			);
+
+		}
+
 //	}
 //
 //	QUnit.module( "Int8BufferAttribute", () => {
