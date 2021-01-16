@@ -415,17 +415,17 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute setXY( index, x, y ) {
-//
-//		index *= this.itemSize;
-//
-//		this.array[ index + 0 ] = x;
-//		this.array[ index + 1 ] = y;
-//
-//		return this;
-//
-//	},
-//
+	public BufferAttribute setXY( int index, double x, double y ) {
+
+		index *= this._itemSize;
+
+		((Float32Array)this.array()).array()[ index + 0 ] = x;
+		((Float32Array)this.array()).array()[ index + 1 ] = y;
+
+		return this;
+
+	}
+
 //	public BufferAttribute setXYZ( index, x, y, z ) {
 //
 //		index *= this.itemSize;
