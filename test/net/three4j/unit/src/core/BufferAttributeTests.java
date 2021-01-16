@@ -3,6 +3,7 @@ package net.three4j.unit.src.core;
 import org.junit.jupiter.api.Test;
 
 import net.three4j.core.BufferAttribute;
+import net.three4j.math.Color;
 import net.three4j.unit.utils.Float32Array;
 import net.three4j.unit.utils.TypedArray;
 
@@ -108,22 +109,22 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void copyColorsArray() {
-//
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( 6 ), 3 );
-//
-//			attr.copyColorsArray( [
-//				new Color( 0, 0.5, 1 ),
-//				new Color( 0.25, 1, 0 )
-//			] );
-//
-//			var i = attr.array;
-//			assertTrue( i[ 0 ] == 0 && i[ 1 ] == 0.5 && i[ 2 ] == 1, "first color was copied correctly" );
-//			assertTrue( i[ 3 ] == 0.25 && i[ 4 ] == 1 && i[ 5 ] == 0, "second color was copied correctly" );
-//
-//		}
-//
+	@Test
+	public void copyColorsArray() {
+
+			BufferAttribute attr = new BufferAttribute( new Float32Array( 6 ), 3 );
+
+			attr.copyColorsArray( new Color[] {
+				new Color( 0, 0.5, 1 ),
+				new Color( 0.25, 1, 0 )
+			} );
+
+			double[] i = ((Float32Array)attr.array()).array();
+			assertTrue( i[ 0 ] == 0 && i[ 1 ] == 0.5 && i[ 2 ] == 1, "first color was copied correctly" );
+			assertTrue( i[ 3 ] == 0.25 && i[ 4 ] == 1 && i[ 5 ] == 0, "second color was copied correctly" );
+
+		}
+
 //	@Test
 //	public void copyVector2sArray() {
 //

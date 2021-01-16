@@ -161,31 +161,31 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute copyColorsArray( Color[] colors ) {
-//
-//		final double[] array = this.array;
-//		int offset = 0;
-//
-//		for ( int i = 0, l = colors.length; i < l; i ++ ) {
-//
-//			Color color = colors[ i ];
-//
-//			if ( color == null ) {
-//
-//				console.warn( "THREE.BufferAttribute.copyColorsArray(): color is undefined" + i );
-//				color = new Color();
-//
-//			}
-//
-//			array[ offset ++ ] = color.r();
-//			array[ offset ++ ] = color.g();
-//			array[ offset ++ ] = color.b();
-//
-//		}
-//
-//		return this;
-//
-//	}
+	public BufferAttribute copyColorsArray( Color[] colors ) {
+
+		final double[] array = ((Float32Array)this._array).array();
+		int offset = 0;
+
+		for ( int i = 0, l = colors.length; i < l; i ++ ) {
+
+			Color color = colors[ i ];
+
+			if ( color == null ) {
+
+				console.warn( "THREE.BufferAttribute.copyColorsArray(): color is undefined" + i );
+				color = new Color();
+
+			}
+
+			array[ offset ++ ] = color.r();
+			array[ offset ++ ] = color.g();
+			array[ offset ++ ] = color.b();
+
+		}
+
+		return this;
+
+	}
 
 //	public BufferAttribute copyVector2sArray( Vector2[] vectors ) {
 //
