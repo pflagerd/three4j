@@ -152,13 +152,14 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute copyArray( double[] array ) {
-//
-//		this.array = Arrays.copyOf( array, array.length );
-//
-//		return this;
-//
-//	}
+	// DPP: TODO: More like this.
+	public BufferAttribute copyArray( Float32Array array ) {
+
+		this._array = array;
+
+		return this;
+
+	}
 
 //	public BufferAttribute copyColorsArray( Color[] colors ) {
 //

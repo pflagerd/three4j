@@ -6,6 +6,7 @@ import net.three4j.core.BufferAttribute;
 import net.three4j.unit.utils.Float32Array;
 import net.three4j.unit.utils.TypedArray;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -95,18 +96,18 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void copyArray() {
-//
-//			Float32Array f32a = new Float32Array( [ 5, 6, 7, 8 ] );
-//			BufferAttribute a = new BufferAttribute( new Float32Array( [ 1, 2, 3, 4 ] ), 2, false );
-//
-//			a.copyArray( f32a );
-//
-//			assert.deepEqual( a.array, f32a, "Check array has new values" );
-//
-//		}
-//
+	@Test
+	public void copyArray() {
+
+			Float32Array f32a = new Float32Array( new double[] { 5, 6, 7, 8 } );
+			BufferAttribute a = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4 } ), 2, false );
+
+			a.copyArray( f32a );
+
+			assertArrayEquals( ((Float32Array)a.array()).array(), f32a.array(), "Check array has new values" );
+
+		}
+
 //	@Test
 //	public void copyColorsArray() {
 //
