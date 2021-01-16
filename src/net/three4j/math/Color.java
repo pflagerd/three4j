@@ -834,7 +834,7 @@ public class Color {
 		this._g = attribute.getY(index);
 		this._b = attribute.getZ(index);
 
-		if (attribute.normalized == true) {
+		if (attribute.normalized() == true) {
 
 			// assuming Uint8Array
 
