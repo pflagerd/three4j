@@ -1,6 +1,7 @@
 package net.three4j.textures;
 
 import net.three4j.core.EventDispatcher;
+
 import static net.three4j.constants.MirroredRepeatWrapping;
 import static net.three4j.constants.ClampToEdgeWrapping;
 import static net.three4j.constants.RepeatWrapping;
@@ -12,12 +13,15 @@ import static net.three4j.constants.LinearFilter;
 import static net.three4j.constants.UVMapping;
 
 import net.three4j.math.MathUtils;
-//import { Vector2 } from '../math/Vector2.js';
-//import { Matrix3 } from '../math/Matrix3.js';
-//import { ImageUtils } from '../extras/ImageUtils.js';
-//
-//let textureId = 0;
-//
+import net.three4j.math.Vector2;
+import net.three4j.math.Matrix3;
+import net.three4j.extras.ImageUtils;
+
+
+public class Texture {
+
+	int textureId = 0;
+	
 //function Texture( image = Texture.DEFAULT_IMAGE, mapping = Texture.DEFAULT_MAPPING, wrapS = ClampToEdgeWrapping, wrapT = ClampToEdgeWrapping, magFilter = LinearFilter, minFilter = LinearMipmapLinearFilter, format = RGBAFormat, type = UnsignedByteType, anisotropy = 1, encoding = LinearEncoding ) {
 //
 //	Object.defineProperty( this, 'id', { value: textureId ++ } );
@@ -369,6 +373,4 @@ import net.three4j.math.MathUtils;
 //
 //	}
 //
-//}
-//
-//export { Texture };
+}
