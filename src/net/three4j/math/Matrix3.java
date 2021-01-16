@@ -1,7 +1,5 @@
 package net.three4j.math;
 
-import java.util.Arrays;
-
 public class Matrix3 {
 
 	public double[] elements;

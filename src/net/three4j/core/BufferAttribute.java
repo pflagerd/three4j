@@ -1,20 +1,16 @@
 package net.three4j.core;
 
+import static net.three4j.THREE.console;
+import static net.three4j.constants.StaticDrawUsage;
+
+import net.three4j.math.Color;
+import net.three4j.math.Matrix3;
+import net.three4j.math.Matrix4;
 import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
 import net.three4j.math.Vector4;
 import net.three4j.unit.utils.Float32Array;
 import net.three4j.unit.utils.TypedArray;
-
-import static net.three4j.THREE.console;
-
-import net.three4j.math.Color;
-import net.three4j.math.Matrix3;
-import net.three4j.math.Matrix4;
-
-import static net.three4j.constants.StaticDrawUsage;
-
-import java.util.Arrays;
 
 public class BufferAttribute {
 	static final Vector3 _vector = new Vector3();
@@ -251,89 +247,89 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute applyMatrix3( Matrix3 m ) {
-//
-//		if ( this.itemSize == 2 ) {
-//
-//			for ( int i = 0, l = this.count; i < l; i ++ ) {
-//
-//				_vector2.fromBufferAttribute( this, i );
-//				_vector2.applyMatrix3( m );
-//
-//				this.setXY( i, _vector2.x, _vector2.y );
-//
-//			}
-//
-//		} else if ( this.itemSize == 3 ) {
-//
-//			for ( int i = 0, l = this.count; i < l; i ++ ) {
-//
-//				_vector.fromBufferAttribute( this, i );
-//				_vector.applyMatrix3( m );
-//
-//				this.setXYZ( i, _vector.x, _vector.y, _vector.z );
-//
-//			}
-//
-//		}
-//
-//		return this;
-//
-//	}
-//
-//	public BufferAttribute applyMatrix4( Matrix4 m ) {
-//
-//		for ( int i = 0, l = this.count; i < l; i ++ ) {
-//
-//			_vector.x = this.getX( i );
-//			_vector.y = this.getY( i );
-//			_vector.z = this.getZ( i );
-//
-//			_vector.applyMatrix4( m );
-//
-//			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
-//
-//		}
-//
-//		return this;
-//
-//	}
-//
-//	public BufferAttribute applyNormalMatrix( Matrix3 m ) {
-//
-//		for ( int i = 0, l = this.count; i < l; i ++ ) {
-//
-//			_vector.x = this.getX( i );
-//			_vector.y = this.getY( i );
-//			_vector.z = this.getZ( i );
-//
-//			_vector.applyNormalMatrix( m );
-//
-//			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
-//
-//		}
-//
-//		return this;
-//
-//	}
-//
-//	public BufferAttribute transformDirection( Matrix3 m ) {
-//
-//		for ( int i = 0, l = this.count; i < l; i ++ ) {
-//
-//			_vector.x = this.getX( i );
-//			_vector.y = this.getY( i );
-//			_vector.z = this.getZ( i );
-//
-//			_vector.transformDirection( m );
-//
-//			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
-//
-//		}
-//
-//		return this;
-//
-//	}
+	public BufferAttribute applyMatrix3( Matrix3 m ) {
+
+		if ( this._itemSize == 2 ) {
+
+			for ( int i = 0, l = this._count; i < l; i ++ ) {
+
+				_vector2.fromBufferAttribute( this, i );
+				_vector2.applyMatrix3( m );
+
+				this.setXY( i, _vector2.x, _vector2.y );
+
+			}
+
+		} else if ( this._itemSize == 3 ) {
+
+			for ( int i = 0, l = this._count; i < l; i ++ ) {
+
+				_vector.fromBufferAttribute( this, i );
+				_vector.applyMatrix3( m );
+
+				this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+
+			}
+
+		}
+
+		return this;
+
+	}
+
+	public BufferAttribute applyMatrix4( Matrix4 m ) {
+
+		for ( int i = 0, l = this._count; i < l; i ++ ) {
+
+			_vector.x = this.getX( i );
+			_vector.y = this.getY( i );
+			_vector.z = this.getZ( i );
+
+			_vector.applyMatrix4( m );
+
+			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+
+		}
+
+		return this;
+
+	}
+
+	public BufferAttribute applyNormalMatrix( Matrix3 m ) {
+
+		for ( int i = 0, l = this._count; i < l; i ++ ) {
+
+			_vector.x = this.getX( i );
+			_vector.y = this.getY( i );
+			_vector.z = this.getZ( i );
+
+			_vector.applyNormalMatrix( m );
+
+			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+
+		}
+
+		return this;
+
+	}
+
+	public BufferAttribute transformDirection( Matrix4 m ) {
+
+		for ( int i = 0, l = this._count; i < l; i ++ ) {
+
+			_vector.x = this.getX( i );
+			_vector.y = this.getY( i );
+			_vector.z = this.getZ( i );
+
+			_vector.transformDirection( m );
+
+			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+
+		}
+
+		return this;
+
+	}
 
 	public BufferAttribute set( double[] value ) {
 		return set(value, 0);
