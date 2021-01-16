@@ -206,19 +206,19 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void setXYZ() {
-//
-//			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } );
-//			BufferAttribute a = new BufferAttribute( f32a, 3, false );
-//			Float32Array expected = new Float32Array( new double[] { 1, 2, 3, - 4, - 5, - 6 } );
-//
-//			a.setXYZ( 1, - 4, - 5, - 6 );
-//
-//			assert.deepEqual( a.array, expected, "Check for the correct values" );
-//
-//		}
-//
+	@Test
+	public void setXYZ() {
+
+			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } );
+			BufferAttribute a = new BufferAttribute( f32a, 3, false );
+			Float32Array expected = new Float32Array( new double[] { 1, 2, 3, - 4, - 5, - 6 } );
+
+			a.setXYZ( 1, - 4, - 5, - 6 );
+
+			assertArrayEquals( expected.array(), ((Float32Array) a.array()).array(), "Check for the correct values" );
+
+		}
+
 //	@Test
 //	public void setXYZW() {
 //
@@ -228,7 +228,7 @@ public class BufferAttributeTests {
 //
 //			a.setXYZW( 0, - 1, - 2, - 3, - 4 );
 //
-//			assert.deepEqual( a.array, expected, "Check for the correct values" );
+//			assert.deepEqual( expected.array(), ((Float32Array) a.array()).array(), "Check for the correct values" );
 //
 //		}
 //

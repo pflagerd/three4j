@@ -426,18 +426,18 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute setXYZ( index, x, y, z ) {
-//
-//		index *= this.itemSize;
-//
-//		this.array[ index + 0 ] = x;
-//		this.array[ index + 1 ] = y;
-//		this.array[ index + 2 ] = z;
-//
-//		return this;
-//
-//	},
-//
+	public BufferAttribute setXYZ( int index, double x, double y, double z ) {
+
+		index *= this._itemSize;
+
+		((Float32Array)this.array()).array()[ index + 0 ] = x;
+		((Float32Array)this.array()).array()[ index + 1 ] = y;
+		((Float32Array)this.array()).array()[ index + 2 ] = z;
+
+		return this;
+
+	}
+
 //	public BufferAttribute setXYZW( index, x, y, z, w ) {
 //
 //		index *= this.itemSize;
