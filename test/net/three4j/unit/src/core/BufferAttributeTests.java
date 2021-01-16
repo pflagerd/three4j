@@ -6,6 +6,7 @@ import net.three4j.core.BufferAttribute;
 import net.three4j.math.Color;
 import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
+import net.three4j.math.Vector4;
 import net.three4j.unit.utils.Float32Array;
 import net.three4j.unit.utils.TypedArray;
 
@@ -159,22 +160,22 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void copyVector4sArray() {
-//
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( 8 ), 2 );
-//
-//			attr.copyVector4sArray( [
-//				new Vector4( 1, 2, 3, 4 ),
-//				new Vector4( 10, 20, 30, 40 )
-//			] );
-//
-//			var i = attr.array;
-//			assertTrue( i[ 0 ] == 1 && i[ 1 ] == 2 && i[ 2 ] == 3 && i[ 3 ] == 4, "first vector was copied correctly" );
-//			assertTrue( i[ 4 ] == 10 && i[ 5 ] == 20 && i[ 6 ] == 30 && i[ 7 ] == 40, "second vector was copied correctly" );
-//
-//		}
-//
+	@Test
+	public void copyVector4sArray() {
+
+			BufferAttribute attr = new BufferAttribute( new Float32Array( 8 ), 2 );
+
+			attr.copyVector4sArray( new Vector4[] {
+				new Vector4( 1, 2, 3, 4 ),
+				new Vector4( 10, 20, 30, 40 )
+			} );
+
+			double[] i = ((Float32Array)attr.array()).array();
+			assertTrue( i[ 0 ] == 1 && i[ 1 ] == 2 && i[ 2 ] == 3 && i[ 3 ] == 4, "first vector was copied correctly" );
+			assertTrue( i[ 4 ] == 10 && i[ 5 ] == 20 && i[ 6 ] == 30 && i[ 7 ] == 40, "second vector was copied correctly" );
+
+		}
+
 //	@Test
 //	public void set() {
 //

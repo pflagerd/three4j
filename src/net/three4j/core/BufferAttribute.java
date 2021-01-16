@@ -238,32 +238,32 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute copyVector4sArray( Vector4[] vectors ) {
-//
-//		double[] array = this.array;
-//		int offset = 0;
-//
-//		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
-//
-//			Vector4 vector = vectors[ i ];
-//
-//			if ( vector == null ) {
-//
-//				console.warn( "THREE.BufferAttribute.copyVector4sArray(): vector is undefined " + i );
-//				vector = new Vector4();
-//
-//			}
-//
-//			array[ offset ++ ] = vector.x();
-//			array[ offset ++ ] = vector.y();
-//			array[ offset ++ ] = vector.z();
-//			array[ offset ++ ] = vector.w();
-//
-//		}
-//
-//		return this;
-//
-//	}
+	public BufferAttribute copyVector4sArray( Vector4[] vectors ) {
+
+		final double[] array = ((Float32Array)this._array).array();
+		int offset = 0;
+
+		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
+
+			Vector4 vector = vectors[ i ];
+
+			if ( vector == null ) {
+
+				console.warn( "THREE.BufferAttribute.copyVector4sArray(): vector is undefined " + i );
+				vector = new Vector4();
+
+			}
+
+			array[ offset ++ ] = vector.x();
+			array[ offset ++ ] = vector.y();
+			array[ offset ++ ] = vector.z();
+			array[ offset ++ ] = vector.w();
+
+		}
+
+		return this;
+
+	}
 
 //	public BufferAttribute applyMatrix3( Matrix3 m ) {
 //
