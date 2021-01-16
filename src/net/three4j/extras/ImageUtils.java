@@ -1,6 +1,6 @@
 package net.three4j.extras;
 
-import com.mozilla.dom.Image;
+import org.mozilla.dom.Image;
 
 public class ImageUtils {
 

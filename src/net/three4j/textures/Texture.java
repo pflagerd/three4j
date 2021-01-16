@@ -7,6 +7,9 @@ import static net.three4j.constants.ClampToEdgeWrapping;
 import static net.three4j.constants.RepeatWrapping;
 import static net.three4j.constants.LinearEncoding;
 import static net.three4j.constants.UnsignedByteType;
+
+import org.mozilla.dom.Image;
+
 import static net.three4j.constants.RGBAFormat;
 import static net.three4j.constants.LinearMipmapLinearFilter;
 import static net.three4j.constants.LinearFilter;
@@ -70,10 +73,10 @@ public class Texture {
 //	this.onUpdate = null;
 //
 //}
-//
-//Texture.DEFAULT_IMAGE = undefined;
-//Texture.DEFAULT_MAPPING = UVMapping;
-//
+	
+	public static Image DEFAULT_IMAGE = null;
+	public static int DEFAULT_MAPPING = UVMapping;
+	
 //Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
 //
 //	constructor: Texture,

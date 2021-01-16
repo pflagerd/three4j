@@ -1,4 +1,4 @@
-package com.mozilla.dom;
+package org.mozilla.dom;
 
 public class Image {
 	
