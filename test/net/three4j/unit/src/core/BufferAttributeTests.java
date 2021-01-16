@@ -3,6 +3,7 @@ package net.three4j.unit.src.core;
 import org.junit.jupiter.api.Test;
 
 import net.three4j.core.BufferAttribute;
+import net.three4j.unit.utils.Float32Array;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -53,27 +54,27 @@ public class BufferAttributeTests {
 			BufferAttribute attr = new BufferAttribute();
 			attr.setUsage( DynamicDrawUsage );
 
-			assertEquals( DynamicDrawUsage, attr.usage, "Usage was set" );
+			assertEquals(DynamicDrawUsage, attr.usage(),  "Usage was set" );
 
 		}
 
-//	@Test
-//	public void copy() {
-//
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( [ 1, 2, 3, 4, 5, 6 ] ), 3 );
-//			attr.setUsage( DynamicDrawUsage );
-//			attr.needsUpdate = true;
-//
-//			BufferAttribute attrCopy = new BufferAttribute().copy( attr );
-//
-//			assertTrue( attr.count == attrCopy.count, "count is equal" );
-//			assertTrue( attr.itemSize == attrCopy.itemSize, "itemSize is equal" );
-//			assertTrue( attr.usage == attrCopy.usage, "usage is equal" );
-//			assertTrue( attr.array.length == attrCopy.array.length, "array length is equal" );
-//			assertTrue( attr.version == 1 && attrCopy.version === 0, "version is not copied which is good" );
-//
-//		}
-//
+	@Test
+	public void copy() {
+
+			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } ), 3 );
+			attr.setUsage( DynamicDrawUsage );
+			attr.needsUpdate(true);
+
+			BufferAttribute attrCopy = new BufferAttribute().copy( attr );
+
+			assertTrue( attr.count() == attrCopy.count(), "count is equal" );
+			assertTrue( attr.itemSize() == attrCopy.itemSize(), "itemSize is equal" );
+			assertTrue( attr.usage() == attrCopy.usage(), "usage is equal" );
+			assertTrue( attr.array().length == attrCopy.array().length, "array length is equal" );
+			assertTrue( attr.version() == 1 && attrCopy.version() == 0, "version is not copied which is good" );
+
+		}
+
 //	@Test
 //	public void copyAt() {
 //
@@ -245,7 +246,7 @@ public class BufferAttributeTests {
 //
 //			a.onUpload( func );
 //
-//			assertEquals( a.onUploadCallback, func, "Check callback was set properly" );
+//			assertEquals(func, a.onUploadCallback,  "Check callback was set properly" );
 //
 //		}
 //

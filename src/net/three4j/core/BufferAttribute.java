@@ -3,6 +3,8 @@ package net.three4j.core;
 import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
 import net.three4j.math.Vector4;
+import net.three4j.unit.utils.Float32Array;
+import net.three4j.unit.utils.TypedArray;
 
 import static net.three4j.THREE.console;
 
@@ -27,19 +29,63 @@ public class BufferAttribute {
 		int offset;
 		int count;
 	}
+	
+	public TypedArray _array;
 
-	public String name;
-	public int itemSize;
-	public int count;
-	public boolean normalized;
-	public int usage;
-	public int version;
-	public UpdateRange updateRange;
+	public TypedArray array() {
+		return _array;
+	}
+
+	public String _name;
+	public String name() {
+		return _name;
+	}	
+	
+	public int _itemSize;
+	public int itemSize() {
+		return _itemSize;
+	}	
+	
+	public int _count;
+	public int count() {
+		return _count;
+	}	
+	
+	public boolean _normalized;
+	public boolean normalized() {
+		return _normalized;
+	}	
+	
+	public int _usage;
+	public int usage() {
+		return _usage;
+	}	
+	
+	public int _version;
+	public int version() {
+		return _version;
+	}	
+	
+	public UpdateRange _updateRange;
+	public UpdateRange updateRange() {
+		return _updateRange;
+	}	
+	
 	
 	public BufferAttribute() {
-		name = "";
-		usage = StaticDrawUsage;
-		updateRange = new UpdateRange(0, 1);
+		_name = "";
+		_usage = StaticDrawUsage;
+		_updateRange = new UpdateRange(0, 1);
+	}
+	
+	public BufferAttribute(Float32Array array, int itemSize) {
+		this(array, itemSize, false);
+	}
+
+	public BufferAttribute(Float32Array array, int itemSize, boolean normalized) {
+		this._array = array;
+		this._itemSize = itemSize;
+		this._normalized = normalized;
 	}
 
 //	public BufferAttribute(double[] array, int itemSize, boolean normalized) {
@@ -60,32 +106,32 @@ public class BufferAttribute {
 	
 	public void needsUpdate(boolean needsUpdate) {
 		if (needsUpdate)
-			this.version++;
+			this._version++;
 	}
 
 	public void onUploadCallback() {}
 	
 	public BufferAttribute setUsage( int value ) {
 
-		this.usage = value;
+		this._usage = value;
 
 		return this;
 
 	}
 
-//	public BufferAttribute copy( BufferAttribute source ) {
-//
-//		this.name = source.name;
-//		this.array = Arrays.copyOf( source.array, source.array.length );
-//		this.itemSize = source.itemSize;
-//		this.count = source.count;
-//		this.normalized = source.normalized;
-//
-//		this.usage = source.usage;
-//
-//		return this;
-//
-//	}
+	public BufferAttribute copy( BufferAttribute source ) {
+
+		this._name = source._name;
+		this._array = source._array.clone();
+		this._itemSize = source._itemSize;
+		this._count = source._count;
+		this._normalized = source._normalized;
+
+		this._usage = source._usage;
+
+		return this;
+
+	}
 
 //	public BufferAttribute copyAt( int index1, BufferAttribute attribute, int index2 ) {
 //
