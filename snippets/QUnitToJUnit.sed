@@ -6,6 +6,6 @@ s#//(.+}) \);#\1#
 s#^.*QUnit\.test.*"(.*[a-zA-Z0-9_$]+)".+$#	@Test\n	public void \1() {#
 s#QUnit\.todo.*"([a-zA-Z0-9_$]+)".+#	@Test\n	public void \1() {#
 s#} \);#}#
-s#===#==#
-s#!==#!=#
+s#===#==#g
+s#!==#!=#g
 s#'([^']+)'#"\1"#
