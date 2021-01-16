@@ -133,20 +133,24 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute copyAt( int index1, BufferAttribute attribute, int index2 ) {
-//
-//		index1 *= this.itemSize;
-//		index2 *= attribute.itemSize;
-//
-//		for ( int i = 0, l = this.itemSize; i < l; i ++ ) {
-//
-//			this.array[ index1 + i ] = attribute.array[ index2 + i ];
-//
-//		}
-//
-//		return this;
-//
-//	}
+	public BufferAttribute copyAt( int index1, BufferAttribute attribute, int index2 ) {
+
+		index1 *= this._itemSize;
+		index2 *= attribute._itemSize;
+		
+		for ( int i = 0, l = this._itemSize; i < l; i ++ ) {
+
+			if (_array instanceof Float32Array) {				
+				((Float32Array)this._array).array()[ index1 + i ] = 
+						((Float32Array)attribute._array).array()[ index2 + i ];
+			}
+			// DPP: TODO: Add more here.
+
+		}
+
+		return this;
+
+	}
 
 //	public BufferAttribute copyArray( double[] array ) {
 //

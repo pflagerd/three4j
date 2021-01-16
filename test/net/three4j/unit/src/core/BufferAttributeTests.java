@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import net.three4j.core.BufferAttribute;
 import net.three4j.unit.utils.Float32Array;
+import net.three4j.unit.utils.TypedArray;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -75,25 +76,25 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void copyAt() {
-//
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] ), 3 );
-//			BufferAttribute attr2 = new BufferAttribute( new Float32Array( 9 ), 3 );
-//
-//			attr2.copyAt( 1, attr, 2 );
-//			attr2.copyAt( 0, attr, 1 );
-//			attr2.copyAt( 2, attr, 0 );
-//
-//			var i = attr.array;
-//			var i2 = attr2.array; // should be [4, 5, 6, 7, 8, 9, 1, 2, 3]
-//
-//			assertTrue( i2[ 0 ] == i[ 3 ] && i2[ 1 ] === i[ 4 ] && i2[ 2 ] === i[ 5 ], "chunck copied to correct place" );
-//			assertTrue( i2[ 3 ] == i[ 6 ] && i2[ 4 ] === i[ 7 ] && i2[ 5 ] === i[ 8 ], "chunck copied to correct place" );
-//			assertTrue( i2[ 6 ] == i[ 0 ] && i2[ 7 ] === i[ 1 ] && i2[ 8 ] === i[ 2 ], "chunck copied to correct place" );
-//
-//		}
-//
+	@Test
+	public void copyAt() {
+
+			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 } ), 3 );
+			BufferAttribute attr2 = new BufferAttribute( new Float32Array( 9 ), 3 );
+
+			attr2.copyAt( 1, attr, 2 );
+			attr2.copyAt( 0, attr, 1 );
+			attr2.copyAt( 2, attr, 0 );
+
+			double[] i = ((Float32Array)attr.array()).array();
+			double[] i2 = ((Float32Array)attr2.array()).array(); // should be [4, 5, 6, 7, 8, 9, 1, 2, 3]
+
+			assertTrue( i2[ 0 ] == i[ 3 ] && i2[ 1 ] == i[ 4 ] && i2[ 2 ] == i[ 5 ], "chunck copied to correct place" );
+			assertTrue( i2[ 3 ] == i[ 6 ] && i2[ 4 ] == i[ 7 ] && i2[ 5 ] == i[ 8 ], "chunck copied to correct place" );
+			assertTrue( i2[ 6 ] == i[ 0 ] && i2[ 7 ] == i[ 1 ] && i2[ 8 ] == i[ 2 ], "chunck copied to correct place" );
+
+		}
+
 //	@Test
 //	public void copyArray() {
 //
@@ -117,8 +118,8 @@ public class BufferAttributeTests {
 //			] );
 //
 //			var i = attr.array;
-//			assertTrue( i[ 0 ] == 0 && i[ 1 ] === 0.5 && i[ 2 ] === 1, "first color was copied correctly" );
-//			assertTrue( i[ 3 ] == 0.25 && i[ 4 ] === 1 && i[ 5 ] === 0, "second color was copied correctly" );
+//			assertTrue( i[ 0 ] == 0 && i[ 1 ] == 0.5 && i[ 2 ] == 1, "first color was copied correctly" );
+//			assertTrue( i[ 3 ] == 0.25 && i[ 4 ] == 1 && i[ 5 ] == 0, "second color was copied correctly" );
 //
 //		}
 //
@@ -133,8 +134,8 @@ public class BufferAttributeTests {
 //			] );
 //
 //			var i = attr.array;
-//			assertTrue( i[ 0 ] == 1 && i[ 1 ] === 2, "first vector was copied correctly" );
-//			assertTrue( i[ 2 ] == 4 && i[ 3 ] === 5, "second vector was copied correctly" );
+//			assertTrue( i[ 0 ] == 1 && i[ 1 ] == 2, "first vector was copied correctly" );
+//			assertTrue( i[ 2 ] == 4 && i[ 3 ] == 5, "second vector was copied correctly" );
 //
 //		}
 //
@@ -149,8 +150,8 @@ public class BufferAttributeTests {
 //			] );
 //
 //			var i = attr.array;
-//			assertTrue( i[ 0 ] == 1 && i[ 1 ] === 2 && i[ 2 ] === 3, "first vector was copied correctly" );
-//			assertTrue( i[ 3 ] == 10 && i[ 4 ] === 20 && i[ 5 ] === 30, "second vector was copied correctly" );
+//			assertTrue( i[ 0 ] == 1 && i[ 1 ] == 2 && i[ 2 ] == 3, "first vector was copied correctly" );
+//			assertTrue( i[ 3 ] == 10 && i[ 4 ] == 20 && i[ 5 ] == 30, "second vector was copied correctly" );
 //
 //		}
 //
@@ -165,8 +166,8 @@ public class BufferAttributeTests {
 //			] );
 //
 //			var i = attr.array;
-//			assertTrue( i[ 0 ] == 1 && i[ 1 ] === 2 && i[ 2 ] === 3 && i[ 3 ] === 4, "first vector was copied correctly" );
-//			assertTrue( i[ 4 ] == 10 && i[ 5 ] === 20 && i[ 6 ] === 30 && i[ 7 ] === 40, "second vector was copied correctly" );
+//			assertTrue( i[ 0 ] == 1 && i[ 1 ] == 2 && i[ 2 ] == 3 && i[ 3 ] == 4, "first vector was copied correctly" );
+//			assertTrue( i[ 4 ] == 10 && i[ 5 ] == 20 && i[ 6 ] == 30 && i[ 7 ] == 40, "second vector was copied correctly" );
 //
 //		}
 //
