@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import net.three4j.core.BufferAttribute;
 import net.three4j.math.Matrix4;
 import net.three4j.math.Vector4;
+import net.three4j.unit.utils.Float32Array;
 
 import static net.three4j.unit.src.math.ConstantsTests.x;
 import static net.three4j.unit.src.math.ConstantsTests.y;
@@ -555,25 +557,25 @@ public class Vector4Tests {
 
 	}
 
-//	@Test
-//	public void fromBufferAttribute() {
-//
-//			Vector4 a = new Vector4();
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( [ 1, 2, 3, 4, 5, 6, 7, 8 ] ), 4 );
-//
-//			a.fromBufferAttribute( attr, 0 );
-//			assertEquals( 1, a.x(), "Offset 0: check x" );
-//			assertEquals( 2, a.y(), "Offset 0: check y" );
-//			assertEquals( 3, a.z(), "Offset 0: check z" );
-//			assertEquals( 4, a.w(), "Offset 0: check w" );
-//
-//			a.fromBufferAttribute( attr, 1 );
-//			assertEquals( 5, a.x(), "Offset 1: check x" );
-//			assertEquals( 6, a.y(), "Offset 1: check y" );
-//			assertEquals( 7, a.z(), "Offset 1: check z" );
-//			assertEquals( 8, a.w(), "Offset 1: check w" );
-//
-//		}
+	@Test
+	public void fromBufferAttribute() {
+
+			Vector4 a = new Vector4();
+			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 5, 6, 7, 8 } ), 4 );
+
+			a.fromBufferAttribute( attr, 0 );
+			assertEquals( 1, a.x(), "Offset 0: check x" );
+			assertEquals( 2, a.y(), "Offset 0: check y" );
+			assertEquals( 3, a.z(), "Offset 0: check z" );
+			assertEquals( 4, a.w(), "Offset 0: check w" );
+
+			a.fromBufferAttribute( attr, 1 );
+			assertEquals( 5, a.x(), "Offset 1: check x" );
+			assertEquals( 6, a.y(), "Offset 1: check y" );
+			assertEquals( 7, a.z(), "Offset 1: check z" );
+			assertEquals( 8, a.w(), "Offset 1: check w" );
+
+		}
 
 	@Test
 	public void setX_setY_setZ_setW() {

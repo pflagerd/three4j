@@ -593,7 +593,7 @@ public class Vector3 {
 
 	public Vector3 setFromSpherical( Spherical s ) {
 
-		return this.setFromSphericalCoords( s.radius, s.phi, s.theta );
+		return this.setFromSphericalCoords( s.radius(), s.phi(), s.theta() );
 
 	}
 
