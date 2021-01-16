@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import net.three4j.math.Vector2;
+import net.three4j.unit.utils.Float32Array;
 import net.three4j.math.Matrix3;
 import net.three4j.core.BufferAttribute;
 
@@ -519,21 +520,21 @@ public class Vector2Tests {
 
 	}
 
-//	@Test
-//	public void fromBufferAttribute() {
-//
-//			Vector2 a = new Vector2();
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( [ 1, 2, 3, 4 ] ), 2 );
-//
-//			a.fromBufferAttribute( attr, 0 );
-//			assertEquals( a.x, 1, "Offset 0: check x" );
-//			assertEquals( a.y, 2, "Offset 0: check y" );
-//
-//			a.fromBufferAttribute( attr, 1 );
-//			assertEquals( a.x, 3, "Offset 1: check x" );
-//			assertEquals( a.y, 4, "Offset 1: check y" );
-//
-//	}
+	@Test
+	public void fromBufferAttribute() {
+
+			Vector2 a = new Vector2();
+			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4 } ), 2 );
+
+			a.fromBufferAttribute( attr, 0 );
+			assertEquals( a.x, 1, "Offset 0: check x" );
+			assertEquals( a.y, 2, "Offset 0: check y" );
+
+			a.fromBufferAttribute( attr, 1 );
+			assertEquals( a.x, 3, "Offset 1: check x" );
+			assertEquals( a.y, 4, "Offset 1: check y" );
+
+	}
 
 	@Test
 	public void rotateAround() {
