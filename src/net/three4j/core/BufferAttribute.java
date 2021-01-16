@@ -348,19 +348,19 @@ public class BufferAttribute {
 //		return this;
 //
 //	}
-//
-//	public BufferAttribute set( double value, int offset ) {
-//		set(value, 0);
-//	}
-//
-//	public BufferAttribute set( double value, int offset ) {
-//
-//		this.array.set( value, offset );
-//
-//		return this;
-//
-//	}
-//
+
+	public BufferAttribute set( double[] value ) {
+		return set(value, 0);
+	}
+
+	public BufferAttribute set( double[] value, int offset ) {
+
+		((Float32Array)this._array).set( value, offset );
+
+		return this;
+
+	}
+
 //	public double getX(int index) {
 //
 //		// return this.array[ index * this.itemSize ];

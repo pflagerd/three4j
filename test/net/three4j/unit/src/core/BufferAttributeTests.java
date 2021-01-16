@@ -108,7 +108,7 @@ public class BufferAttributeTests {
 
 			a.copyArray( f32a );
 
-			assertArrayEquals( ((Float32Array)a.array()).array(), f32a.array(), "Check array has new values" );
+			assertArrayEquals( f32a.array(), ((Float32Array)a.array()).array(), "Check array has new values" );
 
 		}
 
@@ -176,20 +176,20 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void set() {
-//
-//			Float32Array f32a = new Float32Array( [ 1, 2, 3, 4 ] );
-//			BufferAttribute a = new BufferAttribute( f32a, 2, false );
-//			Float32Array expected = new Float32Array( [ 9, 2, 8, 4 ] );
-//
-//			a.set( [ 9 ] );
-//			a.set( [ 8 ], 2 );
-//
-//			assert.deepEqual( a.array, expected, "Check array has expected values" );
-//
-//		}
-//
+	@Test
+	public void set() {
+
+			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4 } );
+			BufferAttribute a = new BufferAttribute( f32a, 2, false );
+			Float32Array expected = new Float32Array( new double[] { 9, 2, 8, 4 } );
+
+			a.set( new double[] { 9 } );
+			a.set( new double[] { 8 }, 2 );
+
+			assertArrayEquals( expected.array(), ((Float32Array)a.array()).array(), "Check array has expected values" );
+
+		}
+
 //		QUnit.test( "set[X, Y, Z, W, XYZ, XYZW]/get[X, Y, Z, W]", ( assert ) => {
 //
 //			Float32Array f32a = new Float32Array( [ 1, 2, 3, 4, 5, 6, 7, 8 ] );
