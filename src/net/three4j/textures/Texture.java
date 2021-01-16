@@ -2,11 +2,15 @@ package net.three4j.textures;
 
 import net.three4j.core.EventDispatcher;
 
+import static net.three4j.THREE.console;
+
 import static net.three4j.constants.MirroredRepeatWrapping;
 import static net.three4j.constants.ClampToEdgeWrapping;
 import static net.three4j.constants.RepeatWrapping;
 import static net.three4j.constants.LinearEncoding;
 import static net.three4j.constants.UnsignedByteType;
+
+import java.util.Arrays;
 
 import org.mozilla.dom.Image;
 
@@ -20,120 +24,157 @@ import net.three4j.math.Vector2;
 import net.three4j.math.Matrix3;
 import net.three4j.extras.ImageUtils;
 
+public class Texture extends EventDispatcher {
 
-public class Texture {
+	private static int textureId = 0;
 
-	int textureId = 0;
+	private Image _image = Texture.DEFAULT_IMAGE;
+	private int _mapping = Texture.DEFAULT_MAPPING;
+	private int _wrapS = ClampToEdgeWrapping;
+	private int _wrapT = ClampToEdgeWrapping;
+	private int _magFilter = LinearFilter;
+	private int _minFilter = LinearMipmapLinearFilter;
+	private int _format = RGBAFormat;
+	private int _type = UnsignedByteType;
+	private int _anisotropy = 1;
+	private int _encoding = LinearEncoding;
+	private String _name = "";
+	private String _uuid = MathUtils.generateUUID();
+	private byte[] _mipmaps = new byte[0];
+	private Vector2 _offset = new Vector2(0, 0);
+	private Vector2 _repeat = new Vector2(1, 1);
+	private Vector2 _center = new Vector2(0, 0);
+	private double _rotation = 0;
+	private Object _internalFormat = null; 
+
+	private boolean _matrixAutoUpdate = true;
+	private Matrix3 _matrix = new Matrix3();
+
+	private boolean _generateMipmaps = true;
+	private boolean _premultiplyAlpha = false;
+	private boolean _flipY = true;
+	private int _unpackAlignment = 4; // valid values: 1, 2, 4, 8 (see // http://www.khronos.org/opengles/sdk/docs/man/xhtml/glPixelStorei.xml)
+	private int _version = 0;
 	
-//function Texture( image = Texture.DEFAULT_IMAGE, mapping = Texture.DEFAULT_MAPPING, wrapS = ClampToEdgeWrapping, wrapT = ClampToEdgeWrapping, magFilter = LinearFilter, minFilter = LinearMipmapLinearFilter, format = RGBAFormat, type = UnsignedByteType, anisotropy = 1, encoding = LinearEncoding ) {
-//
-//	Object.defineProperty( this, 'id', { value: textureId ++ } );
-//
-//	this.uuid = MathUtils.generateUUID();
-//
-//	this.name = '';
-//
-//	this.image = image;
-//	this.mipmaps = [];
-//
-//	this.mapping = mapping;
-//
-//	this.wrapS = wrapS;
-//	this.wrapT = wrapT;
-//
-//	this.magFilter = magFilter;
-//	this.minFilter = minFilter;
-//
-//	this.anisotropy = anisotropy;
-//
-//	this.format = format;
-//	this.internalFormat = null;
-//	this.type = type;
-//
-//	this.offset = new Vector2( 0, 0 );
-//	this.repeat = new Vector2( 1, 1 );
-//	this.center = new Vector2( 0, 0 );
-//	this.rotation = 0;
-//
-//	this.matrixAutoUpdate = true;
-//	this.matrix = new Matrix3();
-//
-//	this.generateMipmaps = true;
-//	this.premultiplyAlpha = false;
-//	this.flipY = true;
-//	this.unpackAlignment = 4;	// valid values: 1, 2, 4, 8 (see http://www.khronos.org/opengles/sdk/docs/man/xhtml/glPixelStorei.xml)
-//
-//	// Values of encoding !== THREE.LinearEncoding only supported on map, envMap and emissiveMap.
-//	//
-//	// Also changing the encoding after already used by a Material will not automatically make the Material
-//	// update. You need to explicitly call Material.needsUpdate to trigger it to recompile.
-//	this.encoding = encoding;
-//
-//	this.version = 0;
-//	this.onUpdate = null;
-//
-//}
-	
+	public Texture() {
+		_image = Texture.DEFAULT_IMAGE;
+		_mapping = Texture.DEFAULT_MAPPING;
+		_wrapS = ClampToEdgeWrapping;
+		_wrapT = ClampToEdgeWrapping;
+		_magFilter = LinearFilter;
+		_minFilter = LinearMipmapLinearFilter;
+		_format = RGBAFormat;
+		_type = UnsignedByteType;
+		_anisotropy = 1;
+		_encoding = LinearEncoding;
+	}
+
+	public int id() {
+		return textureId++;
+	}
+
+	public String name() {
+		return _name;
+	}
+
+	public Texture(Image image, int mapping, int wrapS, int wrapT, int magFilter, int minFilter, int format, int type, int anisotropy, int encoding) {
+
+		this._mapping = mapping;
+
+		this._wrapS = wrapS;
+		this._wrapT = wrapT;
+
+		this._magFilter = magFilter;
+		this._minFilter = minFilter;
+
+		this._anisotropy = anisotropy;
+
+		this._format = format;
+		this._internalFormat = null;
+		this._type = type;
+
+		this._offset = new Vector2(0, 0);
+		this._repeat = new Vector2(1, 1);
+		this._center = new Vector2(0, 0);
+		this._rotation = 0;
+
+		this._matrixAutoUpdate = true;
+		this._matrix = new Matrix3();
+
+		this._generateMipmaps = true;
+		this._premultiplyAlpha = false;
+		this._flipY = true;
+		this._unpackAlignment = 4; // valid values: 1, 2, 4, 8 (see
+									// http://www.khronos.org/opengles/sdk/docs/man/xhtml/glPixelStorei.xml)
+
+		// Values of encoding !== THREE.LinearEncoding only supported on map, envMap and
+		// emissiveMap.
+		//
+		// Also changing the encoding after already used by a Material will not
+		// automatically make the Material
+		// update. You need to explicitly call Material.needsUpdate to trigger it to
+		// recompile.
+		this._encoding = encoding;
+
+		this._version = 0;
+//		this._onUpdate = null;
+
+	}
+
 	public static Image DEFAULT_IMAGE = null;
 	public static int DEFAULT_MAPPING = UVMapping;
-	
-//Texture.prototype = Object.assign( Object.create( EventDispatcher.prototype ), {
-//
-//	constructor: Texture,
-//
-//	isTexture: true,
-//
-//	updateMatrix: function () {
-//
-//		this.matrix.setUvTransform( this.offset.x, this.offset.y, this.repeat.x, this.repeat.y, this.rotation, this.center.x, this.center.y );
-//
-//	},
-//
-//	clone: function () {
-//
-//		return new this.constructor().copy( this );
-//
-//	},
-//
-//	copy: function ( source ) {
-//
-//		this.name = source.name;
-//
-//		this.image = source.image;
-//		this.mipmaps = source.mipmaps.slice( 0 );
-//
-//		this.mapping = source.mapping;
-//
-//		this.wrapS = source.wrapS;
-//		this.wrapT = source.wrapT;
-//
-//		this.magFilter = source.magFilter;
-//		this.minFilter = source.minFilter;
-//
-//		this.anisotropy = source.anisotropy;
-//
-//		this.format = source.format;
-//		this.internalFormat = source.internalFormat;
-//		this.type = source.type;
-//
-//		this.offset.copy( source.offset );
-//		this.repeat.copy( source.repeat );
-//		this.center.copy( source.center );
-//		this.rotation = source.rotation;
-//
-//		this.matrixAutoUpdate = source.matrixAutoUpdate;
-//		this.matrix.copy( source.matrix );
-//
-//		this.generateMipmaps = source.generateMipmaps;
-//		this.premultiplyAlpha = source.premultiplyAlpha;
-//		this.flipY = source.flipY;
-//		this.unpackAlignment = source.unpackAlignment;
-//		this.encoding = source.encoding;
-//
-//		return this;
-//
-//	},
-//
+
+	public void updateMatrix() {
+
+		this._matrix.setUvTransform( this._offset.x, this._offset.y, this._repeat.x, this._repeat.y, this._rotation, this._center.x, this._center.y );
+
+	}
+
+	public Texture clone() {
+
+		return new Texture().copy( this );
+
+	}
+
+	public Texture copy( Texture source ) {
+
+		this._name = source._name;
+
+		this._image = source._image;
+		this._mipmaps = Arrays.copyOf(source._mipmaps, source._mipmaps.length);
+
+		this._mapping = source._mapping;
+
+		this._wrapS = source._wrapS;
+		this._wrapT = source._wrapT;
+
+		this._magFilter = source._magFilter;
+		this._minFilter = source._minFilter;
+
+		this._anisotropy = source._anisotropy;
+
+		this._format = source._format;
+		this._internalFormat = source._internalFormat;
+		this._type = source._type;
+
+		this._offset.copy( source._offset );
+		this._repeat.copy( source._repeat );
+		this._center.copy( source._center );
+		this._rotation = source._rotation;
+
+		this._matrixAutoUpdate = source._matrixAutoUpdate;
+		this._matrix.copy( source._matrix );
+
+		this._generateMipmaps = source._generateMipmaps;
+		this._premultiplyAlpha = source._premultiplyAlpha;
+		this._flipY = source._flipY;
+		this._unpackAlignment = source._unpackAlignment;
+		this._encoding = source._encoding;
+
+		return this;
+
+	}
+
 //	toJSON: function ( meta ) {
 //
 //		const isRootObject = ( meta === undefined || typeof meta === 'string' );
@@ -331,49 +372,47 @@ public class Texture {
 //		return uv;
 //
 //	}
-//
-//} );
-//
-//Object.defineProperty( Texture.prototype, 'needsUpdate', {
-//
-//	set: function ( value ) {
-//
-//		if ( value === true ) this.version ++;
-//
-//	}
-//
-//} );
-//
-//function serializeImage( image ) {
-//
-//	if ( ( typeof HTMLImageElement !== 'undefined' && image instanceof HTMLImageElement ) ||
-//		( typeof HTMLCanvasElement !== 'undefined' && image instanceof HTMLCanvasElement ) ||
-//		( typeof ImageBitmap !== 'undefined' && image instanceof ImageBitmap ) ) {
-//
-//		// default images
-//
-//		return ImageUtils.getDataURL( image );
-//
-//	} else {
-//
-//		if ( image.data ) {
-//
-//			// images of DataTexture
-//
-//			return {
-//				data: Array.prototype.slice.call( image.data ),
-//				width: image.width,
-//				height: image.height,
-//				type: image.data.constructor.name
-//			};
-//
+	
+	public void needsUpdate(boolean needsUpdate) {
+		if (needsUpdate)
+			this._version++;
+	}
+	
+	public static class SerializedImage {
+		public byte[] data = new byte[0];
+		public int width;
+		public int height;
+		public String type = "";
+	}
+
+	public Object serializeImage( Image image ) {
+
+//		if ( ( typeof HTMLImageElement !== 'undefined' && image instanceof HTMLImageElement ) ||
+//			( typeof HTMLCanvasElement !== 'undefined' && image instanceof HTMLCanvasElement ) ||
+//			( typeof ImageBitmap !== 'undefined' && image instanceof ImageBitmap ) ) {
+//	
+//			// default images
+//	
+//			return ImageUtils.getDataURL( image );
+//	
 //		} else {
-//
-//			console.warn( 'THREE.Texture: Unable to serialize Texture.' );
-//			return {};
-//
-//		}
+//	
+			if ( image.data != null) {
+				// images of DataTexture
+				SerializedImage serializedImage = new SerializedImage();
+				serializedImage.data = Arrays.copyOf( image.data, image.data.length );
+				serializedImage.width = image.width;
+				serializedImage.height = image.height;
+				serializedImage.type = image.dataType;
+				return serializedImage;
+			} else {
+	
+				console.warn( "THREE.Texture: Unable to serialize Texture." );
+				return new SerializedImage();
+	
+			}
+	
+		}
 //
 //	}
-//
 }

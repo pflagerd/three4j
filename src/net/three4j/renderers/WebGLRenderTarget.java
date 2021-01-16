@@ -1,10 +1,11 @@
 package net.three4j.renderers;
 
 import net.three4j.core.EventDispatcher;
-//import { Texture } from '../textures/Texture.js';
-//import { LinearFilter } from '../constants.js';
-//import { Vector4 } from '../math/Vector4.js';
-//
+import net.three4j.textures.Texture;
+import static net.three4j.constants.LinearFilter;
+import net.three4j.math.Vector4;
+
+public class WebGLRenderTarget {
 ///*
 // In options, we can specify:
 // * Texture parameters for an auto-generated target texture
@@ -91,7 +92,4 @@ import net.three4j.core.EventDispatcher;
 //
 //	}
 //
-//} );
-//
-//
-//export { WebGLRenderTarget };
+}

@@ -1,7 +1,7 @@
 package net.three4j.renderers;
 
-//import net.three4j.renderers.WebGLRenderTarget;
-//
+import net.three4j.renderers.WebGLRenderTarget;
+
 //function WebGLMultisampleRenderTarget( width, height, options ) {
 //
 //	WebGLRenderTarget.call( this, width, height, options );
