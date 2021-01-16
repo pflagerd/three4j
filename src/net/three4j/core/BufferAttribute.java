@@ -438,19 +438,19 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute setXYZW( index, x, y, z, w ) {
-//
-//		index *= this.itemSize;
-//
-//		this.array[ index + 0 ] = x;
-//		this.array[ index + 1 ] = y;
-//		this.array[ index + 2 ] = z;
-//		this.array[ index + 3 ] = w;
-//
-//		return this;
-//
-//	},
-//
+	public BufferAttribute setXYZW( int index, double x, double y, double z, double w ) {
+
+		index *= this._itemSize;
+
+		((Float32Array)this.array()).array()[ index + 0 ] = x;
+		((Float32Array)this.array()).array()[ index + 1 ] = y;
+		((Float32Array)this.array()).array()[ index + 2 ] = z;
+		((Float32Array)this.array()).array()[ index + 3 ] = w;
+
+		return this;
+
+	}
+
 //	public BufferAttribute onUpload( callback ) {
 //
 //		this.onUploadCallback = callback;
@@ -458,13 +458,13 @@ public class BufferAttribute {
 //		return this;
 //
 //	},
-//
-//	public BufferAttribute clone() {
-//
-//		return new this.constructor( this.array, this.itemSize ).copy( this );
-//
-//	},
-//
+
+	public BufferAttribute clone() {
+
+		return new BufferAttribute( (Float32Array)this._array, this._itemSize );
+
+	}
+
 //	public void toJSON() {
 //
 //		return {

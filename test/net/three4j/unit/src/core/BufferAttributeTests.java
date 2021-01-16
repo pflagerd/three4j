@@ -219,19 +219,19 @@ public class BufferAttributeTests {
 
 		}
 
-//	@Test
-//	public void setXYZW() {
-//
-//			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4 } );
-//			BufferAttribute a = new BufferAttribute( f32a, 4, false );
-//			Float32Array expected = new Float32Array( new double[] { - 1, - 2, - 3, - 4 } );
-//
-//			a.setXYZW( 0, - 1, - 2, - 3, - 4 );
-//
-//			assert.deepEqual( expected.array(), ((Float32Array) a.array()).array(), "Check for the correct values" );
-//
-//		}
-//
+	@Test
+	public void setXYZW() {
+
+			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4 } );
+			BufferAttribute a = new BufferAttribute( f32a, 4, false );
+			Float32Array expected = new Float32Array( new double[] { - 1, - 2, - 3, - 4 } );
+
+			a.setXYZW( 0, - 1, - 2, - 3, - 4 );
+
+			assertArrayEquals( expected.array(), ((Float32Array) a.array()).array(), "Check for the correct values" );
+
+		}
+
 //	@Test
 //	public void onUpload() {
 //
@@ -243,23 +243,23 @@ public class BufferAttributeTests {
 //			assertEquals(func, a.onUploadCallback,  "Check callback was set properly" );
 //
 //		}
-//
-//	@Test
-//	public void clone() {
-//
-//			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 0.12, - 12 } ), 2 );
-//			var attrCopy = attr.clone();
-//
-//			assertTrue( attr.array.length == attrCopy.array.length, "attribute was cloned" );
-//			for ( var i = 0; i < attr.array.length; i ++ ) {
-//
-//				assertTrue( attr.arraynew double[] { i } == attrCopy.array[ i ], "array item is equal" );
-//
-//			}
-//
-//		}
-//
-//		// OTHERS
+
+	@Test
+	public void $clone() {
+
+			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 0.12, - 12 } ), 2 );
+			BufferAttribute attrCopy = attr.clone();
+
+			assertTrue( attr.array().length == attrCopy.array().length, "attribute was cloned" );
+			for ( int i = 0; i < attr.array().length; i ++ ) {
+
+				assertTrue( ((Float32Array)attr.array()).array()[ i ] == ((Float32Array)attrCopy.array()).array()[ i ], "array item is equal" );
+
+			}
+
+		}
+
+		// OTHERS
 //	@Test
 //	public void count() {
 //
