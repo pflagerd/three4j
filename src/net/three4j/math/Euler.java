@@ -44,7 +44,7 @@ public class Euler {
 	public void x( double value) {
 
 		this._x = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -57,7 +57,7 @@ public class Euler {
 	public void y( double value) {
 
 		this._y = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -70,7 +70,7 @@ public class Euler {
 	public void z( double value) {
 
 		this._z = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -83,7 +83,7 @@ public class Euler {
 	public void order( String value ) {
 
 		this._order = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -98,7 +98,7 @@ public class Euler {
 		this._z = z;
 		this._order = order;
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -117,7 +117,7 @@ public class Euler {
 		this._z = euler._z;
 		this._order = euler._order;
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 	}
@@ -256,7 +256,7 @@ public class Euler {
 		this._order = order;
 
 		if ( update ) 
-			this._onChangeCallback();
+			this._onChangeCallback.run();
 
 		return this;
 	}
@@ -273,7 +273,7 @@ public class Euler {
 
 		_matrix.makeRotationFromQuaternion( q );
 
-		return this.setFromRotationMatrix( _matrix, order, update );
+		return this.setFromRotationMatrix( _matrix, order == null ? DefaultOrder : order, update );
 
 	}
 	
@@ -308,7 +308,7 @@ public class Euler {
 //		if ( array.length !== undefined ) 
 //			this._order = array[ 3 ];
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -347,15 +347,17 @@ public class Euler {
 //
 //	}
 
-//	_onChange( callback ) {
-//
-//		this._onChangeCallback = callback;
-//
-//		return this;
-//
-//	}
+	public Euler onChange( Runnable callback ) {
 
-	public void _onChangeCallback() {}
+		this._onChangeCallback = callback;
+
+		return this;
+
+	}
+	
+	private void noop() {}
+
+	private Runnable _onChangeCallback = this::noop;
 
 	public static final String DefaultOrder = "XYZ";
 	public static final String[] RotationOrders = new String[] { "XYZ", "YZX", "ZXY", "XZY", "YXZ", "ZYX" };

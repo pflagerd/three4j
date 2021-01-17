@@ -131,7 +131,7 @@ public class Quaternion {
 	public void x( double value ) {
 
 		this._x = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -144,7 +144,7 @@ public class Quaternion {
 	public void y( double value ) {
 
 		this._y = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -157,7 +157,7 @@ public class Quaternion {
 	public void z( double value ) {
 
 		this._z = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -170,7 +170,7 @@ public class Quaternion {
 	public void w( double value ) {
 
 		this._w = value;
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 	}
 
@@ -180,7 +180,7 @@ public class Quaternion {
 		this._z = z;
 		this._w = w;
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 	}
@@ -196,7 +196,7 @@ public class Quaternion {
 		this._z = quaternion._z;
 		this._w = quaternion._w;
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 	}
@@ -270,7 +270,7 @@ public class Quaternion {
 
 		}
 
-		if ( update != false ) this._onChangeCallback();
+		if ( update != false ) this._onChangeCallback.run();
 
 		return this;
 
@@ -289,7 +289,7 @@ public class Quaternion {
 		this._z = axis.z * s;
 		this._w = Math.cos( halfAngle );
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -347,7 +347,7 @@ public class Quaternion {
 
 		}
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -436,7 +436,7 @@ public class Quaternion {
 		this._y *= - 1;
 		this._z *= - 1;
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -482,7 +482,7 @@ public class Quaternion {
 
 		}
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 		
@@ -520,7 +520,7 @@ public class Quaternion {
 		this._z = qaz * qbw + qaw * qbz + qax * qby - qay * qbx;
 		this._w = qaw * qbw - qax * qbx - qay * qby - qaz * qbz;
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -576,7 +576,7 @@ public class Quaternion {
 			this._z = s * z + t * this._z;
 
 			this.normalize();
-			this._onChangeCallback();
+			this._onChangeCallback.run();
 
 			return this;
 
@@ -591,7 +591,7 @@ public class Quaternion {
 		this._x = ( x * ratioA + this._x * ratioB );
 		this._y = ( y * ratioA + this._y * ratioB );
 		this._z = ( z * ratioA + this._z * ratioB );
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -614,7 +614,7 @@ public class Quaternion {
 		this._z = array[ offset + 2 ];
 		this._w = array[ offset + 3 ];
 
-		this._onChangeCallback();
+		this._onChangeCallback.run();
 
 		return this;
 
@@ -655,13 +655,16 @@ public class Quaternion {
 		return super.toString() + " {x:" + _x + ", y:" + _y + ", z:" + _z + ", w:" + _w + "}";
 	}
 
-//	_onChange( callback ) {
-//
-//		this._onChangeCallback = callback;
-//
-//		return this;
-//
-//	}
+	public Quaternion onChange( Runnable callback ) {
 
-	public void _onChangeCallback() {}
+		this._onChangeCallback = callback;
+
+		return this;
+
+	}
+	
+	private void noop() {}
+
+	private Runnable _onChangeCallback = this::noop;
+	
 }

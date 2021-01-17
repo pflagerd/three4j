@@ -113,8 +113,8 @@ public class Object3DTests {
 
 		a.applyMatrix4(m);
 
-		assertTrue(a.position.equals(expectedPos), "Position has the expected values");
-		assertTrue(Math.abs(a.quaternion.x() - expectedQuat.x()) <= eps && Math.abs(a.quaternion.y() - expectedQuat.y()) <= eps && Math.abs(a.quaternion.z() - expectedQuat.z()) <= eps, "Quaternion has the expected values");
+		assertTrue(a.position().equals(expectedPos), "Position has the expected values");
+		assertTrue(Math.abs(a.quaternion().x() - expectedQuat.x()) <= eps && Math.abs(a.quaternion().y() - expectedQuat.y()) <= eps && Math.abs(a.quaternion().z() - expectedQuat.z()) <= eps, "Quaternion has the expected values");
 
 	}
 
@@ -127,13 +127,13 @@ public class Object3DTests {
 			Quaternion quat = new Quaternion( 0, sqrt, 0, sqrt );
 			Quaternion expected = new Quaternion( sqrt / 2, sqrt / 2, 0, 0 );
 
-			a.quaternion.set( 0.25, 0.25, 0.25, 0.25 );
+			a.quaternion().set( 0.25, 0.25, 0.25, 0.25 );
 			a.applyQuaternion( quat );
 
 			assertTrue(
-				Math.abs( a.quaternion.x() - expected.x() ) <= eps &&
-				Math.abs( a.quaternion.y() - expected.y() ) <= eps &&
-				Math.abs( a.quaternion.z() - expected.z() ) <= eps,
+				Math.abs( a.quaternion().x() - expected.x() ) <= eps &&
+				Math.abs( a.quaternion().y() - expected.y() ) <= eps &&
+				Math.abs( a.quaternion().z() - expected.z() ) <= eps,
 				"Quaternion has the expected values"
 			);
 
@@ -233,7 +233,7 @@ public class Object3DTests {
 			double angleInRad = 1.562;
 			obj.rotateX( angleInRad );
 
-			assertEquals( angleInRad, obj.rotation.x(), eps, "x is equal" );
+			assertEquals( angleInRad, obj.rotation().x(), eps, "x is equal" );
 
 	}
 
@@ -246,7 +246,7 @@ public class Object3DTests {
 			double angleInRad = - 0.346;
 			obj.rotateY( angleInRad );
 
-			assertEquals( angleInRad, obj.rotation.y(), eps, "y is equal" );
+			assertEquals( angleInRad, obj.rotation().y(), eps, "y is equal" );
 
 	}
 
@@ -259,7 +259,7 @@ public class Object3DTests {
 			double angleInRad = 1;
 			obj.rotateZ( angleInRad );
 
-			assertEquals( angleInRad, obj.rotation.z(), eps, "z is equal" );
+			assertEquals( angleInRad, obj.rotation().z(), eps, "z is equal" );
 
 	}
 
@@ -273,7 +273,7 @@ public class Object3DTests {
 //			obj.translateOnAxis( new Vector3( 0, 1, 0 ), 1.23 );
 //			obj.translateOnAxis( new Vector3( 0, 0, 1 ), - 4.56 );
 //
-//			assert.propEqual( obj.position, {
+//			assert.propEqual( obj.position()(), {
 //				x: 1,
 //				y: 1.23,
 //				z: - 4.56
@@ -288,7 +288,7 @@ public class Object3DTests {
 			Object3D obj = new Object3D();
 			obj.translateX( 1.234 );
 
-			assertEquals( 1.234, obj.position.x, eps, "x is equal" );
+			assertEquals( 1.234, obj.position().x, eps, "x is equal" );
 
 	}
 
@@ -299,7 +299,7 @@ public class Object3DTests {
 			Object3D obj = new Object3D();
 			obj.translateY( 1.234 );
 
-			assertEquals( 1.234, obj.position.y, eps, "y is equal" );
+			assertEquals( 1.234, obj.position().y, eps, "y is equal" );
 
 	}
 
@@ -310,7 +310,7 @@ public class Object3DTests {
 			Object3D obj = new Object3D();
 			obj.translateZ( 1.234 );
 
-			assertEquals( 1.234, obj.position.z, eps, "z is equal" );
+			assertEquals( 1.234, obj.position().z, eps, "z is equal" );
 
 	}
 
@@ -324,11 +324,11 @@ public class Object3DTests {
 //			Object3D parent = new Object3D();
 //			Object3D child = new Object3D();
 //
-//			parent.position.set( 1, 0, 0 );
+//			parent.position()().set( 1, 0, 0 );
 //			parent.rotation.set( 0, Math.PI / 2, 0 );
 //			parent.scale.set( 2, 1, 1 );
 //
-//			child.position.set( 0, 1, 0 );
+//			child.position()().set( 0, 1, 0 );
 //			child.rotation.set( Math.PI / 2, 0, 0 );
 //			child.scale.set( 1, 2, 1 );
 //
@@ -356,11 +356,11 @@ public class Object3DTests {
 //			const parent = new Object3D();
 //			const child = new Object3D();
 //
-//			parent.position.set( 1, 0, 0 );
+//			parent.position()().set( 1, 0, 0 );
 //			parent.rotation.set( 0, Math.PI / 2, 0 );
 //			parent.scale.set( 2, 1, 1 );
 //
-//			child.position.set( 0, 1, 0 );
+//			child.position()().set( 0, 1, 0 );
 //			child.rotation.set( Math.PI / 2, 0, 0 );
 //			child.scale.set( 1, 2, 1 );
 //
@@ -616,8 +616,8 @@ public class Object3DTests {
 	public void updateMatrix() {
 //
 //			const a = new Object3D();
-//			a.position.set( 2, 3, 4 );
-//			a.quaternion.set( 5, 6, 7, 8 );
+//			a.position()().set( 2, 3, 4 );
+//			a.quaternion().set( 5, 6, 7, 8 );
 //			a.scale.set( 9, 10, 11 );
 //
 //			assert.deepEqual( a.matrix.elements, [
@@ -649,8 +649,8 @@ public class Object3DTests {
 //
 //			// -- Standard usage test
 //
-//			parent.position.set( 1, 2, 3 );
-//			child.position.set( 4, 5, 6 );
+//			parent.position()().set( 1, 2, 3 );
+//			child.position()().set( 4, 5, 6 );
 //			parent.add( child );
 //
 //			parent.updateMatrixWorld();
@@ -687,7 +687,7 @@ public class Object3DTests {
 //
 //			// -- No sync between local position/quaternion/scale/matrix and world matrix test
 //
-//			parent.position.set( 0, 0, 0 );
+//			parent.position()().set( 0, 0, 0 );
 //			parent.updateMatrix();
 //
 //			assert.deepEqual( parent.matrixWorld.elements, [
@@ -700,10 +700,10 @@ public class Object3DTests {
 //			// -- matrixAutoUpdate = false test
 //
 //			// Resetting local and world matrices to the origin
-//			child.position.set( 0, 0, 0 );
+//			child.position()().set( 0, 0, 0 );
 //			parent.updateMatrixWorld();
 //
-//			parent.position.set( 1, 2, 3 );
+//			parent.position()().set( 1, 2, 3 );
 //			parent.matrixAutoUpdate = false;
 //			child.matrixAutoUpdate = false;
 //			parent.updateMatrixWorld();
@@ -744,11 +744,11 @@ public class Object3DTests {
 //			// -- force argument test
 //
 //			// Resetting the local and world matrices to the origin
-//			child.position.set( 0, 0, 0 );
+//			child.position()().set( 0, 0, 0 );
 //			child.matrixAutoUpdate = true;
 //			parent.updateMatrixWorld();
 //
-//			parent.position.set( 1, 2, 3 );
+//			parent.position().set( 1, 2, 3 );
 //			parent.updateMatrix();
 //			parent.matrixAutoUpdate = false;
 //			parent.matrixWorldNeedsUpdate = false;
@@ -765,14 +765,14 @@ public class Object3DTests {
 //			// -- Restriction test: No effect to parent matrices
 //
 //			// Resetting the local and world matrices to the origin
-//			parent.position.set( 0, 0, 0 );
-//			child.position.set( 0, 0, 0 );
+//			parent.position().set( 0, 0, 0 );
+//			child.position().set( 0, 0, 0 );
 //			parent.matrixAutoUpdate = true;
 //			child.matrixAutoUpdate = true;
 //			parent.updateMatrixWorld();
 //
-//			parent.position.set( 1, 2, 3 );
-//			child.position.set( 4, 5, 6 );
+//			parent.position().set( 1, 2, 3 );
+//			child.position().set( 4, 5, 6 );
 //
 //			child.updateMatrixWorld();
 //
@@ -813,9 +813,9 @@ public class Object3DTests {
 //			parent.add( object );
 //			object.add( child );
 //
-//			parent.position.set( 1, 2, 3 );
-//			object.position.set( 4, 5, 6 );
-//			child.position.set( 7, 8, 9 );
+//			parent.position().set( 1, 2, 3 );
+//			object.position().set( 4, 5, 6 );
+//			child.position().set( 7, 8, 9 );
 //
 //			// Update the world matrix of an object
 //
@@ -830,11 +830,11 @@ public class Object3DTests {
 //				"No effect to parents' world matrices" );
 //
 //			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position ).elements,
+//				m.setPosition( object.position() ).elements,
 //				"Object's local matrix is updated" );
 //
 //			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( object.position ).elements,
+//				m.setPosition( object.position() ).elements,
 //				"Object's world matrix is updated" );
 //
 //			assert.deepEqual( child.matrix.elements,
@@ -853,19 +853,19 @@ public class Object3DTests {
 //			object.updateWorldMatrix( true, false );
 //
 //			assert.deepEqual( parent.matrix.elements,
-//				m.setPosition( parent.position ).elements,
+//				m.setPosition( parent.position() ).elements,
 //				"Parents' local matrices are updated" );
 //
 //			assert.deepEqual( parent.matrixWorld.elements,
-//				m.setPosition( parent.position ).elements,
+//				m.setPosition( parent.position() ).elements,
 //				"Parents' world matrices are updated" );
 //
 //			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position ).elements,
+//				m.setPosition( object.position() ).elements,
 //				"Object's local matrix is updated" );
 //
 //			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( v.copy( parent.position ).add( object.position ) ).elements,
+//				m.setPosition( v.copy( parent.position() ).add( object.position() ) ).elements,
 //				"Object's world matrix is updated" );
 //
 //			assert.deepEqual( child.matrix.elements,
@@ -894,19 +894,19 @@ public class Object3DTests {
 //				"No effect to parents' world matrices" );
 //
 //			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position ).elements,
+//				m.setPosition( object.position() ).elements,
 //				"Object's local matrix is updated" );
 //
 //			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( object.position ).elements,
+//				m.setPosition( object.position() ).elements,
 //				"Object's world matrix is updated" );
 //
 //			assert.deepEqual( child.matrix.elements,
-//				m.setPosition( child.position ).elements,
+//				m.setPosition( child.position() ).elements,
 //				"Children's local matrices are updated" );
 //
 //			assert.deepEqual( child.matrixWorld.elements,
-//				m.setPosition( v.copy( object.position ).add( child.position ) ).elements,
+//				m.setPosition( v.copy( object.position() ).add( child.position() ) ).elements,
 //				"Children's world matrices are updated" );
 //
 //			// Update the world matrices of an object and its parents and children
@@ -919,27 +919,27 @@ public class Object3DTests {
 //			object.updateWorldMatrix( true, true );
 //
 //			assert.deepEqual( parent.matrix.elements,
-//				m.setPosition( parent.position ).elements,
+//				m.setPosition( parent.position() ).elements,
 //				"Parents' local matrices are updated" );
 //
 //			assert.deepEqual( parent.matrixWorld.elements,
-//				m.setPosition( parent.position ).elements,
+//				m.setPosition( parent.position() ).elements,
 //				"Parents' world matrices are updated" );
 //
 //			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position ).elements,
+//				m.setPosition( object.position() ).elements,
 //				"Object's local matrix is updated" );
 //
 //			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( v.copy( parent.position ).add( object.position ) ).elements,
+//				m.setPosition( v.copy( parent.position() ).add( object.position() ) ).elements,
 //				"Object's world matrix is updated" );
 //
 //			assert.deepEqual( child.matrix.elements,
-//				m.setPosition( child.position ).elements,
+//				m.setPosition( child.position() ).elements,
 //				"Children's local matrices are updated" );
 //
 //			assert.deepEqual( child.matrixWorld.elements,
-//				m.setPosition( v.copy( parent.position ).add( object.position ).add( child.position ) ).elements,
+//				m.setPosition( v.copy( parent.position() ).add( object.position() ).add( child.position() ) ).elements,
 //				"Children's world matrices are updated" );
 //
 //			// object.matrixAutoUpdate = false test
@@ -955,7 +955,7 @@ public class Object3DTests {
 //				"No effect to object's local matrix if matrixAutoUpdate is false" );
 //
 //			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( parent.position ).elements,
+//				m.setPosition( parent.position() ).elements,
 //				"object's world matrix is updated even if matrixAutoUpdate is false" );
 //
 	}
@@ -1052,8 +1052,8 @@ public class Object3DTests {
 //			a.name = "original";
 //			b.name = "to-be-copied";
 //
-//			b.position.set( x, y, z );
-//			b.quaternion.set( x, y, z, w );
+//			b.position().set( x, y, z );
+//			b.quaternion().set( x, y, z, w );
 //			b.scale.set( 2, 3, 4 );
 //
 //			// bogus QUnit.test values

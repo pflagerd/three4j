@@ -18,12 +18,13 @@ public class Object3D extends EventDispatcher {
 	private final Vector3 _v1 = new Vector3();
 	private final Quaternion _q1 = new Quaternion();
 	private final Matrix4 _m1 = new Matrix4();
-	private final Vector3 _target = new Vector3();
+	private Vector3 _target = new Vector3();
 
-	private final Vector3 _position = new Vector3();
+	private Vector3 _position = new Vector3();
+	private Euler _rotation = new Euler();
 
-	private final Vector3 _scale = new Vector3();
-	private final Quaternion _quaternion = new Quaternion();
+	private Vector3 _scale = new Vector3();
+	private Quaternion _quaternion = new Quaternion();
 
 	private final Vector3 _xAxis = new Vector3( 1, 0, 0 );
 	private final Vector3 _yAxis = new Vector3( 0, 1, 0 );
@@ -33,14 +34,10 @@ public class Object3D extends EventDispatcher {
 //	const _removedEvent = { type: 'removed' };
 
 	public final long id;
-	public final Vector3 position;
-	public Euler rotation;
 	public Object3D parent;
 	public ArrayList<Object3D> children;
 	public final String uuid;
-	public Quaternion quaternion;
 	public String name;
-	public Vector3 scale;
 	public Vector3 up;
 	public Matrix4 modelViewMatrix;
 	public Matrix3 normalMatrix;
@@ -54,6 +51,8 @@ public class Object3D extends EventDispatcher {
 	public int renderOrder;
 	public boolean visible;
 	public Layers layers;
+	// animations
+	Object _userData;
 	
 	
 	public Object3D() {
@@ -68,10 +67,11 @@ public class Object3D extends EventDispatcher {
 	
 		this.up = new Vector3(DefaultUp);
 	
-		position = new Vector3();
-		rotation = new Euler();
-		quaternion = new Quaternion();
-		scale = new Vector3( 1, 1, 1 );
+		this._position = new Vector3();
+		this._rotation = new Euler();
+		this._quaternion = new Quaternion();
+		this._quaternion.onChange( this::onQuaternionChange );
+		this._scale = new Vector3( 1, 1, 1 );
 		
 		this.matrix = new Matrix4();
 		this._matrixWorld = new Matrix4();
@@ -90,24 +90,37 @@ public class Object3D extends EventDispatcher {
 	
 //		this.animations = [];
 //	
-//		this.userData = {};
-	
+		this._userData = new Object();	
 	}
 	
 	public Matrix4 matrixWorld() {
 		return _matrixWorld;
 	}
+	
+	public Vector3 position() {
+		return _position;
+	}
+	
+	public Quaternion quaternion() {
+		return _quaternion;
+	}
+	
+	public Euler rotation() {
+		return _rotation;
+	}
 
 	public void onRotationChange() {
-		quaternion.setFromEuler( rotation, false );
+		_quaternion.setFromEuler( _rotation, false );
 	}
 
 	public void onQuaternionChange() {
-		rotation.setFromQuaternion( quaternion, null, false );
+		_rotation.setFromQuaternion( _quaternion, null, false );
 	}
 
-//	rotation._onChange( onRotationChange );
-//	quaternion._onChange( onQuaternionChange );
+	{
+	_rotation.onChange( this::onRotationChange );
+	_quaternion.onChange( this::onQuaternionChange );
+	}
 
 	static final Vector3 DefaultUp = new Vector3( 0, 1, 0 );
 	boolean DefaultMatrixAutoUpdate = true;
@@ -123,25 +136,25 @@ public class Object3D extends EventDispatcher {
 
 		this.matrix.premultiply( matrix );
 
-		this.matrix.decompose( this.position, this.quaternion, this.scale );
+		this.matrix.decompose( this._position, this._quaternion, this._scale );
 
 	}
 
 	public Object3D applyQuaternion( Quaternion q ) {
 
-		this.quaternion.premultiply( q );
+		this._quaternion.premultiply( q );
 
 		return this;
 	}
 
 	public void setRotationFromAxisAngle(Vector3 axis, double angle ) {
 		// assumes axis is normalized
-		this.quaternion.setFromAxisAngle( axis, angle );
+		this._quaternion.setFromAxisAngle( axis, angle );
 	}
 
 	public void setRotationFromEuler( Euler euler ) {
 
-		this.quaternion.setFromEuler( euler, true );
+		this._quaternion.setFromEuler( euler, true );
 
 	}
 
@@ -149,7 +162,7 @@ public class Object3D extends EventDispatcher {
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
 
-		this.quaternion.setFromRotationMatrix( m );
+		this._quaternion.setFromRotationMatrix( m );
 
 	}
 
@@ -157,7 +170,7 @@ public class Object3D extends EventDispatcher {
 
 		// assumes q is normalized
 
-		this.quaternion.copy( q );
+		this._quaternion.copy( q );
 
 	}
 
@@ -168,7 +181,7 @@ public class Object3D extends EventDispatcher {
 
 		_q1.setFromAxisAngle( axis, angle );
 
-		this.quaternion.multiply( _q1 );
+		this._quaternion.multiply( _q1 );
 
 		return this;
 
@@ -179,7 +192,7 @@ public class Object3D extends EventDispatcher {
 		// axis is assumed to be normalized
 		// method assumes no rotated parent
 		_q1.setFromAxisAngle( axis, angle );
-		this.quaternion.premultiply( _q1 );
+		this._quaternion.premultiply( _q1 );
 		return this;
 	}
 
@@ -206,9 +219,9 @@ public class Object3D extends EventDispatcher {
 		// translate object by distance along axis in object space
 		// axis is assumed to be normalized
 
-		_v1.copy( axis ).applyQuaternion( this.quaternion );
+		_v1.copy( axis ).applyQuaternion( this._quaternion );
 
-		this.position.add( _v1.multiplyScalar( distance ) );
+		this._position.add( _v1.multiplyScalar( distance ) );
 
 		return this;
 
@@ -268,13 +281,13 @@ public class Object3D extends EventDispatcher {
 //
 //		}
 //
-		this.quaternion.setFromRotationMatrix( _m1 );
+		this._quaternion.setFromRotationMatrix( _m1 );
 
 		if ( this.parent != null ) {
 
 			_m1.extractRotation( parent.matrixWorld() );
 			_q1.setFromRotationMatrix( _m1 );
-			this.quaternion.premultiply( _q1.invert() );
+			this._quaternion.premultiply( _q1.invert() );
 
 		}
 	}
@@ -531,7 +544,7 @@ public class Object3D extends EventDispatcher {
 //
 	void updateMatrix() {
 
-		this.matrix.compose( this.position, this.quaternion, this.scale );
+		this.matrix.compose( this._position, this._quaternion, this._scale );
 
 		this.matrixWorldNeedsUpdate = true;
 
@@ -845,10 +858,10 @@ public class Object3D extends EventDispatcher {
 
 		this.up.copy( source.up );
 
-		this.position.copy( source.position );
-		this.rotation.order(source.rotation.order());
-		this.quaternion.copy( source.quaternion );
-		this.scale.copy( source.scale );
+		this._position.copy( source._position );
+		this._rotation.order(source._rotation.order());
+		this._quaternion.copy( source._quaternion );
+		this._scale.copy( source._scale );
 
 		this.matrix.copy( source.matrix );
 		this.matrixWorld().copy( source.matrixWorld() );
@@ -856,7 +869,7 @@ public class Object3D extends EventDispatcher {
 		this.matrixAutoUpdate = source.matrixAutoUpdate;
 		this.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
 
-//		this.layers.mask = source.layers.mask;
+		this.layers.mask = source.layers.mask;
 		this.visible = source.visible;
 
 		this.castShadow = source.castShadow;
