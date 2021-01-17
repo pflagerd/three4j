@@ -2,40 +2,44 @@ package net.three4j.examples;
 
 import static net.three4j.THREE.window;
 
-import net.three4j.THREE;
-import net.three4j.THREE.KV;
+import net.three4j.cameras.PerspectiveCamera;
+import net.three4j.core.Geometry;
+import net.three4j.materials.Material;
+import net.three4j.objects.Mesh;
+import net.three4j.renderers.WebGLRenderer;
+import net.three4j.scenes.Scene;
 
 class hello {
 
-	THREE.PerspectiveCamera camera;
-	THREE.Scene scene;
-	THREE.WebGLRenderer renderer;
-	THREE.Geometry geometry;
-    THREE.Material material;
-    THREE.Mesh mesh;
+	PerspectiveCamera camera;
+	Scene scene;
+	WebGLRenderer renderer;
+	Geometry geometry;
+    Material material;
+    Mesh mesh;
     
     public hello() {
-        camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+        camera = new PerspectiveCamera( 70, (double)window.innerWidth / window.innerHeight, 0.01, 10 );
         camera.position.z = 1;
 
-        scene = new THREE.Scene();
-
-        geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-        material = new THREE.MeshNormalMaterial();
-
-        mesh = new THREE.Mesh( geometry, material );
-        scene.add( mesh );
-
-        THREE.WebGLRenderer renderer = new THREE.WebGLRenderer(new KV("antialias", true));
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.setAnimationLoop( this::animation );
+//        scene = new Scene();
+//
+//        geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
+//        material = new MeshNormalMaterial();
+//
+//        mesh = new Mesh( geometry, material );
+//        scene.add( mesh );
+//
+//        WebGLRenderer renderer = new WebGLRenderer(new KV("antialias", true));
+//        renderer.setSize( window.innerWidth, window.innerHeight );
+//        renderer.setAnimationLoop( this::animation );
     }
 
     void animation( double time ) {
         mesh.rotation.x(time / 2000);
         mesh.rotation.y(time / 1000);
 
-        renderer.render( scene, camera );
+//        renderer.render( scene, camera );
     }
     
     public static void main(String[] args) {
