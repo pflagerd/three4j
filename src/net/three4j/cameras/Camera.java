@@ -1,81 +1,68 @@
 package net.three4j.cameras;
 
-import net.three4j.core.Object3D;
 import net.three4j.math.Matrix4;
+import net.three4j.core.Object3D;
+import net.three4j.math.Vector3;
 
-//import { Matrix4 } from '../math/Matrix4.js';
-//import { Object3D } from '../core/Object3D.js';
-//import { Vector3 } from '../math/Vector3.js';
-//
+
 public class Camera extends Object3D {
-	public Matrix4 matrixWorldInverse;
-	public Matrix4 projectionMatrix;
-	public Matrix4 projectionMatrixInverse;
+	
+	private Matrix4 matrixWorldInverse;
+	private Matrix4 projectionMatrix;
+	private Matrix4 projectionMatrixInverse;
 
-	public Camera() {	
+	public Camera() {
+		super();
+	
 		this.matrixWorldInverse = new Matrix4();
 	
 		this.projectionMatrix = new Matrix4();
-		this.projectionMatrixInverse = new Matrix4();	
+		this.projectionMatrixInverse = new Matrix4();
+	
 	}
 
-//Camera.prototype = Object.assign( Object.create( Object3D.prototype ), {
-//
-//	constructor: Camera,
-//
-//	isCamera: true,
-//
-//	copy: function ( source, recursive ) {
-//
+	public Camera copy  ( Camera source, Camera recursive ) {
+
 //		Object3D.prototype.copy.call( this, source, recursive );
 //
 //		this.matrixWorldInverse.copy( source.matrixWorldInverse );
 //
 //		this.projectionMatrix.copy( source.projectionMatrix );
 //		this.projectionMatrixInverse.copy( source.projectionMatrixInverse );
-//
-//		return this;
-//
-//	},
-//
-//	getWorldDirection: function ( target ) {
-//
-//		if ( target === undefined ) {
-//
-//			console.warn( 'THREE.Camera: .getWorldDirection() target is now required' );
-//			target = new Vector3();
-//
-//		}
-//
+
+		return this;
+
+	}
+
+	public Matrix4 getWorldDirection  ( Matrix4 target ) {
+
 //		this.updateWorldMatrix( true, false );
 //
 //		const e = this.matrixWorld.elements;
 //
 //		return target.set( - e[ 8 ], - e[ 9 ], - e[ 10 ] ).normalize();
-//
-//	},
-//
-//	updateMatrixWorld: function ( force ) {
-//
+		return null;
+	}
+
+//	public void updateMatrixWorld ( force ) {
+
 //		Object3D.prototype.updateMatrixWorld.call( this, force );
 //
 //		this.matrixWorldInverse.copy( this.matrixWorld ).invert();
-//
-//	},
-//
-//	updateWorldMatrix: function ( updateParents, updateChildren ) {
+
+//	}
+
+//	public void updateWorldMatrix  ( updateParents, updateChildren ) {
 //
 //		Object3D.prototype.updateWorldMatrix.call( this, updateParents, updateChildren );
 //
 //		this.matrixWorldInverse.copy( this.matrixWorld ).invert();
 //
-//	},
-//
-//	clone: function () {
-//
-//		return new this.constructor().copy( this );
-//
 //	}
-//
+
+//	public Camera clone  () {
+//		return new Camera().copy( this );
+//	}
+
 }
-//export { Camera };
+
