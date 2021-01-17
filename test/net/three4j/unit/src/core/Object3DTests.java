@@ -1,12 +1,15 @@
 package net.three4j.unit.src.core;
 
-
 import org.junit.jupiter.api.Test;
+
+import net.three4j.core.Object3D;
+import net.three4j.math.Euler;
+import net.three4j.math.Matrix4;
+import net.three4j.math.Quaternion;
+import net.three4j.math.Vector3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-
 
 import static net.three4j.unit.src.math.ConstantsTests.x;
 import static net.three4j.unit.src.math.ConstantsTests.y;
@@ -16,239 +19,251 @@ import static net.three4j.unit.src.math.ConstantsTests.eps;
 
 public class Object3DTests {
 
-//		var RadToDeg = 180 / Math.PI;
-//
-//		var eulerEquals = function ( a, b, tolerance ) {
-//
-//			tolerance = tolerance || 0.0001;
-//
-//			if ( a.order != b.order ) {
-//
-//				return false;
-//
-//			}
-//
-//			return (
-//				Math.abs( a.x - b.x ) <= tolerance &&
-//				Math.abs( a.y - b.y ) <= tolerance &&
-//				Math.abs( a.z - b.z ) <= tolerance
-//			);
-//
-//		};
-//
+		private static final double RadToDeg = 180 / Math.PI;
+
+		boolean eulerEquals(Euler a, Euler b) {
+			return eulerEquals(a, b, 0.0001);
+		}
+	
+		boolean eulerEquals( Euler a, Euler b, double tolerance ) {
+
+			if ( a.order() != b.order() ) {
+
+				return false;
+
+			}
+
+			return (
+				Math.abs( a.x() - b.x() ) <= tolerance &&
+				Math.abs( a.y() - b.y() ) <= tolerance &&
+				Math.abs( a.z() - b.z() ) <= tolerance
+			);
+
+		};
+
 //		// INHERITANCE
 //			@Test
-	public void Extending() {
+//	public void Extending() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-//			assertTrue( false, "everything's gonna be alright" );
+////
+////		// INSTANCING
+////			@Test
+//	public void Instancing() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-		}
+////
+////		// STATIC STUFF
+////			@Test
+//	public void DefaultUp() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-//		// INSTANCING
-//			@Test
-	public void Instancing() {
+////
+////			@Test
+//	public void DefaultMatrixAutoUpdate() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-//			assertTrue( false, "everything's gonna be alright" );
+////
+////		// PUBLIC STUFF
+////			@Test
+//	public void isObject3D() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-		}
+////
+////			@Test
+//	public void onBeforeRender() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-//		// STATIC STUFF
-//			@Test
-	public void DefaultUp() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
-//
-//			@Test
-	public void DefaultMatrixAutoUpdate() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
-//
-//		// PUBLIC STUFF
-//			@Test
-	public void isObject3D() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
-//
-//			@Test
-	public void onBeforeRender() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
-//
-//			@Test
-	public void onAfterRender() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
-//
+////
+////			@Test
+//	public void onAfterRender() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
+
 	@Test
 	public void applyMatrix4() {
-//
-//			Object3D a = new Object3D();
-//			Matrix4 m = new Matrix4();
-//			Vector3 expectedPos = new Vector3( x, y, z );
-//			Quaternion expectedQuat = new Quaternion( 0.5 * Math.sqrt( 2 ), 0, 0, 0.5 * Math.sqrt( 2 ) );
-//
-//			m.makeRotationX( Math.PI / 2 );
-//			m.setPosition( new Vector3( x, y, z ) );
-//
-//			a.applyMatrix4( m );
-//
-//			assert.deepEqual( a.position, expectedPos, "Position has the expected values" );
-//			assertTrue(
-//				Math.abs( a.quaternion.x - expectedQuat.x ) <= eps &&
-//				Math.abs( a.quaternion.y - expectedQuat.y ) <= eps &&
-//				Math.abs( a.quaternion.z - expectedQuat.z ) <= eps,
-//				"Quaternion has the expected values"
-//			);
-//
-		}
-//
+
+		Object3D a = new Object3D();
+		Matrix4 m = new Matrix4();
+		Vector3 expectedPos = new Vector3(x, y, z);
+		Quaternion expectedQuat = new Quaternion(0.5 * Math.sqrt(2), 0, 0, 0.5 * Math.sqrt(2));
+
+		m.makeRotationX(Math.PI / 2);
+		m.setPosition(new Vector3(x, y, z));
+
+		a.applyMatrix4(m);
+
+		assertTrue(a.position.equals(expectedPos), "Position has the expected values");
+		assertTrue(Math.abs(a.quaternion.x() - expectedQuat.x()) <= eps && Math.abs(a.quaternion.y() - expectedQuat.y()) <= eps && Math.abs(a.quaternion.z() - expectedQuat.z()) <= eps, "Quaternion has the expected values");
+
+	}
+
+
 	@Test
 	public void applyQuaternion() {
-//
-//			Object3D a = new Object3D();
-//			var sqrt = 0.5 * Math.sqrt( 2 );
-//			Quaternion quat = new Quaternion( 0, sqrt, 0, sqrt );
-//			Quaternion expected = new Quaternion( sqrt / 2, sqrt / 2, 0, 0 );
-//
-//			a.quaternion.set( 0.25, 0.25, 0.25, 0.25 );
-//			a.applyQuaternion( quat );
-//
-//			assertTrue(
-//				Math.abs( a.quaternion.x - expected.x ) <= eps &&
-//				Math.abs( a.quaternion.y - expected.y ) <= eps &&
-//				Math.abs( a.quaternion.z - expected.z ) <= eps,
-//				"Quaternion has the expected values"
-//			);
-//
-		}
-//
+
+			Object3D a = new Object3D();
+			double sqrt = 0.5 * Math.sqrt( 2 );
+			Quaternion quat = new Quaternion( 0, sqrt, 0, sqrt );
+			Quaternion expected = new Quaternion( sqrt / 2, sqrt / 2, 0, 0 );
+
+			a.quaternion.set( 0.25, 0.25, 0.25, 0.25 );
+			a.applyQuaternion( quat );
+
+			assertTrue(
+				Math.abs( a.quaternion.x() - expected.x() ) <= eps &&
+				Math.abs( a.quaternion.y() - expected.y() ) <= eps &&
+				Math.abs( a.quaternion.z() - expected.z() ) <= eps,
+				"Quaternion has the expected values"
+			);
+
+	}
+
+
 	@Test
 	public void setRotationFromAxisAngle() {
-//
-//			Object3D a = new Object3D();
-//			Vector3 axis = new Vector3( 0, 1, 0 );
-//			var angle = Math.PI;
-//			Euler expected = new Euler( - Math.PI, 0, - Math.PI );
-//			Euler euler = new Euler();
-//
-//			a.setRotationFromAxisAngle( axis, angle );
-//			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
-//			assertTrue( eulerEquals( euler, expected ), "Correct values after rotation" );
-//
-//			axis.set( 1, 0, 0 );
-//			var angle = 0;
-//			expected.set( 0, 0, 0 );
-//
-//			a.setRotationFromAxisAngle( axis, angle );
-//			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
-//			assertTrue( eulerEquals( euler, expected ), "Correct values after zeroing" );
-//
-		}
-//
+
+			Object3D a = new Object3D();
+			Vector3 axis = new Vector3( 0, 1, 0 );
+			double angle = Math.PI;
+			Euler expected = new Euler( - Math.PI, 0, - Math.PI );
+			Euler euler = new Euler();
+
+			a.setRotationFromAxisAngle( axis, angle );
+			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
+			assertTrue( eulerEquals( euler, expected ), "Correct values after rotation" );
+
+			axis.set( 1, 0, 0 );
+			angle = 0;
+			expected.set( 0, 0, 0 );
+
+			a.setRotationFromAxisAngle( axis, angle );
+			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
+			assertTrue( eulerEquals( euler, expected ), "Correct values after zeroing" );
+
+	}
+
 	@Test
 	public void setRotationFromEuler() {
-//
-//			Object3D a = new Object3D();
-//			Euler rotation = new Euler( ( 45 / RadToDeg ), 0, Math.PI );
-//			var expected = rotation.clone(); // bit obvious
-//			Euler euler = new Euler();
-//
-//			a.setRotationFromEuler( rotation );
-//			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
-//			assertTrue( eulerEquals( euler, expected ), "Correct values after rotation" );
-//
-		}
-//
+
+			Object3D a = new Object3D();
+			Euler rotation = new Euler( ( 45 / RadToDeg ), 0, Math.PI );
+			Euler expected = rotation.clone(); // bit obvious
+			Euler euler = new Euler();
+
+			a.setRotationFromEuler( rotation );
+			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
+			assertTrue( eulerEquals( euler, expected ), "Correct values after rotation" );
+
+	}
+
+
 	@Test
 	public void setRotationFromMatrix() {
-//
-//			Object3D a = new Object3D();
-//			Matrix4 m = new Matrix4();
-//			Vector3 eye = new Vector3( 0, 0, 0 );
-//			Vector3 target = new Vector3( 0, 1, - 1 );
-//			Vector3 up = new Vector3( 0, 1, 0 );
-//			Euler euler = new Euler();
-//
-//			m.lookAt( eye, target, up );
-//			a.setRotationFromMatrix( m );
-//			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
-//			assert.numEqual( euler.x * RadToDeg, 45, "Correct rotation angle" );
-//
-		}
-//
+
+			Object3D a = new Object3D();
+			Matrix4 m = new Matrix4();
+			Vector3 eye = new Vector3( 0, 0, 0 );
+			Vector3 target = new Vector3( 0, 1, - 1 );
+			Vector3 up = new Vector3( 0, 1, 0 );
+			Euler euler = new Euler();
+
+			m.lookAt( eye, target, up );
+			a.setRotationFromMatrix( m );
+			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
+			assertEquals( 45., euler.x() * RadToDeg, eps, "Correct rotation angle" );
+
+	}
+
 	@Test
 	public void setRotationFromQuaternion() {
+
+			Object3D a = new Object3D();
+			Quaternion rotation = new Quaternion().setFromEuler( new Euler( Math.PI, 0, - Math.PI ) );
+			Euler euler = new Euler();
+
+			a.setRotationFromQuaternion( rotation );
+			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
+			assertTrue( eulerEquals( euler, new Euler( Math.PI, 0, - Math.PI ) ), "Correct values after rotation" );
+
+	}
+
+////
+////			@Test
+//	public void rotateOnAxis() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-//			Object3D a = new Object3D();
-//			Quaternion rotation = new Quaternion().setFromEuler( new Euler( Math.PI, 0, - Math.PI ) );
-//			Euler euler = new Euler();
+////
+////			@Test
+//	public void rotateOnWorldAxis() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
 //
-//			a.setRotationFromQuaternion( rotation );
-//			euler.setFromQuaternion( a.getWorldQuaternion( new Quaternion() ) );
-//			assertTrue( eulerEquals( euler, new Euler( Math.PI, 0, - Math.PI ) ), "Correct values after rotation" );
-//
-		}
-//
-//			@Test
-	public void rotateOnAxis() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
-//
-//			@Test
-	public void rotateOnWorldAxis() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
-//
+
 	@Test
 	public void rotateX() {
-//
-//			Object3D obj = new Object3D();
-//
-//			var angleInRad = 1.562;
-//			obj.rotateX( angleInRad );
-//
-//			assert.numEqual( obj.rotation.x, angleInRad, "x is equal" );
-//
-		}
+
+			Object3D obj = new Object3D();
+
+			double angleInRad = 1.562;
+			obj.rotateX( angleInRad );
+
+			assertEquals( angleInRad, obj.rotation.x(), eps, "x is equal" );
+
+	}
+
 //
 	@Test
 	public void rotateY() {
-//
-//			Object3D obj = new Object3D();
-//
-//			var angleInRad = - 0.346;
-//			obj.rotateY( angleInRad );
-//
-//			assert.numEqual( obj.rotation.y, angleInRad, "y is equal" );
-//
-		}
-//
+
+			Object3D obj = new Object3D();
+
+			double angleInRad = - 0.346;
+			obj.rotateY( angleInRad );
+
+			assertEquals( angleInRad, obj.rotation.y(), eps, "y is equal" );
+
+	}
+
+
 	@Test
 	public void rotateZ() {
-//
-//			Object3D obj = new Object3D();
-//
-//			var angleInRad = 1;
-//			obj.rotateZ( angleInRad );
-//
-//			assert.numEqual( obj.rotation.z, angleInRad, "z is equal" );
-//
-		}
-//
+
+			Object3D obj = new Object3D();
+
+			double angleInRad = 1;
+			obj.rotateZ( angleInRad );
+
+			assertEquals( angleInRad, obj.rotation.z(), eps, "z is equal" );
+
+	}
+
+
 	@Test
 	public void translateOnAxis() {
 //
@@ -264,46 +279,50 @@ public class Object3DTests {
 //				z: - 4.56
 //			}
 //
-		}
+	}
+
 //
 	@Test
 	public void translateX() {
-//
-//			Object3D obj = new Object3D();
-//			obj.translateX( 1.234 );
-//
-//			assert.numEqual( obj.position.x, 1.234, "x is equal" );
-//
-		}
-//
+
+			Object3D obj = new Object3D();
+			obj.translateX( 1.234 );
+
+			assertEquals( 1.234, obj.position.x, eps, "x is equal" );
+
+	}
+
+
 	@Test
 	public void translateY() {
-//
-//			Object3D obj = new Object3D();
-//			obj.translateY( 1.234 );
-//
-//			assert.numEqual( obj.position.y, 1.234, "y is equal" );
-//
-		}
-//
+
+			Object3D obj = new Object3D();
+			obj.translateY( 1.234 );
+
+			assertEquals( 1.234, obj.position.y, eps, "y is equal" );
+
+	}
+
+
 	@Test
 	public void translateZ() {
+
+			Object3D obj = new Object3D();
+			obj.translateZ( 1.234 );
+
+			assertEquals( 1.234, obj.position.z, eps, "z is equal" );
+
+	}
+
+
+//	@Test
+//	public void localToWorld() {
 //
-//			Object3D obj = new Object3D();
-//			obj.translateZ( 1.234 );
+//			Vector3 v = new Vector3();
+//			Vector3 expectedPosition = new Vector3( 5, - 1, - 4 );
 //
-//			assert.numEqual( obj.position.z, 1.234, "z is equal" );
-//
-		}
-//
-	@Test
-	public void localToWorld() {
-//
-//			const v = new Vector3();
-//			const expectedPosition = new Vector3( 5, - 1, - 4 );
-//
-//			const parent = new Object3D();
-//			const child = new Object3D();
+//			Object3D parent = new Object3D();
+//			Object3D child = new Object3D();
 //
 //			parent.position.set( 1, 0, 0 );
 //			parent.rotation.set( 0, Math.PI / 2, 0 );
@@ -325,8 +344,9 @@ public class Object3DTests {
 //				"local vector is converted to world"
 //			);
 //
-		}
-//
+//	}
+
+
 	@Test
 	public void worldToLocal() {
 //
@@ -356,7 +376,8 @@ public class Object3DTests {
 //				"world vector is converted to local"
 //			);
 //
-		}
+	}
+
 //
 	@Test
 	public void lookAt() {
@@ -366,8 +387,9 @@ public class Object3DTests {
 //
 //			assert.numEqual( obj.rotation.x * RadToDeg, 45, "x is equal" );
 //
-		}
-//
+	}
+
+
 	@Test
 	public void add_remove_clear() {
 //
@@ -408,7 +430,8 @@ public class Object3DTests {
 //			assertEquals(null, child1.parent,  "First child has no parent" );
 //			assertEquals(null, child2.parent,  "Second child has no parent" );
 //
-		}
+	}
+
 //
 	@Test
 	public void getObjectById_getObjectByName_getObjectByProperty() {
@@ -430,7 +453,8 @@ public class Object3DTests {
 //				"Unknown property results in undefined"
 //			);
 //
-		}
+	}
+
 //
 	@Test
 	public void getWorldPosition() {
@@ -456,14 +480,16 @@ public class Object3DTests {
 //			assert.deepEqual( a.getWorldPosition( position ), expectedParent, "WorldPosition as expected for parent" );
 //			assert.deepEqual( b.getWorldPosition( position ), expectedChild, "WorldPosition as expected for child" );
 //
-		}
-//
-//			@Test
-	public void getWorldQuaternion() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
+	}
+
+////
+////			@Test
+//	public void getWorldQuaternion() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
+
 //
 	@Test
 	public void getWorldScale() {
@@ -476,7 +502,8 @@ public class Object3DTests {
 //
 //			assert.deepEqual( a.getWorldScale( new Vector3() ), expected, "WorldScale as expected" );
 //
-		}
+	}
+
 //
 	@Test
 	public void getWorldDirection() {
@@ -495,7 +522,8 @@ public class Object3DTests {
 //				"Direction has the expected values"
 //			);
 //
-		}
+	}
+
 //
 	@Test
 	public void localTransformVariableInstantiation() {
@@ -525,14 +553,16 @@ public class Object3DTests {
 //
 //			assertTrue( true, "Calling lookAt after getWorldScale does not create errors" );
 //
-		}
-//
-//			@Test
-	public void raycast() {
-//
-//			assertTrue( false, "everything's gonna be alright" );
-//
-		}
+	}
+
+////
+////			@Test
+//	public void raycast() {
+////
+////			assertTrue( false, "everything's gonna be alright" );
+////
+//	}
+
 //
 	@Test
 	public void traverse_traverseVisible_traverseAncestors() {
@@ -579,7 +609,8 @@ public class Object3DTests {
 //			}
 //			assert.deepEqual( names, expectedAncestors, "Traversed ancestors in expected order" );
 //
-		}
+	}
+
 //
 	@Test
 	public void updateMatrix() {
@@ -607,7 +638,8 @@ public class Object3DTests {
 //
 //			assert.equal( a.matrixWorldNeedsUpdate, true, "The flag indicating world matrix needs to be updated should be true" );
 //
-		}
+	}
+
 //
 	@Test
 	public void updateMatrixWorld() {
@@ -765,7 +797,8 @@ public class Object3DTests {
 //				4, 5, 6, 1
 //			], "updateMatrixWorld() calculates world matrix from the current parent world matrix" );
 //
-		}
+	}
+
 //
 	@Test
 	public void updateWorldMatrix() {
@@ -925,7 +958,8 @@ public class Object3DTests {
 //				m.setPosition( parent.position ).elements,
 //				"object's world matrix is updated even if matrixAutoUpdate is false" );
 //
-		}
+	}
+
 //
 	@Test
 	public void toJSON() {
@@ -987,7 +1021,8 @@ public class Object3DTests {
 //
 //			assert.deepEqual( out, gold, "JSON is as expected" );
 //
-		}
+	}
+
 //
 	@Test
 	public void $clone() {
@@ -1003,7 +1038,8 @@ public class Object3DTests {
 //			a.uuid = b.uuid;
 //			assert.deepEqual( a, b, "But identical properties" );
 //
-		}
+	}
+
 //
 	@Test
 	public void copy() {
@@ -1059,8 +1095,6 @@ public class Object3DTests {
 //
 //			assert.deepEqual( a, b, "Objects are equal post-copy()" );
 //
-		}
-//
 	}
-
+//
 }

@@ -6,7 +6,7 @@ public class THREE {
 	public static final Window window = new Window("");
 	public static final HTMLDocument document = new HTMLDocument();
 	public static final Console console = new Console();
-	
+
 ////	import './polyfills.js';
 //	public static class OpenGL11Renderer {
 //		public OpenGL11Renderer(KV... kvs) {
@@ -102,14 +102,14 @@ public class THREE {
 //		}
 //
 //	}
-//	
-//	public static class KV {
-//		public KV(String key, int value) {			
-//		}
-//		public KV(String key, boolean value) {			
-//		}
-//	}		
-//	
+	
+	public static class KV {
+		public KV(String key, int value) {			
+		}
+		public KV(String key, boolean value) {			
+		}
+	}		
+	
 ////	export * from './materials/Materials.js';
 //	public static class Material extends net.three4j.materials.Material {
 //		public Material() {

@@ -7,17 +7,29 @@ import net.three4j.math.Vector3;
 
 public class Camera extends Object3D {
 	
-	private Matrix4 matrixWorldInverse;
-	private Matrix4 projectionMatrix;
-	private Matrix4 projectionMatrixInverse;
+	private Matrix4 _matrixWorldInverse;
+	private Matrix4 _projectionMatrix;
+	private Matrix4 _projectionMatrixInverse;
+	
+	public Matrix4 matrixWorldInverse() {
+		return _matrixWorldInverse;
+	}
+
+	public Matrix4 projectionMatrix() {
+		return _projectionMatrix;
+	}
+
+	public Matrix4 projectionMatrixInverse() {
+		return _projectionMatrixInverse;
+	}
 
 	public Camera() {
 		super();
 	
-		this.matrixWorldInverse = new Matrix4();
+		this._matrixWorldInverse = new Matrix4();
 	
-		this.projectionMatrix = new Matrix4();
-		this.projectionMatrixInverse = new Matrix4();
+		this._projectionMatrix = new Matrix4();
+		this._projectionMatrixInverse = new Matrix4();
 	
 	}
 

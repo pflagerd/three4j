@@ -260,6 +260,10 @@ public class Euler {
 
 		return this;
 	}
+	
+	public Euler setFromQuaternion(Quaternion q) {
+		return setFromQuaternion(q, DefaultOrder);
+	}
 
 	public Euler setFromQuaternion(Quaternion q, String order) {
 		return setFromQuaternion(q, order, true);
