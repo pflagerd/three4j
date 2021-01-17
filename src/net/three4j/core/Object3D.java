@@ -4,6 +4,8 @@ import net.three4j.math.Quaternion;
 import static net.three4j.THREE.console;
 import net.three4j.math.Vector3;
 import java.util.ArrayList;
+
+import net.three4j.cameras.Camera;
 import net.three4j.core.EventDispatcher;
 import net.three4j.math.Euler;
 //import { Layers } from './Layers.js';
@@ -258,7 +260,31 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public void lookAt(Vector3 v) {
-		lookAt(v.x, v.y, v.z);
+		_target.copy(v);
+
+		this.updateWorldMatrix(true, false);
+
+		_position.setFromMatrixPosition(this.matrixWorld());
+
+		if ( this instanceof Camera || this instanceof Light ) {
+
+			_m1.lookAt( _position, _target, this.up );
+
+		} else {
+
+			_m1.lookAt( _target, _position, this.up );
+
+		}
+
+		this._quaternion.setFromRotationMatrix(_m1);
+
+		if (this._parent != null) {
+
+			_m1.extractRotation(_parent.matrixWorld());
+			_q1.setFromRotationMatrix(_m1);
+			this._quaternion.premultiply(_q1.invert());
+
+		}
 	}
 
 	public void lookAt(double x, double y, double z) {

@@ -357,12 +357,12 @@ public class Object3DTests {
 
 	@Test
 	public void lookAt() {
-//
-//			Object3D obj = new Object3D();
-//			obj.lookAt( new Vector3( 0, - 1, 1 ) );
-//
-//			assert.numEqual( obj.rotation.x * RadToDeg, 45, "x is equal" );
-//
+
+			Object3D obj = new Object3D();
+			obj.lookAt( new Vector3( 0, -1, 1 ) );
+
+			assertEquals( 45, obj.rotation().x() * RadToDeg, eps, "x is equal" );
+
 	}
 
 	@Test
