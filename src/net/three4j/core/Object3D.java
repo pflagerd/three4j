@@ -14,7 +14,7 @@ import net.three4j.math.Matrix4;
 public class Object3D extends EventDispatcher {
 	// let _object3DId = 0;
 	static int _object3DId = 0;
-	
+
 	private final Vector3 _v1 = new Vector3();
 	private final Quaternion _q1 = new Quaternion();
 	private final Matrix4 _m1 = new Matrix4();
@@ -23,18 +23,18 @@ public class Object3D extends EventDispatcher {
 	private Vector3 _position = new Vector3();
 	private Euler _rotation = new Euler();
 
-	private Vector3 _scale = new Vector3();
+	private Vector3 _scale = new Vector3(1, 1, 1);
 	private Quaternion _quaternion = new Quaternion();
 
-	private final Vector3 _xAxis = new Vector3( 1, 0, 0 );
-	private final Vector3 _yAxis = new Vector3( 0, 1, 0 );
-	private final Vector3 _zAxis = new Vector3( 0, 0, 1 );
+	private final Vector3 _xAxis = new Vector3(1, 0, 0);
+	private final Vector3 _yAxis = new Vector3(0, 1, 0);
+	private final Vector3 _zAxis = new Vector3(0, 0, 1);
 
 //	const _addedEvent = { type: 'added' };
 //	const _removedEvent = { type: 'removed' };
 
 	public final long id;
-	public Object3D parent;
+	private Object3D _parent;
 	public ArrayList<Object3D> children;
 	public final String uuid;
 	public String name;
@@ -53,223 +53,223 @@ public class Object3D extends EventDispatcher {
 	public Layers layers;
 	// animations
 	Object _userData;
-	
-	
+
 	public Object3D() {
 		id = _object3DId++;
 
 		uuid = MathUtils.generateUUID();
-	
+
 		this.name = "";
-	
-		this.parent = null;
+
+		this._parent = null;
 		this.children = new ArrayList<>();
-	
+
 		this.up = new Vector3(DefaultUp);
-	
-		this._position = new Vector3();
-		this._rotation = new Euler();
-		this._quaternion = new Quaternion();
-		this._quaternion.onChange( this::onQuaternionChange );
-		this._scale = new Vector3( 1, 1, 1 );
-		
+
 		this.matrix = new Matrix4();
 		this._matrixWorld = new Matrix4();
-	
+
 		this.matrixAutoUpdate = DefaultMatrixAutoUpdate;
 		this.matrixWorldNeedsUpdate = false;
-	
+
 		this.layers = new Layers();
 		this.visible = true;
-	
+
 		this.castShadow = false;
 		this.receiveShadow = false;
-	
+
 		this.frustumCulled = true;
 		this.renderOrder = 0;
-	
+
 //		this.animations = [];
 //	
-		this._userData = new Object();	
+		this._userData = new Object();
 	}
-	
+
 	public Matrix4 matrixWorld() {
 		return _matrixWorld;
 	}
-	
+
 	public Vector3 position() {
 		return _position;
 	}
-	
+
 	public Quaternion quaternion() {
 		return _quaternion;
 	}
-	
+
 	public Euler rotation() {
 		return _rotation;
 	}
 
+	public final Vector3 scale() {
+		return _scale;
+	}
+
 	public void onRotationChange() {
-		_quaternion.setFromEuler( _rotation, false );
+		_quaternion.setFromEuler(_rotation, false);
 	}
 
 	public void onQuaternionChange() {
-		_rotation.setFromQuaternion( _quaternion, null, false );
+		_rotation.setFromQuaternion(_quaternion, null, false);
 	}
 
 	{
-	_rotation.onChange( this::onRotationChange );
-	_quaternion.onChange( this::onQuaternionChange );
+		_rotation.onChange(this::onRotationChange);
+		_quaternion.onChange(this::onQuaternionChange);
 	}
 
-	static final Vector3 DefaultUp = new Vector3( 0, 1, 0 );
+	static final Vector3 DefaultUp = new Vector3(0, 1, 0);
 	boolean DefaultMatrixAutoUpdate = true;
 
 	public boolean isObject3D = true;
 
-	public void onBeforeRender() {}
-	public void onAfterRender() {}
+	public void onBeforeRender() {
+	}
 
-	public void applyMatrix4( Matrix4 matrix ) {
-		if ( this.matrixAutoUpdate )
+	public void onAfterRender() {
+	}
+
+	public void applyMatrix4(Matrix4 matrix) {
+		if (this.matrixAutoUpdate)
 			this.updateMatrix();
 
-		this.matrix.premultiply( matrix );
+		this.matrix.premultiply(matrix);
 
-		this.matrix.decompose( this._position, this._quaternion, this._scale );
+		this.matrix.decompose(this._position, this._quaternion, this._scale);
 
 	}
 
-	public Object3D applyQuaternion( Quaternion q ) {
+	public Object3D applyQuaternion(Quaternion q) {
 
-		this._quaternion.premultiply( q );
+		this._quaternion.premultiply(q);
 
 		return this;
 	}
 
-	public void setRotationFromAxisAngle(Vector3 axis, double angle ) {
+	public void setRotationFromAxisAngle(Vector3 axis, double angle) {
 		// assumes axis is normalized
-		this._quaternion.setFromAxisAngle( axis, angle );
+		this._quaternion.setFromAxisAngle(axis, angle);
 	}
 
-	public void setRotationFromEuler( Euler euler ) {
+	public void setRotationFromEuler(Euler euler) {
 
-		this._quaternion.setFromEuler( euler, true );
+		this._quaternion.setFromEuler(euler, true);
 
 	}
 
-	public void setRotationFromMatrix( Matrix4 m ) {
+	public void setRotationFromMatrix(Matrix4 m) {
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
 
-		this._quaternion.setFromRotationMatrix( m );
+		this._quaternion.setFromRotationMatrix(m);
 
 	}
 
-	public void setRotationFromQuaternion( Quaternion q ) {
+	public void setRotationFromQuaternion(Quaternion q) {
 
 		// assumes q is normalized
 
-		this._quaternion.copy( q );
+		this._quaternion.copy(q);
 
 	}
 
-	public Object3D rotateOnAxis( Vector3 axis, double angle ) {
+	public Object3D rotateOnAxis(Vector3 axis, double angle) {
 
 		// rotate object on axis in object space
 		// axis is assumed to be normalized
 
-		_q1.setFromAxisAngle( axis, angle );
+		_q1.setFromAxisAngle(axis, angle);
 
-		this._quaternion.multiply( _q1 );
+		this._quaternion.multiply(_q1);
 
 		return this;
 
 	}
 
-	public Object3D rotateOnWorldAxis( Vector3 axis, double angle ) {
+	public Object3D rotateOnWorldAxis(Vector3 axis, double angle) {
 		// rotate object on axis in world space
 		// axis is assumed to be normalized
 		// method assumes no rotated parent
-		_q1.setFromAxisAngle( axis, angle );
-		this._quaternion.premultiply( _q1 );
+		_q1.setFromAxisAngle(axis, angle);
+		this._quaternion.premultiply(_q1);
 		return this;
 	}
 
-	public Object3D rotateX( double angle ) {
+	public Object3D rotateX(double angle) {
 
-		return this.rotateOnAxis( _xAxis, angle );
-
-	}
-
-	public Object3D rotateY( double angle ) {
-
-		return this.rotateOnAxis( _yAxis, angle );
+		return this.rotateOnAxis(_xAxis, angle);
 
 	}
 
-	public Object3D rotateZ( double angle ) {
+	public Object3D rotateY(double angle) {
 
-		return this.rotateOnAxis( _zAxis, angle );
+		return this.rotateOnAxis(_yAxis, angle);
 
 	}
 
-	public Object3D translateOnAxis( Vector3 axis, double distance ) {
+	public Object3D rotateZ(double angle) {
+
+		return this.rotateOnAxis(_zAxis, angle);
+
+	}
+
+	public Object3D translateOnAxis(Vector3 axis, double distance) {
 
 		// translate object by distance along axis in object space
 		// axis is assumed to be normalized
 
-		_v1.copy( axis ).applyQuaternion( this._quaternion );
+		_v1.copy(axis).applyQuaternion(this._quaternion);
 
-		this._position.add( _v1.multiplyScalar( distance ) );
+		this._position.add(_v1.multiplyScalar(distance));
 
 		return this;
 
 	}
 
-	public Object3D translateX( double distance ) {
+	public Object3D translateX(double distance) {
 
-		return this.translateOnAxis( _xAxis, distance );
-
-	}
-
-	public Object3D translateY(double distance ) {
-
-		return this.translateOnAxis( _yAxis, distance );
+		return this.translateOnAxis(_xAxis, distance);
 
 	}
 
-	public Object3D translateZ( double distance ) {
+	public Object3D translateY(double distance) {
 
-		return this.translateOnAxis( _zAxis, distance );
-
-	}
-
-	public Vector3 localToWorld( Vector3 vector ) {
-
-		return vector.applyMatrix4( this.matrixWorld() );
+		return this.translateOnAxis(_yAxis, distance);
 
 	}
 
-	public Vector3 worldToLocal( Vector3 vector ) {
+	public Object3D translateZ(double distance) {
 
-		return vector.applyMatrix4( _m1.copy( this.matrixWorld() ).invert() );
+		return this.translateOnAxis(_zAxis, distance);
 
 	}
-	
+
+	public Vector3 localToWorld(Vector3 vector) {
+
+		return vector.applyMatrix4(this.matrixWorld());
+
+	}
+
+	public Vector3 worldToLocal(Vector3 vector) {
+
+		return vector.applyMatrix4(_m1.copy(this.matrixWorld()).invert());
+
+	}
+
 	public void lookAt(Vector3 v) {
 		lookAt(v.x, v.y, v.z);
 	}
 
-	public void lookAt(double x, double y, double z ) {
+	public void lookAt(double x, double y, double z) {
 
 		// This method does not support objects having non-uniformly-scaled parent(s)
 
-		_target.set( x, y, z );
+		_target.set(x, y, z);
 
-		this.updateWorldMatrix( true, false );
+		this.updateWorldMatrix(true, false);
 
-		_position.setFromMatrixPosition( this.matrixWorld() );
+		_position.setFromMatrixPosition(this.matrixWorld());
 
 //		if ( this.isCamera || this.isLight ) {
 //
@@ -281,55 +281,53 @@ public class Object3D extends EventDispatcher {
 //
 //		}
 //
-		this._quaternion.setFromRotationMatrix( _m1 );
+		this._quaternion.setFromRotationMatrix(_m1);
 
-		if ( this.parent != null ) {
+		if (this._parent != null) {
 
-			_m1.extractRotation( parent.matrixWorld() );
-			_q1.setFromRotationMatrix( _m1 );
-			this._quaternion.premultiply( _q1.invert() );
+			_m1.extractRotation(_parent.matrixWorld());
+			_q1.setFromRotationMatrix(_m1);
+			this._quaternion.premultiply(_q1.invert());
 
 		}
 	}
 
 	public Object3D add(Object3D... objects) {
 
-		for ( int i = 0; i < objects.length; i ++ ) {
+		for (int i = 0; i < objects.length; i++) {
 
-			if ( objects[i] == this ) {
-				throw new RuntimeException( "THREE.Object3D.add: object can't be added as a child of itself.");
+			if (objects[i] == this) {
+				throw new RuntimeException("THREE.Object3D.add: object can't be added as a child of itself.");
 			}
 
-			if ( objects[i] != null && objects[i].isObject3D ) {
+			if (objects[i] != null && objects[i].isObject3D) {
 
-				if ( objects[i].parent != null ) {
+				if (objects[i]._parent != null) {
 
-					objects[i].parent.remove( objects[i] );
+					objects[i]._parent.remove(objects[i]);
 
 				}
 
-				objects[i].parent = this;
-				this.children.add( objects[i] );
+				objects[i]._parent = this;
+				this.children.add(objects[i]);
 
 //				objects.dispatchEvent( _addedEvent );
 
 			} else {
-				throw new RuntimeException( "THREE.Object3D.add: object not an instance of THREE.Object3D.");
+				throw new RuntimeException("THREE.Object3D.add: object not an instance of THREE.Object3D.");
 			}
-
-			this.add( objects[ i ] );
 		}
 
 		return this;
 	}
 
-	public Object3D remove( Object3D... objects ) {
+	public Object3D remove(Object3D... objects) {
 
-		if ( objects.length > 1 ) {
+		if (objects.length > 1) {
 
-			for ( int i = 0; i < objects.length; i ++ ) {
+			for (int i = 0; i < objects.length; i++) {
 
-				this.remove( objects[ i ] );
+				this.remove(objects[i]);
 
 			}
 
@@ -337,12 +335,12 @@ public class Object3D extends EventDispatcher {
 
 		}
 
-		final int index = this.children.indexOf( objects[0] );
+		final int index = this.children.indexOf(objects[0]);
 
-		if ( index != - 1 ) {
+		if (index != -1) {
 
-			objects[0].parent = null;
-			this.children.remove( index );
+			objects[0]._parent = null;
+			this.children.remove(index);
 
 //			object.dispatchEvent( _removedEvent );
 
@@ -354,11 +352,11 @@ public class Object3D extends EventDispatcher {
 
 	public Object3D clear() {
 
-		for ( int i = 0; i < this.children.size(); i ++ ) {
+		for (int i = 0; i < this.children.size(); i++) {
 
 			final Object3D object = this.children.get(i);
 
-			object.parent = null;
+			object._parent = null;
 
 //			object.dispatchEvent( _removedEvent );
 
@@ -370,55 +368,56 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-	public Object3D attach( Object3D object ) {
+	public Object3D attach(Object3D object) {
 
-		// adds object as a child of this, while maintaining the object's world transform
+		// adds object as a child of this, while maintaining the object's world
+		// transform
 
-		this.updateWorldMatrix( true, false );
+		this.updateWorldMatrix(true, false);
 
-		_m1.copy( this.matrixWorld() ).invert();
+		_m1.copy(this.matrixWorld()).invert();
 
-		if ( object.parent != null ) {
+		if (object._parent != null) {
 
-			object.parent.updateWorldMatrix( true, false );
+			object._parent.updateWorldMatrix(true, false);
 
-			_m1.multiply( object.parent.matrixWorld() );
+			_m1.multiply(object._parent.matrixWorld());
 
 		}
 
-		object.applyMatrix4( _m1 );
+		object.applyMatrix4(_m1);
 
-		object.updateWorldMatrix( false, false );
+		object.updateWorldMatrix(false, false);
 
-		this.add( object );
+		this.add(object);
 
 		return this;
 
 	}
 
-	public Object3D getObjectById( String id ) {
+	public Object3D getObjectById(String id) {
 
-		return this.getObjectByProperty( "id", id );
-
-	}
-
-	public Object3D getObjectByName( String name ) {
-
-		return this.getObjectByProperty( "name", name );
+		return this.getObjectByProperty("id", id);
 
 	}
 
-	public Object3D getObjectByProperty( String name, String value ) {
+	public Object3D getObjectByName(String name) {
 
-		if ( "getObjectByProperty".contentEquals(value) ) // DPP: Not sure about this.
+		return this.getObjectByProperty("name", name);
+
+	}
+
+	public Object3D getObjectByProperty(String name, String value) {
+
+		if ("getObjectByProperty".contentEquals(value)) // DPP: Not sure about this.
 			return this;
 
-		for ( int i = 0, l = this.children.size(); i < l; i ++ ) {
+		for (int i = 0, l = this.children.size(); i < l; i++) {
 
 			final Object3D child = this.children.get(i);
-			final Object3D object = child.getObjectByProperty( name, value );
+			final Object3D object = child.getObjectByProperty(name, value);
 
-			if ( object != null ) {
+			if (object != null) {
 
 				return object;
 
@@ -430,69 +429,69 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-	public Vector3 getWorldPosition( Vector3 target ) {
+	public Vector3 getWorldPosition(Vector3 target) {
 
-		if ( target == null ) {
+		if (target == null) {
 
-			console.warn( "THREE.Object3D: .getWorldPosition() target is now required" );
+			console.warn("THREE.Object3D: .getWorldPosition() target is now required");
 			target = new Vector3();
 
 		}
 
-		this.updateWorldMatrix( true, false );
+		this.updateWorldMatrix(true, false);
 
-		return target.setFromMatrixPosition( this.matrixWorld() );
+		return target.setFromMatrixPosition(this.matrixWorld());
 
 	}
 
-	public Quaternion getWorldQuaternion( Quaternion target ) {
+	public Quaternion getWorldQuaternion(Quaternion target) {
 
-		if ( target == null ) {
+		if (target == null) {
 
-			console.warn( "THREE.Object3D: .getWorldQuaternion() target is now required" );
+			console.warn("THREE.Object3D: .getWorldQuaternion() target is now required");
 			target = new Quaternion();
 
 		}
 
-		this.updateWorldMatrix( true, false );
+		this.updateWorldMatrix(true, false);
 
-		this.matrixWorld().decompose( _position, target, _scale );
-
-		return target;
-
-	}
-
-	public Vector3 getWorldScale( Vector3 target ) {
-
-		if ( target == null ) {
-
-			console.warn( "THREE.Object3D: .getWorldScale() target is now required" );
-			target = new Vector3();
-
-		}
-
-		this.updateWorldMatrix( true, false );
-
-		this.matrixWorld().decompose( _position, _quaternion, target );
+		this.matrixWorld().decompose(_position, target, _scale);
 
 		return target;
 
 	}
 
-	public Vector3 getWorldDirection( Vector3 target ) {
+	public Vector3 getWorldScale(Vector3 target) {
 
-		if ( target == null ) {
+		if (target == null) {
 
-			console.warn( "THREE.Object3D: .getWorldDirection() target is now required" );
+			console.warn("THREE.Object3D: .getWorldScale() target is now required");
 			target = new Vector3();
 
 		}
 
-		this.updateWorldMatrix( true, false );
+		this.updateWorldMatrix(true, false);
+
+		this.matrixWorld().decompose(_position, _quaternion, target);
+
+		return target;
+
+	}
+
+	public Vector3 getWorldDirection(Vector3 target) {
+
+		if (target == null) {
+
+			console.warn("THREE.Object3D: .getWorldDirection() target is now required");
+			target = new Vector3();
+
+		}
+
+		this.updateWorldMatrix(true, false);
 
 		final double[] e = this.matrixWorld().elements;
 
-		return target.set( e[ 8 ], e[ 9 ], e[ 10 ] ).normalize();
+		return target.set(e[8], e[9], e[10]).normalize();
 
 	}
 
@@ -544,7 +543,7 @@ public class Object3D extends EventDispatcher {
 //
 	void updateMatrix() {
 
-		this.matrix.compose( this._position, this._quaternion, this._scale );
+		this.matrix.compose(this._position, this._quaternion, this._scale);
 
 		this.matrixWorldNeedsUpdate = true;
 
@@ -553,21 +552,21 @@ public class Object3D extends EventDispatcher {
 	public void updateMatrixWorld() {
 		updateMatrixWorld(false);
 	}
-	
-	public void updateMatrixWorld( boolean force ) {
 
-		if ( this.matrixAutoUpdate ) 
+	public void updateMatrixWorld(boolean force) {
+
+		if (this.matrixAutoUpdate)
 			this.updateMatrix();
 
-		if ( this.matrixWorldNeedsUpdate || force ) {
+		if (this.matrixWorldNeedsUpdate || force) {
 
-			if ( this.parent == null ) {
+			if (this._parent == null) {
 
-				this.matrixWorld().copy( this.matrix );
+				this.matrixWorld().copy(this.matrix);
 
 			} else {
 
-				this.matrixWorld().multiplyMatrices( this.parent.matrixWorld(), this.matrix );
+				this.matrixWorld().multiplyMatrices(this._parent.matrixWorld(), this.matrix);
 
 			}
 
@@ -579,42 +578,42 @@ public class Object3D extends EventDispatcher {
 
 		// update children
 
-		for ( int i = 0, l = children.size(); i < l; i ++ ) {
+		for (int i = 0, l = children.size(); i < l; i++) {
 
-			this.children.get(i).updateMatrixWorld( force );
+			this.children.get(i).updateMatrixWorld(force);
 
 		}
 
 	}
 
-	public void updateWorldMatrix( boolean updateParents, boolean updateChildren ) {
+	public void updateWorldMatrix(boolean updateParents, boolean updateChildren) {
 
-		if ( updateParents == true && parent != null ) {
+		if (updateParents == true && _parent != null) {
 
-			parent.updateWorldMatrix( true, false );
+			_parent.updateWorldMatrix(true, false);
 
 		}
 
-		if ( this.matrixAutoUpdate )
+		if (this.matrixAutoUpdate)
 			this.updateMatrix();
 
-		if ( this.parent == null ) {
+		if (this._parent == null) {
 
-			this.matrixWorld().copy( this.matrix );
+			this.matrixWorld().copy(this.matrix);
 
 		} else {
 
-			this.matrixWorld().multiplyMatrices( this.parent.matrixWorld(), this.matrix );
+			this.matrixWorld().multiplyMatrices(this._parent.matrixWorld(), this.matrix);
 
 		}
 
 		// update children
 
-		if ( updateChildren == true ) {
+		if (updateChildren == true) {
 
-			for ( int i = 0, l = children.size(); i < l; i ++ ) {
+			for (int i = 0, l = children.size(); i < l; i++) {
 
-				children.get(i).updateWorldMatrix( false, true );
+				children.get(i).updateWorldMatrix(false, true);
 
 			}
 
@@ -837,34 +836,34 @@ public class Object3D extends EventDispatcher {
 //		}
 //
 //	},
-	
+
 	public Object3D clone() {
 		return clone(true);
 	}
 
-	public Object3D clone( boolean recursive ) {
+	public Object3D clone(boolean recursive) {
 
-		return new Object3D().copy( this, recursive );
+		return new Object3D().copy(this, recursive);
 
 	}
-	
-	public Object3D copy( Object3D source) {
+
+	public Object3D copy(Object3D source) {
 		return copy(source);
 	}
 
-	public Object3D copy( Object3D source, boolean recursive ) {
+	public Object3D copy(Object3D source, boolean recursive) {
 
 		this.name = source.name;
 
-		this.up.copy( source.up );
+		this.up.copy(source.up);
 
-		this._position.copy( source._position );
+		this._position.copy(source._position);
 		this._rotation.order(source._rotation.order());
-		this._quaternion.copy( source._quaternion );
-		this._scale.copy( source._scale );
+		this._quaternion.copy(source._quaternion);
+		this._scale.copy(source._scale);
 
-		this.matrix.copy( source.matrix );
-		this.matrixWorld().copy( source.matrixWorld() );
+		this.matrix.copy(source.matrix);
+		this.matrixWorld().copy(source.matrixWorld());
 
 		this.matrixAutoUpdate = source.matrixAutoUpdate;
 		this.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
@@ -880,12 +879,12 @@ public class Object3D extends EventDispatcher {
 
 //		this.userData = JSON.parse( JSON.stringify( source.userData ) );
 
-		if ( recursive == true ) {
+		if (recursive == true) {
 
-			for ( int i = 0; i < source.children.size(); i ++ ) {
+			for (int i = 0; i < source.children.size(); i++) {
 
 				final Object3D child = source.children.get(i);
-				this.add( child.clone() );
+				this.add(child.clone());
 
 			}
 

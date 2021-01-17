@@ -358,6 +358,11 @@ public class Euler {
 	private void noop() {}
 
 	private Runnable _onChangeCallback = this::noop;
+	
+	@Override
+	public String toString() {
+		return super.toString() + " {x:" + _x + ", y:" + _y + ", z:" + _z + ", order: " + _order + "}";
+	}
 
 	public static final String DefaultOrder = "XYZ";
 	public static final String[] RotationOrders = new String[] { "XYZ", "YZX", "ZXY", "XZY", "YXZ", "ZYX" };
