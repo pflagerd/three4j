@@ -565,7 +565,7 @@ public class Object3DTests {
 //				names.push( obj.name );
 //
 //			}
-//			assert.deepEqual( names, expectedNormal, "Traversed objects in expected order" );
+//			assertArrayEquals(expectedNormal, names,  "Traversed objects in expected order" );
 //
 //			var names = [];
 //			a.traverseVisible( function ( obj ) {
@@ -573,7 +573,7 @@ public class Object3DTests {
 //				names.push( obj.name );
 //
 //			}
-//			assert.deepEqual( names, expectedVisible, "Traversed visible objects in expected order" );
+//			assertArrayEquals(expectedVisible, names,  "Traversed visible objects in expected order" );
 //
 //			var names = [];
 //			c.traverseAncestors( function ( obj ) {
@@ -581,7 +581,7 @@ public class Object3DTests {
 //				names.push( obj.name );
 //
 //			}
-//			assert.deepEqual( names, expectedAncestors, "Traversed ancestors in expected order" );
+//			assertArrayEquals(expectedAncestors, names,  "Traversed ancestors in expected order" );
 //
 //	}
 
@@ -676,8 +676,8 @@ public class Object3DTests {
 			parent.updateMatrixWorld();
 
 			parent.position().set( 1, 2, 3 );
-			parent.matrixAutoUpdate = false;
-			child.matrixAutoUpdate = false;
+			parent.matrixAutoUpdate(false);
+			child.matrixAutoUpdate(false);
 			parent.updateMatrixWorld();
 
 			assertArrayEquals( new double[] {
@@ -703,7 +703,7 @@ public class Object3DTests {
 
 			// -- Propagation to children world matrices test
 
-			parent.matrixAutoUpdate = true;
+			parent.matrixAutoUpdate(true);
 			parent.updateMatrixWorld();
 
 			assertArrayEquals( new double[] {
@@ -717,12 +717,12 @@ public class Object3DTests {
 
 			// Resetting the local and world matrices to the origin
 			child.position().set( 0, 0, 0 );
-			child.matrixAutoUpdate = true;
+			child.matrixAutoUpdate(true);
 			parent.updateMatrixWorld();
 
 			parent.position().set( 1, 2, 3 );
 			parent.updateMatrix();
-			parent.matrixAutoUpdate = false;
+			parent.matrixAutoUpdate(false);
 			parent.matrixWorldNeedsUpdate(false);
 
 			parent.updateMatrixWorld( true );
@@ -739,8 +739,8 @@ public class Object3DTests {
 			// Resetting the local and world matrices to the origin
 			parent.position().set( 0, 0, 0 );
 			child.position().set( 0, 0, 0 );
-			parent.matrixAutoUpdate = true;
-			child.matrixAutoUpdate = true;
+			parent.matrixAutoUpdate(true);
+			child.matrixAutoUpdate(true);
 			parent.updateMatrixWorld();
 
 			parent.position().set( 1, 2, 3 );
@@ -772,162 +772,110 @@ public class Object3DTests {
 
 	@Test
 	public void updateWorldMatrix() {
-//
-//			const object = new Object3D();
-//			const parent = new Object3D();
-//			const child = new Object3D();
-//
-//			const m = new Matrix4();
-//			const v = new Vector3();
-//
-//			parent.add( object );
-//			object.add( child );
-//
-//			parent.position().set( 1, 2, 3 );
-//			object.position().set( 4, 5, 6 );
-//			child.position().set( 7, 8, 9 );
-//
-//			// Update the world matrix of an object
-//
-//			object.updateWorldMatrix();
-//
-//			assert.deepEqual( parent.matrix.elements,
-//				m.elements,
-//				"No effect to parents' local matrices" );
-//
-//			assert.deepEqual( parent.matrixWorld.elements,
-//				m.elements,
-//				"No effect to parents' world matrices" );
-//
-//			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position() ).elements,
-//				"Object's local matrix is updated" );
-//
-//			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( object.position() ).elements,
-//				"Object's world matrix is updated" );
-//
-//			assert.deepEqual( child.matrix.elements,
-//				m.identity().elements,
-//				"No effect to children's local matrices" );
-//
-//			assert.deepEqual( child.matrixWorld.elements,
-//				m.elements,
-//				"No effect to children's world matrices" );
-//
-//			// Update the world matrices of an object and its parents
-//
-//			object.matrix.identity();
-//			object.matrixWorld.identity();
-//
-//			object.updateWorldMatrix( true, false );
-//
-//			assert.deepEqual( parent.matrix.elements,
-//				m.setPosition( parent.position() ).elements,
-//				"Parents' local matrices are updated" );
-//
-//			assert.deepEqual( parent.matrixWorld.elements,
-//				m.setPosition( parent.position() ).elements,
-//				"Parents' world matrices are updated" );
-//
-//			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position() ).elements,
-//				"Object's local matrix is updated" );
-//
-//			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( v.copy( parent.position() ).add( object.position() ) ).elements,
-//				"Object's world matrix is updated" );
-//
-//			assert.deepEqual( child.matrix.elements,
-//				m.identity().elements,
-//				"No effect to children's local matrices" );
-//
-//			assert.deepEqual( child.matrixWorld.elements,
-//				m.identity().elements,
-//				"No effect to children's world matrices" );
-//
-//			// Update the world matrices of an object and its children
-//
-//			parent.matrix.identity();
-//			parent.matrixWorld.identity();
-//			object.matrix.identity();
-//			object.matrixWorld.identity();
-//
-//			object.updateWorldMatrix( false, true );
-//
-//			assert.deepEqual( parent.matrix.elements,
-//				m.elements,
-//				"No effect to parents' local matrices" );
-//
-//			assert.deepEqual( parent.matrixWorld.elements,
-//				m.elements,
-//				"No effect to parents' world matrices" );
-//
-//			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position() ).elements,
-//				"Object's local matrix is updated" );
-//
-//			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( object.position() ).elements,
-//				"Object's world matrix is updated" );
-//
-//			assert.deepEqual( child.matrix.elements,
-//				m.setPosition( child.position() ).elements,
-//				"Children's local matrices are updated" );
-//
-//			assert.deepEqual( child.matrixWorld.elements,
-//				m.setPosition( v.copy( object.position() ).add( child.position() ) ).elements,
-//				"Children's world matrices are updated" );
-//
-//			// Update the world matrices of an object and its parents and children
-//
-//			object.matrix.identity();
-//			object.matrixWorld.identity();
-//			child.matrix.identity();
-//			child.matrixWorld.identity();
-//
-//			object.updateWorldMatrix( true, true );
-//
-//			assert.deepEqual( parent.matrix.elements,
-//				m.setPosition( parent.position() ).elements,
-//				"Parents' local matrices are updated" );
-//
-//			assert.deepEqual( parent.matrixWorld.elements,
-//				m.setPosition( parent.position() ).elements,
-//				"Parents' world matrices are updated" );
-//
-//			assert.deepEqual( object.matrix.elements,
-//				m.setPosition( object.position() ).elements,
-//				"Object's local matrix is updated" );
-//
-//			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( v.copy( parent.position() ).add( object.position() ) ).elements,
-//				"Object's world matrix is updated" );
-//
-//			assert.deepEqual( child.matrix.elements,
-//				m.setPosition( child.position() ).elements,
-//				"Children's local matrices are updated" );
-//
-//			assert.deepEqual( child.matrixWorld.elements,
-//				m.setPosition( v.copy( parent.position() ).add( object.position() ).add( child.position() ) ).elements,
-//				"Children's world matrices are updated" );
-//
-//			// object.matrixAutoUpdate = false test
-//
-//			object.matrix.identity();
-//			object.matrixWorld.identity();
-//
-//			object.matrixAutoUpdate = false;
-//			object.updateWorldMatrix( true, false );
-//
-//			assert.deepEqual( object.matrix.elements,
-//				m.identity().elements,
-//				"No effect to object's local matrix if matrixAutoUpdate is false" );
-//
-//			assert.deepEqual( object.matrixWorld.elements,
-//				m.setPosition( parent.position() ).elements,
-//				"object's world matrix is updated even if matrixAutoUpdate is false" );
-//
+
+		Object3D object = new Object3D();
+		Object3D parent = new Object3D();
+		Object3D child = new Object3D();
+
+		Matrix4 m = new Matrix4();
+		Vector3 v = new Vector3();
+
+			parent.add( object );
+			object.add( child );
+
+			parent.position().set( 1, 2, 3 );
+			object.position().set( 4, 5, 6 );
+			child.position().set( 7, 8, 9 );
+
+			// Update the world matrix of an object
+
+			object.updateWorldMatrix();
+
+			assertArrayEquals(m.elements, parent.matrix().elements,  "No effect to parents' local matrices" );
+
+			assertArrayEquals(m.elements, parent.matrixWorld().elements,  "No effect to parents' world matrices" );
+
+			assertArrayEquals(m.setPosition( object.position() ).elements, object.matrix().elements,  "Object's local matrix is updated" );
+
+			assertArrayEquals(m.setPosition( object.position() ).elements, object.matrixWorld().elements,  "Object's world matrix is updated" );
+
+			assertArrayEquals(m.identity().elements, child.matrix().elements,  "No effect to children's local matrices" );
+
+			assertArrayEquals(m.elements, child.matrixWorld().elements,  "No effect to children's world matrices" );
+
+			// Update the world matrices of an object and its parents
+
+			object.matrix().identity();
+			object.matrixWorld().identity();
+
+			object.updateWorldMatrix( true, false );
+
+			assertArrayEquals(m.setPosition( parent.position() ).elements, parent.matrix().elements,  "Parents' local matrices are updated" );
+
+			assertArrayEquals(m.setPosition( parent.position() ).elements, parent.matrixWorld().elements,  "Parents' world matrices are updated" );
+
+			assertArrayEquals(m.setPosition( object.position() ).elements, object.matrix().elements,  "Object's local matrix is updated" );
+
+			assertArrayEquals(m.setPosition( v.copy( parent.position() ).add( object.position() ) ).elements, object.matrixWorld().elements,  "Object's world matrix is updated" );
+
+			assertArrayEquals(m.identity().elements, child.matrix().elements,  "No effect to children's local matrices" );
+
+			assertArrayEquals(m.identity().elements, child.matrixWorld().elements,  "No effect to children's world matrices" );
+
+			// Update the world matrices of an object and its children
+
+			parent.matrix().identity();
+			parent.matrixWorld().identity();
+			object.matrix().identity();
+			object.matrixWorld().identity();
+
+			object.updateWorldMatrix( false, true );
+
+			assertArrayEquals(m.elements, parent.matrix().elements,  "No effect to parents' local matrices" );
+
+			assertArrayEquals(m.elements, parent.matrixWorld().elements,  "No effect to parents' world matrices" );
+
+			assertArrayEquals(m.setPosition( object.position() ).elements, object.matrix().elements,  "Object's local matrix is updated" );
+
+			assertArrayEquals(m.setPosition( object.position() ).elements, object.matrixWorld().elements,  "Object's world matrix is updated" );
+
+			assertArrayEquals(m.setPosition( child.position() ).elements, child.matrix().elements,  "Children's local matrices are updated" );
+
+			assertArrayEquals(m.setPosition( v.copy( object.position() ).add( child.position() ) ).elements, child.matrixWorld().elements,  "Children's world matrices are updated" );
+
+			// Update the world matrices of an object and its parents and children
+
+			object.matrix().identity();
+			object.matrixWorld().identity();
+			child.matrix().identity();
+			child.matrixWorld().identity();
+
+			object.updateWorldMatrix( true, true );
+
+			assertArrayEquals(m.setPosition( parent.position() ).elements, parent.matrix().elements,  "Parents' local matrices are updated" );
+
+			assertArrayEquals(m.setPosition( parent.position() ).elements, parent.matrixWorld().elements,  "Parents' world matrices are updated" );
+
+			assertArrayEquals(m.setPosition( object.position() ).elements, object.matrix().elements,  "Object's local matrix is updated" );
+
+			assertArrayEquals(m.setPosition( v.copy( parent.position() ).add( object.position() ) ).elements, object.matrixWorld().elements,  "Object's world matrix is updated" );
+
+			assertArrayEquals(m.setPosition( child.position() ).elements, child.matrix().elements,  "Children's local matrices are updated" );
+
+			assertArrayEquals(m.setPosition( v.copy( parent.position() ).add( object.position() ).add( child.position() ) ).elements, child.matrixWorld().elements,  "Children's world matrices are updated" );
+
+			object.matrixAutoUpdate(false); // test
+
+			object.matrix().identity();
+			object.matrixWorld().identity();
+
+			object.matrixAutoUpdate(false);
+			object.updateWorldMatrix( true, false );
+
+			assertArrayEquals(m.identity().elements, object.matrix().elements,  "No effect to object's local matrix if matrixAutoUpdate is false" );
+
+			assertArrayEquals(m.setPosition( parent.position() ).elements, object.matrixWorld().elements,  "object's world matrix is updated even if matrixAutoUpdate is false" );
+
 	}
 
 //
@@ -989,7 +937,7 @@ public class Object3DTests {
 //			var out = a.toJSON();
 //			out.object.uuid = "0A1E4F43-CB5B-4097-8F82-DC2969C0B8C2";
 //
-//			assert.deepEqual( out, gold, "JSON is as expected" );
+//			assertArrayEquals(gold, out,  "JSON is as expected" );
 //
 	}
 
@@ -1030,7 +978,7 @@ public class Object3DTests {
 			b.matrix().set( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
 			b.matrixWorld().set( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 );
 
-			b.matrixAutoUpdate = false;
+			b.matrixAutoUpdate(false);
 			b.matrixWorldNeedsUpdate(true);
 
 			b.layers.mask = 2;

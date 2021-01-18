@@ -51,10 +51,10 @@ public class Object3D extends EventDispatcher {
 	public Vector3 up;
 	public Matrix4 modelViewMatrix;
 	public Matrix3 normalMatrix;
-	public Matrix4 _matrix;
-	public Matrix4 _matrixWorld;
-	public boolean matrixAutoUpdate;
-	public boolean _matrixWorldNeedsUpdate;
+	private Matrix4 _matrix;
+	private Matrix4 _matrixWorld;
+	private boolean _matrixAutoUpdate;
+	private boolean _matrixWorldNeedsUpdate;
 	public boolean castShadow;
 	public boolean receiveShadow;
 	public boolean frustumCulled;
@@ -79,7 +79,7 @@ public class Object3D extends EventDispatcher {
 		this._matrix = new Matrix4();
 		this._matrixWorld = new Matrix4();
 
-		this.matrixAutoUpdate = DefaultMatrixAutoUpdate;
+		this._matrixAutoUpdate = DefaultMatrixAutoUpdate;
 		this._matrixWorldNeedsUpdate = false;
 
 		this.layers = new Layers();
@@ -123,6 +123,15 @@ public class Object3D extends EventDispatcher {
 	public Object3D parent() {
 		return _parent;
 	}
+	
+	public Object matrixAutoUpdate() {
+		return _matrixAutoUpdate;
+	}
+
+	public Object matrixAutoUpdate(boolean value) {
+		_matrixAutoUpdate = value;
+		return this;
+	}
 
 	public void onRotationChange() {
 		_quaternion.setFromEuler(_rotation, false);
@@ -149,7 +158,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public void applyMatrix4(Matrix4 matrix) {
-		if (this.matrixAutoUpdate)
+		if (this._matrixAutoUpdate)
 			this.updateMatrix();
 
 		this._matrix.premultiply(matrix);
@@ -610,7 +619,7 @@ public class Object3D extends EventDispatcher {
 
 	public void updateMatrixWorld(boolean force) {
 
-		if (this.matrixAutoUpdate)
+		if (this._matrixAutoUpdate)
 			this.updateMatrix();
 
 		if (this._matrixWorldNeedsUpdate || force) {
@@ -640,6 +649,10 @@ public class Object3D extends EventDispatcher {
 		}
 
 	}
+	
+	public void updateWorldMatrix() {
+		updateWorldMatrix(false, false);
+	}
 
 	public void updateWorldMatrix(boolean updateParents, boolean updateChildren) {
 
@@ -649,7 +662,7 @@ public class Object3D extends EventDispatcher {
 
 		}
 
-		if (this.matrixAutoUpdate)
+		if (this._matrixAutoUpdate)
 			this.updateMatrix();
 
 		if (this._parent == null) {
@@ -920,7 +933,7 @@ public class Object3D extends EventDispatcher {
 		this._matrix.copy(source._matrix);
 		this.matrixWorld().copy(source.matrixWorld());
 
-		this.matrixAutoUpdate = source.matrixAutoUpdate;
+		this._matrixAutoUpdate = source._matrixAutoUpdate;
 		this._matrixWorldNeedsUpdate = source._matrixWorldNeedsUpdate;
 
 		this.layers.mask = source.layers.mask;
