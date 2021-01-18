@@ -8,8 +8,11 @@ import net.three4j.math.Matrix4;
 import net.three4j.math.Quaternion;
 import net.three4j.math.Vector3;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
 
 import static net.three4j.unit.src.math.ConstantsTests.x;
 import static net.three4j.unit.src.math.ConstantsTests.y;
@@ -367,49 +370,48 @@ public class Object3DTests {
 
 	@Test
 	public void add_remove_clear() {
-//
-//			Object3D a = new Object3D();
-//			Object3D child1 = new Object3D();
-//			Object3D child2 = new Object3D();
-//
-//			assertEquals(0, a.children.length,  "Starts with no children" );
-//
-//			a.add( child1 );
-//			assertEquals(1, a.children.length,  "The first child was added" );
-//			assertEquals(child1, a.children[ 0 ],  "It's the right one" );
-//
-//			a.add( child2 );
-//			assertEquals(2, a.children.length,  "The second child was added" );
-//			assertEquals(child2, a.children[ 1 ],  "It's the right one" );
-//			assertEquals(child1, a.children[ 0 ],  "The first one is still there" );
-//
-//			a.remove( child1 );
-//			assertEquals(1, a.children.length,  "The first child was removed" );
-//			assertEquals(child2, a.children[ 0 ],  "The second one is still there" );
-//
-//			a.add( child1 );
-//			a.remove( child1, child2 );
-//			assertEquals(0, a.children.length,  "Both children were removed at once" );
-//
-//			child1.add( child2 );
-//			assertEquals(1, child1.children.length,  "The second child was added to the first one" );
-//			a.add( child2 );
-//			assertEquals(1, a.children.length,  "The second one was added to the parent (no remove)" );
-//			assertEquals(child2, a.children[ 0 ],  "The second one is now the parent's child again" );
-//			assertEquals(0, child1.children.length,  "The first one no longer has any children" );
-//
-//			a.add( child1 );
-//			assertEquals(2, a.children.length,  "The first child was added to the parent" );
-//			a.clear();
-//			assertEquals(0, a.children.length,  "All childrens were removed" );
-//			assertEquals(null, child1.parent,  "First child has no parent" );
-//			assertEquals(null, child2.parent,  "Second child has no parent" );
-//
+
+			Object3D a = new Object3D();
+			Object3D child1 = new Object3D();
+			Object3D child2 = new Object3D();
+
+			assertEquals(0, a.children.length(),  "Starts with no children" );
+
+			a.add( child1 );
+			assertEquals(1, a.children.length(),  "The first child was added" );
+			assertEquals(child1, a.children.get( 0 ),  "It's the right one" );
+
+			a.add( child2 );
+			assertEquals(2, a.children.length(),  "The second child was added" );
+			assertEquals(child2, a.children.get( 1 ),  "It's the right one" );
+			assertEquals(child1, a.children.get( 0 ),  "The first one is still there" );
+
+			a.remove( child1 );
+			assertEquals(1, a.children.length(),  "The first child was removed" );
+			assertEquals(child2, a.children.get( 0 ),  "The second one is still there" );
+
+			a.add( child1 );
+			a.remove( child1, child2 );
+			assertEquals(0, a.children.length(),  "Both children were removed at once" );
+
+			child1.add( child2 );
+			assertEquals(1, child1.children.length(),  "The second child was added to the first one" );
+			a.add( child2 );
+			assertEquals(1, a.children.length(),  "The second one was added to the parent (no remove)" );
+			assertEquals(child2, a.children.get( 0 ),  "The second one is now the parent's child again" );
+			assertEquals(0, child1.children.length(),  "The first one no longer has any children" );
+
+			a.add( child1 );
+			assertEquals(2, a.children.length(),  "The first child was added to the parent" );
+			a.clear();
+			assertEquals(0, a.children.length(),  "All childrens were removed" );
+			assertEquals(null, child1.parent(),  "First child has no parent" );
+			assertEquals(null, child2.parent(),  "Second child has no parent" );
+
 	}
 
-//
-	@Test
-	public void getObjectById_getObjectByName_getObjectByProperty() {
+//	@Test
+//	public void getObjectById_getObjectByName_getObjectByProperty() {
 //
 //			Object3D parent = new Object3D();
 //			Object3D childName = new Object3D();
@@ -420,7 +422,7 @@ public class Object3DTests {
 //			childName.name = "foo";
 //			parent.add( childName, childId, childNothing );
 //
-//			assertEquals(true ), parent.getObjectByProperty( "prop",  parent, "Get parent by its own property" );
+//			assertEquals(true , parent.getObjectByProperty( "prop"),  parent, "Get parent by its own property" );
 //			assertEquals(childName, parent.getObjectByName( "foo" ),  "Get child by name" );
 //			assertEquals(childId, parent.getObjectById( parent.id + 2 ),  "Get child by Id" );
 //			assert.strictEqual(
@@ -428,33 +430,30 @@ public class Object3DTests {
 //				"Unknown property results in undefined"
 //			);
 //
-	}
+//	}
 
-//
 	@Test
 	public void getWorldPosition() {
-//
-//			Object3D a = new Object3D();
-//			Object3D b = new Object3D();
-//			Vector3 expectedSingle = new Vector3( x, y, z );
-//			Vector3 expectedParent = new Vector3( x, y, 0 );
-//			Vector3 expectedChild = new Vector3( x, y, 7 + ( z - z ) );
-//			Vector3 position = new Vector3();
-//
-//			a.translateX( x );
-//			a.translateY( y );
-//			a.translateZ( z );
-//
-//			assert.deepEqual( a.getWorldPosition( position ), expectedSingle, "WorldPosition as expected for single object" );
-//
-//			// translate child and then parent
-//			b.translateZ( 7 );
-//			a.add( b );
-//			a.translateZ( - z );
-//
-//			assert.deepEqual( a.getWorldPosition( position ), expectedParent, "WorldPosition as expected for parent" );
-//			assert.deepEqual( b.getWorldPosition( position ), expectedChild, "WorldPosition as expected for child" );
-//
+			Object3D a = new Object3D();
+			Object3D b = new Object3D();
+			Vector3 expectedSingle = new Vector3( x, y, z );
+			Vector3 expectedParent = new Vector3( x, y, 0 );
+			Vector3 expectedChild = new Vector3( x, y, 7 + ( z - z ) );
+			Vector3 position = new Vector3();
+
+			a.translateX( x );
+			a.translateY( y );
+			a.translateZ( z );
+
+			assertTrue( expectedSingle.equals(a.getWorldPosition( position )), "WorldPosition as expected for single object" );
+
+			// translate child and then parent
+			b.translateZ( 7 );
+			a.add( b );
+			a.translateZ( - z );
+
+			assertTrue( expectedParent.equals(a.getWorldPosition( position )), "WorldPosition as expected for parent" );
+			assertTrue( expectedChild.equals(b.getWorldPosition( position )), "WorldPosition as expected for child" );
 	}
 
 ////
@@ -465,69 +464,69 @@ public class Object3DTests {
 ////
 //	}
 
-//
+
 	@Test
 	public void getWorldScale() {
-//
-//			Object3D a = new Object3D();
-//			Matrix4 m = new Matrix4().makeScale( x, y, z );
-//			Vector3 expected = new Vector3( x, y, z );
-//
-//			a.applyMatrix4( m );
-//
-//			assert.deepEqual( a.getWorldScale( new Vector3() ), expected, "WorldScale as expected" );
-//
+
+			Object3D a = new Object3D();
+			Matrix4 m = new Matrix4().makeScale( x, y, z );
+			Vector3 expected = new Vector3( x, y, z );
+
+			a.applyMatrix4( m );
+
+			assertTrue( expected.equals(a.getWorldScale( new Vector3() )), "WorldScale as expected" );
+
 	}
 
-//
+
 	@Test
 	public void getWorldDirection() {
-//
-//			Object3D a = new Object3D();
-//			Vector3 expected = new Vector3( 0, - 0.5 * Math.sqrt( 2 ), 0.5 * Math.sqrt( 2 ) );
-//			Vector3 direction = new Vector3();
-//
-//			a.lookAt( new Vector3( 0, - 1, 1 ) );
-//			a.getWorldDirection( direction );
-//
-//			assertTrue(
-//				Math.abs( direction.x - expected.x ) <= eps &&
-//				Math.abs( direction.y - expected.y ) <= eps &&
-//				Math.abs( direction.z - expected.z ) <= eps,
-//				"Direction has the expected values"
-//			);
-//
+
+			Object3D a = new Object3D();
+			Vector3 expected = new Vector3( 0, - 0.5 * Math.sqrt( 2 ), 0.5 * Math.sqrt( 2 ) );
+			Vector3 direction = new Vector3();
+
+			a.lookAt( new Vector3( 0, - 1, 1 ) );
+			a.getWorldDirection( direction );
+
+			assertTrue(
+				Math.abs( direction.x - expected.x ) <= eps &&
+				Math.abs( direction.y - expected.y ) <= eps &&
+				Math.abs( direction.z - expected.z ) <= eps,
+				"Direction has the expected values"
+			);
+
 	}
 
-//
+
 	@Test
 	public void localTransformVariableInstantiation() {
-//
-//			Object3D a = new Object3D();
-//			Object3D b = new Object3D();
-//			Object3D c = new Object3D();
-//			Object3D d = new Object3D();
-//
-//			a.getWorldDirection( new Vector3() );
-//			a.lookAt( new Vector3( 0, - 1, 1 ) );
-//
-//			assertTrue( true, "Calling lookAt after getWorldDirection does not create errors" );
-//
-//			b.getWorldPosition( new Vector3() );
-//			b.lookAt( new Vector3( 0, - 1, 1 ) );
-//
-//			assertTrue( true, "Calling lookAt after getWorldPosition does not create errors" );
-//
-//			c.getWorldQuaternion( new Quaternion() );
-//			c.lookAt( new Vector3( 0, - 1, 1 ) );
-//
-//			assertTrue( true, "Calling lookAt after getWorldQuaternion does not create errors" );
-//
-//			d.getWorldScale( new Vector3() );
-//			d.lookAt( new Vector3( 0, - 1, 1 ) );
-//
-//			assertTrue( true, "Calling lookAt after getWorldScale does not create errors" );
-//
+
+			Object3D a = new Object3D();
+			Object3D b = new Object3D();
+			Object3D c = new Object3D();
+			Object3D d = new Object3D();
+
+			a.getWorldDirection( new Vector3() );
+			a.lookAt( new Vector3( 0, - 1, 1 ) );
+
+			assertTrue( true, "Calling lookAt after getWorldDirection does not create errors" );
+
+			b.getWorldPosition( new Vector3() );
+			b.lookAt( new Vector3( 0, - 1, 1 ) );
+
+			assertTrue( true, "Calling lookAt after getWorldPosition does not create errors" );
+
+			c.getWorldQuaternion( new Quaternion() );
+			c.lookAt( new Vector3( 0, - 1, 1 ) );
+
+			assertTrue( true, "Calling lookAt after getWorldQuaternion does not create errors" );
+
+			d.getWorldScale( new Vector3() );
+			d.lookAt( new Vector3( 0, - 1, 1 ) );
+
+			assertTrue( true, "Calling lookAt after getWorldScale does not create errors" );
+
 	}
 
 ////
@@ -538,18 +537,18 @@ public class Object3DTests {
 ////
 //	}
 
-//
-	@Test
-	public void traverse_traverseVisible_traverseAncestors() {
+
+//	@Test
+//	public void traverse_traverseVisible_traverseAncestors() {
 //
 //			Object3D a = new Object3D();
 //			Object3D b = new Object3D();
 //			Object3D c = new Object3D();
 //			Object3D d = new Object3D();
-//			var names = [];
-//			var expectedNormal = [ "parent", "child", "childchild 1", "childchild 2" ];
-//			var expectedVisible = [ "parent", "child", "childchild 2" ];
-//			var expectedAncestors = new double[] { "child", "parent" };
+//			ArrayList<String> names = new ArrayList<String>();
+//			String[] expectedNormal = new String[] { "parent", "child", "childchild 1", "childchild 2" };
+//			String[] expectedVisible = new String[] { "parent", "child", "childchild 2" };
+//			String[] expectedAncestors = new String[] { "child", "parent" };
 //
 //			a.name = "parent";
 //			b.name = "child";
@@ -584,38 +583,38 @@ public class Object3DTests {
 //			}
 //			assert.deepEqual( names, expectedAncestors, "Traversed ancestors in expected order" );
 //
-	}
+//	}
 
-//
+
 	@Test
 	public void updateMatrix() {
-//
-//			const a = new Object3D();
-//			a.position()().set( 2, 3, 4 );
-//			a.quaternion().set( 5, 6, 7, 8 );
-//			a.scale.set( 9, 10, 11 );
-//
-//			assert.deepEqual( a.matrix.elements, [
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				0, 0, 0, 1
-//			], "Updating position, quaternion, or scale has no effect to matrix until calling updateMatrix()" );
-//
-//			a.updateMatrix();
-//
-//			assert.deepEqual( a.matrix.elements, [
-//				-1521, 1548, -234, 0,
-//				-520, -1470, 1640, 0,
-//				1826, 44, -1331, 0,
-//				2, 3, 4, 1
-//			], "matrix is calculated from position, quaternion, and scale" );
-//
-//			assert.equal( a.matrixWorldNeedsUpdate, true, "The flag indicating world matrix needs to be updated should be true" );
-//
+
+			Object3D a = new Object3D();
+			a.position().set( 2, 3, 4 );
+			a.quaternion().set( 5, 6, 7, 8 );
+			a.scale().set( 9, 10, 11 );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1},
+				a.matrix.elements, "Updating position, quaternion, or scale has no effect to matrix until calling updateMatrix()" );
+
+			a.updateMatrix();
+
+			assertArrayEquals( new double[] {
+				-1521, 1548, -234, 0,
+				-520, -1470, 1640, 0,
+				1826, 44, -1331, 0,
+				2, 3, 4, 1}, a.matrix.elements, 
+			 "matrix is calculated from position, quaternion, and scale" );
+
+			assertEquals( true, a.matrixWorldNeedsUpdate(), "The flag indicating world matrix needs to be updated should be true" );
+
 	}
 
-//
+
 	@Test
 	public void updateMatrixWorld() {
 //
@@ -630,33 +629,33 @@ public class Object3DTests {
 //
 //			parent.updateMatrixWorld();
 //
-//			assert.deepEqual( parent.matrix.elements, [
+//			assert.deepEqual( parent.matrix.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				1, 2, 3, 1
-//			], "updateMatrixWorld() updates local matrix" );
+//			); "updateMatrixWorld() updates local matrix" );
 //
-//			assert.deepEqual( parent.matrixWorld.elements, [
+//			assert.deepEqual( parent.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				1, 2, 3, 1
-//			], "updateMatrixWorld() updates world matrix" );
+//			); "updateMatrixWorld() updates world matrix" );
 //
-//			assert.deepEqual( child.matrix.elements, [
+//			assert.deepEqual( child.matrix.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				4, 5, 6, 1
-//			], "updateMatrixWorld() updates children's local matrix" );
+//			); "updateMatrixWorld() updates children's local matrix" );
 //
-//			assert.deepEqual( child.matrixWorld.elements, [
+//			assert.deepEqual( child.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				5, 7, 9, 1
-//			], "updateMatrixWorld() updates children's world matrices from their parent world matrix and their local matrices" );
+//			); "updateMatrixWorld() updates children's world matrices from their parent world matrix and their local matrices" );
 //
 //			assert.equal( parent.matrixWorldNeedsUpdate || child.matrixWorldNeedsUpdate, false, "The flag indicating world matrix needs to be updated should be false after updating world matrix" );
 //
@@ -665,12 +664,12 @@ public class Object3DTests {
 //			parent.position()().set( 0, 0, 0 );
 //			parent.updateMatrix();
 //
-//			assert.deepEqual( parent.matrixWorld.elements, [
+//			assert.deepEqual( parent.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				1, 2, 3, 1
-//			], "Updating position, quaternion, scale, or local matrix has no effect to world matrix until calling updateWorldMatrix()" );
+//			); "Updating position, quaternion, scale, or local matrix has no effect to world matrix until calling updateWorldMatrix()" );
 //
 //			// -- matrixAutoUpdate = false test
 //
@@ -683,38 +682,38 @@ public class Object3DTests {
 //			child.matrixAutoUpdate = false;
 //			parent.updateMatrixWorld();
 //
-//			assert.deepEqual( parent.matrix.elements, [
+//			assert.deepEqual( parent.matrix.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				0, 0, 0, 1
-//			], "updateMatrixWorld() doesn't update local matrix if matrixAutoUpdate is false" );
+//			); "updateMatrixWorld() doesn't update local matrix if matrixAutoUpdate is false" );
 //
-//			assert.deepEqual( parent.matrixWorld.elements, [
+//			assert.deepEqual( parent.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				0, 0, 0, 1
-//			], "World matrix isn"t updated because local matrix isn"t updated and the flag indicating world matrix needs to be updated didn't rise" );
+//			); "World matrix isn"t updated because local matrix isn"t updated and the flag indicating world matrix needs to be updated didn't rise" );
 //
-//			assert.deepEqual( child.matrixWorld.elements, [
+//			assert.deepEqual( child.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				0, 0, 0, 1
-//			], "No effect to child world matrix if parent local and world matrices and child local matrix are not updated" );
+//			); "No effect to child world matrix if parent local and world matrices and child local matrix are not updated" );
 //
 //			// -- Propagation to children world matrices test
 //
 //			parent.matrixAutoUpdate = true;
 //			parent.updateMatrixWorld();
 //
-//			assert.deepEqual( child.matrixWorld.elements, [
+//			assert.deepEqual( child.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				1, 2, 3, 1
-//			], "Updating parent world matrix has effect to children world matrices even if children local matrices aren't changed" );
+//			); "Updating parent world matrix has effect to children world matrices even if children local matrices aren't changed" );
 //
 //			// -- force argument test
 //
@@ -730,12 +729,12 @@ public class Object3DTests {
 //
 //			parent.updateMatrixWorld( true );
 //
-//			assert.deepEqual( parent.matrixWorld.elements, [
+//			assert.deepEqual( parent.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				1, 2, 3, 1
-//			], "force = true forces to update world matrix even if local matrix is not changed" );
+//			); "force = true forces to update world matrix even if local matrix is not changed" );
 //
 //			// -- Restriction test: No effect to parent matrices
 //
@@ -751,26 +750,26 @@ public class Object3DTests {
 //
 //			child.updateMatrixWorld();
 //
-//			assert.deepEqual( parent.matrix.elements, [
+//			assert.deepEqual( parent.matrix.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				0, 0, 0, 1
-//			], "updateMatrixWorld() doesn't update parent local matrix" );
+//			); "updateMatrixWorld() doesn't update parent local matrix" );
 //
-//			assert.deepEqual( parent.matrixWorld.elements, [
+//			assert.deepEqual( parent.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				0, 0, 0, 1
-//			], "updateMatrixWorld() doesn't update parent world matrix" );
+//			); "updateMatrixWorld() doesn't update parent world matrix" );
 //
-//			assert.deepEqual( child.matrixWorld.elements, [
+//			assert.deepEqual( child.matrixWorld.elements, .get(
 //				1, 0, 0, 0,
 //				0, 1, 0, 0,
 //				0, 0, 1, 0,
 //				4, 5, 6, 1
-//			], "updateMatrixWorld() calculates world matrix from the current parent world matrix" );
+//			); "updateMatrixWorld() calculates world matrix from the current parent world matrix" );
 //
 	}
 
@@ -970,13 +969,13 @@ public class Object3DTests {
 //					"visible": false,
 //					"userData": { "foo": "bar" },
 //					"layers": 1,
-//					"matrix": [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-//					"children": [
+//					"matrix": .get( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
+//					"children": .get(
 //						{
 //							"uuid": "5D4E9AE8-DA61-4912-A575-71A5BE3D72CD",
 //							"type": "Object3D",
 //							"layers": 1,
-//							"matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
+//							"matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 );
 //							"children": [
 //								{
 //									"uuid": "B43854B3-E970-4E85-BD41-AAF8D7BFA189",

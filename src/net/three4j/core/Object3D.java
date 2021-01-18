@@ -15,6 +15,13 @@ import net.three4j.math.Matrix3;
 import net.three4j.math.Matrix4;
 
 public class Object3D extends EventDispatcher {
+	@SuppressWarnings("serial")
+	public static class ChildArrayList<T> extends ArrayList<T> {
+		public int length() {
+			return this.size();
+		}
+	}
+
 	// let _object3DId = 0;
 	static int _object3DId = 0;
 
@@ -38,7 +45,7 @@ public class Object3D extends EventDispatcher {
 
 	public final long id;
 	private Object3D _parent;
-	public ArrayList<Object3D> children;
+	public ChildArrayList<Object3D> children;
 	public final String uuid;
 	public String name;
 	public Vector3 up;
@@ -47,7 +54,7 @@ public class Object3D extends EventDispatcher {
 	public Matrix4 matrix;
 	public Matrix4 _matrixWorld;
 	public boolean matrixAutoUpdate;
-	public boolean matrixWorldNeedsUpdate;
+	public boolean _matrixWorldNeedsUpdate;
 	public boolean castShadow;
 	public boolean receiveShadow;
 	public boolean frustumCulled;
@@ -56,7 +63,7 @@ public class Object3D extends EventDispatcher {
 	public Layers layers;
 	// animations
 	Object _userData;
-
+	
 	public Object3D() {
 		id = _object3DId++;
 
@@ -65,7 +72,7 @@ public class Object3D extends EventDispatcher {
 		this.name = "";
 
 		this._parent = null;
-		this.children = new ArrayList<>();
+		this.children = new ChildArrayList<>();
 
 		this.up = new Vector3(DefaultUp);
 
@@ -73,7 +80,7 @@ public class Object3D extends EventDispatcher {
 		this._matrixWorld = new Matrix4();
 
 		this.matrixAutoUpdate = DefaultMatrixAutoUpdate;
-		this.matrixWorldNeedsUpdate = false;
+		this._matrixWorldNeedsUpdate = false;
 
 		this.layers = new Layers();
 		this.visible = true;
@@ -105,8 +112,12 @@ public class Object3D extends EventDispatcher {
 		return _rotation;
 	}
 
-	public final Vector3 scale() {
+	public Vector3 scale() {
 		return _scale;
+	}
+	
+	public Object3D parent() {
+		return _parent;
 	}
 
 	public void onRotationChange() {
@@ -433,6 +444,10 @@ public class Object3D extends EventDispatcher {
 		return this.getObjectByProperty("name", name);
 
 	}
+	
+	public Object3D getObjectByProperty(String name) {
+		return null;
+	}
 
 	public Object3D getObjectByProperty(String name, String value) {
 
@@ -567,12 +582,16 @@ public class Object3D extends EventDispatcher {
 //		}
 //
 //	},
-//
-	void updateMatrix() {
+
+	public boolean matrixWorldNeedsUpdate() {
+		return this._matrixWorldNeedsUpdate;
+	}
+	
+	public void updateMatrix() {
 
 		this.matrix.compose(this._position, this._quaternion, this._scale);
 
-		this.matrixWorldNeedsUpdate = true;
+		this._matrixWorldNeedsUpdate = true;
 
 	}
 
@@ -585,7 +604,7 @@ public class Object3D extends EventDispatcher {
 		if (this.matrixAutoUpdate)
 			this.updateMatrix();
 
-		if (this.matrixWorldNeedsUpdate || force) {
+		if (this._matrixWorldNeedsUpdate || force) {
 
 			if (this._parent == null) {
 
@@ -597,7 +616,7 @@ public class Object3D extends EventDispatcher {
 
 			}
 
-			this.matrixWorldNeedsUpdate = false;
+			this._matrixWorldNeedsUpdate = false;
 
 			force = true;
 
@@ -893,7 +912,7 @@ public class Object3D extends EventDispatcher {
 		this.matrixWorld().copy(source.matrixWorld());
 
 		this.matrixAutoUpdate = source.matrixAutoUpdate;
-		this.matrixWorldNeedsUpdate = source.matrixWorldNeedsUpdate;
+		this._matrixWorldNeedsUpdate = source._matrixWorldNeedsUpdate;
 
 		this.layers.mask = source.layers.mask;
 		this.visible = source.visible;
