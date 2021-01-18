@@ -599,7 +599,7 @@ public class Object3DTests {
 				0, 1, 0, 0,
 				0, 0, 1, 0,
 				0, 0, 0, 1},
-				a.matrix.elements, "Updating position, quaternion, or scale has no effect to matrix until calling updateMatrix()" );
+				a.matrix().elements, "Updating position, quaternion, or scale has no effect to matrix until calling updateMatrix()" );
 
 			a.updateMatrix();
 
@@ -607,7 +607,7 @@ public class Object3DTests {
 				-1521, 1548, -234, 0,
 				-520, -1470, 1640, 0,
 				1826, 44, -1331, 0,
-				2, 3, 4, 1}, a.matrix.elements, 
+				2, 3, 4, 1}, a.matrix().elements, 
 			 "matrix is calculated from position, quaternion, and scale" );
 
 			assertEquals( true, a.matrixWorldNeedsUpdate(), "The flag indicating world matrix needs to be updated should be true" );
@@ -617,163 +617,159 @@ public class Object3DTests {
 
 	@Test
 	public void updateMatrixWorld() {
-//
-//			const parent = new Object3D();
-//			const child = new Object3D();
-//
-//			// -- Standard usage test
-//
-//			parent.position()().set( 1, 2, 3 );
-//			child.position()().set( 4, 5, 6 );
-//			parent.add( child );
-//
-//			parent.updateMatrixWorld();
-//
-//			assert.deepEqual( parent.matrix.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				1, 2, 3, 1
-//			); "updateMatrixWorld() updates local matrix" );
-//
-//			assert.deepEqual( parent.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				1, 2, 3, 1
-//			); "updateMatrixWorld() updates world matrix" );
-//
-//			assert.deepEqual( child.matrix.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				4, 5, 6, 1
-//			); "updateMatrixWorld() updates children's local matrix" );
-//
-//			assert.deepEqual( child.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				5, 7, 9, 1
-//			); "updateMatrixWorld() updates children's world matrices from their parent world matrix and their local matrices" );
-//
-//			assert.equal( parent.matrixWorldNeedsUpdate || child.matrixWorldNeedsUpdate, false, "The flag indicating world matrix needs to be updated should be false after updating world matrix" );
-//
-//			// -- No sync between local position/quaternion/scale/matrix and world matrix test
-//
-//			parent.position()().set( 0, 0, 0 );
-//			parent.updateMatrix();
-//
-//			assert.deepEqual( parent.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				1, 2, 3, 1
-//			); "Updating position, quaternion, scale, or local matrix has no effect to world matrix until calling updateWorldMatrix()" );
-//
-//			// -- matrixAutoUpdate = false test
-//
-//			// Resetting local and world matrices to the origin
-//			child.position()().set( 0, 0, 0 );
-//			parent.updateMatrixWorld();
-//
-//			parent.position()().set( 1, 2, 3 );
-//			parent.matrixAutoUpdate = false;
-//			child.matrixAutoUpdate = false;
-//			parent.updateMatrixWorld();
-//
-//			assert.deepEqual( parent.matrix.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				0, 0, 0, 1
-//			); "updateMatrixWorld() doesn't update local matrix if matrixAutoUpdate is false" );
-//
-//			assert.deepEqual( parent.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				0, 0, 0, 1
-//			); "World matrix isn"t updated because local matrix isn"t updated and the flag indicating world matrix needs to be updated didn't rise" );
-//
-//			assert.deepEqual( child.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				0, 0, 0, 1
-//			); "No effect to child world matrix if parent local and world matrices and child local matrix are not updated" );
-//
-//			// -- Propagation to children world matrices test
-//
-//			parent.matrixAutoUpdate = true;
-//			parent.updateMatrixWorld();
-//
-//			assert.deepEqual( child.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				1, 2, 3, 1
-//			); "Updating parent world matrix has effect to children world matrices even if children local matrices aren't changed" );
-//
-//			// -- force argument test
-//
-//			// Resetting the local and world matrices to the origin
-//			child.position()().set( 0, 0, 0 );
-//			child.matrixAutoUpdate = true;
-//			parent.updateMatrixWorld();
-//
-//			parent.position().set( 1, 2, 3 );
-//			parent.updateMatrix();
-//			parent.matrixAutoUpdate = false;
-//			parent.matrixWorldNeedsUpdate = false;
-//
-//			parent.updateMatrixWorld( true );
-//
-//			assert.deepEqual( parent.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				1, 2, 3, 1
-//			); "force = true forces to update world matrix even if local matrix is not changed" );
-//
-//			// -- Restriction test: No effect to parent matrices
-//
-//			// Resetting the local and world matrices to the origin
-//			parent.position().set( 0, 0, 0 );
-//			child.position().set( 0, 0, 0 );
-//			parent.matrixAutoUpdate = true;
-//			child.matrixAutoUpdate = true;
-//			parent.updateMatrixWorld();
-//
-//			parent.position().set( 1, 2, 3 );
-//			child.position().set( 4, 5, 6 );
-//
-//			child.updateMatrixWorld();
-//
-//			assert.deepEqual( parent.matrix.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				0, 0, 0, 1
-//			); "updateMatrixWorld() doesn't update parent local matrix" );
-//
-//			assert.deepEqual( parent.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				0, 0, 0, 1
-//			); "updateMatrixWorld() doesn't update parent world matrix" );
-//
-//			assert.deepEqual( child.matrixWorld.elements, .get(
-//				1, 0, 0, 0,
-//				0, 1, 0, 0,
-//				0, 0, 1, 0,
-//				4, 5, 6, 1
-//			); "updateMatrixWorld() calculates world matrix from the current parent world matrix" );
-//
+
+			Object3D parent = new Object3D();
+			Object3D child = new Object3D();
+
+			// -- Standard usage test
+
+			parent.position().set( 1, 2, 3 );
+			child.position().set( 4, 5, 6 );
+			parent.add( child );
+
+			parent.updateMatrixWorld();
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				1, 2, 3, 1}, parent.matrix().elements, 
+			"updateMatrixWorld() updates local matrix" );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				1, 2, 3, 1}, parent.matrixWorld().elements, 
+			"updateMatrixWorld() updates world matrix" );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				4, 5, 6, 1}, child.matrix().elements, 
+			"updateMatrixWorld() updates children's local matrix" );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				5, 7, 9, 1}, child.matrixWorld().elements, 
+			"updateMatrixWorld() updates children's world matrices from their parent world matrix and their local matrices" );
+
+			assertEquals( false, parent.matrixWorldNeedsUpdate() || child.matrixWorldNeedsUpdate(), "The flag indicating world matrix needs to be updated should be false after updating world matrix" );
+
+			// -- No sync between local position/quaternion/scale/matrix and world matrix test
+
+			parent.position().set( 0, 0, 0 );
+			parent.updateMatrix();
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				1, 2, 3, 1}, parent.matrixWorld().elements, 
+			"Updating position, quaternion, scale, or local matrix has no effect to world matrix until calling updateWorldMatrix()" );
+
+			// -- matrixAutoUpdate = false test
+			child.position().set( 0, 0, 0 );
+			parent.updateMatrixWorld();
+
+			parent.position().set( 1, 2, 3 );
+			parent.matrixAutoUpdate = false;
+			child.matrixAutoUpdate = false;
+			parent.updateMatrixWorld();
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1}, parent.matrix().elements, 
+			"updateMatrixWorld() doesn't update local matrix if matrixAutoUpdate is false" );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1}, parent.matrixWorld().elements, 
+			"World matrix isn't updated because local matrix isn't updated and the flag indicating world matrix needs to be updated didn't rise" );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1}, child.matrixWorld().elements, 
+			"No effect to child world matrix if parent local and world matrices and child local matrix are not updated" );
+
+			// -- Propagation to children world matrices test
+
+			parent.matrixAutoUpdate = true;
+			parent.updateMatrixWorld();
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				1, 2, 3, 1}, child.matrixWorld().elements, 
+			"Updating parent world matrix has effect to children world matrices even if children local matrices aren't changed" );
+
+			// -- force argument test
+
+			// Resetting the local and world matrices to the origin
+			child.position().set( 0, 0, 0 );
+			child.matrixAutoUpdate = true;
+			parent.updateMatrixWorld();
+
+			parent.position().set( 1, 2, 3 );
+			parent.updateMatrix();
+			parent.matrixAutoUpdate = false;
+			parent.matrixWorldNeedsUpdate(false);
+
+			parent.updateMatrixWorld( true );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				1, 2, 3, 1}, parent.matrixWorld().elements, 
+			"force = true forces to update world matrix even if local matrix is not changed" );
+
+			// -- Restriction test: No effect to parent matrices
+
+			// Resetting the local and world matrices to the origin
+			parent.position().set( 0, 0, 0 );
+			child.position().set( 0, 0, 0 );
+			parent.matrixAutoUpdate = true;
+			child.matrixAutoUpdate = true;
+			parent.updateMatrixWorld();
+
+			parent.position().set( 1, 2, 3 );
+			child.position().set( 4, 5, 6 );
+
+			child.updateMatrixWorld();
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1}, parent.matrix().elements, 
+			"updateMatrixWorld() doesn't update parent local matrix" );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				0, 0, 0, 1}, parent.matrixWorld().elements, 
+			"updateMatrixWorld() doesn't update parent world matrix" );
+
+			assertArrayEquals( new double[] {
+				1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				4, 5, 6, 1}, child.matrixWorld().elements, 
+			"updateMatrixWorld() calculates world matrix from the current parent world matrix" );
 	}
 
-//
 	@Test
 	public void updateWorldMatrix() {
 //
@@ -997,78 +993,78 @@ public class Object3DTests {
 //
 	}
 
+
+//	@Test
+//	public void $clone() {
 //
-	@Test
-	public void $clone() {
-//
-//			var a;
+//			Object3D a = null;
 //			Object3D b = new Object3D();
 //
-//			assertEquals(undefined, a,  "Undefined pre-clone()" );
+//			assertEquals(null, a,  "Undefined pre-clone()" );
 //
 //			a = b.clone();
-//			assert.notStrictEqual( a, b, "Defined but seperate instances post-clone()" );
+//			assertEquals( a, b, "Defined but separate instances post-clone()" );
 //
 //			a.uuid = b.uuid;
-//			assert.deepEqual( a, b, "But identical properties" );
+//			assertEquals( a, b, "But identical properties" );
 //
+//	}
+//
+
+	//@Test
+	public void copy() {
+
+			Object3D a = new Object3D();
+			Object3D b = new Object3D();
+			Object3D child = new Object3D();
+			Object3D childChild = new Object3D();
+
+			a.name = "original";
+			b.name = "to-be-copied";
+
+			b.position().set( x, y, z );
+			b.quaternion().set( x, y, z, w );
+			b.scale().set( 2, 3, 4 );
+
+			// bogus QUnit.test values
+			b.matrix().set( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
+			b.matrixWorld().set( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 );
+
+			b.matrixAutoUpdate = false;
+			b.matrixWorldNeedsUpdate(true);
+
+			b.layers.mask = 2;
+			b.visible = false;
+
+			b.castShadow = true;
+			b.receiveShadow = true;
+
+			b.frustumCulled = false;
+			b.renderOrder = 1;
+
+//			b.userData = new double[] { "foo" } = "bar";
+
+			child.add( childChild );
+			b.add( child );
+
+			assertTrue( !a.equals(b), "Objects are not equal pre-copy()" );
+			a.copy( b, true );
+
+			// check they're all unique instances
+			assertTrue(
+				a.uuid != b.uuid &&
+				a.children.get( 0 ).uuid != b.children.get( 0 ).uuid &&
+				a.children.get( 0 ).children.get( 0 ).uuid != b.children.get( 0 ).children.get( 0 ).uuid,
+				"UUIDs are all different"
+			);
+
+			// and now fix that
+			a.uuid = b.uuid;
+			a.children.get( 0 ).uuid = b.children.get( 0 ).uuid;
+			a.children.get( 0 ).children.get( 0 ).uuid = b.children.get( 0 ).children.get( 0 ).uuid;
+
+			assertTrue( a.equals(b), "Objects are equal post-copy()" );
+
 	}
 
-//
-	@Test
-	public void copy() {
-//
-//			Object3D a = new Object3D();
-//			Object3D b = new Object3D();
-//			Object3D child = new Object3D();
-//			Object3D childChild = new Object3D();
-//
-//			a.name = "original";
-//			b.name = "to-be-copied";
-//
-//			b.position().set( x, y, z );
-//			b.quaternion().set( x, y, z, w );
-//			b.scale.set( 2, 3, 4 );
-//
-//			// bogus QUnit.test values
-//			b.matrix.set( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
-//			b.matrixWorld.set( 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 );
-//
-//			b.matrixAutoUpdate = false;
-//			b.matrixWorldNeedsUpdate = true;
-//
-//			b.layers.mask = 2;
-//			b.visible = false;
-//
-//			b.castShadow = true;
-//			b.receiveShadow = true;
-//
-//			b.frustumCulled = false;
-//			b.renderOrder = 1;
-//
-//			b.userDatanew double[] { "foo" } = "bar";
-//
-//			child.add( childChild );
-//			b.add( child );
-//
-//			assert.notDeepEqual( a, b, "Objects are not equal pre-copy()" );
-//			a.copy( b, true );
-//
-//			// check they're all unique instances
-//			assertTrue(
-//				a.uuid != b.uuid &&
-//				a.children[ 0 ].uuid != b.children[ 0 ].uuid &&
-//				a.children[ 0 ].children[ 0 ].uuid != b.children[ 0 ].children[ 0 ].uuid,
-//				"UUIDs are all different"
-//			);
-//
-//			// and now fix that
-//			a.uuid = b.uuid;
-//			a.children[ 0 ].uuid = b.children[ 0 ].uuid;
-//			a.children[ 0 ].children[ 0 ].uuid = b.children[ 0 ].children[ 0 ].uuid;
-//
-//			assert.deepEqual( a, b, "Objects are equal post-copy()" );
-//
-	}
-//
 }

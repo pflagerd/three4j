@@ -46,12 +46,12 @@ public class Object3D extends EventDispatcher {
 	public final long id;
 	private Object3D _parent;
 	public ChildArrayList<Object3D> children;
-	public final String uuid;
+	public String uuid;
 	public String name;
 	public Vector3 up;
 	public Matrix4 modelViewMatrix;
 	public Matrix3 normalMatrix;
-	public Matrix4 matrix;
+	public Matrix4 _matrix;
 	public Matrix4 _matrixWorld;
 	public boolean matrixAutoUpdate;
 	public boolean _matrixWorldNeedsUpdate;
@@ -76,7 +76,7 @@ public class Object3D extends EventDispatcher {
 
 		this.up = new Vector3(DefaultUp);
 
-		this.matrix = new Matrix4();
+		this._matrix = new Matrix4();
 		this._matrixWorld = new Matrix4();
 
 		this.matrixAutoUpdate = DefaultMatrixAutoUpdate;
@@ -94,6 +94,10 @@ public class Object3D extends EventDispatcher {
 //		this.animations = [];
 //	
 		this._userData = new Object();
+	}
+	
+	public Matrix4 matrix() {
+		return _matrix;
 	}
 
 	public Matrix4 matrixWorld() {
@@ -148,9 +152,9 @@ public class Object3D extends EventDispatcher {
 		if (this.matrixAutoUpdate)
 			this.updateMatrix();
 
-		this.matrix.premultiply(matrix);
+		this._matrix.premultiply(matrix);
 
-		this.matrix.decompose(this._position, this._quaternion, this._scale);
+		this._matrix.decompose(this._position, this._quaternion, this._scale);
 
 	}
 
@@ -587,9 +591,14 @@ public class Object3D extends EventDispatcher {
 		return this._matrixWorldNeedsUpdate;
 	}
 	
+	public Object3D matrixWorldNeedsUpdate(boolean matrixWorldNeedsUpdate) {
+		this._matrixWorldNeedsUpdate = matrixWorldNeedsUpdate;
+		return this;
+	}
+	
 	public void updateMatrix() {
 
-		this.matrix.compose(this._position, this._quaternion, this._scale);
+		this._matrix.compose(this._position, this._quaternion, this._scale);
 
 		this._matrixWorldNeedsUpdate = true;
 
@@ -608,11 +617,11 @@ public class Object3D extends EventDispatcher {
 
 			if (this._parent == null) {
 
-				this.matrixWorld().copy(this.matrix);
+				this.matrixWorld().copy(this._matrix);
 
 			} else {
 
-				this.matrixWorld().multiplyMatrices(this._parent.matrixWorld(), this.matrix);
+				this.matrixWorld().multiplyMatrices(this._parent.matrixWorld(), this._matrix);
 
 			}
 
@@ -645,11 +654,11 @@ public class Object3D extends EventDispatcher {
 
 		if (this._parent == null) {
 
-			this.matrixWorld().copy(this.matrix);
+			this.matrixWorld().copy(this._matrix);
 
 		} else {
 
-			this.matrixWorld().multiplyMatrices(this._parent.matrixWorld(), this.matrix);
+			this.matrixWorld().multiplyMatrices(this._parent.matrixWorld(), this._matrix);
 
 		}
 
@@ -908,7 +917,7 @@ public class Object3D extends EventDispatcher {
 		this._quaternion.copy(source._quaternion);
 		this._scale.copy(source._scale);
 
-		this.matrix.copy(source.matrix);
+		this._matrix.copy(source._matrix);
 		this.matrixWorld().copy(source.matrixWorld());
 
 		this.matrixAutoUpdate = source.matrixAutoUpdate;
