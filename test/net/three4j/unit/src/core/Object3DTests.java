@@ -7,6 +7,7 @@ import static net.three4j.unit.src.math.ConstantsTests.y;
 import static net.three4j.unit.src.math.ConstantsTests.z;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -938,22 +939,22 @@ public class Object3DTests {
 	}
 
 
-//	@Test
-//	public void $clone() {
-//
-//			Object3D a = null;
-//			Object3D b = new Object3D();
-//
-//			assertEquals(null, a,  "Undefined pre-clone()" );
-//
-//			a = b.clone();
-//			assertEquals( a, b, "Defined but separate instances post-clone()" );
-//
-//			a.uuid = b.uuid;
-//			assertEquals( a, b, "But identical properties" );
-//
-//	}
-//
+	@Test
+	public void $clone() {
+
+			Object3D a = null;
+			Object3D b = new Object3D();
+
+			assertEquals(null, a,  "Undefined pre-clone()" );
+
+			a = b.clone();
+			assertFalse( a.equals(b), "Defined but separate instances post-clone()" );
+
+			a.uuid = b.uuid;
+			assertTrue( a.equals(b), "But identical properties" );
+
+	}
+
 
 	//@Test
 	public void copy() {

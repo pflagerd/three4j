@@ -23,6 +23,11 @@ public class Object3D extends EventDispatcher {
 		}
 	}
 
+	static final Vector3 DefaultUp = new Vector3(0, 1, 0);
+	static final boolean DefaultMatrixAutoUpdate = true;
+
+	public boolean isObject3D = true;
+	
 	// let _object3DId = 0;
 	static int _object3DId = 0;
 
@@ -47,39 +52,44 @@ public class Object3D extends EventDispatcher {
 //	const _addedEvent = { type: 'added' };
 //	const _removedEvent = { type: 'removed' };
 
-	public final long id;
+	public final long id = _object3DId++;
 	private Object3D _parent;
-	public ChildArrayList<Object3D> children;
-	public String uuid;
-	public String name;
-	public Vector3 up; // DPP: I'm thinking this might be a static final
-	public Matrix4 modelViewMatrix;
-	public Matrix3 normalMatrix;
-	private Matrix4 _matrix;
-	private Matrix4 _matrixWorld;
-	private boolean _matrixAutoUpdate;
-	private boolean _matrixWorldNeedsUpdate;
-	public boolean castShadow;
-	public boolean receiveShadow;
-	public boolean frustumCulled;
-	public int renderOrder;
-	public boolean visible; 
-	public Layers layers;
+	public ChildArrayList<Object3D> children = new ChildArrayList<>();
+	public String uuid = MathUtils.generateUUID();
+	public String name = "";
+	public Vector3 up = new Vector3(DefaultUp); // DPP: I'm thinking this might be a static final
+	public Matrix4 modelViewMatrix = new Matrix4();
+	public Matrix3 normalMatrix = new Matrix3();
+	private Matrix4 _matrix = new Matrix4();
+	private Matrix4 _matrixWorld = new Matrix4();
+	private boolean _matrixAutoUpdate = DefaultMatrixAutoUpdate;
+	private boolean _matrixWorldNeedsUpdate = false;
+	public boolean castShadow = false;
+	public boolean receiveShadow = false;
+	public boolean frustumCulled = true;
+	public int renderOrder = 0;
+	public boolean visible = true; 
+	public Layers layers = new Layers();
 	// animations
-	Object _userData;
+	Object _userData = new Object();
+
+	public Object3D() {
+//		this.animations = [];
+//	
+	}
 
 	public boolean equals(Object3D o) {
-		return 	_position == o._position && 
-				_rotation == o._rotation &&
-				_scale == o._scale &&
-				_quaternion == o._quaternion &&
-				_xAxis == o._xAxis &&
-				_yAxis == o._yAxis &&
-				_zAxis == o._zAxis &&
-				_parent == o._parent &&
+		return 	_position.equals(o._position) && 
+				_rotation.equals(o._rotation) &&
+				_scale.equals(_scale) &&
+				_quaternion.equals(_quaternion) &&
+				_xAxis.equals(o._xAxis) &&
+				_yAxis.equals(o._yAxis) &&
+				_zAxis.equals(o._zAxis) &&
+				(_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) &&
 				children.equals(o.children)&& 
-				uuid == o.uuid &&
-				name == o.name &&
+				uuid.equals(o.uuid) &&
+				name.equals(o.name) &&
 				up.equals(o.up) &&
 				modelViewMatrix.equals(o.modelViewMatrix) &&
 				normalMatrix.equals(o.normalMatrix) &&
@@ -92,8 +102,8 @@ public class Object3D extends EventDispatcher {
 				frustumCulled == o.frustumCulled &&
 				renderOrder == o.renderOrder &&
 				visible == o.visible &&
-				layers.equals(o.layers) &&
-				_userData.equals(o._userData)
+				layers.equals(o.layers)
+//				_userData.equals(o._userData)
 				;
 	}
 
@@ -101,38 +111,6 @@ public class Object3D extends EventDispatcher {
 //	public int hashCode() {
 //		return Objects.hashCode(_position);
 //	}
-
-	public Object3D() {
-		id = _object3DId++;
-
-		uuid = MathUtils.generateUUID();
-
-		this.name = "";
-
-		this._parent = null;
-		this.children = new ChildArrayList<>();
-
-		this.up = new Vector3(DefaultUp);
-
-		this._matrix = new Matrix4();
-		this._matrixWorld = new Matrix4();
-
-		this._matrixAutoUpdate = DefaultMatrixAutoUpdate;
-		this._matrixWorldNeedsUpdate = false;
-
-		this.layers = new Layers();
-		this.visible = true;
-
-		this.castShadow = false;
-		this.receiveShadow = false;
-
-		this.frustumCulled = true;
-		this.renderOrder = 0;
-
-//		this.animations = [];
-//	
-		this._userData = new Object();
-	}
 
 	public Matrix4 matrix() {
 		return _matrix;
@@ -183,11 +161,6 @@ public class Object3D extends EventDispatcher {
 		_rotation.onChange(this::onRotationChange);
 		_quaternion.onChange(this::onQuaternionChange);
 	}
-
-	static final Vector3 DefaultUp = new Vector3(0, 1, 0);
-	boolean DefaultMatrixAutoUpdate = true;
-
-	public boolean isObject3D = true;
 
 	public void onBeforeRender() {
 	}
@@ -964,12 +937,13 @@ public class Object3D extends EventDispatcher {
 		this.up.copy(source.up);
 
 		this._position.copy(source._position);
+		this._rotation.copy(source._rotation);
 		this._rotation.order(source._rotation.order());
 		this._quaternion.copy(source._quaternion);
 		this._scale.copy(source._scale);
 
 		this._matrix.copy(source._matrix);
-		this.matrixWorld().copy(source.matrixWorld());
+		this.matrixWorld().copy(source._matrixWorld);
 
 		this._matrixAutoUpdate = source._matrixAutoUpdate;
 		this._matrixWorldNeedsUpdate = source._matrixWorldNeedsUpdate;

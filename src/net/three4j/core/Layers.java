@@ -51,6 +51,13 @@ public class Layers {
 		return ( this.mask & layers.mask ) != 0;
 	}
 	
+	// DPP: later
+	// public int hashCode() {}	
+	
+	public boolean equals(Layers layers) {
+		return mask == layers.mask;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() + "() {mask:" + mask + "}";
