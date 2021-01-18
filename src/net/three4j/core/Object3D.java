@@ -4,6 +4,7 @@ import net.three4j.math.Quaternion;
 import static net.three4j.THREE.console;
 import net.three4j.math.Vector3;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import net.three4j.cameras.Camera;
 import net.three4j.core.EventDispatcher;
@@ -25,10 +26,13 @@ public class Object3D extends EventDispatcher {
 	// let _object3DId = 0;
 	static int _object3DId = 0;
 
+	// Helpers (not included in equals())
 	private final Vector3 _v1 = new Vector3();
 	private final Quaternion _q1 = new Quaternion();
 	private final Matrix4 _m1 = new Matrix4();
 	private Vector3 _target = new Vector3();
+
+	//
 
 	private Vector3 _position = new Vector3();
 	private Euler _rotation = new Euler();
@@ -48,7 +52,7 @@ public class Object3D extends EventDispatcher {
 	public ChildArrayList<Object3D> children;
 	public String uuid;
 	public String name;
-	public Vector3 up;
+	public Vector3 up; // DPP: I'm thinking this might be a static final
 	public Matrix4 modelViewMatrix;
 	public Matrix3 normalMatrix;
 	private Matrix4 _matrix;
@@ -59,11 +63,45 @@ public class Object3D extends EventDispatcher {
 	public boolean receiveShadow;
 	public boolean frustumCulled;
 	public int renderOrder;
-	public boolean visible;
+	public boolean visible; 
 	public Layers layers;
 	// animations
 	Object _userData;
-	
+
+	public boolean equals(Object3D o) {
+		return 	_position == o._position && 
+				_rotation == o._rotation &&
+				_scale == o._scale &&
+				_quaternion == o._quaternion &&
+				_xAxis == o._xAxis &&
+				_yAxis == o._yAxis &&
+				_zAxis == o._zAxis &&
+				_parent == o._parent &&
+				children.equals(o.children)&& 
+				uuid == o.uuid &&
+				name == o.name &&
+				up.equals(o.up) &&
+				modelViewMatrix.equals(o.modelViewMatrix) &&
+				normalMatrix.equals(o.normalMatrix) &&
+				_matrix.equals(o._matrix) &&
+				_matrixWorld.equals(o._matrixWorld) &&
+				_matrixAutoUpdate == o._matrixAutoUpdate &&
+				_matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate &&
+				castShadow == o.castShadow &&
+				receiveShadow == o.receiveShadow &&
+				frustumCulled == o.frustumCulled &&
+				renderOrder == o.renderOrder &&
+				visible == o.visible &&
+				layers.equals(o.layers) &&
+				_userData.equals(o._userData)
+				;
+	}
+
+	// DPP: Maybe later.
+//	public int hashCode() {
+//		return Objects.hashCode(_position);
+//	}
+
 	public Object3D() {
 		id = _object3DId++;
 
@@ -95,7 +133,7 @@ public class Object3D extends EventDispatcher {
 //	
 		this._userData = new Object();
 	}
-	
+
 	public Matrix4 matrix() {
 		return _matrix;
 	}
@@ -119,11 +157,11 @@ public class Object3D extends EventDispatcher {
 	public Vector3 scale() {
 		return _scale;
 	}
-	
+
 	public Object3D parent() {
 		return _parent;
 	}
-	
+
 	public Object matrixAutoUpdate() {
 		return _matrixAutoUpdate;
 	}
@@ -291,13 +329,13 @@ public class Object3D extends EventDispatcher {
 
 		_position.setFromMatrixPosition(this.matrixWorld());
 
-		if ( this instanceof Camera || this instanceof Light ) {
+		if (this instanceof Camera || this instanceof Light) {
 
-			_m1.lookAt( _position, _target, this.up );
+			_m1.lookAt(_position, _target, this.up);
 
 		} else {
 
-			_m1.lookAt( _target, _position, this.up );
+			_m1.lookAt(_target, _position, this.up);
 
 		}
 
@@ -457,7 +495,7 @@ public class Object3D extends EventDispatcher {
 		return this.getObjectByProperty("name", name);
 
 	}
-	
+
 	public Object3D getObjectByProperty(String name) {
 		return null;
 	}
@@ -599,12 +637,12 @@ public class Object3D extends EventDispatcher {
 	public boolean matrixWorldNeedsUpdate() {
 		return this._matrixWorldNeedsUpdate;
 	}
-	
+
 	public Object3D matrixWorldNeedsUpdate(boolean matrixWorldNeedsUpdate) {
 		this._matrixWorldNeedsUpdate = matrixWorldNeedsUpdate;
 		return this;
 	}
-	
+
 	public void updateMatrix() {
 
 		this._matrix.compose(this._position, this._quaternion, this._scale);
@@ -649,7 +687,7 @@ public class Object3D extends EventDispatcher {
 		}
 
 	}
-	
+
 	public void updateWorldMatrix() {
 		updateWorldMatrix(false, false);
 	}

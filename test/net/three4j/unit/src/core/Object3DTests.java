@@ -1,5 +1,14 @@
 package net.three4j.unit.src.core;
 
+import static net.three4j.unit.src.math.ConstantsTests.eps;
+import static net.three4j.unit.src.math.ConstantsTests.w;
+import static net.three4j.unit.src.math.ConstantsTests.x;
+import static net.three4j.unit.src.math.ConstantsTests.y;
+import static net.three4j.unit.src.math.ConstantsTests.z;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import net.three4j.core.Object3D;
@@ -7,18 +16,6 @@ import net.three4j.math.Euler;
 import net.three4j.math.Matrix4;
 import net.three4j.math.Quaternion;
 import net.three4j.math.Vector3;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-
-import static net.three4j.unit.src.math.ConstantsTests.x;
-import static net.three4j.unit.src.math.ConstantsTests.y;
-import static net.three4j.unit.src.math.ConstantsTests.z;
-import static net.three4j.unit.src.math.ConstantsTests.w;
-import static net.three4j.unit.src.math.ConstantsTests.eps;
 
 public class Object3DTests {
 
@@ -98,7 +95,7 @@ public class Object3DTests {
 ////			assertTrue( false, "everything's gonna be alright" );
 ////
 //	}
-
+	
 	@Test
 	public void applyMatrix4() {
 
@@ -878,7 +875,6 @@ public class Object3DTests {
 
 	}
 
-//
 	@Test
 	public void toJSON() {
 //
