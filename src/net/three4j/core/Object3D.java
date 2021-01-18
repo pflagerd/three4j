@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import net.three4j.cameras.Camera;
 import net.three4j.core.EventDispatcher;
+import net.three4j.lights.Light;
 import net.three4j.math.Euler;
 //import { Layers } from './Layers.js';
 import net.three4j.math.MathUtils;
