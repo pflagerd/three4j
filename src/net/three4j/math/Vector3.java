@@ -372,6 +372,10 @@ public class Vector3 {
 	}
 
 	public Vector3 divideScalar( double scalar ) {
+		if (scalar == 0.0 || scalar == -0.0) {
+			console.warn("Vector3.divideScalar(0)");
+			scalar = 1;
+		}
 
 		return this.multiplyScalar( 1 / scalar );
 

@@ -156,13 +156,13 @@ public class Vector3Tests {
 	public void addScaledVector() {
 
 		Vector3 a = new Vector3(x, y, z);
-		Vector3 b = new Vector3(2, 3, 4);
+		Vector3 b = new Vector3(3, 4, 5);
 		double s = 3;
 
 		a.addScaledVector(b, s);
-		assertEquals(a.x() + b.x() * s, a.x(), "Check x");
-		assertEquals(a.y() + b.y() * s, a.y(), "Check y");
-		assertEquals(a.z() + b.z() * s, a.z(), "Check z");
+		assertEquals(x + b.x() * s, a.x(), "Check x");
+		assertEquals(y + b.y() * s, a.y(), "Check y");
+		assertEquals(z + b.z() * s, a.z(), "Check z");
 
 	}
 
@@ -170,7 +170,7 @@ public class Vector3Tests {
 	public void sub() {
 
 		Vector3 a = new Vector3(x, y, z);
-		Vector3 b = new Vector3(x, y, z);
+		Vector3 b = new Vector3(-x, -y, -z);
 
 		a.sub(b);
 		assertTrue(a.x() == 2 * x, "Passed!");
@@ -797,9 +797,9 @@ public class Vector3Tests {
 		assertEquals(y, array[1], "With array, no offset: check y");
 		assertEquals(z, array[2], "With array, no offset: check z");
 
-		array = new double[3];
+		array = new double[4];
 		a.toArray(array, 1);
-		assertEquals(null, array[0], "With array and offset: check [0]");
+		assertEquals(0, array[0], "With array and offset: check [0]");
 		assertEquals(x, array[1], "With array and offset: check x");
 		assertEquals(y, array[2], "With array and offset: check y");
 		assertEquals(z, array[3], "With array and offset: check z");
@@ -996,7 +996,7 @@ public class Vector3Tests {
 	public void project_unproject() {
 
 		Vector3 a = new Vector3(x, y, z);
-		PerspectiveCamera camera = new PerspectiveCamera(75, 16 / 9, 0.1, 300.0);
+		PerspectiveCamera camera = new PerspectiveCamera(75, 16. / 9, 0.1, 300.0);
 		Vector3 projected = new Vector3(-0.36653213611158914, -0.9774190296309043, 1.0506835611870624);
 
 		a.project(camera);

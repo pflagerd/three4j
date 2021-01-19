@@ -440,7 +440,7 @@ public class Vector2Tests {
 		assertTrue(a.length() == 0, "Passed!");
 		
 		a.setLength(y);
-		assertTrue(a.length() == y, "Passed!");
+		assertTrue(a.length() == 0, "Passed!");
 		
 //			a.setLength();
 //			assertTrue( isNaN( a.length() ), "Passed!" );

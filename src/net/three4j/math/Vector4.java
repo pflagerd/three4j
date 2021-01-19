@@ -1,6 +1,7 @@
 package net.three4j.math;
 
 import net.three4j.core.BufferAttribute;
+import static net.three4j.THREE.console;
 
 public class Vector4 {
 	
@@ -282,6 +283,10 @@ public class Vector4 {
 	}
 
 	public Vector4 divideScalar( double scalar ) {
+		if (scalar == 0.0 || scalar == -0.0) {
+			console.warn("Vector4.divideScalar(0)");
+			scalar = 1;
+		}
 
 		return this.multiplyScalar( 1 / scalar );
 
