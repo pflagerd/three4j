@@ -1,5 +1,7 @@
 package net.three4j.scenes;
 
+import net.three4j.math.Color;
+
 //import { Object3D } from '../core/Object3D.js';
 //
 ///**
@@ -7,42 +9,30 @@ package net.three4j.scenes;
 // */
 //
 public class Scene extends net.three4j.core.Object3D {
-	//function Scene() {
-	//
-	//	Object3D.call( this );
-	//
-	//	this.type = 'Scene';
-	//
-	//	this.background = null;
-	//	this.fog = null;
-	//	this.overrideMaterial = null;
-	//
-	//	this.autoUpdate = true; // checked by the renderer
-	//
-	//}
-	public Scene() {
-		
-	}
 	
-	//Scene.prototype = Object.assign( Object.create( Object3D.prototype ), {
-	//
-	//	constructor: Scene,
-	//
-	//	copy: function ( source, recursive ) {
-	//
-	//		Object3D.prototype.copy.call( this, source, recursive );
-	//
-	//		if ( source.background !== null ) this.background = source.background.clone();
-	//		if ( source.fog !== null ) this.fog = source.fog.clone();
-	//		if ( source.overrideMaterial !== null ) this.overrideMaterial = source.overrideMaterial.clone();
-	//
-	//		this.autoUpdate = source.autoUpdate;
-	//		this.matrixAutoUpdate = source.matrixAutoUpdate;
-	//
-	//		return this;
-	//
-	//	},
-	//
+	private Color _background = null;
+	private Object _fog = null;
+	private Object _overrideMaterial = null;
+	private boolean _autoUpdate = true;
+	
+	public Scene() {
+		super();
+	}	
+
+		Scene copy( Scene source, boolean recursive ) {
+			super.copy(source, recursive);
+	
+			if ( source._background != null ) this._background = source._background.clone();
+//			if ( source._fog != null ) this._fog = source._fog.clone();
+//			if ( source._overrideMaterial != null ) this._overrideMaterial = source._overrideMaterial.clone();
+	
+			this._autoUpdate = source._autoUpdate;
+			this._matrixAutoUpdate = source._matrixAutoUpdate;
+	
+			return this;
+	
+		}
+	
 	//	toJSON: function ( meta ) {
 	//
 	//		var data = Object3D.prototype.toJSON.call( this, meta );
@@ -54,10 +44,4 @@ public class Scene extends net.three4j.core.Object3D {
 	//
 	//	}
 	//
-	//} );
-	//
-	//
-	//
-	//export { Scene };
-
 }

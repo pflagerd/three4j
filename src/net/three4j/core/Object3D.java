@@ -62,7 +62,7 @@ public class Object3D extends EventDispatcher {
 	public Matrix3 normalMatrix = new Matrix3();
 	private Matrix4 _matrix = new Matrix4();
 	protected Matrix4 _matrixWorld = new Matrix4();
-	private boolean _matrixAutoUpdate = DefaultMatrixAutoUpdate;
+	protected boolean _matrixAutoUpdate = DefaultMatrixAutoUpdate;
 	private boolean _matrixWorldNeedsUpdate = false;
 	public boolean castShadow = false;
 	public boolean receiveShadow = false;
