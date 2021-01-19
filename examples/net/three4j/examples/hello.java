@@ -4,6 +4,7 @@ import static net.three4j.THREE.window;
 
 import net.three4j.cameras.PerspectiveCamera;
 import net.three4j.core.Geometry;
+import net.three4j.geometries.BoxGeometry;
 import net.three4j.materials.Material;
 import net.three4j.objects.Mesh;
 import net.three4j.renderers.WebGLRenderer;
@@ -22,9 +23,9 @@ class hello {
         camera = new PerspectiveCamera( 70, (double)window.innerWidth / window.innerHeight, 0.01, 10 );
         camera.position().z(1);
 
-//        scene = new Scene();
-//
-//        geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
+		scene = new Scene();
+
+        geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
 //        material = new MeshNormalMaterial();
 //
 //        mesh = new Mesh( geometry, material );
