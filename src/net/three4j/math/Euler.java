@@ -281,7 +281,7 @@ public class Euler {
 
 	public Euler setFromVector3( Vector3 v, String order ) {
 
-		return this.set( v.x, v.y, v.z, order );
+		return this.set( v.x(), v.y(), v.z(), order );
 
 	}
 

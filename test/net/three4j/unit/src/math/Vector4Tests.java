@@ -35,14 +35,6 @@ public class Vector4Tests {
 
 	}
 
-	// PUBLIC STUFF
-	@Test
-	public void isVector4() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
 	@Test
 	public void set() {
 
@@ -60,61 +52,61 @@ public class Vector4Tests {
 
 	}
 
-	@Test
-	public void setScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setX() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setY() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setZ() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setW() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setComponent() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void getComponent() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void $clone() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void setScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setX() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setY() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setZ() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setW() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setComponent() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void getComponent() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void $clone() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void copy() {
@@ -158,20 +150,20 @@ public class Vector4Tests {
 
 	}
 
-	@Test
-	public void addScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void addVectors() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
+//	@Test
+//	public void addScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void addVectors() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
 	@Test
 	public void addScaledVector() {
 
@@ -207,26 +199,26 @@ public class Vector4Tests {
 
 	}
 
-	@Test
-	public void subScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void subVectors() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void multiplyScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void subScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void subVectors() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void multiplyScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void applyMatrix4() {
@@ -273,47 +265,47 @@ public class Vector4Tests {
 
 	}
 
-	@Test
-	public void divideScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setAxisAngleFromQuaternion() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setAxisAngleFromRotationMatrix() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void min() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void max() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void clamp() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void divideScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setAxisAngleFromQuaternion() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setAxisAngleFromRotationMatrix() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void min() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void max() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void clamp() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void clampScalar() {
@@ -329,40 +321,40 @@ public class Vector4Tests {
 
 	}
 
-	@Test
-	public void clampLength() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void floor() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void ceil() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void round() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void roundToZero() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void clampLength() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void floor() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void ceil() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void round() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void roundToZero() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void negate() {
@@ -392,19 +384,19 @@ public class Vector4Tests {
 
 	}
 
-	@Test
-	public void lengthSq() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void length() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void lengthSq() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void length() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void manhattanLength() {
@@ -470,19 +462,19 @@ public class Vector4Tests {
 
 	}
 
-	@Test
-	public void lerp() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void lerpVectors() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void lerp() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void lerpVectors() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void equals() {

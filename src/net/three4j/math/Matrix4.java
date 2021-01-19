@@ -91,9 +91,9 @@ public class Matrix4 {
 	public Matrix4 makeBasis( Vector3 xAxis, Vector3 yAxis, Vector3 zAxis ) {
 
 		this.set(
-			xAxis.x, yAxis.x, zAxis.x, 0,
-			xAxis.y, yAxis.y, zAxis.y, 0,
-			xAxis.z, yAxis.z, zAxis.z, 0,
+			xAxis.x(), yAxis.x(), zAxis.x(), 0,
+			xAxis.y(), yAxis.y(), zAxis.y(), 0,
+			xAxis.z(), yAxis.z(), zAxis.z(), 0,
 			0, 0, 0, 1
 		);
 
@@ -280,7 +280,7 @@ public class Matrix4 {
 
 			// eye and target are in the same position
 
-			_z.z = 1;
+			_z.z(1);
 
 		}
 
@@ -291,13 +291,13 @@ public class Matrix4 {
 
 			// up and z are parallel
 
-			if ( Math.abs( up.z ) == 1 ) {
+			if ( Math.abs( up.z() ) == 1 ) {
 
-				_z.x += 0.0001;
+				_z.x(_z.x() + 0.0001);
 
 			} else {
 
-				_z.z += 0.0001;
+				_z.z(_z.z() + 0.0001);
 
 			}
 
@@ -309,9 +309,9 @@ public class Matrix4 {
 		_x.normalize();
 		_y.crossVectors( _z, _x );
 
-		te[ 0 ] = _x.x; te[ 4 ] = _y.x; te[ 8 ] = _z.x;
-		te[ 1 ] = _x.y; te[ 5 ] = _y.y; te[ 9 ] = _z.y;
-		te[ 2 ] = _x.z; te[ 6 ] = _y.z; te[ 10 ] = _z.z;
+		te[ 0 ] = _x.x(); te[ 4 ] = _y.x(); te[ 8 ] = _z.x();
+		te[ 1 ] = _x.y(); te[ 5 ] = _y.y(); te[ 9 ] = _z.y();
+		te[ 2 ] = _x.z(); te[ 6 ] = _y.z(); te[ 10 ] = _z.z();
 
 		return this;
 
@@ -449,7 +449,7 @@ public class Matrix4 {
 	}
 
 	public Matrix4 setPosition( Vector3 v ) {
-		return setPosition(v.x, v.y, v.z);
+		return setPosition(v.x(), v.y(), v.z());
 	}
 	
 	public Matrix4 setPosition( double x, double y, double z ) {
@@ -512,7 +512,7 @@ public class Matrix4 {
 	public Matrix4 scale( Vector3 v ) {
 
 		final double[] te = this.elements;
-		final double  x = v.x, y = v.y, z = v.z;
+		final double  x = v.x(), y = v.y(), z = v.z();
 
 		te[ 0 ] *= x; te[ 4 ] *= y; te[ 8 ] *= z;
 		te[ 1 ] *= x; te[ 5 ] *= y; te[ 9 ] *= z;
@@ -607,7 +607,7 @@ public class Matrix4 {
 		final double c = Math.cos( angle );
 		final double s = Math.sin( angle );
 		final double t = 1 - c;
-		final double x = axis.x, y = axis.y, z = axis.z;
+		final double x = axis.x(), y = axis.y(), z = axis.z();
 		final double tx = t * x, ty = t * y;
 
 		this.set(
@@ -663,7 +663,7 @@ public class Matrix4 {
 		final double yy = y * y2, yz = y * z2, zz = z * z2;
 		final double wx = w * x2, wy = w * y2, wz = w * z2;
 
-		final double sx = scale.x, sy = scale.y, sz = scale.z;
+		final double sx = scale.x(), sy = scale.y(), sz = scale.z();
 
 		te[ 0 ] = ( 1 - ( yy + zz ) ) * sx;
 		te[ 1 ] = ( xy + wz ) * sx;
@@ -680,9 +680,9 @@ public class Matrix4 {
 		te[ 10 ] = ( 1 - ( xx + yy ) ) * sz;
 		te[ 11 ] = 0;
 
-		te[ 12 ] = position.x;
-		te[ 13 ] = position.y;
-		te[ 14 ] = position.z;
+		te[ 12 ] = position.x();
+		te[ 13 ] = position.y();
+		te[ 14 ] = position.z();
 		te[ 15 ] = 1;
 
 		return this;
@@ -701,9 +701,9 @@ public class Matrix4 {
 		final double det = this.determinant();
 		if ( det < 0 ) sx = - sx;
 
-		position.x = te[ 12 ];
-		position.y = te[ 13 ];
-		position.z = te[ 14 ];
+		position.x(te[ 12 ]);
+		position.y(te[ 13 ]);
+		position.z(te[ 14 ]);
 
 		// scale the rotation part
 		_m1.copy( this );
@@ -726,9 +726,9 @@ public class Matrix4 {
 
 		quaternion.setFromRotationMatrix( _m1 );
 
-		scale.x = sx;
-		scale.y = sy;
-		scale.z = sz;
+		scale.x(sx);
+		scale.y(sy);
+		scale.z(sz);
 
 		return this;
 

@@ -284,9 +284,9 @@ public class Quaternion {
 
 		final double halfAngle = angle / 2, s = Math.sin( halfAngle );
 
-		this._x = axis.x * s;
-		this._y = axis.y * s;
-		this._z = axis.z * s;
+		this._x = axis.x() * s;
+		this._y = axis.y() * s;
+		this._z = axis.z() * s;
 		this._w = Math.cos( halfAngle );
 
 		this._onChangeCallback.run();
@@ -365,18 +365,18 @@ public class Quaternion {
 
 			r = 0;
 
-			if ( Math.abs( vFrom.x ) > Math.abs( vFrom.z ) ) {
+			if ( Math.abs( vFrom.x() ) > Math.abs( vFrom.z() ) ) {
 
-				this._x = - vFrom.y;
-				this._y = vFrom.x;
+				this._x = - vFrom.y();
+				this._y = vFrom.x();
 				this._z = 0;
 				this._w = r;
 
 			} else {
 
 				this._x = 0;
-				this._y = - vFrom.z;
-				this._z = vFrom.y;
+				this._y = - vFrom.z();
+				this._z = vFrom.y();
 				this._w = r;
 
 			}
@@ -385,9 +385,9 @@ public class Quaternion {
 
 			// crossVectors( vFrom, vTo ); // inlined to avoid cyclic dependency on Vector3
 
-			this._x = vFrom.y * vTo.z - vFrom.z * vTo.y;
-			this._y = vFrom.z * vTo.x - vFrom.x * vTo.z;
-			this._z = vFrom.x * vTo.y - vFrom.y * vTo.x;
+			this._x = vFrom.y() * vTo.z() - vFrom.z() * vTo.y();
+			this._y = vFrom.z() * vTo.x() - vFrom.x() * vTo.z();
+			this._z = vFrom.x() * vTo.y() - vFrom.y() * vTo.x();
 			this._w = r;
 
 		}

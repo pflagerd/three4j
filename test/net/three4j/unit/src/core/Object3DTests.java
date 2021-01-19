@@ -270,7 +270,7 @@ public class Object3DTests {
 		Object3D obj = new Object3D();
 		obj.translateX(1.234);
 
-		assertEquals(1.234, obj.position().x, eps, "x is equal");
+		assertEquals(1.234, obj.position().x(), eps, "x is equal");
 
 	}
 
@@ -280,7 +280,7 @@ public class Object3DTests {
 		Object3D obj = new Object3D();
 		obj.translateY(1.234);
 
-		assertEquals(1.234, obj.position().y, eps, "y is equal");
+		assertEquals(1.234, obj.position().y(), eps, "y is equal");
 
 	}
 
@@ -290,7 +290,7 @@ public class Object3DTests {
 		Object3D obj = new Object3D();
 		obj.translateZ(1.234);
 
-		assertEquals(1.234, obj.position().z, eps, "z is equal");
+		assertEquals(1.234, obj.position().z(), eps, "z is equal");
 
 	}
 
@@ -317,9 +317,9 @@ public class Object3DTests {
 			child.localToWorld( v.set( 2, 2, 2 ) );
 
 			assertTrue(
-				Math.abs( v.x - expectedPosition.x ) <= eps &&
-				Math.abs( v.y - expectedPosition.y ) <= eps &&
-				Math.abs( v.z - expectedPosition.z ) <= eps,
+				Math.abs( v.x() - expectedPosition.x() ) <= eps &&
+				Math.abs( v.y() - expectedPosition.y() ) <= eps &&
+				Math.abs( v.z() - expectedPosition.z() ) <= eps,
 				"local vector is converted to world"
 			);
 
@@ -348,9 +348,9 @@ public class Object3DTests {
 			child.worldToLocal( v.set( 2, 2, 2 ) );
 
 			assertTrue(
-				Math.abs( v.x - expectedPosition.x ) <= eps &&
-				Math.abs( v.y - expectedPosition.y ) <= eps &&
-				Math.abs( v.z - expectedPosition.z ) <= eps,
+				Math.abs( v.x() - expectedPosition.x() ) <= eps &&
+				Math.abs( v.y() - expectedPosition.y() ) <= eps &&
+				Math.abs( v.z() - expectedPosition.z() ) <= eps,
 				"world vector is converted to local"
 			);
 
@@ -488,9 +488,9 @@ public class Object3DTests {
 			a.getWorldDirection( direction );
 
 			assertTrue(
-				Math.abs( direction.x - expected.x ) <= eps &&
-				Math.abs( direction.y - expected.y ) <= eps &&
-				Math.abs( direction.z - expected.z ) <= eps,
+				Math.abs( direction.x() - expected.x() ) <= eps &&
+				Math.abs( direction.y() - expected.y() ) <= eps &&
+				Math.abs( direction.z() - expected.z() ) <= eps,
 				"Direction has the expected values"
 			);
 

@@ -86,7 +86,7 @@ public class Spherical {
 
 	public Spherical setFromVector3( Vector3 v ) {
 
-		return this.setFromCartesianCoords( v.x, v.y, v.z );
+		return this.setFromCartesianCoords( v.x(), v.y(), v.z() );
 
 	}
 

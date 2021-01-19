@@ -19,37 +19,66 @@ import net.three4j.core.InterleavedBufferAttribute;
  */
 
 public class Vector3 {
-	public double x;
-	public double y;
-	public double z;
+	public double _x;
+	public double _y;
+	public double _z;
 	
 	public final boolean isVector3 = true;
 	
 	public Vector3() {
-		this.x = this.y = this.z = 0.0;
+		this._x = this._y = this._z = 0.0;
 	}
 	
 	public Vector3(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this._x = x;
+		this._y = y;
+		this._z = z;
 	}
 	
 	public Vector3(final Vector3 vector3) {
-		this.x = vector3.x;
-		this.y = vector3.y;
-		this.z = vector3.z;
+		this._x = vector3._x;
+		this._y = vector3._y;
+		this._z = vector3._z;
 	}
+	
+	public double x() {
+		  return _x;
+		}
+
+		public Vector3 x(double x) {
+		  this._x = x;
+		  return this;
+		}
+
+
+		public double y() {
+		  return _y;
+		}
+
+		public Vector3 y(double y) {
+		  this._y = y;
+		  return this;
+		}
+
+
+		public double z() {
+		  return _z;
+		}
+
+		public Vector3 z(double z) {
+		  this._z = z;
+		  return this;
+		}
 
 	public Vector3 set( double x, double y) {
-		return set(x, y, this.z);
+		return set(x, y, this._z);
 	}
 	
 	public Vector3 set( double x, double y, double z ) {
 
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this._x = x;
+		this._y = y;
+		this._z = z;
 
 		return this;
 
@@ -57,9 +86,9 @@ public class Vector3 {
 
 	public Vector3 setScalar( double scalar ) {
 
-		this.x = scalar;
-		this.y = scalar;
-		this.z = scalar;
+		this._x = scalar;
+		this._y = scalar;
+		this._z = scalar;
 
 		return this;
 
@@ -67,7 +96,7 @@ public class Vector3 {
 
 	public Vector3 setX( double x ) {
 
-		this.x = x;
+		this._x = x;
 
 		return this;
 
@@ -75,7 +104,7 @@ public class Vector3 {
 
 	public Vector3 setY( double y ) {
 
-		this.y = y;
+		this._y = y;
 
 		return this;
 
@@ -83,7 +112,7 @@ public class Vector3 {
 
 	public Vector3 setZ( double z ) {
 
-		this.z = z;
+		this._z = z;
 
 		return this;
 
@@ -92,9 +121,9 @@ public class Vector3 {
 	public Vector3 setComponent( int index, double value ) {
 
 		switch ( index ) {
-			case 0: this.x = value; break;
-			case 1: this.y = value; break;
-			case 2: this.z = value; break;
+			case 0: this._x = value; break;
+			case 1: this._y = value; break;
+			case 2: this._z = value; break;
 			default: throw new RuntimeException( "index is out of range: " + index );
 
 		}
@@ -107,9 +136,9 @@ public class Vector3 {
 
 		switch ( index ) {
 
-			case 0: return this.x;
-			case 1: return this.y;
-			case 2: return this.z;
+			case 0: return this._x;
+			case 1: return this._y;
+			case 2: return this._z;
 			default: throw new RuntimeException( "index is out of range: " + index );
 
 		}
@@ -118,15 +147,15 @@ public class Vector3 {
 
 	public Vector3 clone() {
 
-		return new Vector3( this.x, this.y, this.z );
+		return new Vector3( this._x, this._y, this._z );
 
 	}
 
 	public Vector3 copy( Vector3 v ) {
 
-		this.x = v.x;
-		this.y = v.y;
-		this.z = v.z;
+		this._x = v._x;
+		this._y = v._y;
+		this._z = v._z;
 
 		return this;
 
@@ -134,9 +163,9 @@ public class Vector3 {
 
 	public Vector3 add( Vector3 v) {
 
-		this.x += v.x;
-		this.y += v.y;
-		this.z += v.z;
+		this._x += v._x;
+		this._y += v._y;
+		this._z += v._z;
 
 		return this;
 
@@ -144,9 +173,9 @@ public class Vector3 {
 
 	public Vector3 addScalar( double s ) {
 
-		this.x += s;
-		this.y += s;
-		this.z += s;
+		this._x += s;
+		this._y += s;
+		this._z += s;
 
 		return this;
 
@@ -154,9 +183,9 @@ public class Vector3 {
 
 	public Vector3 addVectors( Vector3 a, Vector3 b ) {
 
-		this.x = a.x + b.x;
-		this.y = a.y + b.y;
-		this.z = a.z + b.z;
+		this._x = a._x + b._x;
+		this._y = a._y + b._y;
+		this._z = a._z + b._z;
 
 		return this;
 
@@ -164,18 +193,18 @@ public class Vector3 {
 
 	public Vector3 addScaledVector( Vector3 v, double s ) {
 
-		this.x += v.x * s;
-		this.y += v.y * s;
-		this.z += v.z * s;
+		this._x += v._x * s;
+		this._y += v._y * s;
+		this._z += v._z * s;
 
 		return this;
 
 	}
 
 	public Vector3 sub( Vector3 v ) {
-		this.x -= v.x;
-		this.y -= v.y;
-		this.z -= v.z;
+		this._x -= v._x;
+		this._y -= v._y;
+		this._z -= v._z;
 
 		return this;
 
@@ -183,9 +212,9 @@ public class Vector3 {
 
 	public Vector3 subScalar( double s ) {
 
-		this.x -= s;
-		this.y -= s;
-		this.z -= s;
+		this._x -= s;
+		this._y -= s;
+		this._z -= s;
 
 		return this;
 
@@ -193,9 +222,9 @@ public class Vector3 {
 
 	public Vector3 subVectors( Vector3 a, Vector3 b ) {
 
-		this.x = a.x - b.x;
-		this.y = a.y - b.y;
-		this.z = a.z - b.z;
+		this._x = a._x - b._x;
+		this._y = a._y - b._y;
+		this._z = a._z - b._z;
 
 		return this;
 
@@ -203,9 +232,9 @@ public class Vector3 {
 
 	public Vector3 multiply( Vector3 v ) {
 
-		this.x *= v.x;
-		this.y *= v.y;
-		this.z *= v.z;
+		this._x *= v._x;
+		this._y *= v._y;
+		this._z *= v._z;
 
 		return this;
 
@@ -213,9 +242,9 @@ public class Vector3 {
 
 	public Vector3 multiplyScalar( double scalar ) {
 
-		this.x *= scalar;
-		this.y *= scalar;
-		this.z *= scalar;
+		this._x *= scalar;
+		this._y *= scalar;
+		this._z *= scalar;
 
 		return this;
 
@@ -223,9 +252,9 @@ public class Vector3 {
 
 	public Vector3 multiplyVectors( Vector3 a, Vector3 b ) {
 
-		this.x = a.x * b.x;
-		this.y = a.y * b.y;
-		this.z = a.z * b.z;
+		this._x = a._x * b._x;
+		this._y = a._y * b._y;
+		this._z = a._z * b._z;
 
 		return this;
 
@@ -251,12 +280,12 @@ public class Vector3 {
 
 	public Vector3 applyMatrix3( Matrix3 m ) {
 
-		final double x = this.x, y = this.y, z = this.z;
+		final double x = this._x, y = this._y, z = this._z;
 		final double[] e = m.elements;
 
-		this.x = e[ 0 ] * x + e[ 3 ] * y + e[ 6 ] * z;
-		this.y = e[ 1 ] * x + e[ 4 ] * y + e[ 7 ] * z;
-		this.z = e[ 2 ] * x + e[ 5 ] * y + e[ 8 ] * z;
+		this._x = e[ 0 ] * x + e[ 3 ] * y + e[ 6 ] * z;
+		this._y = e[ 1 ] * x + e[ 4 ] * y + e[ 7 ] * z;
+		this._z = e[ 2 ] * x + e[ 5 ] * y + e[ 8 ] * z;
 
 		return this;
 
@@ -270,21 +299,21 @@ public class Vector3 {
 
 	public Vector3 applyMatrix4( Matrix4 m ) {
 
-		final double x = this.x, y = this.y, z = this.z;
+		final double x = this._x, y = this._y, z = this._z;
 		final double[] e = m.elements;
 
 		final double w = 1 / ( e[ 3 ] * x + e[ 7 ] * y + e[ 11 ] * z + e[ 15 ] );
 
-		this.x = ( e[ 0 ] * x + e[ 4 ] * y + e[ 8 ] * z + e[ 12 ] ) * w;
-		this.y = ( e[ 1 ] * x + e[ 5 ] * y + e[ 9 ] * z + e[ 13 ] ) * w;
-		this.z = ( e[ 2 ] * x + e[ 6 ] * y + e[ 10 ] * z + e[ 14 ] ) * w;
+		this._x = ( e[ 0 ] * x + e[ 4 ] * y + e[ 8 ] * z + e[ 12 ] ) * w;
+		this._y = ( e[ 1 ] * x + e[ 5 ] * y + e[ 9 ] * z + e[ 13 ] ) * w;
+		this._z = ( e[ 2 ] * x + e[ 6 ] * y + e[ 10 ] * z + e[ 14 ] ) * w;
 
 		return this;
 	}
 
 	public Vector3 applyQuaternion( Quaternion q ) {
 
-		final double x = this.x, y = this.y, z = this.z;
+		final double x = this._x, y = this._y, z = this._z;
 		final double qx = q.x(), qy = q.y(), qz = q.z(), qw = q.w();
 
 		// calculate quat * vector
@@ -296,9 +325,9 @@ public class Vector3 {
 
 		// calculate result * inverse quat
 
-		this.x = ix * qw + iw * - qx + iy * - qz - iz * - qy;
-		this.y = iy * qw + iw * - qy + iz * - qx - ix * - qz;
-		this.z = iz * qw + iw * - qz + ix * - qy - iy * - qx;
+		this._x = ix * qw + iw * - qx + iy * - qz - iz * - qy;
+		this._y = iy * qw + iw * - qy + iz * - qx - ix * - qz;
+		this._z = iz * qw + iw * - qz + ix * - qy - iy * - qx;
 
 		return this;
 
@@ -321,12 +350,12 @@ public class Vector3 {
 		// input: THREE.Matrix4 affine matrix
 		// vector interpreted as a direction
 
-		final double x = this.x, y = this.y, z = this.z;
+		final double x = this._x, y = this._y, z = this._z;
 		final double[] e = m.elements;
 
-		this.x = e[ 0 ] * x + e[ 4 ] * y + e[ 8 ] * z;
-		this.y = e[ 1 ] * x + e[ 5 ] * y + e[ 9 ] * z;
-		this.z = e[ 2 ] * x + e[ 6 ] * y + e[ 10 ] * z;
+		this._x = e[ 0 ] * x + e[ 4 ] * y + e[ 8 ] * z;
+		this._y = e[ 1 ] * x + e[ 5 ] * y + e[ 9 ] * z;
+		this._z = e[ 2 ] * x + e[ 6 ] * y + e[ 10 ] * z;
 
 		return this.normalize();
 
@@ -334,9 +363,9 @@ public class Vector3 {
 
 	public Vector3 divide( Vector3 v ) {
 
-		this.x /= v.x;
-		this.y /= v.y;
-		this.z /= v.z;
+		this._x /= v._x;
+		this._y /= v._y;
+		this._z /= v._z;
 
 		return this;
 
@@ -350,9 +379,9 @@ public class Vector3 {
 
 	public Vector3 min( Vector3 v ) {
 
-		this.x = Math.min( this.x, v.x );
-		this.y = Math.min( this.y, v.y );
-		this.z = Math.min( this.z, v.z );
+		this._x = Math.min( this._x, v._x );
+		this._y = Math.min( this._y, v._y );
+		this._z = Math.min( this._z, v._z );
 
 		return this;
 
@@ -360,9 +389,9 @@ public class Vector3 {
 
 	public Vector3 max( Vector3 v ) {
 
-		this.x = Math.max( this.x, v.x );
-		this.y = Math.max( this.y, v.y );
-		this.z = Math.max( this.z, v.z );
+		this._x = Math.max( this._x, v._x );
+		this._y = Math.max( this._y, v._y );
+		this._z = Math.max( this._z, v._z );
 
 		return this;
 
@@ -372,9 +401,9 @@ public class Vector3 {
 
 		// assumes min < max, componentwise
 
-		this.x = Math.max( min.x, Math.min( max.x, this.x ) );
-		this.y = Math.max( min.y, Math.min( max.y, this.y ) );
-		this.z = Math.max( min.z, Math.min( max.z, this.z ) );
+		this._x = Math.max( min._x, Math.min( max._x, this._x ) );
+		this._y = Math.max( min._y, Math.min( max._y, this._y ) );
+		this._z = Math.max( min._z, Math.min( max._z, this._z ) );
 
 		return this;
 
@@ -382,9 +411,9 @@ public class Vector3 {
 
 	public Vector3 clampScalar( double minVal, double maxVal ) {
 
-		this.x = Math.max( minVal, Math.min( maxVal, this.x ) );
-		this.y = Math.max( minVal, Math.min( maxVal, this.y ) );
-		this.z = Math.max( minVal, Math.min( maxVal, this.z ) );
+		this._x = Math.max( minVal, Math.min( maxVal, this._x ) );
+		this._y = Math.max( minVal, Math.min( maxVal, this._y ) );
+		this._z = Math.max( minVal, Math.min( maxVal, this._z ) );
 
 		return this;
 
@@ -400,9 +429,9 @@ public class Vector3 {
 
 	public Vector3 floor() {
 
-		this.x = Math.floor( this.x );
-		this.y = Math.floor( this.y );
-		this.z = Math.floor( this.z );
+		this._x = Math.floor( this._x );
+		this._y = Math.floor( this._y );
+		this._z = Math.floor( this._z );
 
 		return this;
 
@@ -410,9 +439,9 @@ public class Vector3 {
 
 	public Vector3 ceil() {
 
-		this.x = Math.ceil( this.x );
-		this.y = Math.ceil( this.y );
-		this.z = Math.ceil( this.z );
+		this._x = Math.ceil( this._x );
+		this._y = Math.ceil( this._y );
+		this._z = Math.ceil( this._z );
 
 		return this;
 
@@ -420,9 +449,9 @@ public class Vector3 {
 
 	public Vector3 round() {
 
-		this.x = Math.round( this.x );
-		this.y = Math.round( this.y );
-		this.z = Math.round( this.z );
+		this._x = Math.round( this._x );
+		this._y = Math.round( this._y );
+		this._z = Math.round( this._z );
 
 		return this;
 
@@ -430,9 +459,9 @@ public class Vector3 {
 
 	public Vector3 roundToZero() {
 
-		this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
-		this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
-		this.z = ( this.z < 0 ) ? Math.ceil( this.z ) : Math.floor( this.z );
+		this._x = ( this._x < 0 ) ? Math.ceil( this._x ) : Math.floor( this._x );
+		this._y = ( this._y < 0 ) ? Math.ceil( this._y ) : Math.floor( this._y );
+		this._z = ( this._z < 0 ) ? Math.ceil( this._z ) : Math.floor( this._z );
 
 		return this;
 
@@ -440,16 +469,16 @@ public class Vector3 {
 
 	public Vector3 negate() {
 
-		this.x = - this.x;
-		this.y = - this.y;
-		this.z = - this.z;
+		this._x = - this._x;
+		this._y = - this._y;
+		this._z = - this._z;
 
 		return this;
 
 	}
 
 	public double dot( Vector3 v ) {
-		return this.x * v.x + this.y * v.y + this.z * v.z;
+		return this._x * v._x + this._y * v._y + this._z * v._z;
 
 	}
 
@@ -463,19 +492,19 @@ public class Vector3 {
 	
 	public double lengthSq() {
 
-		return this.x * this.x + this.y * this.y + this.z * this.z;
+		return this._x * this._x + this._y * this._y + this._z * this._z;
 
 	}
 
 	public double length() {
 
-		return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z );
+		return Math.sqrt( this._x * this._x + this._y * this._y + this._z * this._z );
 
 	}
 
 	public double manhattanLength() {
 
-		return Math.abs( this.x ) + Math.abs( this.y ) + Math.abs( this.z );
+		return Math.abs( this._x ) + Math.abs( this._y ) + Math.abs( this._z );
 
 	}
 
@@ -493,9 +522,9 @@ public class Vector3 {
 
 	public Vector3 lerp( Vector3 v, double alpha ) {
 
-		this.x += ( v.x - this.x ) * alpha;
-		this.y += ( v.y - this.y ) * alpha;
-		this.z += ( v.z - this.z ) * alpha;
+		this._x += ( v._x - this._x ) * alpha;
+		this._y += ( v._y - this._y ) * alpha;
+		this._z += ( v._z - this._z ) * alpha;
 
 		return this;
 
@@ -503,9 +532,9 @@ public class Vector3 {
 
 	public Vector3 lerpVectors( Vector3 v1, Vector3 v2, double alpha ) {
 
-		this.x = v1.x + ( v2.x - v1.x ) * alpha;
-		this.y = v1.y + ( v2.y - v1.y ) * alpha;
-		this.z = v1.z + ( v2.z - v1.z ) * alpha;
+		this._x = v1._x + ( v2._x - v1._x ) * alpha;
+		this._y = v1._y + ( v2._y - v1._y ) * alpha;
+		this._z = v1._z + ( v2._z - v1._z ) * alpha;
 
 		return this;
 
@@ -517,12 +546,12 @@ public class Vector3 {
 
 	public Vector3 crossVectors( Vector3 a, Vector3 b ) {
 
-		final double ax = a.x, ay = a.y, az = a.z;
-		final double bx = b.x, by = b.y, bz = b.z;
+		final double ax = a._x, ay = a._y, az = a._z;
+		final double bx = b._x, by = b._y, bz = b._z;
 
-		this.x = ay * bz - az * by;
-		this.y = az * bx - ax * bz;
-		this.z = ax * by - ay * bx;
+		this._x = ay * bz - az * by;
+		this._y = az * bx - ax * bz;
+		this._z = ax * by - ay * bx;
 
 		return this;
 
@@ -579,7 +608,7 @@ public class Vector3 {
 
 	public double distanceToSquared( Vector3 v ) {
 
-		final double dx = this.x - v.x, dy = this.y - v.y, dz = this.z - v.z;
+		final double dx = this._x - v._x, dy = this._y - v._y, dz = this._z - v._z;
 
 		return dx * dx + dy * dy + dz * dz;
 
@@ -587,7 +616,7 @@ public class Vector3 {
 
 	public double manhattanDistanceTo( Vector3 v ) {
 
-		return Math.abs( this.x - v.x ) + Math.abs( this.y - v.y ) + Math.abs( this.z - v.z );
+		return Math.abs( this._x - v._x ) + Math.abs( this._y - v._y ) + Math.abs( this._z - v._z );
 
 	}
 
@@ -601,9 +630,9 @@ public class Vector3 {
 
 		final double sinPhiRadius = Math.sin( phi ) * radius;
 
-		this.x = sinPhiRadius * Math.sin( theta );
-		this.y = Math.cos( phi ) * radius;
-		this.z = sinPhiRadius * Math.cos( theta );
+		this._x = sinPhiRadius * Math.sin( theta );
+		this._y = Math.cos( phi ) * radius;
+		this._z = sinPhiRadius * Math.cos( theta );
 
 		return this;
 
@@ -617,9 +646,9 @@ public class Vector3 {
 
 	public Vector3 setFromCylindricalCoords( double radius, double theta, double y ) {
 
-		this.x = radius * Math.sin( theta );
-		this.y = y;
-		this.z = radius * Math.cos( theta );
+		this._x = radius * Math.sin( theta );
+		this._y = y;
+		this._z = radius * Math.cos( theta );
 
 		return this;
 
@@ -629,9 +658,9 @@ public class Vector3 {
 
 		final double[] e = m.elements;
 
-		this.x = e[ 12 ];
-		this.y = e[ 13 ];
-		this.z = e[ 14 ];
+		this._x = e[ 12 ];
+		this._y = e[ 13 ];
+		this._z = e[ 14 ];
 
 		return this;
 
@@ -643,9 +672,9 @@ public class Vector3 {
 		final double sy = this.setFromMatrixColumn( m, 1 ).length();
 		final double sz = this.setFromMatrixColumn( m, 2 ).length();
 
-		this.x = sx;
-		this.y = sy;
-		this.z = sz;
+		this._x = sx;
+		this._y = sy;
+		this._z = sz;
 
 		return this;
 
@@ -665,7 +694,7 @@ public class Vector3 {
 
 	public boolean equals( Vector3 v ) {
 
-		return ( ( v.x == this.x ) && ( v.y == this.y ) && ( v.z == this.z ) );
+		return ( ( v._x == this._x ) && ( v._y == this._y ) && ( v._z == this._z ) );
 
 	}
 
@@ -675,9 +704,9 @@ public class Vector3 {
 	
 	public Vector3 fromArray( double[] array, int offset ) {
 
-		this.x = array[ offset ];
-		this.y = array[ offset + 1 ];
-		this.z = array[ offset + 2 ];
+		this._x = array[ offset ];
+		this._y = array[ offset + 1 ];
+		this._z = array[ offset + 2 ];
 
 		return this;
 
@@ -693,9 +722,9 @@ public class Vector3 {
 	
 	public double[] toArray( double[] array, int offset ) {
 
-		array[ offset ] = this.x;
-		array[ offset + 1 ] = this.y;
-		array[ offset + 2 ] = this.z;
+		array[ offset ] = this._x;
+		array[ offset + 1 ] = this._y;
+		array[ offset + 2 ] = this._z;
 
 		return array;
 
@@ -703,9 +732,9 @@ public class Vector3 {
 
 	public Vector3 fromBufferAttribute( BufferAttribute attribute, int index ) {
 
-		this.x = attribute.getX( index );
-		this.y = attribute.getY( index );
-		this.z = attribute.getZ( index );
+		this._x = attribute.getX( index );
+		this._y = attribute.getY( index );
+		this._z = attribute.getZ( index );
 
 		return this;
 
@@ -713,9 +742,9 @@ public class Vector3 {
 
 	public Vector3 fromBufferAttribute( InterleavedBufferAttribute attribute, int index ) {
 
-		this.x = attribute.getX( index );
-		this.y = attribute.getY( index );
-		this.z = attribute.getZ( index );
+		this._x = attribute.getX( index );
+		this._y = attribute.getY( index );
+		this._z = attribute.getZ( index );
 
 		return this;
 
@@ -723,9 +752,9 @@ public class Vector3 {
 
 	public Vector3 random() {
 
-		this.x = Math.random();
-		this.y = Math.random();
-		this.z = Math.random();
+		this._x = Math.random();
+		this._y = Math.random();
+		this._z = Math.random();
 
 		return this;
 
@@ -733,7 +762,7 @@ public class Vector3 {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " {x:" + x + ", y:" + y + ", z:" + z + "}";
+		return super.toString() + " {x:" + this._x + ", y:" + this._y + ", z:" + this._z + "}";
 	}
 
 	private final static Vector3 _vector = /*@__PURE__*/ new Vector3();

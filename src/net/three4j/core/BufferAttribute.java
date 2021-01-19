@@ -185,8 +185,8 @@ public class BufferAttribute {
 
 			}
 
-			array[ offset ++ ] = vector.x;
-			array[ offset ++ ] = vector.y;
+			array[ offset ++ ] = vector.x();
+			array[ offset ++ ] = vector.y();
 
 		}
 
@@ -210,9 +210,9 @@ public class BufferAttribute {
 
 			}
 
-			array[ offset ++ ] = vector.x;
-			array[ offset ++ ] = vector.y;
-			array[ offset ++ ] = vector.z;
+			array[ offset ++ ] = vector.x();
+			array[ offset ++ ] = vector.y();
+			array[ offset ++ ] = vector.z();
 
 		}
 
@@ -267,7 +267,7 @@ public class BufferAttribute {
 				_vector.fromBufferAttribute( this, i );
 				_vector.applyMatrix3( m );
 
-				this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+				this.setXYZ( i, _vector.x(), _vector.y(), _vector.z() );
 
 			}
 
@@ -281,13 +281,11 @@ public class BufferAttribute {
 
 		for ( int i = 0, l = this._count; i < l; i ++ ) {
 
-			_vector.x = this.getX( i );
-			_vector.y = this.getY( i );
-			_vector.z = this.getZ( i );
+			_vector.set(this.getX( i ), this.getY( i ), this.getZ( i ));
 
 			_vector.applyMatrix4( m );
 
-			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+			this.setXYZ( i, _vector.x(), _vector.y(), _vector.z() );
 
 		}
 
@@ -299,13 +297,11 @@ public class BufferAttribute {
 
 		for ( int i = 0, l = this._count; i < l; i ++ ) {
 
-			_vector.x = this.getX( i );
-			_vector.y = this.getY( i );
-			_vector.z = this.getZ( i );
+			_vector.set(this.getX( i ), this.getY( i ), this.getZ( i ));
 
 			_vector.applyNormalMatrix( m );
 
-			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+			this.setXYZ( i, _vector.x(), _vector.y(), _vector.z() );
 
 		}
 
@@ -317,13 +313,11 @@ public class BufferAttribute {
 
 		for ( int i = 0, l = this._count; i < l; i ++ ) {
 
-			_vector.x = this.getX( i );
-			_vector.y = this.getY( i );
-			_vector.z = this.getZ( i );
+			_vector.set(this.getX( i ), this.getY( i ), this.getZ( i ));
 
 			_vector.transformDirection( m );
 
-			this.setXYZ( i, _vector.x, _vector.y, _vector.z );
+			this.setXYZ( i, _vector.x(), _vector.y(), _vector.z() );
 
 		}
 

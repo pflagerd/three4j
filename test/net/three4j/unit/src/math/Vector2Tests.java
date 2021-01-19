@@ -47,26 +47,26 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void width() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void height() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void isVector2() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void width() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void height() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void isVector2() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void set() {
@@ -81,47 +81,47 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void setScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setX() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setY() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void setComponent() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void getComponent() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void $clone() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void setScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setX() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setY() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void setComponent() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void getComponent() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void $clone() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void copy() {
@@ -155,19 +155,19 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void addScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void addVectors() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void addScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void addVectors() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void addScaledVector() {
@@ -198,47 +198,47 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void subScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void subVectors() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void multiply() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void multiplyScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void divide() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void divideScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void subScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void subVectors() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void multiply() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void multiplyScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void divide() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void divideScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void applyMatrix3() {
@@ -252,68 +252,68 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void min() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void max() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void clamp() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void clampScalar() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void clampLength() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void floor() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void ceil() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void round() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void roundToZero() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void min() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void max() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void clamp() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void clampScalar() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void clampLength() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void floor() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void ceil() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void round() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void roundToZero() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void negate() {
@@ -353,19 +353,19 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void lengthSq() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void length() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void lengthSq() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void length() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void manhattanLength() {
@@ -399,33 +399,33 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void angle() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void distanceTo() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void distanceToSquared() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void manhattanDistanceTo() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void angle() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void distanceTo() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void distanceToSquared() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void manhattanDistanceTo() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void setLength() {
@@ -447,19 +447,19 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void lerp() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
-
-	@Test
-	public void lerpVectors() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void lerp() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
+//
+//	@Test
+//	public void lerpVectors() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void equals() {
@@ -536,12 +536,12 @@ public class Vector2Tests {
 
 	}
 
-	@Test
-	public void rotateAround() {
-
-		assertTrue(false, "everything's gonna be alright");
-
-	}
+//	@Test
+//	public void rotateAround() {
+//
+//		assertTrue(false, "everything's gonna be alright");
+//
+//	}
 
 	@Test
 	public void setX_setY() {

@@ -14,7 +14,9 @@ sed -i -E -e's#assert.ok#assertTrue#'
 sed -i -E -e's#([a-zA-Z$_][a-zA-Z0-9$_]+)\.([xyz]))#\1.\2\(\)#'
 
 s#assert.strictEqual[[:isspace]]*#assertEquals#
-s#assertEquals[[:isspace]]*\(#assertequals\(#
+s#assert.strictEqual[[:space:]]*\([[:space:]]*([^,]+),[[:space:]]*([^,]+),(.*)$#assertEquals\(\2, \1, \3#
+s#assert.deepEqual[[:space:]]*\([[:space:]]*([^,]+),[[:space:]]*([^,]+),(.*)$#assertArrayEquals\(\2, \1, \3#
+
 
 sed -i -E -e's#(.*)var ([a-zA-Z$_][a-zA-Z0-9$_]*) = new ([a-zA-Z$_][a-zA-Z0-9$_]*)\((.*)\).*;#\1\3 \2 = new \3\(\4\);#' Vector3Tests.java
 sed -i -E -e's#//(.+}) \);#\1#' Vector3.java
