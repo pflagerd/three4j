@@ -61,7 +61,7 @@ public class Object3D extends EventDispatcher {
 	public Matrix4 modelViewMatrix = new Matrix4();
 	public Matrix3 normalMatrix = new Matrix3();
 	private Matrix4 _matrix = new Matrix4();
-	private Matrix4 _matrixWorld = new Matrix4();
+	protected Matrix4 _matrixWorld = new Matrix4();
 	private boolean _matrixAutoUpdate = DefaultMatrixAutoUpdate;
 	private boolean _matrixWorldNeedsUpdate = false;
 	public boolean castShadow = false;
@@ -927,7 +927,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public Object3D copy(Object3D source) {
-		return copy(source);
+		return copy(source, true);
 	}
 
 	public Object3D copy(Object3D source, boolean recursive) {

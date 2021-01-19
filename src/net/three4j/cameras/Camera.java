@@ -1,15 +1,57 @@
 package net.three4j.cameras;
 
 import net.three4j.math.Matrix4;
+
+import java.util.Arrays;
+
 import net.three4j.core.Object3D;
 import net.three4j.math.Vector3;
 
 
 public class Camera extends Object3D {
 	
+	public class View {
+		boolean _enabled = true;
+		double _fullWidth = 1;
+		double _fullHeight = 1;
+		double _offsetX = 0;
+		double _offsetY = 0;
+		double _width = 1;
+		double _height = 1;
+		
+		public boolean enabled() {
+			return _enabled;
+		}
+		
+		public double fullWidth() {
+			return _fullWidth;
+		}
+		
+		public double fullHeight() {
+			return _fullHeight;
+		}
+		
+		public double offsetX() {
+			return _offsetX;
+		}
+		
+		public double offsetY() {
+			return _offsetY;
+		}
+		
+		public double width() {
+			return _width;
+		}
+		
+		public double height() {
+			return _height;
+		}
+		
+	};
+	
 	private Matrix4 _matrixWorldInverse;
-	private Matrix4 _projectionMatrix;
-	private Matrix4 _projectionMatrixInverse;
+	protected Matrix4 _projectionMatrix;
+	protected Matrix4 _projectionMatrixInverse;
 	
 	public Matrix4 matrixWorldInverse() {
 		return _matrixWorldInverse;
@@ -32,29 +74,37 @@ public class Camera extends Object3D {
 		this._projectionMatrixInverse = new Matrix4();
 	
 	}
+	
+	public Camera clone() {
+		return new Camera().copy(this);
+	}
+	
+	public Camera copy (Camera source) {
+		return copy(source, true);
+	}
+	
+	public Camera copy  ( Camera source, boolean recursive ) {
 
-	public Camera copy  ( Camera source, Camera recursive ) {
+		super.copy( source, recursive );
 
-//		Object3D.prototype.copy.call( this, source, recursive );
-//
-//		this.matrixWorldInverse.copy( source.matrixWorldInverse );
-//
-//		this.projectionMatrix.copy( source.projectionMatrix );
-//		this.projectionMatrixInverse.copy( source.projectionMatrixInverse );
+		this._matrixWorldInverse.copy( source._matrixWorldInverse );
+
+		this._projectionMatrix.copy( source._projectionMatrix );
+		this._projectionMatrixInverse.copy( source._projectionMatrixInverse );
 
 		return this;
 
 	}
 
-	public Matrix4 getWorldDirection  ( Matrix4 target ) {
-
+//	public Matrix4 getWorldDirection  ( Matrix4 target ) {
+//
 //		this.updateWorldMatrix( true, false );
 //
-//		const e = this.matrixWorld.elements;
+//		double[] e = Arrays.copyOf(this._matrixWorld.elements, this._matrixWorld.elements.length);
+//		// Not sure what to do here.
 //
 //		return target.set( - e[ 8 ], - e[ 9 ], - e[ 10 ] ).normalize();
-		return null;
-	}
+//	}
 
 //	public void updateMatrixWorld ( force ) {
 

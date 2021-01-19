@@ -1,7 +1,6 @@
 package net.three4j.cameras;
 
-//import net.three4j.core;
-//import net.three4j.math;
+import net.three4j.math.MathUtils;
 
 public class PerspectiveCamera extends Camera {
 	private double _fov;
@@ -10,7 +9,7 @@ public class PerspectiveCamera extends Camera {
 	private double _far;
 	private double _focus;
 	private double _aspect;
-	private Object _view;
+	private View _view = new View(); // Can never be null
 	private double _filmGauge;
 	private double _filmOffset;
 
@@ -37,22 +36,114 @@ public class PerspectiveCamera extends Camera {
 		this.updateProjectionMatrix();
 	}
 
-	public PerspectiveCamera copy(PerspectiveCamera source, PerspectiveCamera recursive) {
+	public double fov() {
+		return _fov;
+	}
 
-//		Camera.prototype.copy.call( this, source, recursive );
-//
-//		this._fov = source.fov;
-//		this._zoom = source.zoom;
-//
-//		this._near = source.near;
-//		this._far = source.far;
-//		this._focus = source.focus;
-//
-//		this._aspect = source.aspect;
-//		this._view = source.view === null ? null : Object.assign( {}, source.view );
-//
-//		this._filmGauge = source.filmGauge;
-//		this._filmOffset = source.filmOffset;
+	public PerspectiveCamera fov(double fov) {
+		this._fov = fov;
+		return this;
+	}
+
+	public double zoom() {
+		return _zoom;
+	}
+
+	public PerspectiveCamera zoom(double zoom) {
+		this._zoom = zoom;
+		return this;
+	}
+
+	public double near() {
+		return _near;
+	}
+
+	public PerspectiveCamera near(double near) {
+		this._near = near;
+		return this;
+	}
+
+	public double far() {
+		return _far;
+	}
+
+	public PerspectiveCamera far(double far) {
+		this._far = far;
+		return this;
+	}
+
+	public double focus() {
+		return _focus;
+	}
+
+	public PerspectiveCamera focus(double focus) {
+		this._focus = focus;
+		return this;
+	}
+
+	public double aspect() {
+		return _aspect;
+	}
+
+	public PerspectiveCamera aspect(double aspect) {
+		this._aspect = aspect;
+		return this;
+	}
+
+	public View view() {
+		return _view;
+	}
+
+	public PerspectiveCamera view(View view) {
+		if (view == null)
+			new IllegalArgumentException("You may not pass a null for view");
+		
+		this._view = view;
+		return this;
+	}
+
+	public double filmGauge() {
+		return _filmGauge;
+	}
+
+	public PerspectiveCamera filmGauge(double filmGauge) {
+		this._filmGauge = filmGauge;
+		return this;
+	}
+
+	public double filmOffset() {
+		return _filmOffset;
+	}
+
+	public PerspectiveCamera filmOffset(double filmOffset) {
+		this._filmOffset = filmOffset;
+		return this;
+	}
+
+	public PerspectiveCamera clone() {
+		return new PerspectiveCamera().copy(this);
+	}
+	
+	public PerspectiveCamera copy(PerspectiveCamera source) {
+		return copy(source, true);
+	}
+
+	public PerspectiveCamera copy(PerspectiveCamera source, boolean recursive) {
+
+		super.copy( source, recursive );
+
+		this._fov = source._fov;
+		this._zoom = source._zoom;
+
+		this._near = source._near;
+		this._far = source._far;
+		this._focus = source._focus;
+
+		this._aspect = source._aspect;
+		this._view = source._view;
+
+		this._filmGauge = source._filmGauge;
+		this._filmOffset = source._filmOffset;
 
 		return this;
 	}
@@ -60,18 +151,18 @@ public class PerspectiveCamera extends Camera {
 	/**
 	 * Sets the FOV by focal length in respect to the current .filmGauge.
 	 *
-	 * The default film gauge is 35, so that the focal length can be specified for
-	 * a 35mm (full frame) camera.
+	 * The default film gauge is 35, so that the focal length can be specified for a
+	 * 35mm (full frame) camera.
 	 *
 	 * Values for focal length and film gauge must have the same unit.
 	 */
-	public void setFocalLength  ( double focalLength ) {
+	public void setFocalLength(double focalLength) {
 
-//		// see http://www.bobatkins.com/photography/technical/field_of_view.html
-//		const vExtentSlope = 0.5 * this.getFilmHeight() / focalLength;
-//
-//		this._fov = MathUtils.RAD2DEG * 2 * Math.atan( vExtentSlope );
-//		this.updateProjectionMatrix();
+		// see http://www.bobatkins.com/photography/technical/field_of_view.html
+		final double vExtentSlope = 0.5 * this.getFilmHeight() / focalLength;
+
+		this._fov = MathUtils.RAD2DEG * 2 * Math.atan( vExtentSlope );
+		this.updateProjectionMatrix();
 
 	}
 
@@ -80,31 +171,27 @@ public class PerspectiveCamera extends Camera {
 	 */
 	public double getFocalLength() {
 
-//		const vExtentSlope = Math.tan( MathUtils.DEG2RAD * 0.5 * this.fov );
-//
-//		return 0.5 * this.getFilmHeight() / vExtentSlope;
-		return 0;
+		final double vExtentSlope = Math.tan( MathUtils.DEG2RAD * 0.5 * this._fov );
+
+		return 0.5 * this.getFilmHeight() / vExtentSlope;
 	}
 
 	public double getEffectiveFOV() {
 
-//		return MathUtils.RAD2DEG * 2 * Math.atan(
-//			Math.tan( MathUtils.DEG2RAD * 0.5 * this.fov ) / this.zoom );
-		return 0;
+		return MathUtils.RAD2DEG * 2 * Math.atan(
+			Math.tan( MathUtils.DEG2RAD * 0.5 * this._fov ) / this._zoom );
 	}
 
 	public double getFilmWidth() {
 
 		// film not completely covered in portrait format (aspect < 1)
-		// return this.filmGauge * Math.min( this.aspect, 1 );
-		return 0;
+		return this._filmGauge * Math.min( this._aspect, 1 );
 	}
 
 	public double getFilmHeight() {
 
 		// film not completely covered in landscape format (aspect > 1)
-		// return this.filmGauge / Math.max( this.aspect, 1 );
-		return 0;
+		return this._filmGauge / Math.max( this._aspect, 1 );
 	}
 
 	/**
@@ -132,73 +219,54 @@ public class PerspectiveCamera extends Camera {
 	 */
 	public void setViewOffset(double fullWidth, double fullHeight, double x, double y, double width, double height) {
 
-//		this._aspect = fullWidth / fullHeight;
-//
-//		if ( this.view === null ) {
-//
-//			this._view = {
-//				enabled: true,
-//				fullWidth: 1,
-//				fullHeight: 1,
-//				offsetX: 0,
-//				offsetY: 0,
-//				width: 1,
-//				height: 1
-//			};
-//
-//		}
-//
-//		this.view.enabled = true;
-//		this.view.fullWidth = fullWidth;
-//		this.view.fullHeight = fullHeight;
-//		this.view.offsetX = x;
-//		this.view.offsetY = y;
-//		this.view.width = width;
-//		this.view.height = height;
-//
-//		this.updateProjectionMatrix();
+		this._aspect = fullWidth / fullHeight;
+
+		this._view._enabled = true;
+		this._view._fullWidth = fullWidth;
+		this._view._fullHeight = fullHeight;
+		this._view._offsetX = x;
+		this._view._offsetY = y;
+		this._view._width = width;
+		this._view._height = height;
+
+		this.updateProjectionMatrix();
 
 	}
 
 	public void clearViewOffset() {
-//
-//		if ( this.view !== null ) {
-//
-//			this.view.enabled = false;
-//
-//		}
-//
-//		this.updateProjectionMatrix();
+
+		this._view._enabled = false;
+
+		this.updateProjectionMatrix();
 
 	}
 
 	public void updateProjectionMatrix() {
-//
-//		const near = this.near;
-//		let top = near * Math.tan( MathUtils.DEG2RAD * 0.5 * this.fov ) / this.zoom;
-//		let height = 2 * top;
-//		let width = this.aspect * height;
-//		let left = - 0.5 * width;
-//		const view = this.view;
-//
-//		if ( this.view !== null && this.view.enabled ) {
-//
-//			const fullWidth = view.fullWidth,
-//				fullHeight = view.fullHeight;
-//
-//			left += view.offsetX * width / fullWidth;
-//			top -= view.offsetY * height / fullHeight;
-//			width *= view.width / fullWidth;
-//			height *= view.height / fullHeight;
-//
-//		}
-//
-//		const skew = this.filmOffset;
-//		if ( skew !== 0 ) left += near * skew / this.getFilmWidth();
-//
-//		this.projectionMatrix.makePerspective( left, left + width, top, top - height, near, this.far );
-//
-//		this.projectionMatrixInverse.copy( this.projectionMatrix ).invert();
+
+		double near = this._near;
+		double top = near * Math.tan( MathUtils.DEG2RAD * 0.5 * this._fov ) / this._zoom;
+		double height = 2 * top;
+		double width = this._aspect * height;
+		double left = - 0.5 * width;
+
+		if ( this._view != null && this._view.enabled() ) {
+
+			double fullWidth = _view._fullWidth,
+				fullHeight = _view._fullHeight;
+
+			left += _view._offsetX * width / fullWidth;
+			top -= _view._offsetY * height / fullHeight;
+			width *= _view._width / fullWidth;
+			height *= _view._height / fullHeight;
+
+		}
+
+		final double skew = this._filmOffset;
+		if ( skew != 0 ) left += near * skew / this.getFilmWidth();
+
+		this._projectionMatrix.makePerspective( left, left + width, top, top - height, near, this._far );
+
+		this._projectionMatrixInverse.copy( this._projectionMatrix ).invert();
 
 	}
 
