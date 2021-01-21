@@ -9,10 +9,6 @@ import static net.three4j.THREE.console;
 public class Box3 {
 
 	public Box3() {
-
-		this._min = new Vector3(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-		this._max = new Vector3(-Double.NEGATIVE_INFINITY, -Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
-
 	}
 
 	public Box3(Vector3 min, Vector3 max) {
@@ -244,7 +240,7 @@ public class Box3 {
 
 	public Box3 expandByScalar( double scalar ) {
 
-		this._min.addScalar( - scalar );
+		this._min.addScalar( -scalar );
 		this._max.addScalar( scalar );
 
 		return this;
@@ -501,27 +497,27 @@ public class Box3 {
 //
 //	}
 //
-//	public Box3 applyMatrix4( matrix ) {
-//
-//		// transform of empty box is an empty box.
-//		if ( this.isEmpty() ) return this;
-//
-//		// NOTE: I am using a binary pattern to specify all 2^3 combinations below
-//		_points[ 0 ].set( this._min.x, this._min.y, this._min.z ).applyMatrix4( matrix ); // 000
-//		_points[ 1 ].set( this._min.x, this._min.y, this._max.z ).applyMatrix4( matrix ); // 001
-//		_points[ 2 ].set( this._min.x, this._max.y, this._min.z ).applyMatrix4( matrix ); // 010
-//		_points[ 3 ].set( this._min.x, this._max.y, this._max.z ).applyMatrix4( matrix ); // 011
-//		_points[ 4 ].set( this._max.x, this._min.y, this._min.z ).applyMatrix4( matrix ); // 100
-//		_points[ 5 ].set( this._max.x, this._min.y, this._max.z ).applyMatrix4( matrix ); // 101
-//		_points[ 6 ].set( this._max.x, this._max.y, this._min.z ).applyMatrix4( matrix ); // 110
-//		_points[ 7 ].set( this._max.x, this._max.y, this._max.z ).applyMatrix4( matrix ); // 111
-//
-//		this.setFromPoints( _points );
-//
-//		return this;
-//
-//	}
-//
+	public Box3 applyMatrix4( Matrix4 matrix ) {
+
+		// transform of empty box is an empty box.
+		if ( this.isEmpty() ) return this;
+
+		// NOTE: I am using a binary pattern to specify all 2^3 combinations below
+		_points[ 0 ].set( this._min.x(), this._min.y(), this._min.z() ).applyMatrix4( matrix ); // 000
+		_points[ 1 ].set( this._min.x(), this._min.y(), this._max.z() ).applyMatrix4( matrix ); // 001
+		_points[ 2 ].set( this._min.x(), this._max.y(), this._min.z() ).applyMatrix4( matrix ); // 010
+		_points[ 3 ].set( this._min.x(), this._max.y(), this._max.z() ).applyMatrix4( matrix ); // 011
+		_points[ 4 ].set( this._max.x(), this._min.y(), this._min.z() ).applyMatrix4( matrix ); // 100
+		_points[ 5 ].set( this._max.x(), this._min.y(), this._max.z() ).applyMatrix4( matrix ); // 101
+		_points[ 6 ].set( this._max.x(), this._max.y(), this._min.z() ).applyMatrix4( matrix ); // 110
+		_points[ 7 ].set( this._max.x(), this._max.y(), this._max.z() ).applyMatrix4( matrix ); // 111
+
+		this.setFromPoints( _points );
+
+		return this;
+
+	}
+
 //	public Box3 translate( offset ) {
 //
 //		this._min.add( offset );
@@ -530,13 +526,13 @@ public class Box3 {
 //		return this;
 //
 //	}
-//
-//	public double equals( box ) {
-//
-//		return box._min.equals( this._min ) && box._max.equals( this._max );
-//
-//	}
-//
+
+	public boolean equals( Box3 box ) {
+
+		return box._min.equals( this._min ) && box._max.equals( this._max );
+
+	}
+
 //}
 //
 //public satForAxes( axes, v0, v1, v2, extents ) {
