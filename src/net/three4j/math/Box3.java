@@ -10,13 +10,14 @@ public class Box3 {
 
 	public Box3() {
 
-	}
-
-	public Box3(double min, double max) {
-
 		this._min = new Vector3(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
 		this._max = new Vector3(-Double.NEGATIVE_INFINITY, -Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
 
+	}
+
+	public Box3(Vector3 min, Vector3 max) {
+		_min = min != null ? min : new Vector3();
+		_max = max != null ? max : new Vector3();
 	}
 
 	private Vector3 _min = new Vector3();
@@ -341,53 +342,53 @@ public class Box3 {
 
 	}
 
-//	public double intersectsPlane( plane ) {
-//
-//		// We compute the minimum and maximum dot product values. If those values
-//		// are on the same side (back or front) of the plane, then there is no intersection.
-//
-//		let min, max;
-//
-//		if ( plane.normal.x > 0 ) {
-//
-//			min = plane.normal.x * this._min.x;
-//			max = plane.normal.x * this._max.x;
-//
-//		} else {
-//
-//			min = plane.normal.x * this._max.x;
-//			max = plane.normal.x * this._min.x;
-//
-//		}
-//
-//		if ( plane.normal.y > 0 ) {
-//
-//			min += plane.normal.y * this._min.y;
-//			max += plane.normal.y * this._max.y;
-//
-//		} else {
-//
-//			min += plane.normal.y * this._max.y;
-//			max += plane.normal.y * this._min.y;
-//
-//		}
-//
-//		if ( plane.normal.z > 0 ) {
-//
-//			min += plane.normal.z * this._min.z;
-//			max += plane.normal.z * this._max.z;
-//
-//		} else {
-//
-//			min += plane.normal.z * this._max.z;
-//			max += plane.normal.z * this._min.z;
-//
-//		}
-//
-//		return ( min <= - plane.constant && max >= - plane.constant );
-//
-//	}
-//
+	public boolean intersectsPlane( Plane plane ) {
+
+		// We compute the minimum and maximum dot product values. If those values
+		// are on the same side (back or front) of the plane, then there is no intersection.
+
+		double min, max;
+
+		if ( plane.normal().x() > 0 ) {
+
+			min = plane.normal().x() * this._min.x();
+			max = plane.normal().x() * this._max.x();
+
+		} else {
+
+			min = plane.normal().x() * this._max.x();
+			max = plane.normal().x() * this._min.x();
+
+		}
+
+		if ( plane.normal().y() > 0 ) {
+
+			min += plane.normal().y() * this._min.y();
+			max += plane.normal().y() * this._max.y();
+
+		} else {
+
+			min += plane.normal().y() * this._max.y();
+			max += plane.normal().y() * this._min.y();
+
+		}
+
+		if ( plane.normal().z() > 0 ) {
+
+			min += plane.normal().z() * this._min.z();
+			max += plane.normal().z() * this._max.z();
+
+		} else {
+
+			min += plane.normal().z() * this._max.z();
+			max += plane.normal().z() * this._min.z();
+
+		}
+
+		return ( min <= - plane.constant() && max >= - plane.constant() );
+
+	}
+
 //	public double intersectsTriangle( triangle ) {
 //
 //		if ( this.isEmpty() ) {
