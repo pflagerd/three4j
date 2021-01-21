@@ -25,7 +25,7 @@ class hello {
 
 		scene = new Scene();
 
-        geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
+//        geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
 //        material = new MeshNormalMaterial();
 //
 //        mesh = new Mesh( geometry, material );

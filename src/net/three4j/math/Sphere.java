@@ -172,53 +172,53 @@ public class Sphere {
 
 	}
 
-	public double getBoundingBox( target ) {
-
-		if ( target === undefined ) {
-
-			console.warn( 'THREE.Sphere: .getBoundingBox() target is now required' );
-			target = new Box3();
-
-		}
-
-		if ( this.isEmpty() ) {
-
-			// Empty sphere produces empty bounding box
-			target.makeEmpty();
-			return target;
-
-		}
-
-		target.set( this._center, this._center );
-		target.expandByScalar( this._radius );
-
-		return target;
-
-	}
-
-	public Sphere applyMatrix4( matrix ) {
-
-		this._center.applyMatrix4( matrix );
-		this._radius = this._radius * matrix.getMaxScaleOnAxis();
-
-		return this;
-
-	}
-
-	public Sphere translate( offset ) {
-
-		this._center.add( offset );
-
-		return this;
-
-	}
-
-	public double equals( sphere ) {
-
-		return sphere._center.equals( this._center ) && ( sphere._radius === this._radius );
-
-	}
-
+//	public double getBoundingBox( target ) {
+//
+//		if ( target === undefined ) {
+//
+//			console.warn( 'THREE.Sphere: .getBoundingBox() target is now required' );
+//			target = new Box3();
+//
+//		}
+//
+//		if ( this.isEmpty() ) {
+//
+//			// Empty sphere produces empty bounding box
+//			target.makeEmpty();
+//			return target;
+//
+//		}
+//
+//		target.set( this._center, this._center );
+//		target.expandByScalar( this._radius );
+//
+//		return target;
+//
+//	}
+//
+//	public Sphere applyMatrix4( matrix ) {
+//
+//		this._center.applyMatrix4( matrix );
+//		this._radius = this._radius * matrix.getMaxScaleOnAxis();
+//
+//		return this;
+//
+//	}
+//
+//	public Sphere translate( offset ) {
+//
+//		this._center.add( offset );
+//
+//		return this;
+//
+//	}
+//
+//	public double equals( sphere ) {
+//
+//		return sphere._center.equals( this._center ) && ( sphere._radius === this._radius );
+//
+//	}
+//
 }
 
 
