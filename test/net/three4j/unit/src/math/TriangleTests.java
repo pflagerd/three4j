@@ -15,7 +15,6 @@ import net.three4j.math.Vector3;
 
 public class TriangleTests {
 
-	// INSTANCING
 	@Test
 	public void Instancing() {
 
@@ -31,7 +30,6 @@ public class TriangleTests {
 
 	}
 
-//		// STATIC STUFF
 //		@Test
 //		public void getNormal() {
 //
@@ -53,7 +51,6 @@ public class TriangleTests {
 //
 //		}
 
-	// PUBLIC STUFF
 	@Test
 	public void set() {
 
