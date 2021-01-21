@@ -1,20 +1,17 @@
 package net.three4j.unit.src.math;
 
+import static net.three4j.unit.src.math.ConstantsTests.one3;
+import static net.three4j.unit.src.math.ConstantsTests.two3;
+import static net.three4j.unit.src.math.ConstantsTests.zero3;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import net.three4j.math.Box3;
 import net.three4j.math.Plane;
 import net.three4j.math.Triangle;
 import net.three4j.math.Vector3;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static net.three4j.unit.src.math.ConstantsTests.zero3;
-import static net.three4j.unit.src.math.ConstantsTests.one3;
-import static net.three4j.unit.src.math.ConstantsTests.two3;
-import static net.three4j.unit.src.math.ConstantsTests.eps;
 
 public class TriangleTests {
 
