@@ -385,7 +385,7 @@ public class Box3 {
 
 	}
 
-//	public double intersectsTriangle( triangle ) {
+//	public double intersectsTriangle( Triangle triangle ) {
 //
 //		if ( this.isEmpty() ) {
 //
@@ -437,7 +437,7 @@ public class Box3 {
 //		return satForAxes( axes, _v0, _v1, _v2, _extents );
 //
 //	}
-//
+
 	public Vector3 clampPoint( Vector3 point, Vector3 target ) {
 
 		if ( target == null ) {
