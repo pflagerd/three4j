@@ -130,10 +130,10 @@ public class TriangleTests {
 		assertTrue(a.getMidpoint(midpoint).equals(new Vector3(0, 0, 0)), "Passed!");
 
 		a = new Triangle(new Vector3(0, 0, 0), new Vector3(1, 0, 0), new Vector3(0, 1, 0));
-		assertTrue(a.getMidpoint(midpoint).equals(new Vector3(1 / 3, 1 / 3, 0)), "Passed!");
+		assertTrue(a.getMidpoint(midpoint).equals(new Vector3(1. / 3, 1. / 3, 0)), "Passed!");
 
 		a = new Triangle(new Vector3(2, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 2));
-		assertTrue(a.getMidpoint(midpoint).equals(new Vector3(2 / 3, 0, 2 / 3)), "Passed!");
+		assertTrue(a.getMidpoint(midpoint).equals(new Vector3(2. / 3, 0, 2. / 3)), "Passed!");
 
 	}
 

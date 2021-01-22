@@ -207,7 +207,7 @@ public class Triangle {
 			target = new Vector3();
 		}
 
-		return target.addVectors( this._a, this._b ).add( this._c ).multiplyScalar( 1 / 3 );
+		return target.addVectors( this._a, this._b ).add( this._c ).multiplyScalar( 1. / 3 );
 
 	}
 
