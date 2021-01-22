@@ -3,6 +3,7 @@ package net.three4j.math;
 import net.three4j.core.BufferAttribute;
 import net.three4j.core.Geometry;
 import net.three4j.core.Object3D;
+import net.three4j.core.Object3D.ChildArrayList;
 
 import static net.three4j.THREE.console;
 
@@ -150,15 +151,15 @@ public class Box3 {
 
 	}
 
-//	public Box3 setFromObject( Object3D object ) {
-//
-//		this.makeEmpty();
-//
-//		return this.expandByObject( object );
-//
-//	}
+	public Box3 setFromObject( Object3D object ) {
 
-	public Box3 $clone() {
+		this.makeEmpty();
+
+		return this.expandByObject( object );
+
+	}
+
+	public Box3 clone() {
 
 		return new Box3().copy(this);
 
@@ -247,41 +248,41 @@ public class Box3 {
 
 	}
 
-//	public Box3 expandByObject( Object3D object ) {
-//
-//		// Computes the world-axis-aligned bounding box of an object (including its children),
-//		// accounting for both the object's, and children's, world transforms
-//
-//		object.updateWorldMatrix( false, false );
-//
-//		Geometry geometry = object.geometry;
-//
-//		if ( geometry !== undefined ) {
-//
-//			if ( geometry.boundingBox === null ) {
-//
-//				geometry.computeBoundingBox();
-//
-//			}
-//
-//			_box.copy( geometry.boundingBox );
-//			_box.applyMatrix4( object.matrixWorld );
-//
-//			this.union( _box );
-//
-//		}
-//
-//		const children = object.children;
-//
-//		for ( let i = 0, l = children.length; i < l; i ++ ) {
-//
-//			this.expandByObject( children[ i ] );
-//
-//		}
-//
-//		return this;
-//
-//	}
+	public Box3 expandByObject( Object3D object ) {
+
+		// Computes the world-axis-aligned bounding box of an object (including its children),
+		// accounting for both the object's, and children's, world transforms
+
+		object.updateWorldMatrix( false, false );
+
+		Geometry geometry = object.geometry();
+
+		if ( geometry != null ) {
+
+			if ( geometry.boundingBox() == null ) {
+
+				geometry.computeBoundingBox();
+
+			}
+
+			_box.copy( geometry.boundingBox() );
+			_box.applyMatrix4( object.matrixWorld() );
+
+			this.union( _box );
+
+		}
+
+		ChildArrayList<Object3D> children = object.children;
+
+		for ( int i = 0, l = children.length(); i < l; i ++ ) {
+
+			this.expandByObject( children.get(i) );
+
+		}
+
+		return this;
+
+	}
 
 	public boolean containsPoint( Vector3 point ) {
 
@@ -449,52 +450,50 @@ public class Box3 {
 
 	}
 
-//	public double distanceToPoint( point ) {
-//
-//		const clampedPoint = _vector.copy( point ).clamp( this._min, this._max );
-//
-//		return clampedPoint.sub( point ).length();
-//
-//	}
-//
-//	public double getBoundingSphere( target ) {
-//
-//		if ( target === undefined ) {
-//
-//			console.error( 'THREE.Box3: .getBoundingSphere() target is now required' );
-//			//target = new Sphere(); // removed to avoid cyclic dependency
-//
-//		}
-//
-//		this.getCenter( target.center );
-//
-//		target.radius = this.getSize( _vector ).length() * 0.5;
-//
-//		return target;
-//
-//	}
-//
-//	public Box3 intersect( box ) {
-//
-//		this._min.max( box._min );
-//		this._max.min( box._max );
-//
-//		// ensure that if there is no overlap, the result is fully empty, not slightly empty with non-inf/+inf values that will cause subsequence intersects to erroneously return valid values.
-//		if ( this.isEmpty() ) this.makeEmpty();
-//
-//		return this;
-//
-//	}
-//
-//	public Box3 union( box ) {
-//
-//		this._min.min( box._min );
-//		this._max.max( box._max );
-//
-//		return this;
-//
-//	}
-//
+	public double distanceToPoint( Vector3 point ) {
+
+		Vector3 clampedPoint = _vector.copy( point ).clamp( this._min, this._max );
+
+		return clampedPoint.sub( point ).length();
+
+	}
+
+	public Sphere getBoundingSphere( Sphere target ) {
+
+		if ( target == null ) {
+			//target = new Sphere(); // removed to avoid cyclic dependency
+			throw new IllegalArgumentException("Cannot pass null for target.");
+		}
+
+		this.getCenter( target.center() );
+
+		target.radius(this.getSize( _vector ).length() * 0.5);
+
+		return target;
+
+	}
+
+	public Box3 intersect( Box3 box ) {
+
+		this._min.max( box._min );
+		this._max.min( box._max );
+
+		// ensure that if there is no overlap, the result is fully empty, not slightly empty with non-inf/+inf values that will cause subsequence intersects to erroneously return valid values.
+		if ( this.isEmpty() ) this.makeEmpty();
+
+		return this;
+
+	}
+
+	public Box3 union( Box3 box ) {
+
+		this._min.min( box._min );
+		this._max.max( box._max );
+
+		return this;
+
+	}
+
 	public Box3 applyMatrix4( Matrix4 matrix ) {
 
 		// transform of empty box is an empty box.

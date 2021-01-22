@@ -52,6 +52,15 @@ public class Geometry implements EventListener {
 	public Geometry() {
 		super();
 	}
+	
+	public Box3 boundingBox() {
+	  return _boundingBox;
+	}
+
+	public Geometry boundingBox(Box3 boundingBox) {
+	  this._boundingBox = boundingBox;
+	  return this;
+	}
 
 	public Geometry applyMatrix4  ( Matrix4 matrix ) {
 	

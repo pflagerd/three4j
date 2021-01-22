@@ -72,11 +72,24 @@ public class Object3D extends EventDispatcher {
 	public Layers layers = new Layers();
 	// animations
 	Object _userData = new Object();
-
+	
 	public Object3D() {
 //		this.animations = [];
 //	
 	}
+
+
+	private Geometry _geometry = new Geometry();
+
+	public Geometry geometry() {
+	  return _geometry;
+	}
+
+	public Object3D geometry(Geometry geometry) {
+	  this._geometry = geometry;
+	  return this;
+	}
+
 
 	public boolean equals(Object3D o) {
 		return 	_position.equals(o._position) && 
