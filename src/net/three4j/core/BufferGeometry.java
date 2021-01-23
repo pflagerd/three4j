@@ -11,7 +11,7 @@ import net.three4j.math.Matrix4;
 import net.three4j.math.Matrix3;
 import net.three4j.math.MathUtils;
 
-public class BufferGeometry extends EventDispatcher {
+public class BufferGeometry extends Geometry {
 
 	static int _bufferGeometryId = 1; // BufferGeometry uses odd numbers as Id
 

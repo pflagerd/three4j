@@ -9,4 +9,9 @@ public class Event {
 		this.type = type;
 		this.target = null;
 	}
+	
+	public Event(Object target, String type) {
+		this.type = type;
+		this.target = target;
+	}
 }

@@ -79,7 +79,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 
-	private Geometry _geometry = new Geometry();
+	protected Geometry _geometry = new Geometry();
 
 	public Geometry geometry() {
 	  return _geometry;

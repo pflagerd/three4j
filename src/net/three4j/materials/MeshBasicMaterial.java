@@ -1,128 +1,94 @@
 package net.three4j.materials;
 
-//import { Material } from './Material.js';
-//import { MultiplyOperation } from '../constants.js';
-//import { Color } from '../math/Color.js';
+import static net.three4j.constants.MultiplyOperation;
+import net.three4j.math.Color;
 
-public class MeshBasicMaterial extends net.three4j.materials.Material {
-	/**
-	 * @author mrdoob / http://mrdoob.com/
-	 * @author alteredq / http://alteredqualia.com/
-	 *
-	 * parameters = {
-	 *  color: <hex>,
-	 *  opacity: <float>,
-	 *  map: new THREE.Texture( <Image> ),
-	 *
-	 *  lightMap: new THREE.Texture( <Image> ),
-	 *  lightMapIntensity: <float>
-	 *
-	 *  aoMap: new THREE.Texture( <Image> ),
-	 *  aoMapIntensity: <float>
-	 *
-	 *  specularMap: new THREE.Texture( <Image> ),
-	 *
-	 *  alphaMap: new THREE.Texture( <Image> ),
-	 *
-	 *  envMap: new THREE.CubeTexture( [posx, negx, posy, negy, posz, negz] ),
-	 *  combine: THREE.Multiply,
-	 *  reflectivity: <float>,
-	 *  refractionRatio: <float>,
-	 *
-	 *  depthTest: <bool>,
-	 *  depthWrite: <bool>,
-	 *
-	 *  wireframe: <boolean>,
-	 *  wireframeLinewidth: <float>,
-	 *
-	 *  skinning: <bool>,
-	 *  morphTargets: <bool>
-	 * }
-	 */
-	
-//	function MeshBasicMaterial( parameters ) {
-	public MeshBasicMaterial(net.three4j.THREE.KV[] parameters) {		
-//
-//		Material.call( this );
-//
-//		this.type = 'MeshBasicMaterial';
-//
-//		this.color = new Color( 0xffffff ); // emissive
-//
-//		this.map = null;
-//
-//		this.lightMap = null;
-//		this.lightMapIntensity = 1.0;
-//
-//		this.aoMap = null;
-//		this.aoMapIntensity = 1.0;
-//
-//		this.specularMap = null;
-//
-//		this.alphaMap = null;
-//
-//		this.envMap = null;
-//		this.combine = MultiplyOperation;
-//		this.reflectivity = 1;
-//		this.refractionRatio = 0.98;
-//
-//		this.wireframe = false;
-//		this.wireframeLinewidth = 1;
-//		this.wireframeLinecap = 'round';
-//		this.wireframeLinejoin = 'round';
-//
-//		this.skinning = false;
-//		this.morphTargets = false;
-//
-//		this.lights = false;
-//
-//		this.setValues( parameters );
-//
-//	}
+/**
+ * parameters = { color: <hex>, opacity: <float>, map: new THREE.Texture(
+ * <Image> ),
+ *
+ * lightMap: new THREE.Texture( <Image> ), lightMapIntensity: <float>
+ *
+ * aoMap: new THREE.Texture( <Image> ), aoMapIntensity: <float>
+ *
+ * specularMap: new THREE.Texture( <Image> ),
+ *
+ * alphaMap: new THREE.Texture( <Image> ),
+ *
+ * envMap: new THREE.CubeTexture( [posx, negx, posy, negy, posz, negz] ),
+ * combine: THREE.Multiply, reflectivity: <float>, refractionRatio: <float>,
+ *
+ * depthTest: <bool>, depthWrite: <bool>,
+ *
+ * wireframe: <boolean>, wireframeLinewidth: <float>,
+ *
+ * skinning: <bool>, morphTargets: <bool> }
+ */
+
+public class MeshBasicMaterial extends Material {
+
+	private Color _color = new Color(0xffffff); // emissive
+
+	private Object _map = null;
+
+	private Object _lightMap = null;
+	private double _lightMapIntensity = 1.0;
+
+	private Object _aoMap = null;
+	private double _aoMapIntensity = 1.0;
+
+	private Object _specularMap = null;
+
+	private Object _alphaMap = null;
+
+	private Object _envMap = null;
+	private int _combine = MultiplyOperation;
+	private double _reflectivity = 1;
+	private double _refractionRatio = 0.98;
+
+	private boolean _wireframe = false;
+	private double _wireframeLinewidth = 1;
+	private String _wireframeLinecap = "round";
+	private String _wireframeLinejoin = "round";
+
+	private boolean _skinning = false;
+	private boolean _morphTargets = false;
+
+	public MeshBasicMaterial() {
+
 	}
 
-//
-//	MeshBasicMaterial.prototype = Object.create( Material.prototype );
-//	MeshBasicMaterial.prototype.constructor = MeshBasicMaterial;
-//
-//	MeshBasicMaterial.prototype.isMeshBasicMaterial = true;
-//
-//	MeshBasicMaterial.prototype.copy = function ( source ) {
-//
-//		Material.prototype.copy.call( this, source );
-//
-//		this.color.copy( source.color );
-//
-//		this.map = source.map;
-//
-//		this.lightMap = source.lightMap;
-//		this.lightMapIntensity = source.lightMapIntensity;
-//
-//		this.aoMap = source.aoMap;
-//		this.aoMapIntensity = source.aoMapIntensity;
-//
-//		this.specularMap = source.specularMap;
-//
-//		this.alphaMap = source.alphaMap;
-//
-//		this.envMap = source.envMap;
-//		this.combine = source.combine;
-//		this.reflectivity = source.reflectivity;
-//		this.refractionRatio = source.refractionRatio;
-//
-//		this.wireframe = source.wireframe;
-//		this.wireframeLinewidth = source.wireframeLinewidth;
-//		this.wireframeLinecap = source.wireframeLinecap;
-//		this.wireframeLinejoin = source.wireframeLinejoin;
-//
-//		this.skinning = source.skinning;
-//		this.morphTargets = source.morphTargets;
-//
-//		return this;
-//
-//	};
-//
-//
-//	export { MeshBasicMaterial };
+	public MeshBasicMaterial copy(MeshBasicMaterial source) {
 
+		super.copy(source);
+
+		this._color.copy(source._color);
+
+		this._map = source._map;
+
+		this._lightMap = source._lightMap;
+		this._lightMapIntensity = source._lightMapIntensity;
+
+		this._aoMap = source._aoMap;
+		this._aoMapIntensity = source._aoMapIntensity;
+
+		this._specularMap = source._specularMap;
+
+		this._alphaMap = source._alphaMap;
+
+		this._envMap = source._envMap;
+		this._combine = source._combine;
+		this._reflectivity = source._reflectivity;
+		this._refractionRatio = source._refractionRatio;
+
+		this._wireframe = source._wireframe;
+		this._wireframeLinewidth = source._wireframeLinewidth;
+		this._wireframeLinecap = source._wireframeLinecap;
+		this._wireframeLinejoin = source._wireframeLinejoin;
+
+		this._skinning = source._skinning;
+		this._morphTargets = source._morphTargets;
+
+		return this;
+	}
 }

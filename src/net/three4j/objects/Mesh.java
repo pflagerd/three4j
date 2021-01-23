@@ -3,12 +3,12 @@ package net.three4j.objects;
 import net.three4j.math.Vector3;
 import net.three4j.math.Vector2;
 import net.three4j.math.Sphere;
-//import net.three4j.math.Ray;
-//import net.three4j.math.Matrix4;
-//import net.three4j.core.Object3D;
-//import net.three4j.math.Triangle;
-//import net.three4j.core.Face3;
-//import net.three4j.constants;
+import net.three4j.math.Ray;
+import net.three4j.math.Matrix4;
+import net.three4j.core.Object3D;
+import net.three4j.math.Triangle;
+import net.three4j.core.Face3;
+import net.three4j.constants;
 //import net.three4j.materials.MeshBasicMaterial;
 //import net.three4j.core.BufferGeometry;
 //
@@ -37,28 +37,45 @@ import net.three4j.math.Sphere;
 //private final Vector3 _intersectionPoint = new Vector3();
 //private final Vector3 _intersectionPointWorld = new Vector3();
 //
-//public Mesh( geometry = new BufferGeometry(), material = new MeshBasicMaterial() ) {
 //
-//	Object3D.call( this );
+//public BufferGeometry geometry() {
+//  return (BufferGeometry)_geometry;
+//}
 //
-//	this.type = 'Mesh';
+//public Mesh geometry(BufferGeometry geometry) {
+//  this._geometry = geometry;
+//  return this;
+//}
 //
-//	this.geometry = geometry;
-//	this.material = material;
+//
+//private MeshBasicMaterial _material = new MeshBasicMaterial();
+//
+//public MeshBasicMaterial material() {
+//  return _material;
+//}
+//
+//public Mesh material(MeshBasicMaterial material) {
+//  this._material = material;
+//  return this;
+//}
+//
+//
+//public Mesh() {	
+//}
+//
+//public Mesh( BufferGeometry geometry, MeshBasicMaterial material ) {
+//	super();
+//
+//	this._geometry = geometry;
+//	this._material = material;
 //
 //	this.updateMorphTargets();
 //
 //}
 //
-//Mesh.prototype = Object.assign( Object.create( Object3D.prototype ), {
+//	public Mesh copy  ( Mesh source ) {
 //
-//	constructor: Mesh,
-//
-//	isMesh: true,
-//
-//	public copy  ( source ) {
-//
-//		Object3D.prototype.copy.call( this, source );
+//		super.copy( source );
 //
 //		if ( source.morphTargetInfluences !== undefined ) {
 //
@@ -72,16 +89,16 @@ import net.three4j.math.Sphere;
 //
 //		}
 //
-//		this.material = source.material;
-//		this.geometry = source.geometry;
+//		this._material = source._material;
+//		this._geometry = source._geometry;
 //
 //		return this;
 //
-//	},
-//
+//	}
+
 //	public updateMorphTargets  () {
 //
-//		const geometry = this.geometry;
+//		public final geometry = this.geometry;
 //
 //		if ( geometry.isBufferGeometry ) {
 //
@@ -114,16 +131,16 @@ import net.three4j.math.Sphere;
 //
 //			const morphTargets = geometry.morphTargets;
 //
-//			if ( morphTargets !== undefined && morphTargets.length > 0 ) {
+//			if ( morphTargets != undefined && morphTargets.length > 0 ) {
 //
-//				console.error( 'THREE.Mesh.updateMorphTargets() no longer supports THREE.Geometry. Use THREE.BufferGeometry instead.' );
+//				console.error( "THREE.Mesh.updateMorphTargets() no longer supports THREE.Geometry. Use THREE.BufferGeometry instead." );
 //
 //			}
 //
 //		}
 //
-//	},
-//
+//	}
+
 //	public raycast  ( raycaster, intersects ) {
 //
 //		const geometry = this.geometry;
@@ -454,6 +471,5 @@ import net.three4j.math.Sphere;
 //	}
 //
 //	return intersection;
-//
 //}
 //}
