@@ -1,11 +1,13 @@
 package net.three4j.core;
 
 import net.three4j.math.Vector3;
+
+import java.util.Dictionary;
+import java.util.HashMap;
+
 import net.three4j.math.Box3;
 
-
 import net.three4j.math.Sphere;
-
 
 import net.three4j.math.Matrix4;
 import net.three4j.math.Matrix3;
@@ -23,17 +25,17 @@ public class BufferGeometry extends Geometry {
 	final static Vector3 _vector = new Vector3();
 
 	public final int id = _bufferGeometryId += 2;
-	
+
 	private String _uuid = MathUtils.generateUUID();
 
 	private String _name = "";
 
 	private int _index = 0;
 
-	// _attributes = {};
+	private HashMap<String, Object> _attributes = new HashMap<>();
 
 	// _morphAttributes = {};
-	
+
 	private boolean _morphTargetsRelative = false;
 
 	// _groups = [];
@@ -44,7 +46,7 @@ public class BufferGeometry extends Geometry {
 	// this.drawRange = { start: 0, count: Infinity };
 
 	private Object _userData = new Object();
-	
+
 	public BufferGeometry() {
 	}
 
@@ -54,50 +56,46 @@ public class BufferGeometry extends Geometry {
 
 	}
 
-//	public setIndex  ( index ) {
+//	public BufferGeometry setIndex  ( Object[] index ) {
+//		this.index = new ( arrayMax( index ) > 65535 ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
 //
-//		if ( Array.isArray( index ) ) {
-//
-//			this.index = new ( arrayMax( index ) > 65535 ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
-//
-//		} else {
-//
-//			this.index = index;
-//
-//		}
-//
-//		return this;
-//
-//	},
+//	}
 
-//	public Object getAttribute  ( String name ) {
-//
-//		return this.attributes[ name ];
-//
-//	},
-//
-//	public setAttribute  ( name, attribute ) {
-//
-//		this.attributes[ name ] = attribute;
-//
-//		return this;
-//
-//	},
-//
-//	public deleteAttribute  ( name ) {
-//
-//		delete this.attributes[ name ];
-//
-//		return this;
-//
-//	},
-//
-//	public hasAttribute  ( name ) {
-//
-//		return this.attributes[ name ] !== undefined;
-//
-//	},
-//
+	public BufferGeometry setIndex(int index) {
+		this._index = index;
+
+		return this;
+
+	}
+
+	public Object getAttribute  ( String name ) {
+
+		return this._attributes.get(name);
+
+	}
+
+	public BufferGeometry setAttribute  ( String name, Object attribute ) {
+
+		this._attributes.put(name, attribute);
+
+		return this;
+
+	}
+
+	public BufferGeometry deleteAttribute( String name ) {
+
+		this._attributes.remove(name);
+
+		return this;
+
+	}
+
+	public boolean hasAttribute  ( String name ) {
+
+		return this._attributes.get(name ) != null;
+
+	}
+
 //	public addGroup  ( start, count, materialIndex = 0 ) {
 //
 //		this.groups.push( {
@@ -1238,13 +1236,12 @@ public class BufferGeometry extends Geometry {
 //		return this;
 //
 //	},
-//
-//	public dispose  () {
-//
-//		this.dispatchEvent( { type: 'dispose' } );
-//
-//	}
-//
+
+	public void dispose() {
+		super.dispose();
+
+		this.dispatchEvent( new Event(this, "dispose") );
+
+	}
+
 }
-
-

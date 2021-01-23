@@ -14,7 +14,7 @@ import net.three4j.math.Color;
 
 import net.three4j.math.MathUtils;
 
-public class Geometry implements EventListener {
+public class Geometry extends EventDispatcher {
 	public static class ChildArrayList<T> extends ArrayList<T> {
 		public int length() {
 			return this.size();
@@ -1361,10 +1361,10 @@ public class Geometry implements EventListener {
 //	
 //		},
 //
-//	public dispose  () {
-//	
-//			this.dispatchEvent( { type: 'dispose' } );
-//	
-//		}
+	public void dispose() {
+
+		this.dispatchEvent( new Event(this, "dispose") );
+
+	}
 
 }
