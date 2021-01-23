@@ -4,8 +4,8 @@ import com.pflager.glut;
 
 public class Window extends glut {
 	
-	public double innerWidth;
-	public double innerHeight;
+	public int innerWidth;
+	public int innerHeight;
 	
 	public Window(String title) {
 		innerWidth = 800;

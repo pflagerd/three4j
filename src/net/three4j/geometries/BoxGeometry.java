@@ -69,6 +69,10 @@ public class BoxGeometry extends Geometry {
 		this._depthSegments = depthSegments;
 		return this;
 	}
+	
+	public BoxGeometry(double width, double height, double depth) {
+		this(width, height, depth, 1, 1, 1);
+	}
 
 	public BoxGeometry(double width, double height, double depth, int widthSegments, int heightSegments, int depthSegments) {
 		super();

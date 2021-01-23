@@ -8,71 +8,69 @@ import net.three4j.math.Matrix4;
 import net.three4j.core.Object3D;
 import net.three4j.math.Triangle;
 import net.three4j.core.Face3;
+import net.three4j.core.Geometry;
 import net.three4j.constants;
-//import net.three4j.materials.MeshBasicMaterial;
-//import net.three4j.core.BufferGeometry;
-//
-//public class Mesh extends Object3D {
-//
-//private final Matrix4 _inverseMatrix = new Matrix4();
-//private final Ray _ray = new Ray();
-//private final Sphere _sphere = new Sphere();
-//
-//private final Vector3 _vA = new Vector3();
-//private final Vector3 _vB = new Vector3();
-//private final Vector3 _vC = new Vector3();
-//
-//private final Vector3 _tempA = new Vector3();
-//private final Vector3 _tempB = new Vector3();
-//private final Vector3 _tempC = new Vector3();
-//
-//private final Vector3 _morphA = new Vector3();
-//private final Vector3 _morphB = new Vector3();
-//private final Vector3 _morphC = new Vector3();
-//
-//private final Vector2 _uvA = new Vector2();
-//private final Vector2 _uvB = new Vector2();
-//private final Vector2 _uvC = new Vector2();
-//
-//private final Vector3 _intersectionPoint = new Vector3();
-//private final Vector3 _intersectionPointWorld = new Vector3();
-//
-//
-//public BufferGeometry geometry() {
-//  return (BufferGeometry)_geometry;
-//}
-//
-//public Mesh geometry(BufferGeometry geometry) {
-//  this._geometry = geometry;
-//  return this;
-//}
-//
-//
-//private MeshBasicMaterial _material = new MeshBasicMaterial();
-//
-//public MeshBasicMaterial material() {
-//  return _material;
-//}
-//
-//public Mesh material(MeshBasicMaterial material) {
-//  this._material = material;
-//  return this;
-//}
-//
-//
-//public Mesh() {	
-//}
-//
-//public Mesh( BufferGeometry geometry, MeshBasicMaterial material ) {
-//	super();
-//
-//	this._geometry = geometry;
-//	this._material = material;
-//
-//	this.updateMorphTargets();
-//
-//}
-//
+import net.three4j.materials.Material;
+import net.three4j.materials.MeshBasicMaterial;
+import net.three4j.core.BufferGeometry;
+
+public class Mesh extends Object3D {
+
+	private final Matrix4 _inverseMatrix = new Matrix4();
+	private final Ray _ray = new Ray();
+	private final Sphere _sphere = new Sphere();
+
+	private final Vector3 _vA = new Vector3();
+	private final Vector3 _vB = new Vector3();
+	private final Vector3 _vC = new Vector3();
+
+	private final Vector3 _tempA = new Vector3();
+	private final Vector3 _tempB = new Vector3();
+	private final Vector3 _tempC = new Vector3();
+
+	private final Vector3 _morphA = new Vector3();
+	private final Vector3 _morphB = new Vector3();
+	private final Vector3 _morphC = new Vector3();
+
+	private final Vector2 _uvA = new Vector2();
+	private final Vector2 _uvB = new Vector2();
+	private final Vector2 _uvC = new Vector2();
+
+	private final Vector3 _intersectionPoint = new Vector3();
+	private final Vector3 _intersectionPointWorld = new Vector3();
+
+	public BufferGeometry geometry() {
+		return (BufferGeometry) _geometry;
+	}
+
+	public Mesh geometry(BufferGeometry geometry) {
+		this._geometry = geometry;
+		return this;
+	}
+
+	private Material _material = new Material();
+
+	public Material material() {
+		return _material;
+	}
+
+	public Mesh material(Material material) {
+		this._material = material;
+		return this;
+	}
+
+	public Mesh() {
+	}
+
+	public Mesh(Geometry geometry, Material material) {
+		super();
+
+		this._geometry = geometry;
+		this._material = material;
+
+		this.updateMorphTargets();
+	}
+
 //	public Mesh copy  ( Mesh source ) {
 //
 //		super.copy( source );
@@ -96,7 +94,7 @@ import net.three4j.constants;
 //
 //	}
 
-//	public updateMorphTargets  () {
+	public void updateMorphTargets  () {
 //
 //		public final geometry = this.geometry;
 //
@@ -139,7 +137,7 @@ import net.three4j.constants;
 //
 //		}
 //
-//	}
+	}
 
 //	public raycast  ( raycaster, intersects ) {
 //
@@ -472,4 +470,4 @@ import net.three4j.constants;
 //
 //	return intersection;
 //}
-//}
+}
