@@ -2,7 +2,6 @@ package net.three4j.core;
 
 import net.three4j.math.Vector3;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 
 import net.three4j.math.Box3;
@@ -63,6 +62,13 @@ public class BufferGeometry extends Geometry {
 
 	public BufferGeometry setIndex(int index) {
 		this._index = index;
+
+		return this;
+
+	}
+
+	public BufferGeometry setIndex(short[] index) {
+//		this._index = new ( arrayMax( index ) > 65535 ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
 
 		return this;
 

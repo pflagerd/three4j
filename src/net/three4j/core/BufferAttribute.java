@@ -90,8 +90,14 @@ public class BufferAttribute {
 		if (needsUpdate)
 			this._version++;
 	}
+	
+	private void noop() {}
+	
+	private Runnable _onUploadCallback = this::noop;
 
-	public void onUploadCallback() {}
+	public void onUploadCallback() {
+		_onUploadCallback.run();
+	}
 	
 	public BufferAttribute setUsage( int value ) {
 
@@ -427,13 +433,13 @@ public class BufferAttribute {
 
 	}
 
-//	public BufferAttribute onUpload( callback ) {
-//
-//		this.onUploadCallback = callback;
-//
-//		return this;
-//
-//	},
+	public BufferAttribute onUpload( Runnable callback ) {
+
+		this._onUploadCallback = callback;
+
+		return this;
+
+	}
 
 	public BufferAttribute clone() {
 
