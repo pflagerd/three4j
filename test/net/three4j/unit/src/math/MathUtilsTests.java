@@ -101,8 +101,8 @@ public class MathUtilsTests {
 	public void randFloatSpread() {
 		double a = MathUtils.randFloatSpread(3);
 
-		assertTrue(a > -3 / 2, "Value higher than lower limit");
-		assertTrue(a < 3 / 2, "Value lower than upper limit");
+		assertTrue(a > -3. / 2, "Value higher than lower limit");
+		assertTrue(a < 3. / 2, "Value lower than upper limit");
 	}
 
 	@Test

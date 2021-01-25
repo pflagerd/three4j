@@ -92,14 +92,40 @@ public class Object3D extends EventDispatcher {
 		  return this;
 		}
 
-	public Vector3 up = new Vector3(DefaultUp); // DPP: I'm thinking this might be a static final
+	public Vector3 up = new Vector3(DefaultUp);
+
+
 	public Matrix4 modelViewMatrix = new Matrix4();
 	public Matrix3 normalMatrix = new Matrix3();
+
 	private Matrix4 _matrix = new Matrix4();
+
+	public Matrix4 matrix() {
+	  return _matrix;
+	}
+
+	public Object3D matrix(Matrix4 matrix) {
+	  this._matrix = matrix;
+	  return this;
+	}
+	
 	protected Matrix4 _matrixWorld = new Matrix4();
+	
 	protected boolean _matrixAutoUpdate = DefaultMatrixAutoUpdate;
+	
 	private boolean _matrixWorldNeedsUpdate = false;
-	public boolean castShadow = false;
+	
+	private boolean _castShadow;
+
+	public boolean castShadow() {
+	  return _castShadow;
+	}
+
+	public Object3D castShadow(boolean castShadow) {
+	  this._castShadow = castShadow;
+	  return this;
+	}
+
 	public boolean receiveShadow = false;
 	public boolean frustumCulled = true;
 	public int renderOrder = 0;
@@ -125,17 +151,13 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean equals(Object3D o) {
-		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid().contentEquals(o.uuid()) && name().contentEquals(o.name()) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
+		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid().contentEquals(o.uuid()) && name().contentEquals(o.name()) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && _castShadow == o._castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
 	}
 
 	// DPP: Maybe later.
 //	public int hashCode() {
 //		return Objects.hashCode(_position);
 //	}
-
-	public Matrix4 matrix() {
-		return _matrix;
-	}
 
 	public Matrix4 matrixWorld() {
 		return _matrixWorld;
@@ -972,7 +994,7 @@ public class Object3D extends EventDispatcher {
 		this.layers.mask = source.layers.mask;
 		this.visible = source.visible;
 
-		this.castShadow = source.castShadow;
+		this._castShadow = source._castShadow;
 		this.receiveShadow = source.receiveShadow;
 
 		this.frustumCulled = source.frustumCulled;

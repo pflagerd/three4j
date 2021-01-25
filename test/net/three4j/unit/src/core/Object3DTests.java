@@ -981,7 +981,7 @@ public class Object3DTests {
 			b.layers.mask = 2;
 			b.visible = false;
 
-			b.castShadow = true;
+			b.castShadow(true);
 			b.receiveShadow = true;
 
 			b.frustumCulled = false;
