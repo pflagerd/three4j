@@ -71,7 +71,17 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public String uuid = MathUtils.generateUUID();
-	public String name = "";
+	private String _name = "";
+	
+	public String name() {
+		  return _name;
+		}
+
+		public Object3D name(String name) {
+		  this._name = name;
+		  return this;
+		}
+
 	public Vector3 up = new Vector3(DefaultUp); // DPP: I'm thinking this might be a static final
 	public Matrix4 modelViewMatrix = new Matrix4();
 	public Matrix3 normalMatrix = new Matrix3();
@@ -105,7 +115,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean equals(Object3D o) {
-		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid.equals(o.uuid) && name.equals(o.name) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
+		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid.equals(o.uuid) && name().contentEquals(o.name()) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
 	}
 
 	// DPP: Maybe later.
@@ -933,7 +943,7 @@ public class Object3D extends EventDispatcher {
 
 	public Object3D copy(Object3D source, boolean recursive) {
 
-		this.name = source.name;
+		this._name = source._name;
 
 		this.up.copy(source.up);
 

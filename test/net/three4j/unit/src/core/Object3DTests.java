@@ -964,8 +964,8 @@ public class Object3DTests {
 			Object3D child = new Object3D();
 			Object3D childChild = new Object3D();
 
-			a.name = "original";
-			b.name = "to-be-copied";
+			a.name("original");
+			b.name("to-be-copied");
 
 			b.position().set( x, y, z );
 			b.quaternion().set( x, y, z, w );
