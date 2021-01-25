@@ -368,4 +368,19 @@ public class Matrix3 {
 		return array;
 
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < elements.length; i++) {
+			if (i != 0) {
+				sb.append(", ");
+			}
+			sb.append(elements[i]);
+		}
+		
+		return super.toString() + " {" + sb.toString() + "}";
+	}
+
+
 }

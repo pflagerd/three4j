@@ -8,8 +8,8 @@ public class Window extends glut {
 	public int innerHeight;
 	
 	public Window(String title) {
-		innerWidth = 800;
-		innerHeight = 600;
+		innerWidth = 789;
+		innerHeight = 910;
 		// glutInit();
 	}
 

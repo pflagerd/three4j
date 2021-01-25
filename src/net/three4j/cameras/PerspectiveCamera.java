@@ -9,7 +9,7 @@ public class PerspectiveCamera extends Camera {
 	private double _far;
 	private double _focus;
 	private double _aspect;
-	private View _view = new View(); // Can never be null
+	private View _view;
 	private double _filmGauge;
 	private double _filmOffset;
 
