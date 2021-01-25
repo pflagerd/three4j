@@ -1,19 +1,20 @@
 package net.three4j.core;
 
-import net.three4j.math.Quaternion;
 import static net.three4j.THREE.console;
-import net.three4j.math.Vector3;
+
 import java.util.ArrayList;
-import java.util.Objects;
+
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import net.three4j.cameras.Camera;
-import net.three4j.core.EventDispatcher;
 import net.three4j.lights.Light;
 import net.three4j.math.Euler;
 //import { Layers } from './Layers.js';
 import net.three4j.math.MathUtils;
 import net.three4j.math.Matrix3;
 import net.three4j.math.Matrix4;
+import net.three4j.math.Quaternion;
+import net.three4j.math.Vector3;
 
 public class Object3D extends EventDispatcher {
 	@SuppressWarnings("serial")
@@ -23,11 +24,11 @@ public class Object3D extends EventDispatcher {
 		}
 	}
 
-	static final Vector3 DefaultUp = new Vector3(0, 1, 0);
-	static final boolean DefaultMatrixAutoUpdate = true;
+	private static final Vector3 DefaultUp = new Vector3(0, 1, 0);
+	private static final boolean DefaultMatrixAutoUpdate = true;
 
 	public boolean isObject3D = true;
-	
+
 	// let _object3DId = 0;
 	static int _object3DId = 0;
 
@@ -68,56 +69,31 @@ public class Object3D extends EventDispatcher {
 	public boolean receiveShadow = false;
 	public boolean frustumCulled = true;
 	public int renderOrder = 0;
-	public boolean visible = true; 
+	public boolean visible = true;
 	public Layers layers = new Layers();
 	// animations
 	Object _userData = new Object();
-	
+
 	public Object3D() {
 //		this.animations = [];
 //	
 	}
 
-
 	protected Geometry _geometry = null;
 
 	public Geometry geometry() {
-	  return _geometry;
+		return _geometry;
 	}
 
 	public Object3D geometry(Geometry geometry) {
-	  this._geometry = geometry;
-	  return this;
+		this._geometry = geometry;
+		return this;
 	}
 
-
 	public boolean equals(Object3D o) {
-		return 	_position.equals(o._position) && 
-				_rotation.equals(o._rotation) &&
-				_scale.equals(_scale) &&
-				_quaternion.equals(_quaternion) &&
-				_xAxis.equals(o._xAxis) &&
-				_yAxis.equals(o._yAxis) &&
-				_zAxis.equals(o._zAxis) &&
-				(_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) &&
-				children.equals(o.children)&& 
-				uuid.equals(o.uuid) &&
-				name.equals(o.name) &&
-				up.equals(o.up) &&
-				modelViewMatrix.equals(o.modelViewMatrix) &&
-				normalMatrix.equals(o.normalMatrix) &&
-				_matrix.equals(o._matrix) &&
-				_matrixWorld.equals(o._matrixWorld) &&
-				_matrixAutoUpdate == o._matrixAutoUpdate &&
-				_matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate &&
-				castShadow == o.castShadow &&
-				receiveShadow == o.receiveShadow &&
-				frustumCulled == o.frustumCulled &&
-				renderOrder == o.renderOrder &&
-				visible == o.visible &&
-				layers.equals(o.layers)
+		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children.equals(o.children) && uuid.equals(o.uuid) && name.equals(o.name) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers)
 //				_userData.equals(o._userData)
-				;
+		;
 	}
 
 	// DPP: Maybe later.
@@ -985,6 +961,10 @@ public class Object3D extends EventDispatcher {
 
 		return this;
 
+	}
+
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
 	}
 
 }

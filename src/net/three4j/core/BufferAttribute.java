@@ -262,7 +262,7 @@ public class BufferAttribute {
 				_vector2.fromBufferAttribute( this, i );
 				_vector2.applyMatrix3( m );
 
-				this.setXY( i, _vector2.x, _vector2.y );
+				this.setXY( i, _vector2.x(), _vector2.y() );
 
 			}
 

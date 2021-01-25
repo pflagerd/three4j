@@ -652,7 +652,7 @@ public class Quaternion {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " {x:" + _x + ", y:" + _y + ", z:" + _z + ", w:" + _w + "}";
+		return super.toString() + "{x=" + _x + ", y=" + _y + ", z=" + _z + ", w=" + _w + "}";
 	}
 
 	public Quaternion onChange( Runnable callback ) {

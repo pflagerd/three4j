@@ -679,6 +679,13 @@ public class Vector4 {
 		return this;
 
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " {x=" + this._x + ", y=" + this._y + ", z=" + this._z + ", w=" + this._w + "}";
+	}
+
+
 
 }
 

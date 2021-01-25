@@ -846,7 +846,7 @@ public class Matrix4 {
 			sb.append(elements[i]);
 		}
 		
-		return super.toString() + " {" + sb.toString() + "}";
+		return super.toString() + "{ elements={" + sb.toString() + "}}";
 	}
 
 	private static final Vector3 _v1 = /*@__PURE__*/ new Vector3();

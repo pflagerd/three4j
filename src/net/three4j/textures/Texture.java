@@ -126,7 +126,7 @@ public class Texture extends EventDispatcher {
 
 	public void updateMatrix() {
 
-		this._matrix.setUvTransform( this._offset.x, this._offset.y, this._repeat.x, this._repeat.y, this._rotation, this._center.x, this._center.y );
+		this._matrix.setUvTransform( this._offset.x(), this._offset.y(), this._repeat.x(), this._repeat.y(), this._rotation, this._center.x(), this._center.y() );
 
 	}
 

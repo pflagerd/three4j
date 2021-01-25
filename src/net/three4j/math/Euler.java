@@ -361,7 +361,7 @@ public class Euler {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " {x:" + _x + ", y:" + _y + ", z:" + _z + ", order: " + _order + "}";
+		return super.toString() + "{x=" + _x + ", y=" + _y + ", z=" + _z + ", order=\"" + _order + "\"}";
 	}
 
 	public static final String DefaultOrder = "XYZ";

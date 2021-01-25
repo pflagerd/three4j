@@ -19,12 +19,12 @@ public class Vector2Tests {
 	public void instancing() {
 
 		Vector2 a = new Vector2();
-		assertTrue(a.x == 0, "Passed!");
-		assertTrue(a.y == 0, "Passed!");
+		assertTrue(a.x() == 0, "Passed!");
+		assertTrue(a.y() == 0, "Passed!");
 
 		a = new Vector2(x, y);
-		assertTrue(a.x == x, "Passed!");
-		assertTrue(a.y == y, "Passed!");
+		assertTrue(a.x() == x, "Passed!");
+		assertTrue(a.y() == y, "Passed!");
 
 	}
 
@@ -72,12 +72,12 @@ public class Vector2Tests {
 	public void set() {
 
 		Vector2 a = new Vector2();
-		assertTrue(a.x == 0, "Passed!");
-		assertTrue(a.y == 0, "Passed!");
+		assertTrue(a.x() == 0, "Passed!");
+		assertTrue(a.y() == 0, "Passed!");
 
 		a.set(x, y);
-		assertTrue(a.x == x, "Passed!");
-		assertTrue(a.y == y, "Passed!");
+		assertTrue(a.x() == x, "Passed!");
+		assertTrue(a.y() == y, "Passed!");
 
 	}
 
@@ -128,14 +128,14 @@ public class Vector2Tests {
 
 		Vector2 a = new Vector2(x, y);
 		Vector2 b = new Vector2().copy(a);
-		assertTrue(b.x == x, "Passed!");
-		assertTrue(b.y == y, "Passed!");
+		assertTrue(b.x() == x, "Passed!");
+		assertTrue(b.y() == y, "Passed!");
 
 		// ensure that it is a true copy
-		a.x = 0;
-		a.y = -1;
-		assertTrue(b.x == x, "Passed!");
-		assertTrue(b.y == y, "Passed!");
+		a.x(0);
+		a.y(-1);
+		assertTrue(b.x() == x, "Passed!");
+		assertTrue(b.y() == y, "Passed!");
 
 	}
 
@@ -146,12 +146,12 @@ public class Vector2Tests {
 		Vector2 b = new Vector2(-x, -y);
 
 		a.add(b);
-		assertTrue(a.x == 0, "Passed!");
-		assertTrue(a.y == 0, "Passed!");
+		assertTrue(a.x() == 0, "Passed!");
+		assertTrue(a.y() == 0, "Passed!");
 
 		Vector2 c = new Vector2().addVectors(b, b);
-		assertTrue(c.x == -2 * x, "Passed!");
-		assertTrue(c.y == -2 * y, "Passed!");
+		assertTrue(c.x() == -2 * x, "Passed!");
+		assertTrue(c.y() == -2 * y, "Passed!");
 
 	}
 
@@ -177,8 +177,8 @@ public class Vector2Tests {
 		double s = 3;
 
 		a.addScaledVector(b, s);
-		assertEquals(a.x, x + b.x * s, "Check x");
-		assertEquals(a.y, y + b.y * s, "Check y");
+		assertEquals(a.x(), x + b.x() * s, "Check x");
+		assertEquals(a.y(), y + b.y() * s, "Check y");
 
 	}
 
@@ -189,12 +189,12 @@ public class Vector2Tests {
 		Vector2 b = new Vector2(-x, -y);
 
 		a.sub(b);
-		assertTrue(a.x == 2 * x, "Passed!");
-		assertTrue(a.y == 2 * y, "Passed!");
+		assertTrue(a.x() == 2 * x, "Passed!");
+		assertTrue(a.y() == 2 * y, "Passed!");
 
 		Vector2 c = new Vector2().subVectors(a, a);
-		assertTrue(c.x == 0, "Passed!");
-		assertTrue(c.y == 0, "Passed!");
+		assertTrue(c.x() == 0, "Passed!");
+		assertTrue(c.y() == 0, "Passed!");
 
 	}
 
@@ -247,8 +247,8 @@ public class Vector2Tests {
 			Matrix3 m = new Matrix3().set( 2, 3, 5, 7, 11, 13, 17, 19, 23 );
 
 			a.applyMatrix3( m );
-			assertEquals( a.x, 18, "Check x" );
-			assertEquals( a.y, 60, "Check y" );
+			assertEquals( a.x(), 18, "Check x" );
+			assertEquals( a.y(), 60, "Check y" );
 
 	}
 
@@ -321,8 +321,8 @@ public class Vector2Tests {
 		Vector2 a = new Vector2(x, y);
 
 		a.negate();
-		assertTrue(a.x == -x, "Passed!");
-		assertTrue(a.y == -y, "Passed!");
+		assertTrue(a.x() == -x, "Passed!");
+		assertTrue(a.y() == -y, "Passed!");
 
 	}
 
@@ -391,11 +391,11 @@ public class Vector2Tests {
 
 		a.normalize();
 		assertTrue(a.length() == 1, "Passed!");
-		assertTrue(a.x == 1, "Passed!");
+		assertTrue(a.x() == 1, "Passed!");
 
 		b.normalize();
 		assertTrue(b.length() == 1, "Passed!");
-		assertTrue(b.y == -1, "Passed!");
+		assertTrue(b.y() == -1, "Passed!");
 
 	}
 
@@ -467,15 +467,15 @@ public class Vector2Tests {
 		Vector2 a = new Vector2(x, 0);
 		Vector2 b = new Vector2(0, -y);
 
-		assertTrue(a.x != b.x, "Passed!");
-		assertTrue(a.y != b.y, "Passed!");
+		assertTrue(a.x() != b.x(), "Passed!");
+		assertTrue(a.y() != b.y(), "Passed!");
 
 		assertTrue(!a.equals(b), "Passed!");
 		assertTrue(!b.equals(a), "Passed!");
 
 		a.copy(b);
-		assertTrue(a.x == b.x, "Passed!");
-		assertTrue(a.y == b.y, "Passed!");
+		assertTrue(a.x() == b.x(), "Passed!");
+		assertTrue(a.y() == b.y(), "Passed!");
 
 		assertTrue(a.equals(b), "Passed!");
 		assertTrue(b.equals(a), "Passed!");
@@ -489,12 +489,12 @@ public class Vector2Tests {
 		double[] array = { 1, 2, 3, 4 };
 
 		a.fromArray(array);
-		assertEquals(a.x, 1, "No offset: check x");
-		assertEquals(a.y, 2, "No offset: check y");
+		assertEquals(a.x(), 1, "No offset: check x");
+		assertEquals(a.y(), 2, "No offset: check y");
 
 		a.fromArray(array, 2);
-		assertEquals(a.x, 3, "With offset: check x");
-		assertEquals(a.y, 4, "With offset: check y");
+		assertEquals(a.x(), 3, "With offset: check x");
+		assertEquals(a.y(), 4, "With offset: check y");
 
 	}
 
@@ -527,12 +527,12 @@ public class Vector2Tests {
 			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4 } ), 2 );
 
 			a.fromBufferAttribute( attr, 0 );
-			assertEquals( a.x, 1, "Offset 0: check x" );
-			assertEquals( a.y, 2, "Offset 0: check y" );
+			assertEquals( a.x(), 1, "Offset 0: check x" );
+			assertEquals( a.y(), 2, "Offset 0: check y" );
 
 			a.fromBufferAttribute( attr, 1 );
-			assertEquals( a.x, 3, "Offset 1: check x" );
-			assertEquals( a.y, 4, "Offset 1: check y" );
+			assertEquals( a.x(), 3, "Offset 1: check x" );
+			assertEquals( a.y(), 4, "Offset 1: check y" );
 
 	}
 
@@ -547,13 +547,13 @@ public class Vector2Tests {
 	public void setX_setY() {
 
 		Vector2 a = new Vector2();
-		assertTrue(a.x == 0, "Passed!");
-		assertTrue(a.y == 0, "Passed!");
+		assertTrue(a.x() == 0, "Passed!");
+		assertTrue(a.y() == 0, "Passed!");
 
 		a.setX(x);
 		a.setY(y);
-		assertTrue(a.x == x, "Passed!");
-		assertTrue(a.y == y, "Passed!");
+		assertTrue(a.x() == x, "Passed!");
+		assertTrue(a.y() == y, "Passed!");
 
 	}
 
@@ -561,8 +561,8 @@ public class Vector2Tests {
 	public void setComponent_getComponent() {
 
 		Vector2 a = new Vector2();
-		assertTrue(a.x == 0, "Passed!");
-		assertTrue(a.y == 0, "Passed!");
+		assertTrue(a.x() == 0, "Passed!");
+		assertTrue(a.y() == 0, "Passed!");
 
 		a.setComponent(0, 1);
 		a.setComponent(1, 2);
@@ -578,32 +578,32 @@ public class Vector2Tests {
 		Vector2 b = new Vector2(-x, -y);
 
 		a.multiplyScalar(-2);
-		assertTrue(a.x == x * -2, "Passed!");
-		assertTrue(a.y == y * -2, "Passed!");
+		assertTrue(a.x() == x * -2, "Passed!");
+		assertTrue(a.y() == y * -2, "Passed!");
 
 		b.multiplyScalar(-2);
-		assertTrue(b.x == 2 * x, "Passed!");
-		assertTrue(b.y == 2 * y, "Passed!");
+		assertTrue(b.x() == 2 * x, "Passed!");
+		assertTrue(b.y() == 2 * y, "Passed!");
 
 		a.divideScalar(-2);
-		assertTrue(a.x == x, "Passed!");
-		assertTrue(a.y == y, "Passed!");
+		assertTrue(a.x() == x, "Passed!");
+		assertTrue(a.y() == y, "Passed!");
 
 		b.divideScalar(-2);
-		assertTrue(b.x == -x, "Passed!");
-		assertTrue(b.y == -y, "Passed!");
+		assertTrue(b.x() == -x, "Passed!");
+		assertTrue(b.y() == -y, "Passed!");
 
 		a = new Vector2(x, y);
 		b = new Vector2(2 * x, 2 * y);
 		Vector2 c = new Vector2(4 * x, 4 * y);
 
 		a.multiply(b);
-		assertEquals(a.x, x * b.x, "multiply: check x");
-		assertEquals(a.y, y * b.y, "multiply: check y");
+		assertEquals(a.x(), x * b.x(), "multiply: check x");
+		assertEquals(a.y(), y * b.y(), "multiply: check y");
 
 		b.divide(c);
-		assertEquals(b.x, 0.5, "divide: check x");
-		assertEquals(b.y, 0.5, "divide: check y");
+		assertEquals(b.x(), 0.5, "divide: check x");
+		assertEquals(b.y(), 0.5, "divide: check y");
 
 	}
 
@@ -615,22 +615,22 @@ public class Vector2Tests {
 			Vector2 c = new Vector2();
 
 			c.copy( a ).min( b );
-			assertTrue( c.x == - x, "Passed!" );
-			assertTrue( c.y == - y, "Passed!" );
+			assertTrue( c.x() == - x, "Passed!" );
+			assertTrue( c.y() == - y, "Passed!" );
 
 			c.copy( a ).max( b );
-			assertTrue( c.x == x, "Passed!" );
-			assertTrue( c.y == y, "Passed!" );
+			assertTrue( c.x() == x, "Passed!" );
+			assertTrue( c.y() == y, "Passed!" );
 
 			c.set( - 2 * x, 2 * y );
 			c.clamp( b, a );
-			assertTrue( c.x == - x, "Passed!" );
-			assertTrue( c.y == y, "Passed!" );
+			assertTrue( c.x() == - x, "Passed!" );
+			assertTrue( c.y() == y, "Passed!" );
 
 			c.set( - 2 * x, 2 * x );
 			c.clampScalar( - x, x );
-			assertEquals( -x, c.x, "scalar clamp x" );
-			assertEquals( x, c.y, "scalar clamp y" );
+			assertEquals( -x, c.x(), "scalar clamp x" );
+			assertEquals( x, c.y(), "scalar clamp y" );
 
 		}
 
@@ -704,8 +704,8 @@ public class Vector2Tests {
 
 		assertTrue(a.clone().lerp(b, 0).equals(a), "Passed!");
 
-		assertTrue(a.clone().lerp(b, 0.5).x == x * 0.5, "Passed!");
-		assertTrue(a.clone().lerp(b, 0.5).y == -y * 0.5, "Passed!");
+		assertTrue(a.clone().lerp(b, 0.5).x() == x * 0.5, "Passed!");
+		assertTrue(a.clone().lerp(b, 0.5).y() == -y * 0.5, "Passed!");
 
 		assertTrue(a.clone().lerp(b, 1).equals(b), "Passed!");
 
@@ -747,16 +747,16 @@ public class Vector2Tests {
 			double s = 3;
 
 			a.setScalar( s );
-			assertEquals( a.x, s, "setScalar: check x" );
-			assertEquals( a.y, s, "setScalar: check y" );
+			assertEquals( a.x(), s, "setScalar: check x" );
+			assertEquals( a.y(), s, "setScalar: check y" );
 
 			a.addScalar( s );
-			assertEquals( a.x, 2 * s, "addScalar: check x" );
-			assertEquals( a.y, 2 * s, "addScalar: check y" );
+			assertEquals( a.x(), 2 * s, "addScalar: check x" );
+			assertEquals( a.y(), 2 * s, "addScalar: check y" );
 
 			a.subScalar( 2 * s );
-			assertEquals( a.x, 0, "subScalar: check x" );
-			assertEquals( a.y, 0, "subScalar: check y" );
+			assertEquals( a.x(), 0, "subScalar: check x" );
+			assertEquals( a.y(), 0, "subScalar: check y" );
 
 		}
 

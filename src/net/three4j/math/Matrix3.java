@@ -1,5 +1,7 @@
 package net.three4j.math;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 public class Matrix3 {
 
 	public double[] elements;
@@ -369,8 +371,7 @@ public class Matrix3 {
 
 	}
 	
-	@Override
-	public String toString() {
+	public String toStringContent() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < elements.length; i++) {
 			if (i != 0) {
@@ -379,7 +380,12 @@ public class Matrix3 {
 			sb.append(elements[i]);
 		}
 		
-		return super.toString() + " {" + sb.toString() + "}";
+		return sb.toString();
+	}
+	
+	@Override
+	public String toString() {		
+		return super.toString() + "{ elements={" + this.toStringContent() + "} }";		
 	}
 
 
