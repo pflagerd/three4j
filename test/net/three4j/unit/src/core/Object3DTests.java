@@ -950,8 +950,8 @@ public class Object3DTests {
 			a = b.clone();
 			assertFalse( a.equals(b), "Defined but separate instances post-clone()" );
 
-			a.uuid = b.uuid;
-			assertTrue( a.uuid.contentEquals(b.uuid), "But identical properties" );
+			a.uuid(b.uuid());
+			assertTrue( a.uuid().contentEquals(b.uuid()), "But identical properties" );
 
 	}
 
@@ -997,16 +997,16 @@ public class Object3DTests {
 
 			// check they're all unique instances
 			assertTrue(
-				a.uuid != b.uuid &&
-				a.children().get( 0 ).uuid != b.children().get( 0 ).uuid &&
-				a.children().get( 0 ).children().get( 0 ).uuid != b.children().get( 0 ).children().get( 0 ).uuid,
+				!a.uuid().contentEquals(b.uuid()) &&
+				!a.children().get( 0 ).uuid().contentEquals(b.children().get( 0 ).uuid()) &&
+				!a.children().get( 0 ).children().get( 0 ).uuid().contentEquals(b.children().get( 0 ).children().get( 0 ).uuid()),
 				"UUIDs are all different"
 			);
 
 			// and now fix that
-			a.uuid = b.uuid;
-			a.children().get( 0 ).uuid = b.children().get( 0 ).uuid;
-			a.children().get( 0 ).children().get( 0 ).uuid = b.children().get( 0 ).children().get( 0 ).uuid;
+			a.uuid(b.uuid());
+			a.children().get( 0 ).uuid(b.children().get( 0 ).uuid());
+			a.children().get( 0 ).children().get( 0 ).uuid(b.children().get( 0 ).children().get( 0 ).uuid());
 
 			assertTrue( a.equals(b), "Objects are equal post-copy()" );
 

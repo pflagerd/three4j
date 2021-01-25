@@ -70,7 +70,17 @@ public class Object3D extends EventDispatcher {
 		return this;
 	}
 
-	public String uuid = MathUtils.generateUUID();
+	private String _uuid = MathUtils.generateUUID();
+
+	public String uuid() {
+	  return _uuid;
+	}
+
+	public Object3D uuid(String uuid) {
+	  this._uuid = uuid;
+	  return this;
+	}
+
 	private String _name = "";
 	
 	public String name() {
@@ -115,7 +125,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean equals(Object3D o) {
-		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid.equals(o.uuid) && name().contentEquals(o.name()) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
+		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid().contentEquals(o.uuid()) && name().contentEquals(o.name()) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
 	}
 
 	// DPP: Maybe later.
