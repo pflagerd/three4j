@@ -509,7 +509,7 @@ public class Vector2 {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " {x=" + this._x + ", y=" + this._y + "}";
+		return super.toString() + "{x=" + this._x + ", y=" + this._y + "}";
 	}
 
 

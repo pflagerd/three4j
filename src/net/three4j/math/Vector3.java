@@ -766,7 +766,7 @@ public class Vector3 {
 	
 	@Override
 	public String toString() {
-		return super.toString() + " {x=" + this._x + ", y=" + this._y + ", z=" + this._z + "}";
+		return super.toString() + "{x=" + this._x + ", y=" + this._y + ", z=" + this._z + "}";
 	}
 
 	private final static Vector3 _vector = /*@__PURE__*/ new Vector3();
