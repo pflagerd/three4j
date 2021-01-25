@@ -187,7 +187,17 @@ public class Object3D extends EventDispatcher {
 	
 	
 	// animations
-	Object _userData = new Object();
+	private Object _userData = new Object();
+
+	public Object userData() {
+	  return _userData;
+	}
+
+	public Object3D userData(Object userData) {
+	  this._userData = userData;
+	  return this;
+	}
+
 
 	public Object3D() {
 //		this.animations = [];
