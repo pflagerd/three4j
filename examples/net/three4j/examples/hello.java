@@ -23,7 +23,6 @@ class hello {
     public hello() {
         camera = new PerspectiveCamera( 70, (double)window.innerWidth / window.innerHeight, 0.01, 10 );
         camera.position().z(1);
-        System.out.println("camera=" + camera.toString());
 
 		scene = new Scene();
 

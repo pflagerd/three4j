@@ -272,7 +272,7 @@ public class Box3 {
 
 		}
 
-		ChildArrayList<Object3D> children = object.children;
+		ChildArrayList<Object3D> children = object.children();
 
 		for ( int i = 0, l = children.length(); i < l; i ++ ) {
 

@@ -373,36 +373,36 @@ public class Object3DTests {
 			Object3D child1 = new Object3D();
 			Object3D child2 = new Object3D();
 
-			assertEquals(0, a.children.length(),  "Starts with no children" );
+			assertEquals(0, a.children().length(),  "Starts with no children()" );
 
 			a.add( child1 );
-			assertEquals(1, a.children.length(),  "The first child was added" );
-			assertEquals(child1, a.children.get( 0 ),  "It's the right one" );
+			assertEquals(1, a.children().length(),  "The first child was added" );
+			assertEquals(child1, a.children().get( 0 ),  "It's the right one" );
 
 			a.add( child2 );
-			assertEquals(2, a.children.length(),  "The second child was added" );
-			assertEquals(child2, a.children.get( 1 ),  "It's the right one" );
-			assertEquals(child1, a.children.get( 0 ),  "The first one is still there" );
+			assertEquals(2, a.children().length(),  "The second child was added" );
+			assertEquals(child2, a.children().get( 1 ),  "It's the right one" );
+			assertEquals(child1, a.children().get( 0 ),  "The first one is still there" );
 
 			a.remove( child1 );
-			assertEquals(1, a.children.length(),  "The first child was removed" );
-			assertEquals(child2, a.children.get( 0 ),  "The second one is still there" );
+			assertEquals(1, a.children().length(),  "The first child was removed" );
+			assertEquals(child2, a.children().get( 0 ),  "The second one is still there" );
 
 			a.add( child1 );
 			a.remove( child1, child2 );
-			assertEquals(0, a.children.length(),  "Both children were removed at once" );
+			assertEquals(0, a.children().length(),  "Both children() were removed at once" );
 
 			child1.add( child2 );
-			assertEquals(1, child1.children.length(),  "The second child was added to the first one" );
+			assertEquals(1, child1.children().length(),  "The second child was added to the first one" );
 			a.add( child2 );
-			assertEquals(1, a.children.length(),  "The second one was added to the parent (no remove)" );
-			assertEquals(child2, a.children.get( 0 ),  "The second one is now the parent's child again" );
-			assertEquals(0, child1.children.length(),  "The first one no longer has any children" );
+			assertEquals(1, a.children().length(),  "The second one was added to the parent (no remove)" );
+			assertEquals(child2, a.children().get( 0 ),  "The second one is now the parent's child again" );
+			assertEquals(0, child1.children().length(),  "The first one no longer has any children()" );
 
 			a.add( child1 );
-			assertEquals(2, a.children.length(),  "The first child was added to the parent" );
+			assertEquals(2, a.children().length(),  "The first child was added to the parent" );
 			a.clear();
-			assertEquals(0, a.children.length(),  "All childrens were removed" );
+			assertEquals(0, a.children().length(),  "All children()s were removed" );
 			assertEquals(null, child1.parent(),  "First child has no parent" );
 			assertEquals(null, child2.parent(),  "Second child has no parent" );
 
@@ -646,14 +646,14 @@ public class Object3DTests {
 				0, 1, 0, 0,
 				0, 0, 1, 0,
 				4, 5, 6, 1}, child.matrix().elements, 
-			"updateMatrixWorld() updates children's local matrix" );
+			"updateMatrixWorld() updates children()'s local matrix" );
 
 			assertArrayEquals( new double[] {
 				1, 0, 0, 0,
 				0, 1, 0, 0,
 				0, 0, 1, 0,
 				5, 7, 9, 1}, child.matrixWorld().elements, 
-			"updateMatrixWorld() updates children's world matrices from their parent world matrix and their local matrices" );
+			"updateMatrixWorld() updates children()'s world matrices from their parent world matrix and their local matrices" );
 
 			assertEquals( false, parent.matrixWorldNeedsUpdate() || child.matrixWorldNeedsUpdate(), "The flag indicating world matrix needs to be updated should be false after updating world matrix" );
 
@@ -699,7 +699,7 @@ public class Object3DTests {
 				0, 0, 0, 1}, child.matrixWorld().elements, 
 			"No effect to child world matrix if parent local and world matrices and child local matrix are not updated" );
 
-			// -- Propagation to children world matrices test
+			// -- Propagation to children() world matrices test
 
 			parent.matrixAutoUpdate(true);
 			parent.updateMatrixWorld();
@@ -709,7 +709,7 @@ public class Object3DTests {
 				0, 1, 0, 0,
 				0, 0, 1, 0,
 				1, 2, 3, 1}, child.matrixWorld().elements, 
-			"Updating parent world matrix has effect to children world matrices even if children local matrices aren't changed" );
+			"Updating parent world matrix has effect to children() world matrices even if children() local matrices aren't changed" );
 
 			// -- force argument test
 
@@ -797,9 +797,9 @@ public class Object3DTests {
 
 			assertArrayEquals(m.setPosition( object.position() ).elements, object.matrixWorld().elements,  "Object's world matrix is updated" );
 
-			assertArrayEquals(m.identity().elements, child.matrix().elements,  "No effect to children's local matrices" );
+			assertArrayEquals(m.identity().elements, child.matrix().elements,  "No effect to children()'s local matrices" );
 
-			assertArrayEquals(m.elements, child.matrixWorld().elements,  "No effect to children's world matrices" );
+			assertArrayEquals(m.elements, child.matrixWorld().elements,  "No effect to children()'s world matrices" );
 
 			// Update the world matrices of an object and its parents
 
@@ -816,11 +816,11 @@ public class Object3DTests {
 
 			assertArrayEquals(m.setPosition( v.copy( parent.position() ).add( object.position() ) ).elements, object.matrixWorld().elements,  "Object's world matrix is updated" );
 
-			assertArrayEquals(m.identity().elements, child.matrix().elements,  "No effect to children's local matrices" );
+			assertArrayEquals(m.identity().elements, child.matrix().elements,  "No effect to children()'s local matrices" );
 
-			assertArrayEquals(m.identity().elements, child.matrixWorld().elements,  "No effect to children's world matrices" );
+			assertArrayEquals(m.identity().elements, child.matrixWorld().elements,  "No effect to children()'s world matrices" );
 
-			// Update the world matrices of an object and its children
+			// Update the world matrices of an object and its children()
 
 			parent.matrix().identity();
 			parent.matrixWorld().identity();
@@ -841,7 +841,7 @@ public class Object3DTests {
 
 			assertArrayEquals(m.setPosition( v.copy( object.position() ).add( child.position() ) ).elements, child.matrixWorld().elements,  "Children's world matrices are updated" );
 
-			// Update the world matrices of an object and its parents and children
+			// Update the world matrices of an object and its parents and children()
 
 			object.matrix().identity();
 			object.matrixWorld().identity();
@@ -911,13 +911,13 @@ public class Object3DTests {
 //					"userData": { "foo": "bar" },
 //					"layers": 1,
 //					"matrix": .get( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
-//					"children": .get(
+//					"children()": .get(
 //						{
 //							"uuid": "5D4E9AE8-DA61-4912-A575-71A5BE3D72CD",
 //							"type": "Object3D",
 //							"layers": 1,
 //							"matrix": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 );
-//							"children": [
+//							"children()": [
 //								{
 //									"uuid": "B43854B3-E970-4E85-BD41-AAF8D7BFA189",
 //									"type": "Object3D",
@@ -951,7 +951,7 @@ public class Object3DTests {
 			assertFalse( a.equals(b), "Defined but separate instances post-clone()" );
 
 			a.uuid = b.uuid;
-			assertTrue( a.equals(b), "But identical properties" );
+			assertTrue( a.uuid.contentEquals(b.uuid), "But identical properties" );
 
 	}
 
@@ -998,15 +998,15 @@ public class Object3DTests {
 			// check they're all unique instances
 			assertTrue(
 				a.uuid != b.uuid &&
-				a.children.get( 0 ).uuid != b.children.get( 0 ).uuid &&
-				a.children.get( 0 ).children.get( 0 ).uuid != b.children.get( 0 ).children.get( 0 ).uuid,
+				a.children().get( 0 ).uuid != b.children().get( 0 ).uuid &&
+				a.children().get( 0 ).children().get( 0 ).uuid != b.children().get( 0 ).children().get( 0 ).uuid,
 				"UUIDs are all different"
 			);
 
 			// and now fix that
 			a.uuid = b.uuid;
-			a.children.get( 0 ).uuid = b.children.get( 0 ).uuid;
-			a.children.get( 0 ).children.get( 0 ).uuid = b.children.get( 0 ).children.get( 0 ).uuid;
+			a.children().get( 0 ).uuid = b.children().get( 0 ).uuid;
+			a.children().get( 0 ).children().get( 0 ).uuid = b.children().get( 0 ).children().get( 0 ).uuid;
 
 			assertTrue( a.equals(b), "Objects are equal post-copy()" );
 

@@ -22,15 +22,19 @@ public class Object3D extends EventDispatcher {
 		public int length() {
 			return this.size();
 		}
+		
+		public boolean equals(ChildArrayList<T> o) {
+			return false;
+		}
 	}
 
 	private static final Vector3 DefaultUp = new Vector3(0, 1, 0);
 	private static final boolean DefaultMatrixAutoUpdate = true;
 
-	public boolean isObject3D = true;
+	public final boolean isObject3D = true;
 
 	// let _object3DId = 0;
-	static int _object3DId = 0;
+	private static int _object3DId = 0;
 
 	// Helpers (not included in equals())
 	private final Vector3 _v1 = new Vector3();
@@ -55,7 +59,17 @@ public class Object3D extends EventDispatcher {
 
 	public final long id = _object3DId++;
 	private Object3D _parent;
-	public ChildArrayList<Object3D> children = new ChildArrayList<>();
+	public ChildArrayList<Object3D> _children = new ChildArrayList<>();
+
+	public ChildArrayList<Object3D> children() {
+		return _children;
+	}
+
+	public Object3D geometry(ChildArrayList<Object3D> children) {
+		this._children = children;
+		return this;
+	}
+
 	public String uuid = MathUtils.generateUUID();
 	public String name = "";
 	public Vector3 up = new Vector3(DefaultUp); // DPP: I'm thinking this might be a static final
@@ -91,9 +105,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean equals(Object3D o) {
-		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children.equals(o.children) && uuid.equals(o.uuid) && name.equals(o.name) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers)
-//				_userData.equals(o._userData)
-		;
+		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid.equals(o.uuid) && name.equals(o.name) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && castShadow == o.castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
 	}
 
 	// DPP: Maybe later.
@@ -360,7 +372,7 @@ public class Object3D extends EventDispatcher {
 				}
 
 				objects[i]._parent = this;
-				this.children.add(objects[i]);
+				this.children().add(objects[i]);
 
 //				objects.dispatchEvent( _addedEvent );
 
@@ -386,12 +398,12 @@ public class Object3D extends EventDispatcher {
 
 		}
 
-		final int index = this.children.indexOf(objects[0]);
+		final int index = this.children().indexOf(objects[0]);
 
 		if (index != -1) {
 
 			objects[0]._parent = null;
-			this.children.remove(index);
+			this.children().remove(index);
 
 //			object.dispatchEvent( _removedEvent );
 
@@ -403,9 +415,9 @@ public class Object3D extends EventDispatcher {
 
 	public Object3D clear() {
 
-		for (int i = 0; i < this.children.size(); i++) {
+		for (int i = 0; i < this.children().size(); i++) {
 
-			final Object3D object = this.children.get(i);
+			final Object3D object = this.children().get(i);
 
 			object._parent = null;
 
@@ -413,7 +425,7 @@ public class Object3D extends EventDispatcher {
 
 		}
 
-		this.children.clear();
+		this.children().clear();
 
 		return this;
 
@@ -467,9 +479,9 @@ public class Object3D extends EventDispatcher {
 		if ("getObjectByProperty".contentEquals(value)) // DPP: Not sure about this.
 			return this;
 
-		for (int i = 0, l = this.children.size(); i < l; i++) {
+		for (int i = 0, l = this.children().size(); i < l; i++) {
 
-			final Object3D child = this.children.get(i);
+			final Object3D child = this.children().get(i);
 			final Object3D object = child.getObjectByProperty(name, value);
 
 			if (object != null) {
@@ -642,9 +654,9 @@ public class Object3D extends EventDispatcher {
 
 		// update children
 
-		for (int i = 0, l = children.size(); i < l; i++) {
+		for (int i = 0, l = children().size(); i < l; i++) {
 
-			this.children.get(i).updateMatrixWorld(force);
+			this.children().get(i).updateMatrixWorld(force);
 
 		}
 
@@ -679,9 +691,9 @@ public class Object3D extends EventDispatcher {
 
 		if (updateChildren == true) {
 
-			for (int i = 0, l = children.size(); i < l; i++) {
+			for (int i = 0, l = children().size(); i < l; i++) {
 
-				children.get(i).updateWorldMatrix(false, true);
+				children().get(i).updateWorldMatrix(false, true);
 
 			}
 
@@ -950,9 +962,9 @@ public class Object3D extends EventDispatcher {
 
 		if (recursive == true) {
 
-			for (int i = 0; i < source.children.size(); i++) {
+			for (int i = 0; i < source.children().size(); i++) {
 
-				final Object3D child = source.children.get(i);
+				final Object3D child = source.children().get(i);
 				this.add(child.clone());
 
 			}
