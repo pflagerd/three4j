@@ -979,13 +979,13 @@ public class Object3DTests {
 			b.matrixWorldNeedsUpdate(true);
 
 			b.layers.mask = 2;
-			b.visible = false;
+			b.visible(false);
 
 			b.castShadow(true);
-			b.receiveShadow = true;
+			b.receiveShadow(true);
 
-			b.frustumCulled = false;
-			b.renderOrder = 1;
+			b.frustumCulled(false);
+			b.renderOrder(1);
 
 //			b.userData = new double[] { "foo" } = "bar";
 

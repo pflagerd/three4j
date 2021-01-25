@@ -126,10 +126,61 @@ public class Object3D extends EventDispatcher {
 	  return this;
 	}
 
-	public boolean receiveShadow = false;
-	public boolean frustumCulled = true;
-	public int renderOrder = 0;
-	public boolean visible = true;
+//	public boolean receiveShadow = false;
+//	public boolean frustumCulled = true;
+//	public int renderOrder = 0;
+//	public boolean visible = true;
+
+	private boolean _receiveShadow = false;
+
+	public boolean receiveShadow() {
+	  return _receiveShadow;
+	}
+
+	public Object3D receiveShadow(boolean receiveShadow) {
+	  this._receiveShadow = receiveShadow;
+	  return this;
+	}
+
+
+	private boolean _frustumCulled = true;
+
+	public boolean frustumCulled() {
+	  return _frustumCulled;
+	}
+
+	public Object3D frustumCulled(boolean frustumCulled) {
+	  this._frustumCulled = frustumCulled;
+	  return this;
+	}
+
+
+	private int _renderOrder = 0;
+
+	public int renderOrder() {
+	  return _renderOrder;
+	}
+
+	public Object3D renderOrder(int renderOrder) {
+	  this._renderOrder = renderOrder;
+	  return this;
+	}
+
+
+	private boolean _visible = true;
+
+	public boolean visible() {
+	  return _visible;
+	}
+
+	public Object3D visible(boolean visible) {
+	  this._visible = visible;
+	  return this;
+	}
+
+	
+	
+	
 	public Layers layers = new Layers();
 	// animations
 	Object _userData = new Object();
@@ -151,7 +202,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean equals(Object3D o) {
-		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid().contentEquals(o.uuid()) && name().contentEquals(o.name()) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && _castShadow == o._castShadow && receiveShadow == o.receiveShadow && frustumCulled == o.frustumCulled && renderOrder == o.renderOrder && visible == o.visible && layers.equals(o.layers);
+		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid().contentEquals(o.uuid()) && name().contentEquals(o.name()) && up.equals(o.up) && modelViewMatrix.equals(o.modelViewMatrix) && normalMatrix.equals(o.normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && _castShadow == o._castShadow && _receiveShadow == o._receiveShadow && _frustumCulled == o._frustumCulled && _renderOrder == o._renderOrder && _visible == o._visible && layers.equals(o.layers);
 	}
 
 	// DPP: Maybe later.
@@ -992,13 +1043,15 @@ public class Object3D extends EventDispatcher {
 		this._matrixWorldNeedsUpdate = source._matrixWorldNeedsUpdate;
 
 		this.layers.mask = source.layers.mask;
-		this.visible = source.visible;
+		this._visible = source._visible;
 
 		this._castShadow = source._castShadow;
-		this.receiveShadow = source.receiveShadow;
+		this._receiveShadow = source._receiveShadow;
 
-		this.frustumCulled = source.frustumCulled;
-		this.renderOrder = source.renderOrder;
+		this._frustumCulled = source._frustumCulled;
+		this._renderOrder = source._renderOrder;
+		
+		
 
 //		this.userData = JSON.parse( JSON.stringify( source.userData ) );
 
