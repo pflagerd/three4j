@@ -385,7 +385,7 @@ public class Matrix3 {
 	
 	@Override
 	public String toString() {		
-		return super.toString() + "{ elements={" + this.toStringContent() + "} }";		
+		return super.toString() + "{elements={" + this.toStringContent() + "}}";		
 	}
 
 
