@@ -978,7 +978,7 @@ public class Object3DTests {
 			b.matrixAutoUpdate(false);
 			b.matrixWorldNeedsUpdate(true);
 
-			b.layers.mask = 2;
+			b.layers().mask = 2;
 			b.visible(false);
 
 			b.castShadow(true);
