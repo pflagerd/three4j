@@ -4,6 +4,9 @@ import net.three4j.math.Vector3;
 
 import java.util.HashMap;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import net.three4j.math.Box3;
 
 import net.three4j.math.Sphere;
@@ -12,9 +15,89 @@ import net.three4j.math.Matrix4;
 import net.three4j.math.Matrix3;
 import net.three4j.math.MathUtils;
 
-public class BufferGeometry extends Geometry {
+public class BufferGeometry extends EventDispatcher {
+	public static class DrawRange {
+		public DrawRange(int start, int count) {
+			this._start = start;
+			this._count = count;
+		}
 
-	static int _bufferGeometryId = 1; // BufferGeometry uses odd numbers as Id
+		private int _start;
+
+		public int start() {
+		  return _start;
+		}
+
+		public DrawRange start(int start) {
+		  this._start = start;
+		  return this;
+		}
+
+
+		private int _count;
+
+		public int count() {
+		  return _count;
+		}
+
+		public DrawRange count(int count) {
+		  this._count = count;
+		  return this;
+		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "{start=" + this._start + ", count=" + this._count + "}";
+		}
+
+	}
+
+	public static class Group {
+		public Group(int start, int count, int materialIndex) {
+			this._start = start;
+			this._count = count;
+			this._materialIndex = materialIndex;
+		}
+
+		private int _start;
+
+		public int start() {
+		  return _start;
+		}
+
+		public Group start(int start) {
+		  this._start = start;
+		  return this;
+		}
+
+
+		private int _count;
+
+		public int count() {
+		  return _count;
+		}
+
+		public Group count(int count) {
+		  this._count = count;
+		  return this;
+		}
+
+
+		private int _materialIndex;
+
+		public int materialIndex() {
+		  return _materialIndex;
+		}
+
+		public Group materialIndex(int materialIndex) {
+		  this._materialIndex = materialIndex;
+		  return this;
+		}
+
+
+	}
+
+	private static int _bufferGeometryId = 1; // BufferGeometry uses odd numbers as Id
 
 	final static Matrix4 _m1 = new Matrix4();
 	final static Object3D _obj = new Object3D();
@@ -33,16 +116,16 @@ public class BufferGeometry extends Geometry {
 
 	private HashMap<String, Object> _attributes = new HashMap<>();
 
-	// _morphAttributes = {};
+	private HashMap<String, Object>  _morphAttributes = new HashMap();
 
 	private boolean _morphTargetsRelative = false;
 
-	// _groups = [];
+	private Group[] _groups = new Group[0];
 
 	private Box3 _boundingBox = new Box3();
 	private Sphere _boundingSphere = new Sphere();
 
-	// this.drawRange = { start: 0, count: Infinity };
+	private DrawRange drawRange = new DrawRange( 0, Integer.MAX_VALUE );
 
 	private Object _userData = new Object();
 
@@ -102,18 +185,16 @@ public class BufferGeometry extends Geometry {
 
 	}
 
-//	public addGroup  ( start, count, materialIndex = 0 ) {
-//
-//		this.groups.push( {
-//
-//			start: start,
-//			count: count,
-//			materialIndex: materialIndex
-//
-//		} );
-//
-//	},
-//
+	public void addGroup  ( int start, int count) {
+		addGroup(start, count, 0);
+	}
+
+	public void addGroup  ( int start, int count, int materialIndex ) {
+
+		this._groups = ArrayUtils.addAll(this._groups, new Group(start, count, materialIndex));
+
+	}
+
 //	public clearGroups  () {
 //
 //		this.groups = [];
@@ -1243,8 +1324,11 @@ public class BufferGeometry extends Geometry {
 //
 //	},
 
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+	}
+
 	public void dispose() {
-		super.dispose();
 
 		this.dispatchEvent( new Event(this, "dispose") );
 

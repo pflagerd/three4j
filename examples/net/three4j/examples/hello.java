@@ -19,7 +19,7 @@ class hello {
 	Geometry geometry;
     Material material;
     Mesh mesh;
-    
+
     public hello() {
         camera = new PerspectiveCamera( 70, (double)window.innerWidth / window.innerHeight, 0.01, 10 );
         camera.position().z(1);
@@ -27,6 +27,7 @@ class hello {
 		scene = new Scene();
 
         geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
+        System.out.println(geometry);
         material = new MeshNormalMaterial();
 
         mesh = new Mesh( geometry, material );
@@ -43,9 +44,9 @@ class hello {
 
         renderer.render( scene, camera );
     }
-    
+
     public static void main(String[] args) {
     	new hello();
     }
-    
+
 }

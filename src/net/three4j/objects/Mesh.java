@@ -39,15 +39,17 @@ public class Mesh extends Object3D {
 	private final Vector3 _intersectionPoint = new Vector3();
 	private final Vector3 _intersectionPointWorld = new Vector3();
 
-	public BufferGeometry geometry() {
-		return (BufferGeometry) _geometry;
-	}
-
-	public Mesh geometry(BufferGeometry geometry) {
-		this._geometry = geometry;
-		return this;
-	}
-
+//	private BufferGeometry _bufferGeometry;
+//
+//	public BufferGeometry bufferGeometry() {
+//		return _bufferGeometry;
+//	}
+//
+//	public Mesh geometry(BufferGeometry bufferGeometry) {
+//		this._bufferGeometry = bufferGeometry;
+//		return this;
+//	}
+//
 	private Material _material = new Material();
 
 	public Material material() {
