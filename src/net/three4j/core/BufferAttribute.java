@@ -3,7 +3,10 @@ package net.three4j.core;
 import static net.three4j.THREE.console;
 import static net.three4j.constants.StaticDrawUsage;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.mozilla.types.Float32Array;
 import org.mozilla.types.Int32Array;
+import org.mozilla.types.TypedArray;
 import org.mozilla.types.Uint16Array;
 import org.mozilla.types.Uint32Array;
 
@@ -13,8 +16,6 @@ import net.three4j.math.Matrix4;
 import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
 import net.three4j.math.Vector4;
-import net.three4j.unit.utils.Float32Array;
-import net.three4j.unit.utils.TypedArray;
 
 public class BufferAttribute {
 	static final Vector3 _vector = new Vector3();
@@ -489,6 +490,13 @@ public class BufferAttribute {
 
 	}
 
+	public String toString() {
+
+		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+
+	}
+
+
 //	public void toJSON() {
 //
 //		return {
@@ -499,11 +507,8 @@ public class BufferAttribute {
 //		};
 //
 //	}
-//
-//}
-//
-////
-//
+}
+
 //function Int8BufferAttribute( array, itemSize, normalized ) {
 //
 //	BufferAttribute.call( this, new Int8Array( array ), itemSize, normalized );
@@ -540,45 +545,6 @@ public class BufferAttribute {
 //
 //}
 
-class Uint16BufferAttribute extends BufferAttribute {
-	public Uint16BufferAttribute( double[] array, int itemSize) {
-		this(array, itemSize, false);
-	}
-
-	public Uint16BufferAttribute( double[] array, int itemSize, boolean normalized ) {
-
-		super(new Uint16Array( array ), itemSize, normalized );
-
-	}
-}
-
-class Int32BufferAttribute extends BufferAttribute {
-
-	public Int32BufferAttribute( double[] array, int itemSize) {
-		this(array, itemSize, false);
-	}
-
-	public Int32BufferAttribute( double[] array, int itemSize, boolean normalized ) {
-
-		super(new Int32Array( array ), itemSize, normalized );
-
-	}
-}
-
-class Uint32BufferAttribute extends BufferAttribute {
-
-	public Uint32BufferAttribute( double[] array, int itemSize) {
-		this(array, itemSize, false);
-	}
-
-	public Uint32BufferAttribute( double[] array, int itemSize, boolean normalized) {
-
-		super( new Uint32Array( array ), itemSize, normalized );
-
-	}
-
-}
-
 //function Float16BufferAttribute( array, itemSize, normalized ) {
 //
 //	BufferAttribute.call( this, new Uint16Array( array ), itemSize, normalized );
@@ -594,17 +560,7 @@ class Uint32BufferAttribute extends BufferAttribute {
 //	BufferAttribute.call( this, new Float32Array( array ), itemSize, normalized );
 //
 //}
-//
-//Float32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
-//Float32BufferAttribute.prototype.constructor = Float32BufferAttribute;
-//
-//
-//function Float64BufferAttribute( array, itemSize, normalized ) {
-//
-//	BufferAttribute.call( this, new Float64Array( array ), itemSize, normalized );
-//
-//}
-//
+
 //Float64BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
 //Float64BufferAttribute.prototype.constructor = Float64BufferAttribute;
 //
@@ -622,4 +578,3 @@ class Uint32BufferAttribute extends BufferAttribute {
 //	Uint8BufferAttribute,
 //	Int8BufferAttribute,
 //	BufferAttribute
-}

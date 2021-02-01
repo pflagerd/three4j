@@ -1,25 +1,21 @@
 package net.three4j.core;
 
 import org.apache.commons.lang3.ArrayUtils;
-
-import net.three4j.unit.utils.Int8Array;
+import org.mozilla.types.Int8Array;
+import org.mozilla.types.Uint32Array;
 
 public class Uint32BufferAttribute extends BufferAttribute {
 
-	public Uint32BufferAttribute(double[] array, int itemSize) {
-		this(array, itemSize, false);
-	}
-
-	public Uint32BufferAttribute(double[] array, int itemSize, boolean normalized) {
-		_doubleArray = ArrayUtils.clone(array);
-	}
-
-	public Uint32BufferAttribute(Int8Array array, int itemSize) {
-		this(array, itemSize, false);
-	}
-
 	public Uint32BufferAttribute(Int8Array array, int itemSize, boolean normalized) {
+	}
 
+	public Uint32BufferAttribute(double[] _array, int i) {
+		this(_array, i, false);
+	}
+
+	public Uint32BufferAttribute(double[] _array, int i, boolean normalized) {
+		this._doubleArray = ArrayUtils.clone(_array);
+		this._array = new Uint32Array(_array);
 	}
 
 }

@@ -1,20 +1,19 @@
 package net.three4j.unit.src.math;
 
-import org.junit.jupiter.api.Test;
-
+import static net.three4j.unit.src.math.ConstantsTests.eps;
+import static net.three4j.unit.src.math.ConstantsTests.w;
+import static net.three4j.unit.src.math.ConstantsTests.x;
+import static net.three4j.unit.src.math.ConstantsTests.y;
+import static net.three4j.unit.src.math.ConstantsTests.z;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+import org.mozilla.types.Float32Array;
 
 import net.three4j.core.BufferAttribute;
 import net.three4j.math.Matrix4;
 import net.three4j.math.Vector4;
-import net.three4j.unit.utils.Float32Array;
-
-import static net.three4j.unit.src.math.ConstantsTests.x;
-import static net.three4j.unit.src.math.ConstantsTests.y;
-import static net.three4j.unit.src.math.ConstantsTests.z;
-import static net.three4j.unit.src.math.ConstantsTests.w;
-import static net.three4j.unit.src.math.ConstantsTests.eps;
 
 public class Vector4Tests {
 

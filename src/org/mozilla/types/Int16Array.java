@@ -1,11 +1,12 @@
 package org.mozilla.types;
 
-public class Uint16Array extends TypedArray {
+
+public class Int16Array extends TypedArray {
 
 	public static int BYTES_PER_ELEMENT = 2;
-	public static final String name = "Uint16Array";
+	public static final String name = "Int16Array";
 
-	public Uint16Array(double[] array) {
+	public Int16Array(double[] array) {
 		super(array.length);
 	}
 

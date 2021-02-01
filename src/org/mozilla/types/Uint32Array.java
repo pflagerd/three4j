@@ -1,7 +1,5 @@
 package org.mozilla.types;
 
-import net.three4j.unit.utils.TypedArray;
-
 public class Uint32Array extends TypedArray {
 
 	public static int BYTES_PER_ELEMENT = 4;

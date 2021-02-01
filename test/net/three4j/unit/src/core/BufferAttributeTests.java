@@ -1,19 +1,5 @@
 package net.three4j.unit.src.core;
 
-import org.junit.jupiter.api.Test;
-
-import net.three4j.core.BufferAttribute;
-import net.three4j.math.Color;
-import net.three4j.math.Vector2;
-import net.three4j.math.Vector3;
-import net.three4j.math.Vector4;
-import net.three4j.unit.utils.Float32Array;
-import net.three4j.unit.utils.TypedArray;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 //import { BufferAttribute } from "../../../../src/core/BufferAttribute";
 //import { Color } from "../../../../src/math/Color";
 //import { Vector2 } from "../../../../src/math/Vector2";
@@ -21,6 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 //import { Vector4 } from "../../../../src/math/Vector4";
 //import { DynamicDrawUsage } from "../../../../src/constants";
 import static net.three4j.constants.DynamicDrawUsage;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+import org.mozilla.types.Float32Array;
+
+import net.three4j.core.BufferAttribute;
+import net.three4j.math.Color;
+import net.three4j.math.Vector2;
+import net.three4j.math.Vector3;
+import net.three4j.math.Vector4;
 
 public class BufferAttributeTests {
 //	@Test

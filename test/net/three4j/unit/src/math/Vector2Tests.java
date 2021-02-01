@@ -1,17 +1,17 @@
 package net.three4j.unit.src.math;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import net.three4j.math.Vector2;
-import net.three4j.unit.utils.Float32Array;
-import net.three4j.math.Matrix3;
-import net.three4j.core.BufferAttribute;
-
+import static net.three4j.unit.src.math.ConstantsTests.eps;
 import static net.three4j.unit.src.math.ConstantsTests.x;
 import static net.three4j.unit.src.math.ConstantsTests.y;
-import static net.three4j.unit.src.math.ConstantsTests.eps;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+import org.mozilla.types.Float32Array;
+
+import net.three4j.core.BufferAttribute;
+import net.three4j.math.Matrix3;
+import net.three4j.math.Vector2;
 
 public class Vector2Tests {
 
@@ -438,10 +438,10 @@ public class Vector2Tests {
 
 		a = new Vector2(0, 0);
 		assertTrue(a.length() == 0, "Passed!");
-		
+
 		a.setLength(y);
 		assertTrue(a.length() == 0, "Passed!");
-		
+
 //			a.setLength();
 //			assertTrue( isNaN( a.length() ), "Passed!" );
 

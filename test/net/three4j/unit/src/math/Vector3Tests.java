@@ -1,11 +1,15 @@
 package net.three4j.unit.src.math;
 
+import static net.three4j.unit.src.math.ConstantsTests.eps;
+import static net.three4j.unit.src.math.ConstantsTests.w;
+import static net.three4j.unit.src.math.ConstantsTests.x;
+import static net.three4j.unit.src.math.ConstantsTests.y;
+import static net.three4j.unit.src.math.ConstantsTests.z;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import org.junit.jupiter.api.Test;
+import org.mozilla.types.Float32Array;
 
 import net.three4j.cameras.PerspectiveCamera;
 import net.three4j.core.BufferAttribute;
@@ -17,13 +21,6 @@ import net.three4j.math.Quaternion;
 import net.three4j.math.Spherical;
 import net.three4j.math.Vector3;
 import net.three4j.math.Vector4;
-import net.three4j.unit.utils.Float32Array;
-
-import static net.three4j.unit.src.math.ConstantsTests.x;
-import static net.three4j.unit.src.math.ConstantsTests.y;
-import static net.three4j.unit.src.math.ConstantsTests.z;
-import static net.three4j.unit.src.math.ConstantsTests.w;
-import static net.three4j.unit.src.math.ConstantsTests.eps;
 
 public class Vector3Tests {
 
@@ -667,18 +664,18 @@ public class Vector3Tests {
 
 	@Test
 	public void setFromSpherical() {
-	
+
 		Vector3 a = new Vector3();
 		double phi = Math.acos( - 0.5 );
 		double theta = Math.sqrt( Math.PI ) * phi;
 		Spherical sph = new Spherical( 10, phi, theta );
 		Vector3 expected = new Vector3( - 4.677914006701843, - 5, - 7.288149322420796 );
-	
+
 		a.setFromSpherical( sph );
 		assertTrue( Math.abs( a.x() - expected.x() ) <= eps, "Check x" );
 		assertTrue( Math.abs( a.y() - expected.y() ) <= eps, "Check y" );
 		assertTrue( Math.abs( a.z() - expected.z() ) <= eps, "Check z" );
-	
+
 	}
 
 	@Test

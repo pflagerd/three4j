@@ -3,6 +3,7 @@ package net.three4j.geometries;
 import org.apache.commons.lang3.ArrayUtils;
 
 import net.three4j.core.BufferGeometry;
+import net.three4j.core.Float32BufferAttribute;
 import net.three4j.math.Vector3;
 
 public class BoxBufferGeometry extends BufferGeometry {
@@ -129,18 +130,18 @@ public class BoxBufferGeometry extends BufferGeometry {
 		// build each side of the box geometry
 
 		buildPlane("z", "y", "x", -1, -1, depth, height, width, depthSegments, heightSegments, 0); // px
-		buildPlane("z", "y", "x", 1, -1, depth, height, -width, depthSegments, heightSegments, 1); // nx
-		buildPlane("x", "z", "y", 1, 1, width, depth, height, widthSegments, depthSegments, 2); // py
-		buildPlane("x", "z", "y", 1, -1, width, depth, -height, widthSegments, depthSegments, 3); // ny
-		buildPlane("x", "y", "z", 1, -1, width, height, depth, widthSegments, heightSegments, 4); // pz
+		buildPlane("z", "y", "x",  1, -1, depth, height, -width, depthSegments, heightSegments, 1); // nx
+		buildPlane("x", "z", "y",  1,  1, width, depth, height, widthSegments, depthSegments, 2); // py
+		buildPlane("x", "z", "y",  1, -1, width, depth, -height, widthSegments, depthSegments, 3); // ny
+		buildPlane("x", "y", "z",  1, -1, width, height, depth, widthSegments, heightSegments, 4); // pz
 		buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5); // nz
 
 		// build geometry
 
 		this.setIndex( _indices );
-//		this.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
-//		this.setAttribute( 'normal', new Float32BufferAttribute( normals, 3 ) );
-//		this.setAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
+		this.setAttribute( "position", new Float32BufferAttribute( _vertices, 3 ) );
+		this.setAttribute( "normal", new Float32BufferAttribute( _normals, 3 ) );
+		this.setAttribute( "uv", new Float32BufferAttribute( _uvs, 2 ) );
 	}
 
 	private int numberOfVertices = 0;
