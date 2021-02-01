@@ -138,6 +138,8 @@ public class BufferGeometry extends EventDispatcher {
 
 	private Uint32BufferAttribute _uint32BufferAttribute;
 
+	private Uint16BufferAttribute _uint16BufferAttribute;
+
 	public BufferGeometry() {
 	}
 
@@ -152,6 +154,8 @@ public class BufferGeometry extends EventDispatcher {
 		//this._index = new ( arrayMax(index) > 65535. ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
 		if ( arrayMax(index) > 65535. )
 			this._uint32BufferAttribute = new Uint32BufferAttribute(index, 1);
+		else
+			this._uint16BufferAttribute = new Uint16BufferAttribute(index, 1);
 
 		return this;
 
