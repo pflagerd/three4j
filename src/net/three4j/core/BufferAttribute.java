@@ -37,7 +37,7 @@ public class BufferAttribute {
 		return _array;
 	}
 
-	public String _name;
+	public String _name = "";
 	public String name() {
 		return _name;
 	}
