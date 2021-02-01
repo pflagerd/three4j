@@ -119,35 +119,35 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 		// buffers
 
-		_indices = new double[0];
-		_vertices = new double[0];
-		_normals = new double[0];
-		_uvs = new double[0];
+		double[] indices = new double[0];
+		double[] vertices = new double[0];
+		double[] normals = new double[0];
+		double[] uvs = new double[0];
 
 		numberOfVertices = 0;
 		groupStart = 0;
 
 		// build each side of the box geometry
 
-		buildPlane("z", "y", "x", -1, -1, depth, height, width, depthSegments, heightSegments, 0); // px
-		buildPlane("z", "y", "x",  1, -1, depth, height, -width, depthSegments, heightSegments, 1); // nx
-		buildPlane("x", "z", "y",  1,  1, width, depth, height, widthSegments, depthSegments, 2); // py
-		buildPlane("x", "z", "y",  1, -1, width, depth, -height, widthSegments, depthSegments, 3); // ny
-		buildPlane("x", "y", "z",  1, -1, width, height, depth, widthSegments, heightSegments, 4); // pz
-		buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5); // nz
+		buildPlane("z", "y", "x", -1, -1, depth, height, width, depthSegments, heightSegments, 0, vertices, normals, uvs, indices); // px
+		buildPlane("z", "y", "x",  1, -1, depth, height, -width, depthSegments, heightSegments, 1, vertices, normals, uvs, indices); // nx
+		buildPlane("x", "z", "y",  1,  1, width, depth, height, widthSegments, depthSegments, 2, vertices, normals, uvs, indices); // py
+		buildPlane("x", "z", "y",  1, -1, width, depth, -height, widthSegments, depthSegments, 3, vertices, normals, uvs, indices); // ny
+		buildPlane("x", "y", "z",  1, -1, width, height, depth, widthSegments, heightSegments, 4, vertices, normals, uvs, indices); // pz
+		buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5, vertices, normals, uvs, indices); // nz
 
 		// build geometry
 
-		this.setIndex( _indices );
-		this.setAttribute( "position", new Float32BufferAttribute( _vertices, 3 ) );
-		this.setAttribute( "normal", new Float32BufferAttribute( _normals, 3 ) );
-		this.setAttribute( "uv", new Float32BufferAttribute( _uvs, 2 ) );
+		this.setIndex( indices );
+		this.setAttribute( "position", new Float32BufferAttribute( vertices, 3 ) );
+		this.setAttribute( "normal", new Float32BufferAttribute( normals, 3 ) );
+		this.setAttribute( "uv", new Float32BufferAttribute( uvs, 2 ) );
 	}
 
 	private int numberOfVertices = 0;
 	private int groupStart = 0;
 
-	private void buildPlane(String u, String v, String w, double udir, double vdir, double width, double height, double depth, int gridX, int gridY, int materialIndex) {
+	private void buildPlane(String u, String v, String w, double udir, double vdir, double width, double height, double depth, int gridX, int gridY, int materialIndex, double[] vertices, double[] normals, double[] uvs, double[] indices) {
 
 		double segmentWidth = width / gridX;
 		double segmentHeight = height / gridY;
@@ -220,7 +220,7 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 				// now apply vector to vertex buffer
 
-				_vertices = ArrayUtils.addAll(_vertices, vector.x(), vector.y(), vector.z());
+				vertices = ArrayUtils.addAll(vertices, vector.x(), vector.y(), vector.z());
 
 				// set values to correct vector component
 				switch (u) {
@@ -267,10 +267,10 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 				// now apply vector to normal buffer
 
-				_normals = ArrayUtils.addAll(_normals, vector.x(), vector.y(), vector.z());
+				normals = ArrayUtils.addAll(normals, vector.x(), vector.y(), vector.z());
 
 				// uvs
-				_uvs = ArrayUtils.addAll(_uvs, ix / gridX, 1 - (iy / gridY));
+				uvs = ArrayUtils.addAll(uvs, ix / gridX, 1 - (iy / gridY));
 
 				// counters
 
@@ -296,8 +296,8 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 				// faces
 
-				_indices = ArrayUtils.addAll(_indices, a, b, d);
-				_indices = ArrayUtils.addAll(_indices, b, c, d);
+				indices = ArrayUtils.addAll(indices, a, b, d);
+				indices = ArrayUtils.addAll(indices, b, c, d);
 
 				// increase counter
 
@@ -351,50 +351,6 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 	public BoxBufferGeometry depthSegments(int depthSegments) {
 		this._depthSegments = depthSegments;
-		return this;
-	}
-
-	private double[] _indices = new double[0];
-
-	public double[] indices() {
-		return _indices;
-	}
-
-	public BoxBufferGeometry indices(double[] indices) {
-		this._indices = indices;
-		return this;
-	}
-
-	private double[] _vertices = new double[0];
-
-	public double[] vertices() {
-		return _vertices;
-	}
-
-	public BoxBufferGeometry vertices(double[] vertices) {
-		this._vertices = vertices;
-		return this;
-	}
-
-	private double[] _normals = new double[0];
-
-	public double[] normals() {
-		return _normals;
-	}
-
-	public BoxBufferGeometry normals(double[] normals) {
-		this._normals = normals;
-		return this;
-	}
-
-	private double[] _uvs = new double[0];
-
-	public double[] uvs() {
-		return _uvs;
-	}
-
-	public BoxBufferGeometry uvs(double[] uvs) {
-		this._uvs = uvs;
 		return this;
 	}
 
