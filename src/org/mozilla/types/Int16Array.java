@@ -7,13 +7,7 @@ public class Int16Array extends TypedArray {
 	public static final String name = "Int16Array";
 
 	public Int16Array(double[] array) {
-		super(array.length);
-	}
-
-	@Override
-	public TypedArray clone() {
-		// TODO Auto-generated method stub
-		return null;
+		super(array);
 	}
 
 }

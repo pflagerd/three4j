@@ -6,13 +6,6 @@ public class Uint16Array extends TypedArray {
 	public static final String name = "Uint16Array";
 
 	public Uint16Array(double[] array) {
-		super(array.length);
+		super(array);
 	}
-
-	@Override
-	public TypedArray clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

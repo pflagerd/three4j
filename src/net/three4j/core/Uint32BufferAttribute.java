@@ -1,6 +1,5 @@
 package net.three4j.core;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.mozilla.types.Int8Array;
 import org.mozilla.types.Uint32Array;
 
@@ -14,7 +13,6 @@ public class Uint32BufferAttribute extends BufferAttribute {
 	}
 
 	public Uint32BufferAttribute(double[] _array, int i, boolean normalized) {
-		this._doubleArray = ArrayUtils.clone(_array);
 		this._array = new Uint32Array(_array);
 	}
 

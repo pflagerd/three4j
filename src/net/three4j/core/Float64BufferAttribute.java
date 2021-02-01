@@ -14,7 +14,6 @@ public class Float64BufferAttribute extends BufferAttribute {
 	}
 
 	public Float64BufferAttribute(double[] _array, int i, boolean normalized) {
-		this._doubleArray = ArrayUtils.clone(_array);
 		this._array = new Float64Array(_array);
 	}
 

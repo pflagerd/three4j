@@ -6,13 +6,6 @@ public class Int8Array extends TypedArray {
 	public static final String name = "Int8Array";
 
 	public Int8Array(double[] array) {
-		super(array.length);
+		super(array);
 	}
-
-	@Override
-	public TypedArray clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

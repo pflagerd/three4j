@@ -17,6 +17,11 @@ public class TypedArray {
 		return new TypedArray(this._array);
 	}
 
+
+	public double[] array() {
+		return _array;
+	}
+
 	public TypedArray set(double[] array, int length) {
 		this.length = length;
 		this._array = array;

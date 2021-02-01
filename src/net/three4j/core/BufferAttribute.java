@@ -31,8 +31,6 @@ public class BufferAttribute {
 		int count;
 	}
 
-	protected double[] _doubleArray = new double[0];
-
 	public TypedArray _array;
 
 	public TypedArray array() {

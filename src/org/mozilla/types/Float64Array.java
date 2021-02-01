@@ -6,13 +6,7 @@ public class Float64Array extends TypedArray {
 	public static final String name = "Float64Array";
 
 	public Float64Array(double[] array) {
-		super(array.length);
-	}
-
-	@Override
-	public TypedArray clone() {
-		// TODO Auto-generated method stub
-		return null;
+		super(array);
 	}
 
 }

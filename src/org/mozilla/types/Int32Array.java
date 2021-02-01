@@ -6,13 +6,6 @@ public class Int32Array extends TypedArray {
 	public static final String name = "Int32Array";
 
 	public Int32Array(double[] array) {
-		super(array.length);
+		super(array);
 	}
-
-	@Override
-	public TypedArray clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

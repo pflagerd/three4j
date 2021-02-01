@@ -1,7 +1,5 @@
 package org.mozilla.types;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 public class Float32Array extends TypedArray {
 
 	public static int BYTES_PER_ELEMENT = 4;
@@ -14,18 +12,6 @@ public class Float32Array extends TypedArray {
 	}
 
 	public Float32Array(double[] array) {
-		super(array.length);
-		ArrayUtils.clone(array);
+		super(array);
 	}
-
-	public double[] array() {
-		return _array;
-	}
-
-	@Override
-	public TypedArray clone() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
