@@ -3,6 +3,10 @@ package net.three4j.core;
 import static net.three4j.THREE.console;
 import static net.three4j.constants.StaticDrawUsage;
 
+import org.mozilla.types.Int32Array;
+import org.mozilla.types.Uint16Array;
+import org.mozilla.types.Uint32Array;
+
 import net.three4j.math.Color;
 import net.three4j.math.Matrix3;
 import net.three4j.math.Matrix4;
@@ -25,7 +29,7 @@ public class BufferAttribute {
 		int offset;
 		int count;
 	}
-	
+
 	public TypedArray _array;
 
 	public TypedArray array() {
@@ -35,45 +39,45 @@ public class BufferAttribute {
 	public String _name;
 	public String name() {
 		return _name;
-	}	
-	
+	}
+
 	public int _itemSize;
 	public int itemSize() {
 		return _itemSize;
-	}	
-	
+	}
+
 	public int _count;
 	public int count() {
 		return _count;
-	}	
-	
+	}
+
 	public boolean _normalized;
 	public boolean normalized() {
 		return _normalized;
-	}	
-	
+	}
+
 	public int _usage;
 	public int usage() {
 		return _usage;
-	}	
-	
+	}
+
 	public int _version;
 	public int version() {
 		return _version;
-	}	
-	
+	}
+
 	public UpdateRange _updateRange;
 	public UpdateRange updateRange() {
 		return _updateRange;
-	}	
-	
-	
+	}
+
+
 	public BufferAttribute() {
 		_name = "";
 		_usage = StaticDrawUsage;
 		_updateRange = new UpdateRange(0, 1);
 	}
-	
+
 	public BufferAttribute(Float32Array array, int itemSize) {
 		this(array, itemSize, false);
 		this._count = array.length / _itemSize;
@@ -86,19 +90,55 @@ public class BufferAttribute {
 		this._count = array.length / _itemSize;
 	}
 
+	public BufferAttribute(Int32Array array, int itemSize) {
+		this(array, itemSize, false);
+		this._count = array.length / _itemSize;
+	}
+
+	public BufferAttribute(Int32Array array, int itemSize, boolean normalized) {
+		this._array = array;
+		this._itemSize = itemSize;
+		this._normalized = normalized;
+		this._count = array.length / _itemSize;
+	}
+
+	public BufferAttribute(Uint16Array array, int itemSize) {
+		this(array, itemSize, false);
+		this._count = array.length / _itemSize;
+	}
+
+	public BufferAttribute(Uint16Array array, int itemSize, boolean normalized) {
+		this._array = array;
+		this._itemSize = itemSize;
+		this._normalized = normalized;
+		this._count = array.length / _itemSize;
+	}
+
+	public BufferAttribute(Uint32Array array, int itemSize) {
+		this(array, itemSize, false);
+		this._count = array.length / _itemSize;
+	}
+
+	public BufferAttribute(Uint32Array array, int itemSize, boolean normalized) {
+		this._array = array;
+		this._itemSize = itemSize;
+		this._normalized = normalized;
+		this._count = array.length / _itemSize;
+	}
+
 	public void needsUpdate(boolean needsUpdate) {
 		if (needsUpdate)
 			this._version++;
 	}
-	
+
 	private void noop() {}
-	
+
 	private Runnable _onUploadCallback = this::noop;
 
 	public void onUploadCallback() {
 		_onUploadCallback.run();
 	}
-	
+
 	public BufferAttribute setUsage( int value ) {
 
 		this._usage = value;
@@ -125,11 +165,11 @@ public class BufferAttribute {
 
 		index1 *= this._itemSize;
 		index2 *= attribute._itemSize;
-		
+
 		for ( int i = 0, l = this._itemSize; i < l; i ++ ) {
 
-			if (_array instanceof Float32Array) {				
-				((Float32Array)this._array).array()[ index1 + i ] = 
+			if (_array instanceof Float32Array) {
+				((Float32Array)this._array).array()[ index1 + i ] =
 						((Float32Array)attribute._array).array()[ index2 + i ];
 			}
 			// DPP: TODO: Add more here.
@@ -358,7 +398,7 @@ public class BufferAttribute {
 	public double getY(int index) {
 
 		return ((Float32Array)this.array()).array()[ index * this._itemSize + 1 ];
-		
+
 	}
 
 	public BufferAttribute setY( int index, double y ) {
@@ -384,7 +424,7 @@ public class BufferAttribute {
 	}
 
 	public double getW(int index) {
-		
+
 		return ((Float32Array)this.array()).array()[ index * this._itemSize + 3 ];
 
 	}
@@ -497,40 +537,46 @@ public class BufferAttribute {
 //	BufferAttribute.call( this, new Int16Array( array ), itemSize, normalized );
 //
 //}
-//
-//Int16BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
-//Int16BufferAttribute.prototype.constructor = Int16BufferAttribute;
-//
-//
-//function Uint16BufferAttribute( array, itemSize, normalized ) {
-//
-//	BufferAttribute.call( this, new Uint16Array( array ), itemSize, normalized );
-//
-//}
-//
-//Uint16BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
-//Uint16BufferAttribute.prototype.constructor = Uint16BufferAttribute;
-//
-//
-//function Int32BufferAttribute( array, itemSize, normalized ) {
-//
-//	BufferAttribute.call( this, new Int32Array( array ), itemSize, normalized );
-//
-//}
-//
-//Int32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
-//Int32BufferAttribute.prototype.constructor = Int32BufferAttribute;
-//
-//
-//function Uint32BufferAttribute( array, itemSize, normalized ) {
-//
-//	BufferAttribute.call( this, new Uint32Array( array ), itemSize, normalized );
-//
-//}
-//
-//Uint32BufferAttribute.prototype = Object.create( BufferAttribute.prototype );
-//Uint32BufferAttribute.prototype.constructor = Uint32BufferAttribute;
-//
+
+class Uint16BufferAttribute extends BufferAttribute {
+	public Uint16BufferAttribute( double[] array, int itemSize) {
+		this(array, itemSize, false);
+	}
+
+	public Uint16BufferAttribute( double[] array, int itemSize, boolean normalized ) {
+
+		super(new Uint16Array( array ), itemSize, normalized );
+
+	}
+}
+
+class Int32BufferAttribute extends BufferAttribute {
+
+	public Int32BufferAttribute( double[] array, int itemSize) {
+		this(array, itemSize, false);
+	}
+
+	public Int32BufferAttribute( double[] array, int itemSize, boolean normalized ) {
+
+		super(new Int32Array( array ), itemSize, normalized );
+
+	}
+}
+
+class Uint32BufferAttribute extends BufferAttribute {
+
+	public Uint32BufferAttribute( double[] array, int itemSize) {
+		this(array, itemSize, false);
+	}
+
+	public Uint32BufferAttribute( double[] array, int itemSize, boolean normalized) {
+
+		super( new Uint32Array( array ), itemSize, normalized );
+
+	}
+
+}
+
 //function Float16BufferAttribute( array, itemSize, normalized ) {
 //
 //	BufferAttribute.call( this, new Uint16Array( array ), itemSize, normalized );

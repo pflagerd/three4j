@@ -15,6 +15,8 @@ import net.three4j.math.Matrix4;
 import net.three4j.math.Matrix3;
 import net.three4j.math.MathUtils;
 
+import static net.three4j.utils.arrayMax;
+
 public class BufferGeometry extends EventDispatcher {
 	public static class DrawRange {
 		public DrawRange(int start, int count) {
@@ -94,6 +96,10 @@ public class BufferGeometry extends EventDispatcher {
 		  return this;
 		}
 
+		@Override
+		public String toString() {
+			return super.toString() + "{_start=" + this._start + ", _count=" + this._count + ", _materialIndex=" + this._materialIndex + "}";
+		}
 
 	}
 
@@ -112,7 +118,8 @@ public class BufferGeometry extends EventDispatcher {
 
 	private String _name = "";
 
-	private int _index = 0;
+	private int _intIndex = 0;
+	private double[] _doubleArrayIndex = new double[0];
 
 	private HashMap<String, Object> _attributes = new HashMap<>();
 
@@ -129,29 +136,30 @@ public class BufferGeometry extends EventDispatcher {
 
 	private Object _userData = new Object();
 
+	private Uint32BufferAttribute _uint32BufferAttribute;
+
 	public BufferGeometry() {
 	}
 
 	public int getIndex() {
 
-		return this._index;
+		return this._intIndex;
 
 	}
 
-//	public BufferGeometry setIndex  ( Object[] index ) {
-//		this.index = new ( arrayMax( index ) > 65535 ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
-//
-//	}
+	public BufferGeometry setIndex(double[] index) {
 
-	public BufferGeometry setIndex(int index) {
-		this._index = index;
+		//this._index = new ( arrayMax(index) > 65535. ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
+		if ( arrayMax(index) > 65535. )
+			this._uint32BufferAttribute = new Uint32BufferAttribute(index, 1);
 
 		return this;
 
 	}
 
-	public BufferGeometry setIndex(short[] index) {
-//		this._index = new ( arrayMax( index ) > 65535 ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
+	public BufferGeometry setIndex(int index) {
+
+		this._intIndex = index;
 
 		return this;
 

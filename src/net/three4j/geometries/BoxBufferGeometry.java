@@ -3,12 +3,8 @@ package net.three4j.geometries;
 import org.apache.commons.lang3.ArrayUtils;
 
 import net.three4j.core.BufferGeometry;
-import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
 
-//import net.three4j.core.BufferAttribute;
-//import net.three4j.math.Vector3;
-//
 public class BoxBufferGeometry extends BufferGeometry {
 
 	public static class Parameters {
@@ -122,7 +118,7 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 		// buffers
 
-		_indices = new Object[0];
+		_indices = new double[0];
 		_vertices = new double[0];
 		_normals = new double[0];
 		_uvs = new double[0];
@@ -141,12 +137,11 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 		// build geometry
 
-//		this.setIndex( indices );
+		this.setIndex( _indices );
 //		this.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
 //		this.setAttribute( 'normal', new Float32BufferAttribute( normals, 3 ) );
 //		this.setAttribute( 'uv', new Float32BufferAttribute( uvs, 2 ) );
 	}
-
 
 	private int numberOfVertices = 0;
 	private int groupStart = 0;
@@ -281,49 +276,47 @@ public class BoxBufferGeometry extends BufferGeometry {
 				vertexCounter += 1;
 
 			}
+		}
 
+		// indices
 
-			// indices
+		// 1. you need three indices to draw a single face
+		// 2. a single segment consists of two faces
+		// 3. so we need to generate six (2*3) indices per segment
 
-			// 1. you need three indices to draw a single face
-			// 2. a single segment consists of two faces
-			// 3. so we need to generate six (2*3) indices per segment
+		for (int iy = 0; iy < gridY; iy++) {
 
-			for ( iy = 0; iy < gridY; iy ++ ) {
+			for (int ix = 0; ix < gridX; ix++) {
 
-				for ( int ix = 0; ix < gridX; ix ++ ) {
+				double a = numberOfVertices + ix + gridX1 * iy;
+				double b = numberOfVertices + ix + gridX1 * (iy + 1);
+				double c = numberOfVertices + (ix + 1) + gridX1 * (iy + 1);
+				double d = numberOfVertices + (ix + 1) + gridX1 * iy;
 
-					double a = numberOfVertices + ix + gridX1 * iy;
-					double b = numberOfVertices + ix + gridX1 * ( iy + 1 );
-					double c = numberOfVertices + ( ix + 1 ) + gridX1 * ( iy + 1 );
-					double d = numberOfVertices + ( ix + 1 ) + gridX1 * iy;
+				// faces
 
-					// faces
+				_indices = ArrayUtils.addAll(_indices, a, b, d);
+				_indices = ArrayUtils.addAll(_indices, b, c, d);
 
-					_indices = ArrayUtils.addAll(_indices, a, b, d);
-					_indices = ArrayUtils.addAll(_indices, b, c, d);
+				// increase counter
 
-					// increase counter
-
-					groupCount += 6;
-
-				}
+				groupCount += 6;
 
 			}
 
-			// add a group to the geometry. this will ensure multi material support
-
-			this.addGroup( groupStart, groupCount, materialIndex );
-
-			// calculate new start value for groups
-
-			groupStart += groupCount;
-
-			// update total number of vertices
-
-			numberOfVertices += vertexCounter;
-
 		}
+
+		// add a group to the geometry. this will ensure multi material support
+
+		this.addGroup(groupStart, groupCount, materialIndex);
+
+		// calculate new start value for groups
+
+		groupStart += groupCount;
+
+		// update total number of vertices
+
+		numberOfVertices += vertexCounter;
 
 	}
 
@@ -360,13 +353,13 @@ public class BoxBufferGeometry extends BufferGeometry {
 		return this;
 	}
 
-	private Object[] _indices = new Object[0];
+	private double[] _indices = new double[0];
 
-	public Object[] indices() {
+	public double[] indices() {
 		return _indices;
 	}
 
-	public BoxBufferGeometry indices(Object[] indices) {
+	public BoxBufferGeometry indices(double[] indices) {
 		this._indices = indices;
 		return this;
 	}
