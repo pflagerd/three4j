@@ -1,5 +1,8 @@
 package net.three4j.math;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 import net.three4j.core.BufferAttribute;
 
 /**
@@ -17,11 +20,11 @@ public class Quaternion {
 	private double _y;
 	private double _z;
 	private double _w;
-	
+
 	public boolean isQuaternion() {
 		return true;
 	}
-	
+
 	public Quaternion() {
 		this(0, 0, 0, 1);
 	}
@@ -32,7 +35,7 @@ public class Quaternion {
 		this._z = z;
 		this._w = w;
 	}
-	
+
 	public Quaternion(Quaternion quaternion) {
 		quaternion.clone();
 	}
@@ -200,14 +203,14 @@ public class Quaternion {
 
 		return this;
 	}
-	
+
 	public Quaternion setFromEuler( Euler euler) {
 		return setFromEuler(euler, true);
 	}
 
 	public Quaternion setFromEuler( Euler euler, boolean update ) {
 
-		final double x = euler._x, y = euler._y, z = euler._z; 
+		final double x = euler._x, y = euler._y, z = euler._z;
 		String order = euler.order();
 
 		// http://www.mathworks.com/matlabcentral/fileexchange/
@@ -485,13 +488,13 @@ public class Quaternion {
 		this._onChangeCallback.run();
 
 		return this;
-		
+
 	}
 
 	public Quaternion multiply( Quaternion q) {
-		return this.multiplyQuaternions( this, q );		
+		return this.multiplyQuaternions( this, q );
 	}
-	
+
 	public Quaternion multiply( Quaternion q, Quaternion p ) {
 
 		if ( p != null ) {
@@ -528,10 +531,10 @@ public class Quaternion {
 
 	public Quaternion slerp( Quaternion qb, double t ) {
 
-		if ( t == 0 ) 
+		if ( t == 0 )
 			return this;
-		
-		if ( t == 1 ) 
+
+		if ( t == 1 )
 			return this.copy( qb );
 
 		final double x = this._x, y = this._y, z = this._z, w = this._w;
@@ -602,7 +605,7 @@ public class Quaternion {
 		return ( q._x == this._x ) && ( q._y == this._y ) && ( q._z == this._z ) && ( q._w == this._w );
 
 	}
-	
+
 	public Quaternion fromArray(double[] array) {
 		return fromArray(array, 0);
 	}
@@ -623,11 +626,11 @@ public class Quaternion {
 	public double[] toArray() {
 		return new double[] { this._x, this._y, this._z, this._w};
 	}
-	
+
 	public double[] toArray(double[] array) {
 		return toArray(array, 0);
 	}
-	
+
 	public double[] toArray( double[] array, int offset ) {
 
 		array[ offset ] = this._x;
@@ -649,10 +652,12 @@ public class Quaternion {
 		return this;
 
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "{x=" + _x + ", y=" + _y + ", z=" + _z + ", w=" + _w + "}";
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_onChangeCallback");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 	public Quaternion onChange( Runnable callback ) {
@@ -662,9 +667,9 @@ public class Quaternion {
 		return this;
 
 	}
-	
+
 	private void noop() {}
 
 	private Runnable _onChangeCallback = this::noop;
-	
+
 }

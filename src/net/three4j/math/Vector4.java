@@ -3,8 +3,12 @@ package net.three4j.math;
 import net.three4j.core.BufferAttribute;
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+import org.apache.commons.lang3.builder.UnsortedReflectionToStringBuilder;
+
 public class Vector4 {
-	
+
 	private double _x;
 	private double _y;
 	private double _z;
@@ -13,8 +17,8 @@ public class Vector4 {
 	public Vector4() {
 		this(0, 0, 0, 1);
 	}
-	
-	
+
+
 	public Vector4( double x, double y, double z, double w ) {
 		this._x = x;
 		this._y = y;
@@ -68,7 +72,7 @@ public class Vector4 {
 		return this;
 
 	}
-	
+
 	public double x() {
 		return this._x;
 	}
@@ -84,7 +88,7 @@ public class Vector4 {
 	public double w() {
 		return this._w;
 	}
-	
+
 	public void x(double x) {
 		this._x = x;
 	}
@@ -628,7 +632,7 @@ public class Vector4 {
 		return this.fromArray(array, 0);
 	}
 
-	
+
 	public Vector4 fromArray( double[] array, int offset ) {
 
 		this._x = array[ offset ];
@@ -643,11 +647,11 @@ public class Vector4 {
 	public double[] toArray() {
 		return toArray(new double[4], 0);
 	}
-	
+
 	public double[] toArray(double[] array) {
 		return toArray(array, 0);
 	}
-	
+
 	public double[] toArray( double[] array, int offset ) {
 
 		array[ offset ] = this._x;
@@ -679,13 +683,13 @@ public class Vector4 {
 		return this;
 
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "{x=" + this._x + ", y=" + this._y + ", z=" + this._z + ", w=" + this._w + "}";
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("_onChangeCallback");
+		return sortedReflectionToStringBuilder.toString();
 	}
-
-
 
 }
 

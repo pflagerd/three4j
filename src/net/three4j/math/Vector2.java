@@ -4,17 +4,20 @@ import net.three4j.core.BufferAttribute;
 
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 public class Vector2 {
-	
+
 	private double _x;
 	private double _y;
 
 	public Vector2() {
 		this(0, 0);
 	}
-	
+
 	public final static boolean isVector2 = true;
-	
+
 	public Vector2( double x, double y) {
 		this._x = x;
 		this._y = y;
@@ -69,15 +72,15 @@ public class Vector2 {
 		return this;
 
 	}
-	
+
 	public double x() {
 		return this._x;
 	}
-	
+
 	public double x(double x) {
 		return this._x = x;
 	}
-	
+
 
 	public Vector2 setY( double y ) {
 
@@ -86,11 +89,11 @@ public class Vector2 {
 		return this;
 
 	}
-	
+
 	public double y() {
 		return this._y;
 	}
-	
+
 	public double y(double y) {
 		return this._y = y;
 	}
@@ -343,7 +346,7 @@ public class Vector2 {
 		return this._x * v._x + this._y * v._y;
 
 	}
-	
+
 	public double cross(Vector2 v) {
 		return determinant(v);
 	}
@@ -354,11 +357,11 @@ public class Vector2 {
 		return this._x * v._y - this._y * v._x;
 
 	}
-	
+
 	public double lengthSquared() {
 		return lengthSq();
 	}
-	
+
 	public double quadrature() {
 		return lengthSq();
 	}
@@ -445,7 +448,7 @@ public class Vector2 {
 		return ( ( v._x == this._x ) && ( v._y == this._y ) );
 
 	}
-	
+
 	public Vector2 fromArray(double[] array) {
 		return fromArray(array, 0);
 	}
@@ -458,11 +461,11 @@ public class Vector2 {
 		return this;
 
 	}
-	
+
 	public double[] toArray() {
 		return toArray(new double[2], 0);
 	}
-	
+
 	public double[] toArray(double[] array) {
 		return toArray(array, 0);
 	}
@@ -506,11 +509,14 @@ public class Vector2 {
 		return this;
 
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "{x=" + this._x + ", y=" + this._y + "}";
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("isVector2");
+		return sortedReflectionToStringBuilder.toString();
 	}
+
 
 
 }

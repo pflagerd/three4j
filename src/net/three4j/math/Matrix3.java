@@ -1,6 +1,9 @@
 package net.three4j.math;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.UnsortedReflectionToStringBuilder;
 
 public class Matrix3 {
 
@@ -370,22 +373,12 @@ public class Matrix3 {
 		return array;
 
 	}
-	
-	public String toStringContent() {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < elements.length; i++) {
-			if (i != 0) {
-				sb.append(", ");
-			}
-			sb.append(elements[i]);
-		}
-		
-		return sb.toString();
-	}
-	
+
 	@Override
-	public String toString() {		
-		return super.toString() + "{elements={" + this.toStringContent() + "}}";		
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("isMatrix3");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 

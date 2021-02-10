@@ -2,10 +2,14 @@ package net.three4j.math;
 
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+import org.apache.commons.lang3.builder.UnsortedReflectionToStringBuilder;
+
 public class Matrix4 {
-	
+
 	public double[] elements;
-	
+
 	public final boolean isMatrix4 = true;
 
 	public Matrix4() {
@@ -451,7 +455,7 @@ public class Matrix4 {
 	public Matrix4 setPosition( Vector3 v ) {
 		return setPosition(v.x(), v.y(), v.z());
 	}
-	
+
 	public Matrix4 setPosition( double x, double y, double z ) {
 
 		final double[] te = this.elements;
@@ -780,7 +784,7 @@ public class Matrix4 {
 
 		for ( int i = 0; i < 16; i ++ ) {
 
-			if ( te[ i ] != me[ i ] ) 
+			if ( te[ i ] != me[ i ] )
 				return false;
 
 		}
@@ -791,7 +795,7 @@ public class Matrix4 {
 	public Matrix4 fromArray(double[] array) {
 		return fromArray(array, 0);
 	}
-	
+
 	public Matrix4 fromArray( double[] array, int offset ) {
 
 		for ( int i = 0; i < 16; i ++ ) {
@@ -807,7 +811,7 @@ public class Matrix4 {
 	public double[] toArray( double[] array) {
 		return toArray(array, 0);
 	}
-	
+
 	public double[] toArray( double[] array, int offset ) {
 
 		final double[] te = this.elements;
@@ -838,15 +842,9 @@ public class Matrix4 {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < elements.length; i++) {
-			if (i != 0) {
-				sb.append(", ");
-			}
-			sb.append(elements[i]);
-		}
-		
-		return super.toString() + "{elements={" + sb.toString() + "}}";
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("isMatrix4");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 	private static final Vector3 _v1 = /*@__PURE__*/ new Vector3();

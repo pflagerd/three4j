@@ -2,6 +2,9 @@ package net.three4j.math;
 
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 public class Triangle {
 	private Vector3 _a = new Vector3();
 
@@ -35,9 +38,9 @@ public class Triangle {
 		this._c = c;
 		return this;
 	}
-	
+
 	public Triangle() {
-		
+
 	}
 
 	public Triangle(Vector3 a, Vector3 b, Vector3 c) {
@@ -345,6 +348,13 @@ public class Triangle {
 
 		return triangle._a.equals( this._a ) && triangle._b.equals( this._b ) && triangle._c.equals( this._c );
 
+	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("_onChangeCallback");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }

@@ -7,6 +7,9 @@ import net.three4j.core.Object3D.ChildArrayList;
 
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 public class Box3 {
 
 	public Box3() {
@@ -194,8 +197,8 @@ public class Box3 {
 	public Vector3 getCenter() {
 		return getCenter(new Vector3());
 	}
-	
-	public Vector3 getCenter( Vector3 target ) {		
+
+	public Vector3 getCenter( Vector3 target ) {
 
 		if ( target == null ) {
 
@@ -345,7 +348,7 @@ public class Box3 {
 		// are on the same side (back or front) of the plane, then there is no intersection.
 
 		double min, max;
-		
+
 		if ( plane.normal().x() > 0 ) {
 
 			min = plane.normal().x() * this._min.x();
@@ -515,6 +518,13 @@ public class Box3 {
 
 	}
 
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("isVector3");
+		return sortedReflectionToStringBuilder.toString();
+	}
+
 	public Box3 translate( Vector3 offset ) {
 
 		this._min.add( offset );
@@ -566,23 +576,23 @@ public class Box3 {
 		/*@__PURE__*/ new Vector3(),
 		/*@__PURE__*/ new Vector3()
 	};
-	
+
 	private static final Vector3 _vector = /*@__PURE__*/ new Vector3();
-	
+
 	private static final Box3 _box = /*@__PURE__*/ new Box3();
-	
+
 	// triangle centered vertices
-	
+
 	private static final Vector3 _v0 = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _v1 = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _v2 = /*@__PURE__*/ new Vector3();
-	
+
 	// triangle edge vectors
-	
+
 	private static final Vector3 _f0 = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _f1 = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _f2 = /*@__PURE__*/ new Vector3();
-	
+
 	private static final Vector3 _center = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _extents = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _triangleNormal = /*@__PURE__*/ new Vector3();

@@ -5,7 +5,7 @@ import static net.three4j.THREE.console;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
 
 import net.three4j.cameras.Camera;
 import net.three4j.lights.Light;
@@ -30,7 +30,7 @@ public class Object3D extends EventDispatcher {
 	}
 
 	// let _object3DId = 0;
-	private static int _object3DId = 0;
+	private static long _object3DId = 0;
 	private static final boolean DefaultMatrixAutoUpdate = true;
 
 	private static final Vector3 DefaultUp = new Vector3(0, 1, 0);
@@ -75,11 +75,10 @@ public class Object3D extends EventDispatcher {
 
 	private Vector3 _target = new Vector3();
 
-		// animations
-		private Object _userData = new Object();
+	private Object[] _animations = new Object[0];
+	private Object _userData = new Object();
 
 	private String _uuid = MathUtils.generateUUID();
-
 
 	// Helpers (not included in equals())
 	private final Vector3 _v1 = new Vector3();
@@ -91,12 +90,11 @@ public class Object3D extends EventDispatcher {
 
 	private final Vector3 _zAxis = new Vector3(0, 0, 1);
 
-	public final long id = _object3DId++;
+	public final long _id = _object3DId++;
 
 	public final boolean isObject3D = true;
 
-	public Vector3 up = new Vector3(DefaultUp);
-
+	public Vector3 _up = new Vector3(DefaultUp);
 
 	{
 		_rotation.onChange(this::onRotationChange);
@@ -136,9 +134,6 @@ public class Object3D extends EventDispatcher {
 
 		return this;
 	}
-
-
-
 
 	public void applyMatrix4(Matrix4 matrix) {
 		if (this._matrixAutoUpdate)
@@ -185,12 +180,12 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean castShadow() {
-	  return _castShadow;
+		return _castShadow;
 	}
 
 	public Object3D castShadow(boolean castShadow) {
-	  this._castShadow = castShadow;
-	  return this;
+		this._castShadow = castShadow;
+		return this;
 	}
 
 	public ChildArrayList<Object3D> children() {
@@ -215,7 +210,6 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-
 	public Object3D clone() {
 		return clone(true);
 	}
@@ -230,12 +224,11 @@ public class Object3D extends EventDispatcher {
 		return copy(source, true);
 	}
 
-
 	public Object3D copy(Object3D source, boolean recursive) {
 
 		this._name = source._name;
 
-		this.up.copy(source.up);
+		this._up.copy(source._up);
 
 		this._position.copy(source._position);
 		this._rotation.copy(source._rotation);
@@ -276,17 +269,16 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean equals(Object3D o) {
-		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid().contentEquals(o.uuid()) && name().contentEquals(o.name()) && up.equals(o.up) && _modelViewMatrix.equals(o._modelViewMatrix) && _normalMatrix.equals(o._normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && _castShadow == o._castShadow && _receiveShadow == o._receiveShadow && _frustumCulled == o._frustumCulled && _renderOrder == o._renderOrder && _visible == o._visible && _layers.equals(o._layers);
+		return _position.equals(o._position) && _rotation.equals(o._rotation) && _scale.equals(_scale) && _quaternion.equals(_quaternion) && _xAxis.equals(o._xAxis) && _yAxis.equals(o._yAxis) && _zAxis.equals(o._zAxis) && (_parent == null ? (_parent == o._parent) : _parent.equals(o._parent)) && children().equals(o.children()) && uuid().contentEquals(o.uuid()) && name().contentEquals(o.name()) && _up.equals(o._up) && _modelViewMatrix.equals(o._modelViewMatrix) && _normalMatrix.equals(o._normalMatrix) && _matrix.equals(o._matrix) && _matrixWorld.equals(o._matrixWorld) && _matrixAutoUpdate == o._matrixAutoUpdate && _matrixWorldNeedsUpdate == o._matrixWorldNeedsUpdate && _castShadow == o._castShadow && _receiveShadow == o._receiveShadow && _frustumCulled == o._frustumCulled && _renderOrder == o._renderOrder && _visible == o._visible && _layers.equals(o._layers);
 	}
 
 	public boolean frustumCulled() {
-	  return _frustumCulled;
+		return _frustumCulled;
 	}
 
-
 	public Object3D frustumCulled(boolean frustumCulled) {
-	  this._frustumCulled = frustumCulled;
-	  return this;
+		this._frustumCulled = frustumCulled;
+		return this;
 	}
 
 	public Geometry geometry() {
@@ -297,7 +289,6 @@ public class Object3D extends EventDispatcher {
 		this._children = children;
 		return this;
 	}
-
 
 	public Object3D geometry(Geometry geometry) {
 		this._geometry = geometry;
@@ -315,7 +306,6 @@ public class Object3D extends EventDispatcher {
 		return this.getObjectByProperty("name", name);
 
 	}
-
 
 	public Object3D getObjectByProperty(String name) {
 		return null;
@@ -359,7 +349,6 @@ public class Object3D extends EventDispatcher {
 		return target.set(e[8], e[9], e[10]).normalize();
 
 	}
-
 
 	public Vector3 getWorldPosition(Vector3 target) {
 
@@ -411,12 +400,12 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public Layers layers() {
-	  return _layers;
+		return _layers;
 	}
 
 	public Object3D layers(Layers layers) {
-	  this._layers = layers;
-	  return this;
+		this._layers = layers;
+		return this;
 	}
 
 	// DPP: Maybe later.
@@ -470,11 +459,11 @@ public class Object3D extends EventDispatcher {
 
 		if (this instanceof Camera || this instanceof Light) {
 
-			_m1.lookAt(_position, _target, this.up);
+			_m1.lookAt(_position, _target, this._up);
 
 		} else {
 
-			_m1.lookAt(_target, _position, this.up);
+			_m1.lookAt(_target, _position, this._up);
 
 		}
 
@@ -490,12 +479,12 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public Matrix4 matrix() {
-	  return _matrix;
+		return _matrix;
 	}
 
 	public Object3D matrix(Matrix4 matrix) {
-	  this._matrix = matrix;
-	  return this;
+		this._matrix = matrix;
+		return this;
 	}
 
 	public Object matrixAutoUpdate() {
@@ -521,30 +510,30 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public Matrix4 modelViewMatrix() {
-	  return _modelViewMatrix;
+		return _modelViewMatrix;
 	}
 
 	public Object3D modelViewMatrix(Matrix4 modelViewMatrix) {
-	  this._modelViewMatrix = modelViewMatrix;
-	  return this;
+		this._modelViewMatrix = modelViewMatrix;
+		return this;
 	}
 
 	public String name() {
-		  return _name;
-		}
+		return _name;
+	}
 
 	public Object3D name(String name) {
-	  this._name = name;
-	  return this;
+		this._name = name;
+		return this;
 	}
 
 	public Matrix3 normalMatrix() {
-	  return _normalMatrix;
+		return _normalMatrix;
 	}
 
 	public Object3D normalMatrix(Matrix3 normalMatrix) {
-	  this._normalMatrix = normalMatrix;
-	  return this;
+		this._normalMatrix = normalMatrix;
+		return this;
 	}
 
 	public void onAfterRender() {
@@ -574,12 +563,12 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public boolean receiveShadow() {
-	  return _receiveShadow;
+		return _receiveShadow;
 	}
 
 	public Object3D receiveShadow(boolean receiveShadow) {
-	  this._receiveShadow = receiveShadow;
-	  return this;
+		this._receiveShadow = receiveShadow;
+		return this;
 	}
 
 	public Object3D remove(Object3D... objects) {
@@ -612,12 +601,12 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public int renderOrder() {
-	  return _renderOrder;
+		return _renderOrder;
 	}
 
 	public Object3D renderOrder(int renderOrder) {
-	  this._renderOrder = renderOrder;
-	  return this;
+		this._renderOrder = renderOrder;
+		return this;
 	}
 
 	public Object3D rotateOnAxis(Vector3 axis, double angle) {
@@ -695,21 +684,11 @@ public class Object3D extends EventDispatcher {
 
 	}
 
-	public class CustomToStringStyle extends ToStringStyle
-	{
-	    private static final long serialVersionUID = 1L;
-	    protected void appendDetail(StringBuffer buffer, String fieldName, Object value)
-	    {
-	         if (value instanceof String)
-	         {
-		         buffer.append(value);
-	         }
-	     }
-	}
-
 	@Override
 	public String toString() {
-		return new SortedReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_m1", "_q1", "_v1", "isObject3D", "_geometry", "listeners", "_id");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 	public Object3D translateOnAxis(Vector3 axis, double distance) {
@@ -874,12 +853,12 @@ public class Object3D extends EventDispatcher {
 	}
 
 	public Object userData() {
-	  return _userData;
+		return _userData;
 	}
 
 	public Object3D userData(Object userData) {
-	  this._userData = userData;
-	  return this;
+		this._userData = userData;
+		return this;
 	}
 
 //	public toJSON: function ( meta ) {
@@ -1099,21 +1078,21 @@ public class Object3D extends EventDispatcher {
 //	},
 
 	public String uuid() {
-	  return _uuid;
+		return _uuid;
 	}
 
 	public Object3D uuid(String uuid) {
-	  this._uuid = uuid;
-	  return this;
+		this._uuid = uuid;
+		return this;
 	}
 
 	public boolean visible() {
-	  return _visible;
+		return _visible;
 	}
 
 	public Object3D visible(boolean visible) {
-	  this._visible = visible;
-	  return this;
+		this._visible = visible;
+		return this;
 	}
 
 	public Vector3 worldToLocal(Vector3 vector) {

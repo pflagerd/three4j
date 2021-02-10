@@ -1,5 +1,9 @@
 package net.three4j.math;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 //import { Quaternion } from './Quaternion.js';
 //import { Vector3 } from './Vector3.js';
 //import { Matrix4 } from './Matrix4.js';
@@ -16,9 +20,9 @@ public class Euler {
 	double _y;
 	double _z;
 	String _order;
-	
+
 	public final boolean isEuler = true;
-	
+
 	public Euler() {
 		this._x = this._y = this._z = 0.0;
 		this._order = DefaultOrder;
@@ -27,7 +31,7 @@ public class Euler {
 	public Euler(double x, double y, double z) {
 		this(x, y, z, DefaultOrder);
 	}
-	
+
 	public Euler(double x, double y, double z, String order) {
 		this._x = x;
 		this._y = y;
@@ -90,7 +94,7 @@ public class Euler {
 	public Euler set( double x, double y, double z) {
 		return set(x, y, z, DefaultOrder);
 	}
-	
+
 	public Euler set( double x, double y, double z, String order ) {
 
 		this._x = x;
@@ -125,7 +129,7 @@ public class Euler {
 	public Euler setFromRotationMatrix( Matrix4 m, String order) {
 		return setFromRotationMatrix(m, order, true);
 	}
-	
+
 	public Euler setFromRotationMatrix( Matrix4 m, String order, boolean update ) {
 
 		// assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
@@ -255,12 +259,12 @@ public class Euler {
 
 		this._order = order;
 
-		if ( update ) 
+		if ( update )
 			this._onChangeCallback.run();
 
 		return this;
 	}
-	
+
 	public Euler setFromQuaternion(Quaternion q) {
 		return setFromQuaternion(q, DefaultOrder);
 	}
@@ -268,7 +272,7 @@ public class Euler {
 	public Euler setFromQuaternion(Quaternion q, String order) {
 		return setFromQuaternion(q, order, true);
 	}
-	
+
 	public Euler setFromQuaternion( Quaternion q, String order, boolean update ) {
 
 		_matrix.makeRotationFromQuaternion( q );
@@ -276,8 +280,8 @@ public class Euler {
 		return this.setFromRotationMatrix( _matrix, order == null ? DefaultOrder : order, update );
 
 	}
-	
-	
+
+
 
 	public Euler setFromVector3( Vector3 v, String order ) {
 
@@ -305,7 +309,7 @@ public class Euler {
 		this._x = array[ 0 ];
 		this._y = array[ 1 ];
 		this._z = array[ 2 ];
-//		if ( array.length !== undefined ) 
+//		if ( array.length !== undefined )
 //			this._order = array[ 3 ];
 
 		this._onChangeCallback.run();
@@ -313,7 +317,7 @@ public class Euler {
 		return this;
 
 	}
-	
+
 	public double[] toArray() {
 		return toArray(new double[3], 0);
 	}
@@ -354,14 +358,16 @@ public class Euler {
 		return this;
 
 	}
-	
+
 	private void noop() {}
 
 	private Runnable _onChangeCallback = this::noop;
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "{x=" + _x + ", y=" + _y + ", z=" + _z + ", order=\"" + _order + "\"}";
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_onChangeCallback", "isEuler");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 	public static final String DefaultOrder = "XYZ";

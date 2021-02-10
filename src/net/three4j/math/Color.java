@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 import static net.three4j.THREE.console;
 
 import net.three4j.core.BufferAttribute;
@@ -567,8 +570,8 @@ public class Color {
 		return this;
 
 	}
-	
-	
+
+
 	public Color convertGammaToLinear(double gammaFactor) {
 
 		this.copyGammaToLinear(this, gammaFactor);
@@ -854,8 +857,15 @@ public class Color {
 
 	}
 
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("isVector3");
+		return sortedReflectionToStringBuilder.toString();
+	}
+
 	public static class NAMES {
-		public final static int 
+		public final static int
 			aliceblue = 0xF0F8FF,
 			antiquewhite = 0xFAEBD7,
 			aqua = 0x00FFFF,

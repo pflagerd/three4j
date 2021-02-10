@@ -1,6 +1,7 @@
 package net.three4j.math;
 
-
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
 
 public class Ray {
 
@@ -12,7 +13,7 @@ public class Ray {
 	private static final Vector3 _edge1 = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _edge2 = /*@__PURE__*/ new Vector3();
 	private static final Vector3 _normal = /*@__PURE__*/ new Vector3();
-	
+
 	private Vector3 _origin = new Vector3();
 
 	public Vector3 origin() {
@@ -43,9 +44,9 @@ public class Ray {
 		this._direction = ( direction != null ) ? direction : new Vector3( 0, 0, - 1 );
 
 	}
-	
+
 	public Ray() {
-		
+
 	}
 
 	public Ray set( Vector3 origin, Vector3 direction ) {
@@ -527,6 +528,13 @@ public class Ray {
 
 		return ray._origin.equals( this._origin ) && ray._direction.equals( this._direction );
 
+	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("_onChangeCallback");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }

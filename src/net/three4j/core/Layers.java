@@ -1,5 +1,9 @@
 package net.three4j.core;
 
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.UnsortedReflectionToStringBuilder;
+
 public class Layers {
 
 	public int mask;
@@ -60,7 +64,9 @@ public class Layers {
 
 	@Override
 	public String toString() {
-		return super.toString() + "{mask:" + mask + "}";
+		UnsortedReflectionToStringBuilder unsortedReflectionToStringBuilder = new UnsortedReflectionToStringBuilder(this, new Three4jToStringStyle());
+		//unsortedReflectionToStringBuilder.setExcludeFieldNames("isMatrix4");
+		return unsortedReflectionToStringBuilder.toString();
 	}
 
 }

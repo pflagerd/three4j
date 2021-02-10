@@ -5,6 +5,11 @@ package net.three4j.math;
 //import { Quaternion } from './Quaternion.js';
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.UnsortedReflectionToStringBuilder;
+
 import net.three4j.cameras.Camera;
 import net.three4j.core.BufferAttribute;
 import net.three4j.core.InterleavedBufferAttribute;
@@ -22,25 +27,25 @@ public class Vector3 {
 	public double _x;
 	public double _y;
 	public double _z;
-	
+
 	public final boolean isVector3 = true;
-	
+
 	public Vector3() {
 		this._x = this._y = this._z = 0.0;
 	}
-	
+
 	public Vector3(double x, double y, double z) {
 		this._x = x;
 		this._y = y;
 		this._z = z;
 	}
-	
+
 	public Vector3(final Vector3 vector3) {
 		this._x = vector3._x;
 		this._y = vector3._y;
 		this._z = vector3._z;
 	}
-	
+
 	public double x() {
 		  return _x;
 		}
@@ -73,7 +78,7 @@ public class Vector3 {
 	public Vector3 set( double x, double y) {
 		return set(x, y, this._z);
 	}
-	
+
 	public Vector3 set( double x, double y, double z ) {
 
 		this._x = x;
@@ -489,11 +494,11 @@ public class Vector3 {
 	public double lengthSquared() {
 		return lengthSq();
 	}
-	
+
 	public double quadrature() {
 		return lengthSq();
-	}	
-	
+	}
+
 	public double lengthSq() {
 
 		return this._x * this._x + this._y * this._y + this._z * this._z;
@@ -565,7 +570,7 @@ public class Vector3 {
 
 		final double denominator = v.lengthSq();
 
-		if ( denominator == 0 ) 
+		if ( denominator == 0 )
 			return this.set( 0, 0, 0 );
 
 		final double scalar = v.dot( this ) / denominator;
@@ -594,7 +599,7 @@ public class Vector3 {
 
 		final double denominator = Math.sqrt( this.lengthSq() * v.lengthSq() );
 
-		if ( denominator == 0 ) 
+		if ( denominator == 0 )
 			return Math.PI / 2;
 
 		final double theta = this.dot( v ) / denominator;
@@ -705,7 +710,7 @@ public class Vector3 {
 	public Vector3 fromArray( double[] array) {
 		return fromArray(array, 0);
 	}
-	
+
 	public Vector3 fromArray( double[] array, int offset ) {
 
 		this._x = array[ offset ];
@@ -719,11 +724,11 @@ public class Vector3 {
 	public double[] toArray() {
 		return toArray(new double[3]);
 	}
-	
+
 	public double[] toArray(double[] array) {
 		return toArray(array, 0);
 	}
-	
+
 	public double[] toArray( double[] array, int offset ) {
 
 		array[ offset ] = this._x;
@@ -763,10 +768,12 @@ public class Vector3 {
 		return this;
 
 	}
-	
+
 	@Override
 	public String toString() {
-		return super.toString() + "{x=" + this._x + ", y=" + this._y + ", z=" + this._z + "}";
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("isVector3");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 	private final static Vector3 _vector = /*@__PURE__*/ new Vector3();

@@ -1,16 +1,19 @@
 package net.three4j.math;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 //import { MathUtils } from './MathUtils.js';
 
 public class Spherical {
 	private double _radius;
 	private double _phi;
-	private double _theta;	
+	private double _theta;
 
 	public Spherical() {
 		this(1, 0, 0);
 	}
-	
+
 	public double radius() {
 		return _radius;
 	}
@@ -44,7 +47,7 @@ public class Spherical {
 		this._phi = phi; // polar angle
 		this._theta = theta; // azimuthal angle
 	}
-	
+
 	public boolean equals(Spherical s) {
 		return s._radius == _radius && s._phi == _phi && s._theta == _theta;
 	}
@@ -109,5 +112,13 @@ public class Spherical {
 		return this;
 
 	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("_onChangeCallback");
+		return sortedReflectionToStringBuilder.toString();
+	}
+
 
 }

@@ -2,6 +2,9 @@ package net.three4j.math;
 
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 public class Sphere {
 
 	public final static Box3 _box = /* @__PURE__ */ new Box3();
@@ -215,6 +218,13 @@ public class Sphere {
 
 		return sphere._center.equals( this._center ) && ( sphere._radius == this._radius );
 
+	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("_onChangeCallback");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }

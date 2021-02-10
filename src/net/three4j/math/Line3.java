@@ -2,6 +2,9 @@ package net.three4j.math;
 
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 public class Line3 {
 
 	final static Vector3 _startP = /* @__PURE__ */ new Vector3();
@@ -166,6 +169,13 @@ public class Line3 {
 
 		return line._start.equals(this._start) && line._end.equals(this._end);
 
+	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("isVector3");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }

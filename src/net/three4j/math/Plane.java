@@ -2,6 +2,9 @@ package net.three4j.math;
 
 import static net.three4j.THREE.console;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 public class Plane {
 	private final Vector3 _vector1 = /* @__PURE__ */ new Vector3();
 	private final Vector3 _vector2 = /* @__PURE__ */ new Vector3();
@@ -223,7 +226,7 @@ public class Plane {
 		return applyMatrix4(matrix, null);
 	}
 
-	
+
 	public Plane applyMatrix4( Matrix4 matrix, Matrix3 optionalNormalMatrix ) {
 
 		Matrix3 normalMatrix = optionalNormalMatrix != null ? optionalNormalMatrix : _normalMatrix.getNormalMatrix( matrix );
@@ -250,6 +253,13 @@ public class Plane {
 
 		return plane._normal.equals( this._normal ) && ( plane._constant == this._constant );
 
+	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("isPlane");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }

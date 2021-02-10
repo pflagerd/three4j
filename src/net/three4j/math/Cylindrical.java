@@ -4,8 +4,11 @@
 
 package net.three4j.math;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 public class Cylindrical {
-	
+
 	private double _radius;
 	private double _theta;
 	private double _y;
@@ -13,7 +16,7 @@ public class Cylindrical {
 	public Cylindrical() {
 		this(1, 0, 0);
 	}
-	
+
 	public Cylindrical ( double radius, double theta, double y ) {
 
 		this._radius = radius; // distance from the origin to a point in the x-z plane
@@ -21,38 +24,38 @@ public class Cylindrical {
 		this._y = y; // height above the x-z plane
 
 	}
-	
+
 	public double radius() {
 		return _radius;
 	}
-	
+
 	public double theta() {
 		return _theta;
 	}
-	
+
 	public double y() {
 		return _y;
 	}
-	
+
 	public Cylindrical radius(double radius) {
 		_radius = radius;
 		return this;
 	}
-	
+
 	public Cylindrical theta(double theta) {
 		_theta = theta;
 		return this;
 	}
-	
+
 	public Cylindrical y(double y) {
 		_y = y;
 		return this;
 	}
-	
+
 	public boolean equals(Cylindrical s) {
 		return s._radius == _radius && s._theta == _theta && s._y == _y;
 	}
-	
+
 	public Cylindrical set( double radius, double theta, double y ) {
 
 		this._radius = radius;
@@ -92,6 +95,13 @@ public class Cylindrical {
 		this._y = y;
 
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("isVector3");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }
