@@ -4,7 +4,9 @@ import static net.three4j.THREE.console;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilderOld;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import net.three4j.cameras.Camera;
 import net.three4j.lights.Light;
@@ -22,7 +24,7 @@ public class Object3D extends EventDispatcher {
 		public boolean equals(ChildArrayList<T> o) {
 			return false;
 		}
-		
+
 		public int length() {
 			return this.size();
 		}
@@ -71,7 +73,7 @@ public class Object3D extends EventDispatcher {
 	private Euler _rotation = new Euler();
 
 	private Vector3 _scale = new Vector3(1, 1, 1);
-	
+
 	private Vector3 _target = new Vector3();
 
 		// animations
@@ -89,7 +91,7 @@ public class Object3D extends EventDispatcher {
 	private final Vector3 _yAxis = new Vector3(0, 1, 0);
 
 	private final Vector3 _zAxis = new Vector3(0, 0, 1);
-	
+
 	public final long id = _object3DId++;
 
 	public final boolean isObject3D = true;
@@ -104,7 +106,7 @@ public class Object3D extends EventDispatcher {
 
 	public Object3D() {
 //		this.animations = [];
-//	
+//
 	}
 
 	public Object3D add(Object3D... objects) {
@@ -137,8 +139,8 @@ public class Object3D extends EventDispatcher {
 	}
 
 
-	
-	
+
+
 	public void applyMatrix4(Matrix4 matrix) {
 		if (this._matrixAutoUpdate)
 			this.updateMatrix();
@@ -148,7 +150,7 @@ public class Object3D extends EventDispatcher {
 		this._matrix.decompose(this._position, this._quaternion, this._scale);
 
 	}
-	
+
 	public Object3D applyQuaternion(Quaternion q) {
 
 		this._quaternion.premultiply(q);
@@ -297,7 +299,7 @@ public class Object3D extends EventDispatcher {
 		return this;
 	}
 
-		
+
 	public Object3D geometry(Geometry geometry) {
 		this._geometry = geometry;
 		return this;
@@ -314,8 +316,8 @@ public class Object3D extends EventDispatcher {
 		return this.getObjectByProperty("name", name);
 
 	}
-	
-	
+
+
 	public Object3D getObjectByProperty(String name) {
 		return null;
 	}
@@ -694,8 +696,21 @@ public class Object3D extends EventDispatcher {
 
 	}
 
+	public class CustomToStringStyle extends ToStringStyle
+	{
+	    private static final long serialVersionUID = 1L;
+	    protected void appendDetail(StringBuffer buffer, String fieldName, Object value)
+	    {
+	         if (value instanceof String)
+	         {
+		         buffer.append(value);
+	         }
+	     }
+	}
+
+	@Override
 	public String toString() {
-		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		return new SortedReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
 	}
 
 	public Object3D translateOnAxis(Vector3 axis, double distance) {

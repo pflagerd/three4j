@@ -9,7 +9,7 @@ import net.three4j.math.Vector2;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 
 import net.three4j.math.Box3;
 import net.three4j.math.Color;
@@ -1370,7 +1370,7 @@ public class Geometry extends EventDispatcher {
 	}
 
 	public String toString() {
-		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
 	}
 
 

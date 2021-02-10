@@ -25,9 +25,11 @@ class hello {
         camera.position().z(1);
 
 		scene = new Scene();
+        println(jsonify(scene.toString()));
 
         geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
-        System.out.println(geometry);
+        println(geometry);
+
         material = new MeshNormalMaterial();
 
         mesh = new Mesh( geometry, material );
@@ -48,5 +50,15 @@ class hello {
     public static void main(String[] args) {
     	new hello();
     }
+
+
+    public static void println(Object object) {
+    	System.out.println(object);
+    }
+
+    public static String jsonify(String string) {
+    	return string.replaceAll("<null>", "null").replaceAll("=", ": ").replaceAll(",(?!\s)", ", ");
+    }
+
 
 }

@@ -1,6 +1,6 @@
 package net.three4j.math;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 
 public class Matrix3 {
 

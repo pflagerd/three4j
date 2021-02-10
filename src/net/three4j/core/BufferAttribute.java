@@ -3,7 +3,7 @@ package net.three4j.core;
 import static net.three4j.THREE.console;
 import static net.three4j.constants.StaticDrawUsage;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 import org.mozilla.types.Float32Array;
 import org.mozilla.types.Int32Array;
 import org.mozilla.types.TypedArray;
@@ -490,7 +490,7 @@ public class BufferAttribute {
 
 	public String toString() {
 
-		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
 
 	}
 

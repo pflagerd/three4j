@@ -5,7 +5,7 @@ import net.three4j.math.Vector3;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 
 import net.three4j.math.Box3;
 
@@ -1337,7 +1337,7 @@ public class BufferGeometry extends EventDispatcher {
 //	},
 
 	public String toString() {
-		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
 	}
 
 	public void dispose() {

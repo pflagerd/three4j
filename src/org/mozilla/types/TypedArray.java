@@ -1,7 +1,7 @@
 package org.mozilla.types;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 
 public class TypedArray {
 	public TypedArray(double[] array) {
@@ -20,7 +20,7 @@ public class TypedArray {
 
 
 	public String toString() {
-		return ReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
 	}
 
 	public double[] array() {
