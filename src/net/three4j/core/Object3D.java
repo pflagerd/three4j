@@ -5,7 +5,6 @@ import static net.three4j.THREE.console;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.SortedReflectionToStringBuilderOld;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import net.three4j.cameras.Camera;
