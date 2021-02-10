@@ -57,8 +57,7 @@ class hello {
     }
 
     public static String jsonify(String string) {
-    	return string;
-//    	return string.replaceAll("<null>", "null").replaceAll("=", ": ").replaceAll(",(?!\s)", ", ");
+    	return string.replaceAll("_([a-zA-Z_$][a-zA-Z0-9_$]+)(?=:)", "$1");
     }
 
 

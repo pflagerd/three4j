@@ -687,7 +687,7 @@ public class Object3D extends EventDispatcher {
 	@Override
 	public String toString() {
 		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
-		sortedReflectionToStringBuilder.setExcludeFieldNames("_m1", "_q1", "_v1", "isObject3D", "_geometry", "listeners", "_id");
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_m1", "_q1", "_v1", "isObject3D", "_geometry", "listeners", "_id", "_modelViewMatrix", "_normalMatrix", "_target", "_xAxis", "_yAxis", "_zAxis");
 		return sortedReflectionToStringBuilder.toString();
 	}
 
