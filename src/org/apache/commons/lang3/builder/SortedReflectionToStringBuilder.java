@@ -827,11 +827,16 @@ public class SortedReflectionToStringBuilder extends ToStringBuilder {
 
 	    HashMap<String, Object> fieldMap = new HashMap<>();
 
-		Class<?> clazz = this.getObject().getClass();
-		collectFields(fieldMap, clazz);
-		while (clazz.getSuperclass() != null && clazz != this.getUpToClass()) {
-			clazz = clazz.getSuperclass();
-			collectFields(fieldMap, clazz);
+	    ArrayList<Class<?>> classHierarchy = new ArrayList<>();
+
+		for (Class<?> clazz = this.getObject().getClass(); clazz.getSuperclass() != null && clazz != this.getUpToClass(); clazz = clazz.getSuperclass()) {
+			classHierarchy.add(clazz);
+		}
+
+		// Add fields from the top-down so as to get proper overrides on
+		// repeated variable names.
+		for (int i = classHierarchy.size() - 1; i >= 0; i--) {
+			collectFields(fieldMap, classHierarchy.get(i));
 		}
 
 		String[] keySet = fieldMap.keySet().toArray(new String[0]);
