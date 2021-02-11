@@ -10,6 +10,7 @@ import net.three4j.math.Vector2;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
 
 import net.three4j.math.Box3;
 import net.three4j.math.Color;
@@ -40,8 +41,8 @@ public class Geometry extends EventDispatcher {
 	private final ChildArrayList<Object> _skinWeights = new ChildArrayList<>(); // DPP: TODO:
 	private final ChildArrayList<Object> _skinIndices = new ChildArrayList<>(); // DPP: TODO:
 	private final ChildArrayList<Object> _lineDistances = new ChildArrayList<>(); // DPP: TODO:
-	private Box3 _boundingBox = new Box3();
-	private final Object _boundingSphere = new Object(); // DPP: TODO:
+	private Box3 _boundingBox;
+	private Object _boundingSphere;
 
 	private final boolean _elementsNeedUpdate = false;
 	private final boolean _verticesNeedUpdate = false;
@@ -1370,7 +1371,9 @@ public class Geometry extends EventDispatcher {
 	}
 
 	public String toString() {
-		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_depth", "_depthSegments", "_height", "_heightSegments", "_id", "_m1", "_obj", "_offset", "listeners", "_width", "_widthSegments");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 

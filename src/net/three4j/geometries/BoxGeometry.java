@@ -4,6 +4,8 @@ import net.three4j.core.Geometry;
 
 public class BoxGeometry extends Geometry {
 
+	private String _type = "BoxGeometry";
+
 	private double _width;
 
 	public double width() {
