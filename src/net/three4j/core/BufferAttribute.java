@@ -119,8 +119,10 @@ public class BufferAttribute {
 	public BufferAttribute(Uint16Array array, int itemSize, boolean normalized) {
 		this._array = array;
 		this._itemSize = itemSize;
-		this._normalized = normalized;
 		this._count = array.length / _itemSize;
+		this._normalized = normalized;
+		this._usage = StaticDrawUsage;
+		this._updateRange = new UpdateRange(0, -1);
 	}
 
 	public BufferAttribute(Uint32Array array, int itemSize) {
