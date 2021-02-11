@@ -4,6 +4,7 @@ import static net.three4j.THREE.console;
 import static net.three4j.constants.StaticDrawUsage;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
 import org.mozilla.types.Float32Array;
 import org.mozilla.types.Int32Array;
 import org.mozilla.types.TypedArray;
@@ -29,6 +30,13 @@ public class BufferAttribute {
 
 		int offset;
 		int count;
+
+		public String toString() {
+			SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+			//sortedReflectionToStringBuilder.setExcludeFieldNames("_onUploadCallback");
+			return sortedReflectionToStringBuilder.toString();
+		}
+
 	}
 
 	public TypedArray _array;
@@ -489,9 +497,9 @@ public class BufferAttribute {
 	}
 
 	public String toString() {
-
-		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
-
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_onUploadCallback");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 

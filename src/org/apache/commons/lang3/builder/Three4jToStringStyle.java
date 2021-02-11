@@ -40,5 +40,11 @@ public class Three4jToStringStyle extends ToStringStyle {
 		}
 		buffer.append(value);
 	}
+
+	@Override
+	public void setUseFieldNames(boolean value) {
+		super.setUseFieldNames(value);
+	}
+
 }
 

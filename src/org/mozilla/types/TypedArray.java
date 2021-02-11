@@ -2,6 +2,7 @@ package org.mozilla.types;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
 
 public class TypedArray {
 	public TypedArray(double[] array) {
@@ -18,9 +19,13 @@ public class TypedArray {
 		return new TypedArray(this._array);
 	}
 
-
 	public String toString() {
-		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		Three4jToStringStyle three4jToStringStyle = new Three4jToStringStyle();
+		three4jToStringStyle.setUseFieldNames(false);
+
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, three4jToStringStyle);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("length");
+		return sortedReflectionToStringBuilder.toString().replace("[", "").replace("]", "");
 	}
 
 	public double[] array() {
@@ -38,7 +43,11 @@ public class TypedArray {
 		return this;
 	}
 
+
+
 	protected double[] _array = new double[0];
 
 	public int length;
+
+
 }

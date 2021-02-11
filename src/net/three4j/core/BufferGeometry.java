@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
 
 import net.three4j.math.Box3;
 
@@ -105,18 +106,19 @@ public class BufferGeometry extends EventDispatcher {
 
 	private static int _bufferGeometryId = 1; // BufferGeometry uses odd numbers as Id
 
-	final static Matrix4 _m1 = new Matrix4();
-	final static Object3D _obj = new Object3D();
-	final static Vector3 _offset = new Vector3();
-	final static Box3 _box = new Box3();
-	final static Box3 _boxMorphTargets = new Box3();
-	final static Vector3 _vector = new Vector3();
+	final Matrix4 _m1 = new Matrix4();
+	final Object3D _obj = new Object3D();
+	final Vector3 _offset = new Vector3();
+	final Box3 _box = new Box3();
+	final Box3 _boxMorphTargets = new Box3();
+	final Vector3 _vector = new Vector3();
 
 	public final int id = _bufferGeometryId += 2;
 
 	private String _uuid = MathUtils.generateUUID();
 
 	private String _name = "";
+	private String _type = "BufferGeometry";
 
 	private int _intIndex = 0;
 	private double[] _doubleArrayIndex = new double[0];
@@ -129,8 +131,8 @@ public class BufferGeometry extends EventDispatcher {
 
 	private Group[] _groups = new Group[0];
 
-	private Box3 _boundingBox = new Box3();
-	private Sphere _boundingSphere = new Sphere();
+	private Box3 _boundingBox;
+	private Sphere _boundingSphere;
 
 	private DrawRange drawRange = new DrawRange( 0, Integer.MAX_VALUE );
 
@@ -1337,7 +1339,9 @@ public class BufferGeometry extends EventDispatcher {
 //	},
 
 	public String toString() {
-		return SortedReflectionToStringBuilder.toString(this).replaceAll("\\[", "{").replaceAll("\\]", "}");
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_vertices", "_normals", "_uvs", "_indices");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 	public void dispose() {

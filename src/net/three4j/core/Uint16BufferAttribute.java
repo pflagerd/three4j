@@ -13,7 +13,7 @@ public class Uint16BufferAttribute extends BufferAttribute {
 	}
 
 	public Uint16BufferAttribute(double[] _array, int i, boolean normalized) {
-		this._array = new Uint16Array(_array);
+		super(new Uint16Array(_array), i, normalized);
 	}
 
 }
