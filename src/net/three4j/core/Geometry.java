@@ -29,9 +29,10 @@ public class Geometry extends EventDispatcher {
 	private final Object3D _obj = new Object3D();
 	private final Vector3 _offset = new Vector3();
 
-	private final int _id = _geometryId += 2;
-	private final String _uuid = MathUtils.generateUUID();
-	private final String _name = "";
+	private int _id = _geometryId += 2;
+	private String _uuid = MathUtils.generateUUID();
+	private String _name = "";
+	private String _type = "Geometry";
 	private final ChildArrayList<Vector3> _vertices = new ChildArrayList<>();
 	private final ChildArrayList<Color> _colors = new ChildArrayList<>();
 	private final ChildArrayList<Face3> _faces = new ChildArrayList<>();
