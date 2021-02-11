@@ -14,6 +14,7 @@ public class Scene extends net.three4j.core.Object3D {
 	private Object _fog = null;
 	private Object _overrideMaterial = null;
 	private boolean _autoUpdate = true;
+	private String _type = "Scene";
 
 	public Scene() {
 		super();
