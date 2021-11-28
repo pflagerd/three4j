@@ -28,6 +28,8 @@ public class Three4jToStringStyle extends ToStringStyle {
 			if (d % 1 == 0) {
 				value = String.format("%.0f", d);
 			}
+		} else if (value.getClass() == Object.class) {
+			value = "Object {}";
 		}
 		buffer.append(value);
 	}

@@ -11,6 +11,7 @@ import net.three4j.math.Color;
 public class Scene extends net.three4j.core.Object3D {
 
 	private Color _background = null;
+	private Object _environment = null;
 	private Object _fog = null;
 	private Object _overrideMaterial = null;
 	private boolean _autoUpdate = true;
@@ -25,8 +26,15 @@ public class Scene extends net.three4j.core.Object3D {
 
 		if (source._background != null)
 			this._background = source._background.clone();
-//			if ( source._fog != null ) this._fog = source._fog.clone();
-//			if ( source._overrideMaterial != null ) this._overrideMaterial = source._overrideMaterial.clone();
+
+//		if (source._environment != null)
+//			this._environment = source._environment.clone();
+
+//		if ( source._fog != null )
+//			this._fog = source._fog.clone();
+
+//		if ( source._overrideMaterial != null )
+//			this._overrideMaterial = source._overrideMaterial.clone();
 
 		this._autoUpdate = source._autoUpdate;
 		this._matrixAutoUpdate = source._matrixAutoUpdate;
