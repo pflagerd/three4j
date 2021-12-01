@@ -1,10 +1,5 @@
 package net.three4j.renderers;
 
-import net.three4j.core.EventDispatcher;
-import net.three4j.textures.Texture;
-import static net.three4j.constants.LinearFilter;
-import net.three4j.math.Vector4;
-
 public class WebGLRenderTarget {
 ///*
 // In options, we can specify:

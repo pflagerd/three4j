@@ -26,9 +26,10 @@ public class utils {
 
 		double max = array[ 0 ];
 
-		for ( int i = 1, l = array.length; i < l; ++ i ) {
+		for ( int i = 1, l = array.length; i < l; ++i ) {
 
-			if ( array[ i ] > max ) max = array[ i ];
+			if ( array[ i ] > max )
+				max = array[ i ];
 
 		}
 

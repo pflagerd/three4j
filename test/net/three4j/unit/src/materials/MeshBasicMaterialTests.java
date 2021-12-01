@@ -1,9 +1,7 @@
 package net.three4j.unit.src.materials;
 
-import net.three4j.materials.MeshBasicMaterial;
-
 public class MeshBasicMaterialTests {
-	
+
 //		// INHERITANCE
 //		@Test
 //		public void Extending() {

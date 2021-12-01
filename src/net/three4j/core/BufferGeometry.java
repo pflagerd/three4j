@@ -1,6 +1,6 @@
 package net.three4j.core;
 
-import net.three4j.math.Vector3;
+import static net.three4j.utils.arrayMax;
 
 import java.util.HashMap;
 
@@ -9,14 +9,10 @@ import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.Three4jToStringStyle;
 
 import net.three4j.math.Box3;
-
-import net.three4j.math.Sphere;
-
-import net.three4j.math.Matrix4;
-import net.three4j.math.Matrix3;
 import net.three4j.math.MathUtils;
-
-import static net.three4j.utils.arrayMax;
+import net.three4j.math.Matrix4;
+import net.three4j.math.Sphere;
+import net.three4j.math.Vector3;
 
 public class BufferGeometry extends EventDispatcher {
 	public static class DrawRange {
@@ -120,16 +116,23 @@ public class BufferGeometry extends EventDispatcher {
 	private String _name = "";
 	private String _type = "BufferGeometry";
 
-	private int _intIndex = 0;
-	private double[] _doubleArrayIndex = new double[0];
+	BufferAttribute _index;
 
 	private HashMap<String, Object> _attributes = new HashMap<>();
 
-	private HashMap<String, Object>  _morphAttributes = new HashMap();
+	public HashMap<String, Object> attributes() {
+		return _attributes;
+	}
+
+	private HashMap<String, Object>  _morphAttributes = new HashMap<>();
 
 	private boolean _morphTargetsRelative = false;
 
 	private Group[] _groups = new Group[0];
+
+	public Group[] groups() {
+		return _groups;
+	}
 
 	private Box3 _boundingBox;
 	private Sphere _boundingSphere;
@@ -138,34 +141,28 @@ public class BufferGeometry extends EventDispatcher {
 
 	private Object _userData = new Object();
 
-	private Uint32BufferAttribute _uint32BufferAttribute;
-
-	private Uint16BufferAttribute _uint16BufferAttribute;
-
 	public BufferGeometry() {
 	}
 
-	public int getIndex() {
+	public BufferAttribute getIndex() {
 
-		return this._intIndex;
+		return this._index;
 
 	}
 
 	public BufferGeometry setIndex(double[] index) {
 
-		//this._index = new ( arrayMax(index) > 65535. ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
-		if ( arrayMax(index) > 65535. )
-			this._uint32BufferAttribute = new Uint32BufferAttribute(index, 1);
-		else
-			this._uint16BufferAttribute = new Uint16BufferAttribute(index, 1);
+//		if ( index.getClass().isArray() ) { // not technically necessary, but here for reference for now.
 
-		return this;
+			//this._index = new ( arrayMax(index) > 65535. ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
+			if ( arrayMax(index) > 65535. )
+				this._index = new Uint32BufferAttribute(index, 1);
+			else
+				this._index = new Uint16BufferAttribute(index, 1);
 
-	}
-
-	public BufferGeometry setIndex(int index) {
-
-		this._intIndex = index;
+//		} else {
+//			this._index = index;
+//		}
 
 		return this;
 

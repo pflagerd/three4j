@@ -1,29 +1,5 @@
 package net.three4j.unit.src.core;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import net.three4j.core.BufferGeometry;
-//import static net.three4j.core.BufferAttribute.BufferAttribute;
-//import static net.three4j.core.BufferAttribute.Uint16BufferAttribute;
-//import static net.three4j.core.BufferAttribute.Uint32BufferAttribute;
-import net.three4j.math.Color;
-import net.three4j.math.Vector2;
-import net.three4j.math.Vector3;
-import net.three4j.math.Vector4;
-import net.three4j.math.Matrix4;
-import net.three4j.math.Sphere;
-import net.three4j.core.Geometry;
-import net.three4j.core.Face3;
-//import net.three4j.objects.Mesh;
-//import net.three4j.objects.Line;
-import static net.three4j.unit.src.math.ConstantsTests.x;
-import static net.three4j.unit.src.math.ConstantsTests.y;
-import static net.three4j.unit.src.math.ConstantsTests.z;
-//import net.three4j.unit.utils.console-wrapper;
-
 public class BufferGeometryTests {
 
 	private final static double DegToRad = Math.PI / 180;

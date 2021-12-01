@@ -1,28 +1,22 @@
 package net.three4j.textures;
 
-import net.three4j.core.EventDispatcher;
-
 import static net.three4j.THREE.console;
-
-import static net.three4j.constants.MirroredRepeatWrapping;
 import static net.three4j.constants.ClampToEdgeWrapping;
-import static net.three4j.constants.RepeatWrapping;
 import static net.three4j.constants.LinearEncoding;
+import static net.three4j.constants.LinearFilter;
+import static net.three4j.constants.LinearMipmapLinearFilter;
+import static net.three4j.constants.RGBAFormat;
+import static net.three4j.constants.UVMapping;
 import static net.three4j.constants.UnsignedByteType;
 
 import java.util.Arrays;
 
 import org.mozilla.dom.Image;
 
-import static net.three4j.constants.RGBAFormat;
-import static net.three4j.constants.LinearMipmapLinearFilter;
-import static net.three4j.constants.LinearFilter;
-import static net.three4j.constants.UVMapping;
-
+import net.three4j.core.EventDispatcher;
 import net.three4j.math.MathUtils;
-import net.three4j.math.Vector2;
 import net.three4j.math.Matrix3;
-import net.three4j.extras.ImageUtils;
+import net.three4j.math.Vector2;
 
 public class Texture extends EventDispatcher {
 
@@ -45,7 +39,7 @@ public class Texture extends EventDispatcher {
 	private Vector2 _repeat = new Vector2(1, 1);
 	private Vector2 _center = new Vector2(0, 0);
 	private double _rotation = 0;
-	private Object _internalFormat = null; 
+	private Object _internalFormat = null;
 
 	private boolean _matrixAutoUpdate = true;
 	private Matrix3 _matrix = new Matrix3();
@@ -55,7 +49,7 @@ public class Texture extends EventDispatcher {
 	private boolean _flipY = true;
 	private int _unpackAlignment = 4; // valid values: 1, 2, 4, 8 (see // http://www.khronos.org/opengles/sdk/docs/man/xhtml/glPixelStorei.xml)
 	private int _version = 0;
-	
+
 	public Texture() {
 		_image = Texture.DEFAULT_IMAGE;
 		_mapping = Texture.DEFAULT_MAPPING;
@@ -372,12 +366,12 @@ public class Texture extends EventDispatcher {
 //		return uv;
 //
 //	}
-	
+
 	public void needsUpdate(boolean needsUpdate) {
 		if (needsUpdate)
 			this._version++;
 	}
-	
+
 	public static class SerializedImage {
 		public byte[] data = new byte[0];
 		public int width;
@@ -390,13 +384,13 @@ public class Texture extends EventDispatcher {
 //		if ( ( typeof HTMLImageElement !== 'undefined' && image instanceof HTMLImageElement ) ||
 //			( typeof HTMLCanvasElement !== 'undefined' && image instanceof HTMLCanvasElement ) ||
 //			( typeof ImageBitmap !== 'undefined' && image instanceof ImageBitmap ) ) {
-//	
+//
 //			// default images
-//	
+//
 //			return ImageUtils.getDataURL( image );
-//	
+//
 //		} else {
-//	
+//
 			if ( image.data != null) {
 				// images of DataTexture
 				SerializedImage serializedImage = new SerializedImage();
@@ -406,12 +400,12 @@ public class Texture extends EventDispatcher {
 				serializedImage.type = image.dataType;
 				return serializedImage;
 			} else {
-	
+
 				console.warn( "THREE.Texture: Unable to serialize Texture." );
 				return new SerializedImage();
-	
+
 			}
-	
+
 		}
 //
 //	}

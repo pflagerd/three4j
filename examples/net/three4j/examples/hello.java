@@ -26,10 +26,10 @@ class hello {
 //        println(jsonify(camera.toString()));
 
 		scene = new Scene();
-        println(jsonify(scene.toString()));
+//        println(jsonify(scene.toString()));
 
         geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
-//        println(jsonify(geometry.toString()));
+        println(jsonify(geometry.toString()));
 
         material = new MeshNormalMaterial();
 

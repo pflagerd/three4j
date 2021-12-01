@@ -1,16 +1,16 @@
 package net.three4j.materials;
 
-import net.three4j.core.Event;
-import net.three4j.core.EventDispatcher;
-import static net.three4j.constants.FrontSide;
-import static net.three4j.constants.FlatShading;
-import static net.three4j.constants.NormalBlending;
-import static net.three4j.constants.LessEqualDepth;
 import static net.three4j.constants.AddEquation;
+import static net.three4j.constants.AlwaysStencilFunc;
+import static net.three4j.constants.FrontSide;
+import static net.three4j.constants.KeepStencilOp;
+import static net.three4j.constants.LessEqualDepth;
+import static net.three4j.constants.NormalBlending;
 import static net.three4j.constants.OneMinusSrcAlphaFactor;
 import static net.three4j.constants.SrcAlphaFactor;
-import static net.three4j.constants.AlwaysStencilFunc;
-import static net.three4j.constants.KeepStencilOp;
+
+import net.three4j.core.Event;
+import net.three4j.core.EventDispatcher;
 import net.three4j.math.MathUtils;
 import net.three4j.math.Plane;
 
@@ -87,9 +87,9 @@ public class Material extends EventDispatcher {
 	Object userData = new Object();
 
 	private double _version = 0;
-	
+
 	public Material() {
-		
+
 	}
 
 	public String onBeforeCompile( /* shaderobject, renderer */ ) {

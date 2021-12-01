@@ -1,18 +1,13 @@
 package net.three4j.objects;
 
-import net.three4j.math.Vector3;
-import net.three4j.math.Vector2;
-import net.three4j.math.Sphere;
-import net.three4j.math.Ray;
-import net.three4j.math.Matrix4;
-import net.three4j.core.Object3D;
-import net.three4j.math.Triangle;
-import net.three4j.core.Face3;
 import net.three4j.core.Geometry;
-import net.three4j.constants;
+import net.three4j.core.Object3D;
 import net.three4j.materials.Material;
-import net.three4j.materials.MeshBasicMaterial;
-import net.three4j.core.BufferGeometry;
+import net.three4j.math.Matrix4;
+import net.three4j.math.Ray;
+import net.three4j.math.Sphere;
+import net.three4j.math.Vector2;
+import net.three4j.math.Vector3;
 
 public class Mesh extends Object3D {
 

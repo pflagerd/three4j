@@ -1,7 +1,5 @@
 package net.three4j.unit.src.materials;
 
-import net.three4j.materials.Material;
-
 public class MaterialTests {
 
 //		// INSTANCING

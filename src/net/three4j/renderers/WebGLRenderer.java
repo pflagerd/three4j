@@ -1,48 +1,7 @@
 package net.three4j.renderers;
 
-import static net.three4j.constants.RGBAFormat;
-import static net.three4j.constants.HalfFloatType;
-import static net.three4j.constants.FloatType;
-import static net.three4j.constants.UnsignedByteType;
-
 import net.three4j.cameras.Camera;
-
-import static net.three4j.constants.LinearEncoding;
-import static net.three4j.constants.NoToneMapping;
-import net.three4j.math.MathUtils;
-//import net.three4j.textures.DataTexture;
-//import net.three4j.math.Frustum;
-import net.three4j.math.Matrix4;
-import net.three4j.math.Vector2;
-import net.three4j.math.Vector3;
-import net.three4j.math.Vector4;
 import net.three4j.scenes.Scene;
-import net.three4j.math.Color;
-//import net.three4j.renderers.webgl.WebGLAnimation;
-//import net.three4j.renderers.webgl.WebGLAttributes;
-//import net.three4j.renderers.webgl.WebGLBackground;
-//import net.three4j.renderers.webgl.WebGLBindingStates;
-//import net.three4j.renderers.webgl.WebGLBufferRenderer;
-//import net.three4j.renderers.webgl.WebGLCapabilities;
-//import net.three4j.renderers.webgl.WebGLClipping;
-//import net.three4j.renderers.webgl.WebGLCubeMaps;
-//import net.three4j.renderers.webgl.WebGLExtensions;
-//import net.three4j.renderers.webgl.WebGLGeometries;
-//import net.three4j.renderers.webgl.WebGLIndexedBufferRenderer;
-//import net.three4j.renderers.webgl.WebGLInfo;
-//import net.three4j.renderers.webgl.WebGLMorphtargets;
-//import net.three4j.renderers.webgl.WebGLObjects;
-//import net.three4j.renderers.webgl.WebGLPrograms;
-//import net.three4j.renderers.webgl.WebGLProperties;
-//import net.three4j.renderers.webgl.WebGLRenderLists;
-//import net.three4j.renderers.webgl.WebGLRenderStates;
-//import net.three4j.renderers.webgl.WebGLShadowMap;
-//import net.three4j.renderers.webgl.WebGLState;
-//import net.three4j.renderers.webgl.WebGLTextures;
-//import net.three4j.renderers.webgl.WebGLUniforms;
-//import net.three4j.renderers.webgl.WebGLUtils;
-//import net.three4j.renderers.webxr.WebXRManager;
-//import net.three4j.renderers.webgl.WebGLMaterials;
 
 //public createCanvasElement() {
 //
@@ -53,9 +12,9 @@ import net.three4j.math.Color;
 //}
 
 public class WebGLRenderer {
-	
+
 	public WebGLRenderer() {
-		
+
 	}
 
 //	parameters = parameters || {};
@@ -67,7 +26,7 @@ public class WebGLRenderer {
 //		_depth = parameters.depth !== undefined ? parameters.depth : true,
 //		_stencil = parameters.stencil !== undefined ? parameters.stencil : true,
 	private boolean _antialias;
-	
+
 	public boolean antialias() {
 	  return _antialias;
 	}
@@ -420,16 +379,16 @@ public class WebGLRenderer {
 	public WebGLRenderer size( int width, int height) {
 		return setSize(width, height, false);
 	}
-	
+
 	public WebGLRenderer size( int width, int height, boolean updateStyle ) {
 		return setSize(width, height, updateStyle);
 	}
-	
+
 	public WebGLRenderer setSize( int width, int height) {
 		return setSize(width, height, true);
 	}
-	
-	
+
+
 	public WebGLRenderer setSize( int width, int height, boolean updateStyle ) {
 
 //		if ( xr.isPresenting ) {
@@ -998,8 +957,8 @@ public class WebGLRenderer {
 //
 	public interface AnimationCallback {
 		public void callback(long time);
-	}	
-	
+	}
+
 	public WebGLRenderer setAnimationLoop( AnimationCallback callback ) {
 
 //		onAnimationFrameCallback = callback;

@@ -7,7 +7,7 @@ import net.three4j.core.Geometry;
 
 public class BoxGeometry extends Geometry {
 
-	private String _type;
+	private String _type = "BoxGeometry";
 
 	static class Parameters {
 		public Parameters(double width, double height, double depth, int widthSegments, int heightSegments, int depthSegments) {
@@ -109,7 +109,7 @@ public class BoxGeometry extends Geometry {
 		_parameters = new Parameters(width, height, depth, widthSegments, heightSegments, depthSegments);
 
 		this.fromBufferGeometry(new BoxBufferGeometry(width, height, depth, widthSegments, heightSegments, depthSegments));
-//		this.mergeVertices();
+		this.mergeVertices();
 
 	}
 

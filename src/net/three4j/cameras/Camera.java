@@ -1,15 +1,11 @@
 package net.three4j.cameras;
 
-import net.three4j.math.Matrix4;
-
-import java.util.Arrays;
-
 import net.three4j.core.Object3D;
-import net.three4j.math.Vector3;
+import net.three4j.math.Matrix4;
 
 
 public class Camera extends Object3D {
-	
+
 	public class View {
 		boolean _enabled = true;
 		double _fullWidth = 1;
@@ -18,41 +14,41 @@ public class Camera extends Object3D {
 		double _offsetY = 0;
 		double _width = 1;
 		double _height = 1;
-		
+
 		public boolean enabled() {
 			return _enabled;
 		}
-		
+
 		public double fullWidth() {
 			return _fullWidth;
 		}
-		
+
 		public double fullHeight() {
 			return _fullHeight;
 		}
-		
+
 		public double offsetX() {
 			return _offsetX;
 		}
-		
+
 		public double offsetY() {
 			return _offsetY;
 		}
-		
+
 		public double width() {
 			return _width;
 		}
-		
+
 		public double height() {
 			return _height;
 		}
-		
+
 	};
-	
+
 	private Matrix4 _matrixWorldInverse;
 	protected Matrix4 _projectionMatrix;
 	protected Matrix4 _projectionMatrixInverse;
-	
+
 	public Matrix4 matrixWorldInverse() {
 		return _matrixWorldInverse;
 	}
@@ -67,22 +63,22 @@ public class Camera extends Object3D {
 
 	public Camera() {
 		super();
-	
+
 		this._matrixWorldInverse = new Matrix4();
-	
+
 		this._projectionMatrix = new Matrix4();
 		this._projectionMatrixInverse = new Matrix4();
-	
+
 	}
-	
+
 	public Camera clone() {
 		return new Camera().copy(this);
 	}
-	
+
 	public Camera copy (Camera source) {
 		return copy(source, true);
 	}
-	
+
 	public Camera copy  ( Camera source, boolean recursive ) {
 
 		super.copy( source, recursive );

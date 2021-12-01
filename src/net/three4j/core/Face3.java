@@ -4,16 +4,16 @@ import net.three4j.math.Color;
 import net.three4j.math.Vector3;
 
 public class Face3 {
-	
+
 	public Face3() {
-		
+
 	}
 
-	public Face3(double a, double b, double c, Vector3 normal, Color color) {
+	public Face3(int a, int b, int c, Vector3 normal, Color color) {
 		this(a, b, c, normal, color, 0);
 	}
 
-	public Face3(double a, double b, double c, Vector3[] normals, Color color, int materialIndex) {
+	public Face3(int a, int b, int c, Vector3[] normals, Color color, int materialIndex) {
 		this._a = a;
 		this._b = b;
 		this._c = c;
@@ -26,7 +26,7 @@ public class Face3 {
 
 	}
 
-	public Face3(double a, double b, double c, Vector3 normal, Color[] colors, int materialIndex) {
+	public Face3(int a, int b, int c, Vector3 normal, Color[] colors, int materialIndex) {
 		this._a = a;
 		this._b = b;
 		this._c = c;
@@ -39,7 +39,7 @@ public class Face3 {
 
 	}
 
-	public Face3(double a, double b, double c, Vector3[] normals, Color[] colors, int materialIndex) {
+	public Face3(int a, int b, int c, Vector3[] normals, Color[] colors, int materialIndex) {
 		this._a = a;
 		this._b = b;
 		this._c = c;
@@ -52,7 +52,7 @@ public class Face3 {
 
 	}
 
-	public Face3(double a, double b, double c, Vector3 normal, Color color, int materialIndex) {
+	public Face3(int a, int b, int c, Vector3 normal, Color color, int materialIndex) {
 
 		this._a = a;
 		this._b = b;
@@ -68,35 +68,35 @@ public class Face3 {
 
 	}
 
-	private double _a = 0;
+	private int _a = 0;
 
-	public double a() {
+	public int a() {
 		return _a;
 	}
 
-	public Face3 a(double a) {
+	public Face3 a(int a) {
 		this._a = a;
 		return this;
 	}
 
-	private double _b = 0;
+	private int _b = 0;
 
-	public double b() {
+	public int b() {
 		return _b;
 	}
 
-	public Face3 b(double b) {
+	public Face3 b(int b) {
 		this._b = b;
 		return this;
 	}
 
-	private double _c = 0;
+	private int _c = 0;
 
-	public double c() {
+	public int c() {
 		return _c;
 	}
 
-	public Face3 c(double c) {
+	public Face3 c(int c) {
 		this._c = c;
 		return this;
 	}
