@@ -65,7 +65,7 @@ public class BufferAttribute {
 		return _normalized;
 	}
 
-	public int _usage;
+	public int _usage = StaticDrawUsage;
 	public int usage() {
 		return _usage;
 	}
@@ -75,16 +75,13 @@ public class BufferAttribute {
 		return _version;
 	}
 
-	public UpdateRange _updateRange;
+	public UpdateRange _updateRange = new UpdateRange(0, 1);
 	public UpdateRange updateRange() {
 		return _updateRange;
 	}
 
 
 	public BufferAttribute() {
-		_name = "";
-		_usage = StaticDrawUsage;
-		_updateRange = new UpdateRange(0, 1);
 	}
 
 	public BufferAttribute(Float32Array array, int itemSize) {

@@ -135,7 +135,16 @@ public class BufferGeometry extends EventDispatcher {
 	}
 
 	private Box3 _boundingBox;
+
+	public Box3 boundingBox() {
+		return _boundingBox;
+	}
+
 	private Sphere _boundingSphere;
+
+	public Sphere boundingSphere() {
+		return _boundingSphere;
+	}
 
 	private DrawRange drawRange = new DrawRange( 0, Integer.MAX_VALUE );
 

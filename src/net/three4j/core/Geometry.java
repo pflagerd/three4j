@@ -12,6 +12,7 @@ import net.three4j.math.Color;
 import net.three4j.math.MathUtils;
 import net.three4j.math.Matrix3;
 import net.three4j.math.Matrix4;
+import net.three4j.math.Vector2;
 //import net.three4j.math.Sphere;
 //import net.three4j.math.Box3;
 import net.three4j.math.Vector3;
@@ -29,8 +30,8 @@ public class Geometry extends EventDispatcher {
 	private String _type = "Geometry";
 	private Vector3[] _vertices = new Vector3[0];
 	private Color[] _colors = new Color[0];
-	private Face3[] _faces = new Face3[0];
-	private Object[][] _faceVertexUvs = new Object[0][0]; // DPP: TODO:
+	protected Face3[] _faces = new Face3[0];
+	protected Vector2[][] _faceVertexUvs = new Vector2[0][0]; // DPP: TODO:
 	private Object[] _morphTargets = new Object[0]; // DPP: TODO:
 	private Object[] _morphNormals = new Object[0]; // DPP: TODO:
 	private Object[] _skinWeights = new Object[0]; // DPP: TODO:
@@ -175,7 +176,7 @@ public class Geometry extends EventDispatcher {
 
 			Geometry scope = this;
 
-			BufferAttribute index = (BufferAttribute) geometry._index;
+			BufferAttribute index = geometry._index;
 
 			HashMap<String, Object> attributes = geometry.attributes();
 
@@ -192,8 +193,8 @@ public class Geometry extends EventDispatcher {
 			BufferAttribute uv2 = (BufferAttribute) attributes.get("uv2");		// TODO: Might be a BufferAttribute subclass, or even primitive type
 
 			if ( uv2 != null ) {
-				this._faceVertexUvs = new Object[2][]; // this._faceVertexUvs[ 1 ] = [];
-				this._faceVertexUvs[1] = new Object[0];
+				this._faceVertexUvs = new Vector2[2][]; // this._faceVertexUvs[ 1 ] = [];
+				this._faceVertexUvs[1] = new Vector2[0];
 			}
 
 			for ( int i = 0; i < position.count(); i ++ ) {
@@ -207,6 +208,51 @@ public class Geometry extends EventDispatcher {
 				}
 
 			}
+
+			class NestedFunction {
+				// DPP: This was a nested function, which meant that color, scope, normal, and all the other locals
+				public void addFace( int a, int b, int c, int materialIndex ) {
+
+							Color[] vertexColors = ( color == null ) ? new Color[0] : new Color[] {
+								scope._colors[ a ].clone(),
+								scope._colors[ b ].clone(),
+								scope._colors[ c ].clone()
+							};
+
+
+							Vector3[] vertexNormals = ( normal == null ) ? new Vector3[0] : new Vector3[] {
+								new Vector3().fromBufferAttribute( normal, a ),
+								new Vector3().fromBufferAttribute( normal, b ),
+								new Vector3().fromBufferAttribute( normal, c )
+							};
+
+							Face3 face = new Face3( a, b, c, vertexNormals, vertexColors, materialIndex );
+
+							scope._faces = ArrayUtils.add(scope._faces, face); // scope._faces.push( face );
+
+							if ( uv != null ) {
+								// DPP: Java cannot figure out that the generic T of scope._faceVertexUvs[0] is Vector2[]
+								scope._faceVertexUvs[0] = (Vector2[]) ArrayUtils.add(scope._faceVertexUvs[0], new Vector2[] {
+									new Vector2().fromBufferAttribute( uv, a ),
+									new Vector2().fromBufferAttribute( uv, b ),
+									new Vector2().fromBufferAttribute( uv, c )
+								} );
+
+							}
+
+							if ( uv2 != null ) {
+
+								scope._faceVertexUvs[1] = (Vector2[]) ArrayUtils.add(scope._faceVertexUvs[ 1 ], new Vector2[] {
+									new Vector2().fromBufferAttribute( uv2, a ),
+									new Vector2().fromBufferAttribute( uv2, b ),
+									new Vector2().fromBufferAttribute( uv2, c )
+								} );
+
+							}
+
+						}
+			}
+			NestedFunction nestedFunction = new NestedFunction(); // just so we have a class instance to work with.
 
 			Group[] groups = geometry.groups();
 
@@ -223,11 +269,14 @@ public class Geometry extends EventDispatcher {
 
 						if ( index != null ) {
 
-//							addFace( index.getX( j ), index.getX( j + 1 ), index.getX( j + 2 ), group.materialIndex );
+							// DPP: Somehow index.getX( j ) should return an integer instead of a double.
+							//      Maybe index.getX() needs to be generic?
+							//      Then I wouldn't need these (int) casts.
+							nestedFunction.addFace( (int)index.getX( j ), (int)index.getX( j + 1 ), (int)index.getX( j + 2 ), group.materialIndex() );
 
 						} else {
 
-//							addFace( j, j + 1, j + 2, group.materialIndex );
+							nestedFunction.addFace( j, j + 1, j + 2, group.materialIndex() );
 
 						}
 
@@ -240,8 +289,9 @@ public class Geometry extends EventDispatcher {
 				if ( index != null ) {
 
 					for ( int i = 0; i < index.count(); i += 3 ) {
-
-//						addFace( index.getX( i ), index.getX( i + 1 ), index.getX( i + 2 ) );
+						// DPP: Using -1 for undefined is designed to emulate the behavior of addFace() and Face() when material is passed
+						//      as "undefined" (which is what happens if no material parameter is passed to addFace() or Face().
+						nestedFunction.addFace( (int)index.getX( i ), (int)index.getX( i + 1 ), (int)index.getX( i + 2 ), -1 /* undefined */ );
 
 					}
 
@@ -249,73 +299,31 @@ public class Geometry extends EventDispatcher {
 
 					for ( int i = 0; i < position.count(); i += 3 ) {
 
-//						addFace( i, i + 1, i + 2 );
+						nestedFunction.addFace( i, i + 1, i + 2, -1 /* undefined */ );
 
 					}
 
 				}
 
 			}
-//
-//			this.computeFaceNormals();
-//
-//			if ( geometry.boundingBox !== null ) {
-//
-//				this.boundingBox = geometry.boundingBox.clone();
-//
-//			}
-//
-//			if ( geometry.boundingSphere !== null ) {
-//
-//				this.boundingSphere = geometry.boundingSphere.clone();
-//
-//			}
+
+			this.computeFaceNormals();
+
+			if ( geometry.boundingBox() != null ) {
+
+				this._boundingBox = geometry.boundingBox().clone();
+
+			}
+
+			if ( geometry.boundingSphere() != null ) {
+
+				this._boundingSphere = geometry.boundingSphere().clone();
+
+			}
 
 			return this;
 
 		}
-
-//	public addFace( a, b, c, materialIndex ) {
-//
-//				const vertexColors = ( color === undefined ) ? [] : [
-//					scope.colors[ a ].clone(),
-//					scope.colors[ b ].clone(),
-//					scope.colors[ c ].clone()
-//				];
-//
-//				const vertexNormals = ( normal === undefined ) ? [] : [
-//					new Vector3().fromBufferAttribute( normal, a ),
-//					new Vector3().fromBufferAttribute( normal, b ),
-//					new Vector3().fromBufferAttribute( normal, c )
-//				];
-//
-//				const face = new Face3( a, b, c, vertexNormals, vertexColors, materialIndex );
-//
-//				scope.faces.push( face );
-//
-//				if ( uv !== undefined ) {
-//
-//					scope.faceVertexUvs[ 0 ].push( [
-//						new Vector2().fromBufferAttribute( uv, a ),
-//						new Vector2().fromBufferAttribute( uv, b ),
-//						new Vector2().fromBufferAttribute( uv, c )
-//					] );
-//
-//				}
-//
-//				if ( uv2 !== undefined ) {
-//
-//					scope.faceVertexUvs[ 1 ].push( [
-//						new Vector2().fromBufferAttribute( uv2, a ),
-//						new Vector2().fromBufferAttribute( uv2, b ),
-//						new Vector2().fromBufferAttribute( uv2, c )
-//					] );
-//
-//				}
-//
-//			}
-//
-
 
 //	public center  () {
 //
@@ -351,31 +359,31 @@ public class Geometry extends EventDispatcher {
 //			return this;
 //
 //		},
-//
-//	public computeFaceNormals  () {
-//
-//			const cb = new Vector3(), ab = new Vector3();
-//
-//			for ( let f = 0, fl = this.faces.length; f < fl; f ++ ) {
-//
-//				const face = this.faces[ f ];
-//
-//				const vA = this.vertices[ face.a ];
-//				const vB = this.vertices[ face.b ];
-//				const vC = this.vertices[ face.c ];
-//
-//				cb.subVectors( vC, vB );
-//				ab.subVectors( vA, vB );
-//				cb.cross( ab );
-//
-//				cb.normalize();
-//
-//				face.normal.copy( cb );
-//
-//			}
-//
-//		},
-//
+
+	public void computeFaceNormals  () {
+
+			Vector3 cb = new Vector3(), ab = new Vector3();
+
+			for ( int f = 0, fl = this._faces.length; f < fl; f ++ ) {
+
+				Face3 face = this._faces[ f ];
+
+				Vector3 vA = this._vertices[ face.a() ];
+				Vector3 vB = this._vertices[ face.b() ];
+				Vector3 vC = this._vertices[ face.c() ];
+
+				cb.subVectors( vC, vB );
+				ab.subVectors( vA, vB );
+				cb.cross( ab );
+
+				cb.normalize();
+
+				face.normal().copy( cb );
+
+			}
+
+		}
+
 //	public computeVertexNormals  ( areaWeighted = true ) {
 //
 //			const vertices = new Array( this.vertices.length );

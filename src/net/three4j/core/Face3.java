@@ -10,7 +10,7 @@ public class Face3 {
 	}
 
 	public Face3(int a, int b, int c, Vector3 normal, Color color) {
-		this(a, b, c, normal, color, 0);
+		this(a, b, c, normal, color, -1);  // materialIndex == -1 means "undefined"
 	}
 
 	public Face3(int a, int b, int c, Vector3[] normals, Color color, int materialIndex) {
