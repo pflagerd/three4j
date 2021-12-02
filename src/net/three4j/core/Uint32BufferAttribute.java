@@ -8,11 +8,11 @@ public class Uint32BufferAttribute extends BufferAttribute {
 	public Uint32BufferAttribute(Int8Array array, int itemSize, boolean normalized) {
 	}
 
-	public Uint32BufferAttribute(double[] _array, int i) {
+	public Uint32BufferAttribute(int[] _array, int i) {
 		this(_array, i, false);
 	}
 
-	public Uint32BufferAttribute(double[] _array, int i, boolean normalized) {
+	public Uint32BufferAttribute(int[] _array, int i, boolean normalized) {
 		this._array = new Uint32Array(_array);
 	}
 

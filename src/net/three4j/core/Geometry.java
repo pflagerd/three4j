@@ -31,7 +31,7 @@ public class Geometry extends EventDispatcher {
 	private Vector3[] _vertices = new Vector3[0];
 	private Color[] _colors = new Color[0];
 	protected Face3[] _faces = new Face3[0];
-	protected Vector2[][] _faceVertexUvs = new Vector2[0][0]; // DPP: TODO:
+	protected Vector2[][] _faceVertexUvs = new Vector2[2][0]; // DPP: TODO:
 	private Object[] _morphTargets = new Object[0]; // DPP: TODO:
 	private Object[] _morphNormals = new Object[0]; // DPP: TODO:
 	private Object[] _skinWeights = new Object[0]; // DPP: TODO:
@@ -232,7 +232,7 @@ public class Geometry extends EventDispatcher {
 
 							if ( uv != null ) {
 								// DPP: Java cannot figure out that the generic T of scope._faceVertexUvs[0] is Vector2[]
-								scope._faceVertexUvs[0] = (Vector2[]) ArrayUtils.add(scope._faceVertexUvs[0], new Vector2[] {
+								scope._faceVertexUvs[0] = (Vector2[]) ArrayUtils.addAll(scope._faceVertexUvs[0], new Vector2[] {
 									new Vector2().fromBufferAttribute( uv, a ),
 									new Vector2().fromBufferAttribute( uv, b ),
 									new Vector2().fromBufferAttribute( uv, c )
@@ -242,7 +242,7 @@ public class Geometry extends EventDispatcher {
 
 							if ( uv2 != null ) {
 
-								scope._faceVertexUvs[1] = (Vector2[]) ArrayUtils.add(scope._faceVertexUvs[ 1 ], new Vector2[] {
+								scope._faceVertexUvs[1] = (Vector2[]) ArrayUtils.addAll(scope._faceVertexUvs[ 1 ], new Vector2[] {
 									new Vector2().fromBufferAttribute( uv2, a ),
 									new Vector2().fromBufferAttribute( uv2, b ),
 									new Vector2().fromBufferAttribute( uv2, c )
@@ -272,7 +272,7 @@ public class Geometry extends EventDispatcher {
 							// DPP: Somehow index.getX( j ) should return an integer instead of a double.
 							//      Maybe index.getX() needs to be generic?
 							//      Then I wouldn't need these (int) casts.
-							nestedFunction.addFace( (int)index.getX( j ), (int)index.getX( j + 1 ), (int)index.getX( j + 2 ), group.materialIndex() );
+							nestedFunction.addFace( index.getX( j, 0 ), index.getX( j + 1, 0 ), index.getX( j + 2, 0 ), group.materialIndex() );
 
 						} else {
 
@@ -291,7 +291,7 @@ public class Geometry extends EventDispatcher {
 					for ( int i = 0; i < index.count(); i += 3 ) {
 						// DPP: Using -1 for undefined is designed to emulate the behavior of addFace() and Face() when material is passed
 						//      as "undefined" (which is what happens if no material parameter is passed to addFace() or Face().
-						nestedFunction.addFace( (int)index.getX( i ), (int)index.getX( i + 1 ), (int)index.getX( i + 2 ), -1 /* undefined */ );
+						nestedFunction.addFace( index.getX( i, 0 ), index.getX( i + 1, 0 ), index.getX( i + 2, 0 ), -1 /* undefined */ );
 
 					}
 
@@ -784,19 +784,19 @@ public class Geometry extends EventDispatcher {
 
 			HashMap<String, Integer> verticesMap = new HashMap<>(); // Hashmap for looking up vertices by position coordinates (and making sure they are unique)
 			Vector3[] unique = new Vector3[0];
-			int[] changes = new int[0];
+			int[] changes = new int[this._vertices.length];
 
 			double precision = Math.pow( 10, precisionPoints );
 
-			for ( int i = 0, il = _vertices.length; i < il; i ++ ) {
+			for ( int i = 0, il = this._vertices.length; i < il; i ++ ) {
 
-				Vector3 v = _vertices[ i ];
+				Vector3 v = this._vertices[ i ];
 				String key = "" + Math.round( v.x() * precision ) + '_' + Math.round( v.y() * precision ) + '_' + Math.round( v.z() * precision );
 
 				if ( verticesMap.get(key) == null ) {
 
 					verticesMap.put(key, i);
-					unique = ArrayUtils.add(unique, _vertices[i]); // unique.push( _vertices[ i ] );
+					unique = ArrayUtils.add(unique, this._vertices[i]); // unique.push( _vertices[ i ] );
 					changes[ i ] = unique.length - 1;
 
 				} else {
@@ -855,7 +855,7 @@ public class Geometry extends EventDispatcher {
 			// Use unique set of vertices
 
 			int diff = _vertices.length - unique.length;
-			_vertices = unique;
+			this._vertices = unique;
 			return diff;
 
 		}

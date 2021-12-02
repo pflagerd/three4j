@@ -37,6 +37,24 @@ public class utils {
 
 	}
 
+	public static double arrayMax( int[] array ) {
+
+		if ( array.length == 0 )
+			return Integer.MIN_VALUE;
+
+		int max = array[ 0 ];
+
+		for ( int i = 1, l = array.length; i < l; ++i ) {
+
+			if ( array[ i ] > max )
+				max = array[ i ];
+
+		}
+
+		return max;
+
+	}
+
 	//const TYPED_ARRAYS = {
 	//	Int8Array: Int8Array,
 	//	Uint8Array: Uint8Array,

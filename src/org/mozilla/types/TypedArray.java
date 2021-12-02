@@ -5,18 +5,23 @@ import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.Three4jToStringStyle;
 
 public class TypedArray {
+	public TypedArray(int[] array) {
+		this._iarray = ArrayUtils.clone(array);
+		this.length = array.length;
+	}
+
 	public TypedArray(double[] array) {
-		this._array = ArrayUtils.clone(array);
+		this._darray = ArrayUtils.clone(array);
 		this.length = array.length;
 	}
 
 	public TypedArray(int length) {
-		this._array = new double[length];
+		this._darray = new double[length];
 		this.length = length;
 	}
 
 	public TypedArray clone() {
-		return new TypedArray(this._array);
+		return new TypedArray(this._darray);
 	}
 
 	public String toString() {
@@ -29,23 +34,27 @@ public class TypedArray {
 	}
 
 	public double[] array() {
-		return _array;
+		return _darray;
+	}
+
+	public int[] array(int t) {
+		return _iarray;
 	}
 
 	public TypedArray set(double[] array, int offset) {
-		System.arraycopy(array, 0,  this._array, offset, array.length);
+		System.arraycopy(array, 0,  this._darray, offset, array.length);
 		return this;
 	}
 
 	public TypedArray set(double[] array) {
 		this.length = array.length;
-		this._array = ArrayUtils.clone(array);
+		this._darray = ArrayUtils.clone(array);
 		return this;
 	}
 
-
-
-	protected double[] _array = new double[0];
+	// Only one of these may be non-null
+	protected double[] _darray;
+	protected int[] _iarray;
 
 	public int length;
 

@@ -5,7 +5,7 @@ public class Uint32Array extends TypedArray {
 	public static int BYTES_PER_ELEMENT = 4;
 	public static final String name = "Uint32Array";
 
-	public Uint32Array(double[] array) {
+	public Uint32Array(int[] array) {
 		super(array);
 	}
 

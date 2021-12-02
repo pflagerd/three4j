@@ -105,7 +105,7 @@ public class BoxBufferGeometry extends BufferGeometry {
 		this(width, height, depth, 1, 1, 1);
 	}
 
-	private double[] _indices;
+	private int[] _indices;
 	private double[] _vertices;
 	private double[] _normals;
 	private double[] _uvs;
@@ -124,7 +124,7 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 		// buffers
 
-		_indices = new double[0];
+		_indices = new int[0];
 		_vertices = new double[0];
 		_normals = new double[0];
 		_uvs = new double[0];
@@ -294,10 +294,10 @@ public class BoxBufferGeometry extends BufferGeometry {
 
 			for (int ix = 0; ix < gridX; ix++) {
 
-				double a = numberOfVertices + ix + gridX1 * iy;
-				double b = numberOfVertices + ix + gridX1 * (iy + 1);
-				double c = numberOfVertices + (ix + 1) + gridX1 * (iy + 1);
-				double d = numberOfVertices + (ix + 1) + gridX1 * iy;
+				int a = numberOfVertices + ix + gridX1 * iy;
+				int b = numberOfVertices + ix + gridX1 * (iy + 1);
+				int c = numberOfVertices + (ix + 1) + gridX1 * (iy + 1);
+				int d = numberOfVertices + (ix + 1) + gridX1 * iy;
 
 				// faces
 

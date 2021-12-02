@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.mozilla.types.Float32Array;
+import org.mozilla.types.Uint16Array;
 
 import net.three4j.core.BufferAttribute;
 import net.three4j.math.Color;
@@ -178,16 +179,16 @@ public class BufferAttributeTests {
 
 	@Test
 	public void get_set() {
-			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4, 5, 6, 7, 8 } );
-			BufferAttribute a = new BufferAttribute( f32a, 4, false );
-			Float32Array expected = new Float32Array( new double[] { 1, 2, - 3, - 4, - 5, - 6, 7, 8 } );
+			Uint16Array ui16a = new Uint16Array( new int[] { 1, 2, 3, 4, 5, 6, 7, 8 } );
+			BufferAttribute a = new BufferAttribute( ui16a, 4, false );
+			Uint16Array expected = new Uint16Array( new int[] { 1, 2, -3, -4, -5, -6, 7, 8 } );
 
-			a.setX( 1, a.getX( 1 ) * - 1 );
-			a.setY( 1, a.getY( 1 ) * - 1 );
-			a.setZ( 0, a.getZ( 0 ) * - 1 );
-			a.setW( 0, a.getW( 0 ) * - 1 );
+			a.setX( 1, -a.getX( 1, 0 ));
+			a.setY( 1, -a.getY( 1, 0 ));
+			a.setZ( 0, -a.getZ( 0, 0 ));
+			a.setW( 0, -a.getW( 0, 0 ));
 
-			assertArrayEquals( expected.array(), ((Float32Array) a.array()).array(), "Check all set* calls set the correct values" );
+			assertArrayEquals( expected.array(), ((Uint16Array) a.array()).array(), "Check all set* calls set the correct values" );
 
 	}
 

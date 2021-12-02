@@ -403,6 +403,18 @@ public class BufferAttribute {
 
 	}
 
+	public int getX(int index, int t) {
+		return ((Uint16Array)this.array()).array(t)[ index * this._itemSize ];
+	}
+
+	public BufferAttribute setX( int index, int x ) { // x is used for type as well as value
+
+		((Uint16Array)this.array()).array(x)[ index * this._itemSize ] = x;
+
+		return this;
+
+	}
+
 	public double getY(int index) {
 
 		return ((Float32Array)this.array()).array()[ index * this._itemSize + 1 ];
@@ -412,6 +424,18 @@ public class BufferAttribute {
 	public BufferAttribute setY( int index, double y ) {
 
 		((Float32Array)this.array()).array()[ index * this._itemSize + 1 ] = y;
+
+		return this;
+
+	}
+
+	public int getY(int index, int t) {
+		return ((Uint16Array)this.array()).array(t)[ index * this._itemSize + 1];
+	}
+
+	public BufferAttribute setY( int index, int y ) { // x is used for type as well as value
+
+		((Uint16Array)this.array()).array(y)[ index * this._itemSize + 1] = y;
 
 		return this;
 
@@ -431,6 +455,18 @@ public class BufferAttribute {
 
 	}
 
+	public int getZ(int index, int t) {
+		return ((Uint16Array)this.array()).array(t)[ index * this._itemSize + 2];
+	}
+
+	public BufferAttribute setZ( int index, int z ) { // x is used for type as well as value
+
+		((Uint16Array)this.array()).array(z)[ index * this._itemSize + 2] = z;
+
+		return this;
+
+	}
+
 	public double getW(int index) {
 
 		return ((Float32Array)this.array()).array()[ index * this._itemSize + 3 ];
@@ -440,6 +476,18 @@ public class BufferAttribute {
 	public BufferAttribute setW( int index, double w ) {
 
 		((Float32Array)this.array()).array()[ index * this._itemSize + 3 ] = w;
+
+		return this;
+
+	}
+
+	public int getW(int index, int t) {
+		return ((Uint16Array)this.array()).array(t)[ index * this._itemSize + 3];
+	}
+
+	public BufferAttribute setW( int index, int w ) { // x is used for type as well as value
+
+		((Uint16Array)this.array()).array(w)[ index * this._itemSize + 3] = w;
 
 		return this;
 

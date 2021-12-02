@@ -159,22 +159,9 @@ public class BufferGeometry extends EventDispatcher {
 
 	}
 
-	public BufferGeometry setIndex(double[] index) {
-
-//		if ( index.getClass().isArray() ) { // not technically necessary, but here for reference for now.
-
-			//this._index = new ( arrayMax(index) > 65535. ? Uint32BufferAttribute : Uint16BufferAttribute )( index, 1 );
-			if ( arrayMax(index) > 65535. )
-				this._index = new Uint32BufferAttribute(index, 1);
-			else
-				this._index = new Uint16BufferAttribute(index, 1);
-
-//		} else {
-//			this._index = index;
-//		}
-
+	public BufferGeometry setIndex(int[] index) {
+		this._index = new Uint16BufferAttribute(index, 1);
 		return this;
-
 	}
 
 	public Object getAttribute  ( String name ) {
