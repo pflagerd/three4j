@@ -29,9 +29,10 @@ class hello {
 //        println(jsonify(scene.toString()));
 
         geometry = new BoxGeometry( 0.2, 0.2, 0.2 );
-        println(jsonify(geometry.toString()));
+//        println(jsonify(geometry.toString()));
 
         material = new MeshNormalMaterial();
+        println(jsonify(material.toString()));
 
         mesh = new Mesh( geometry, material );
         scene.add( mesh );

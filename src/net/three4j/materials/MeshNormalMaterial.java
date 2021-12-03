@@ -91,6 +91,8 @@ public class MeshNormalMaterial extends Material {
 	}
 
 	public void setValues(KV values) {
+		if (values == null)
+			return;
 
 		for ( String key : values.keySet() ) {
 
