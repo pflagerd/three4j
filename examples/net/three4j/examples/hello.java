@@ -32,9 +32,10 @@ class hello {
 //        println(jsonify(geometry.toString()));
 
         material = new MeshNormalMaterial();
-        println(jsonify(material.toString()));
+//        println(jsonify(material.toString()));
 
         mesh = new Mesh( geometry, material );
+        println(jsonify(mesh.toString()));
         scene.add( mesh );
 
         WebGLRenderer renderer = new WebGLRenderer().antialias(true);

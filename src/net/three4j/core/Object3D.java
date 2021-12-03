@@ -54,8 +54,8 @@ public class Object3D extends EventDispatcher {
 	private Matrix4 _modelViewMatrix = new Matrix4();
 	private String _name = "";
 
-//	const _addedEvent = { type: 'added' };
-//	const _removedEvent = { type: 'removed' };
+	private Event _addedEvent = new Event( "added" );
+	private Event _removedEvent = new Event( "removed" );
 
 	private Matrix3 _normalMatrix = new Matrix3();
 	private Object3D _parent;
@@ -125,7 +125,7 @@ public class Object3D extends EventDispatcher {
 				objects[i]._parent = this;
 				this.children().add(objects[i]);
 
-//				objects.dispatchEvent( _addedEvent );
+				objects[i].dispatchEvent( _addedEvent );
 
 			} else {
 				throw new RuntimeException("THREE.Object3D.add: object not an instance of THREE.Object3D.");
@@ -687,7 +687,7 @@ public class Object3D extends EventDispatcher {
 	@Override
 	public String toString() {
 		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
-		sortedReflectionToStringBuilder.setExcludeFieldNames("_m1", "_q1", "_v1", "isObject3D", "_geometry", "listeners", "_id", "_modelViewMatrix", "_normalMatrix", "_target", "_xAxis", "_yAxis", "_zAxis");
+		sortedReflectionToStringBuilder.setExcludeFieldNames("_m1", "_q1", "_v1", "isObject3D", "listeners", "_id", "_modelViewMatrix", "_normalMatrix", "_target", "_xAxis", "_yAxis", "_zAxis");
 		return sortedReflectionToStringBuilder.toString();
 	}
 
