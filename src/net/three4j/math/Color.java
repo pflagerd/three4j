@@ -237,7 +237,7 @@ public class Color {
 	}
 
 	public Color() {
-		this._r = this._g = this._b = 1.0;
+		this._r = this._g = this._b = Double.NEGATIVE_INFINITY;
 	}
 
 	public Color(Color color) {
@@ -859,6 +859,9 @@ public class Color {
 
 	@Override
 	public String toString() {
+		if (_r == Double.NEGATIVE_INFINITY && _g == Double.NEGATIVE_INFINITY && _b == Double.NEGATIVE_INFINITY)
+			return "Color {}";
+
 		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
 		//sortedReflectionToStringBuilder.setExcludeFieldNames("isVector3");
 		return sortedReflectionToStringBuilder.toString();

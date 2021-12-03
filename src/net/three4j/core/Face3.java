@@ -1,5 +1,8 @@
 package net.three4j.core;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 import net.three4j.math.Color;
 import net.three4j.math.Vector3;
 
@@ -189,6 +192,13 @@ public class Face3 {
 
 		return this;
 
+	}
+
+	@Override
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		//sortedReflectionToStringBuilder.setExcludeFieldNames("isVector3");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }
