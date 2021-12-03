@@ -119,37 +119,36 @@ public class Material extends EventDispatcher {
 
 			}
 
-//			// for backward compatability if shading is set in the constructor
-//			if ( key === 'shading' ) {
-//
-//				console.warn( 'THREE.' + this.type + ': .shading has been removed. Use the boolean .flatShading instead.' );
-//				this.flatShading = ( newValue === FlatShading ) ? true : false;
-//				continue;
-//
-//			}
+			// for backward compatibility if shading is set in the constructor
+			if ( key.contentEquals("shading")) {
+				throw new RuntimeException( this._type + ".shading has been removed. Use " + this._type + ".flatShading instead." );
+				// this.flatShading = ( newValue === FlatShading ) ? true : false;
+				// continue;
+			}
 
-//			const currentValue = this[ key ];
-//
-//			if ( currentValue === undefined ) {
-//
-//				console.warn( 'THREE.' + this.type + ': \'' + key + '\' is not a property of this material.' );
-//				continue;
-//
-//			}
-//
-//			if ( currentValue && currentValue.isColor ) {
-//
-//				currentValue.set( newValue );
-//
-//			} else if ( ( currentValue && currentValue.isVector3 ) && ( newValue && newValue.isVector3 ) ) {
-//
-//				currentValue.copy( newValue );
-//
-//			} else {
-//
-//				this[ key ] = newValue;
-//
-//			}
+			switch (key) {
+
+//				const currentValue = this[ key ];
+				//
+//							if ( currentValue && currentValue.isColor ) {
+				//
+//								currentValue.set( newValue );
+				//
+//							} else if ( ( currentValue && currentValue.isVector3 ) && ( newValue && newValue.isVector3 ) ) {
+				//
+//								currentValue.copy( newValue );
+				//
+//							} else {
+				//
+//								this[ key ] = newValue;
+				//
+//							}
+
+				default:
+					throw new RuntimeException("THREE." + this._type + ": \"" + key + "\" is not a property of this material.");
+			}
+
+
 
 		}
 
