@@ -1,30 +1,83 @@
 package net.three4j.renderers;
 
+import net.three4j.Canvas;
+import static net.three4j.Document.document;
+import net.three4j.HTMLCanvasElement;
 import net.three4j.cameras.Camera;
 import net.three4j.scenes.Scene;
 
-//public createCanvasElement() {
-//
-//	const canvas = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' );
-//	canvas.style.display = 'block';
-//	return canvas;
-//
-//}
-
 public class WebGLRenderer {
 
-	public WebGLRenderer() {
+	class WebGLRenderingContext {
 
 	}
 
-//	parameters = parameters || {};
-//
-//	const _canvas = parameters.canvas !== undefined ? parameters.canvas : createCanvasElement(),
-//		_context = parameters.context !== undefined ? parameters.context : null,
-//
-//		_alpha = parameters.alpha !== undefined ? parameters.alpha : false,
-//		_depth = parameters.depth !== undefined ? parameters.depth : true,
-//		_stencil = parameters.stencil !== undefined ? parameters.stencil : true,
+	public WebGLRenderer() {
+	}
+
+	private Canvas _canvas = createCanvasElement();
+
+	public Canvas canvas() {
+		return _canvas;
+	}
+
+	public WebGLRenderer canvas(Canvas canvas) {
+		_canvas = canvas;
+		return this;
+	}
+
+	private HTMLCanvasElement createCanvasElement() {
+
+		_canvas = new HTMLCanvasElement(document.createElementNS( "http://www.w3.org/1999/xhtml", "canvas" ));
+		((HTMLCanvasElement)_canvas).style.display = "block";
+		return (HTMLCanvasElement) _canvas;
+
+	}
+
+	private WebGLRenderingContext _context;
+
+	public WebGLRenderingContext context() {
+		return _context;
+	}
+
+	public WebGLRenderer context(WebGLRenderingContext webGLRenderingContext) {
+		_context = webGLRenderingContext;
+		return this;
+	}
+
+	private boolean _alpha;
+
+	public boolean alpha() {
+		return _alpha;
+	}
+
+	public WebGLRenderer alpha(boolean alpha) {
+		_alpha = alpha;
+		return this;
+	}
+
+	private boolean _depth = true;
+
+	public boolean depth() {
+	  return _depth;
+	}
+
+	public WebGLRenderer depth(boolean depth) {
+	  this._depth = depth;
+	  return this;
+	}
+
+	private boolean _stencil = true;
+
+	public boolean stencil() {
+	  return _stencil;
+	}
+
+	public WebGLRenderer stencil(boolean stencil) {
+	  this._stencil = stencil;
+	  return this;
+	}
+
 	private boolean _antialias;
 
 	public boolean antialias() {
@@ -36,11 +89,50 @@ public class WebGLRenderer {
 	  return this;
 	}
 
-//		_premultipliedAlpha = parameters.premultipliedAlpha !== undefined ? parameters.premultipliedAlpha : true,
-//		_preserveDrawingBuffer = parameters.preserveDrawingBuffer !== undefined ? parameters.preserveDrawingBuffer : false,
-//		_powerPreference = parameters.powerPreference !== undefined ? parameters.powerPreference : 'default',
-//		_failIfMajorPerformanceCaveat = parameters.failIfMajorPerformanceCaveat !== undefined ? parameters.failIfMajorPerformanceCaveat : false;
-//
+	private boolean _premultipliedAlpha = true;
+
+	public boolean premultipliedAlpha() {
+	  return _premultipliedAlpha;
+	}
+
+	public WebGLRenderer premultipliedAlpha(boolean premultipliedAlpha) {
+	  this._premultipliedAlpha = premultipliedAlpha;
+	  return this;
+	}
+
+	private boolean _preserveDrawingBuffer;
+
+	public boolean preserveDrawingBuffer() {
+	  return _preserveDrawingBuffer;
+	}
+
+	public WebGLRenderer preserveDrawingBuffer(boolean preserveDrawingBuffer) {
+	  this._preserveDrawingBuffer = preserveDrawingBuffer;
+	  return this;
+	}
+
+	private String _powerPreference = "default";
+
+	public String powerPreference() {
+	  return _powerPreference;
+	}
+
+	public WebGLRenderer powerPreference(String powerPreference) {
+	  this._powerPreference = powerPreference;
+	  return this;
+	}
+
+	private boolean _failIfMajorPerformanceCaveat;
+
+	public boolean failIfMajorPerformanceCaveat() {
+	  return _failIfMajorPerformanceCaveat;
+	}
+
+	public WebGLRenderer failIfMajorPerformanceCaveat(boolean failIfMajorPerformanceCaveat) {
+	  this._failIfMajorPerformanceCaveat = failIfMajorPerformanceCaveat;
+	  return this;
+	}
+
 //	let currentRenderList = null;
 //	let currentRenderState = null;
 //
@@ -48,11 +140,9 @@ public class WebGLRenderer {
 //	// We track this so that the nested render call gets its state isolated from the parent render call.
 //
 //	const renderStateStack = [];
-//
-//	// public properties
-//
-//	private int _domElement = _canvas;
-//
+
+	private HTMLCanvasElement _domElement = (HTMLCanvasElement)_canvas;
+
 //	// Debug configuration container
 //	this.debug = {
 //
