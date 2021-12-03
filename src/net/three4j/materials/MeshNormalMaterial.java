@@ -1,69 +1,128 @@
 package net.three4j.materials;
 
+import static net.three4j.constants.TangentSpaceNormalMap;
+
+import net.three4j.math.Vector2;
+import net.three4j.textures.Texture;
+
 //import { TangentSpaceNormalMap } from '../constants.js';
 //import { Material } from './Material.js';
 //import { Vector2 } from '../math/Vector2.js';
 
-public class MeshNormalMaterial extends net.three4j.materials.Material {
-/**
- * parameters = {
- *  opacity: <float>,
- *
- *  bumpMap: new THREE.Texture( <Image> ),
- *  bumpScale: <float>,
- *
- *  normalMap: new THREE.Texture( <Image> ),
- *  normalMapType: THREE.TangentSpaceNormalMap,
- *  normalScale: <Vector2>,
- *
- *  displacementMap: new THREE.Texture( <Image> ),
- *  displacementScale: <float>,
- *  displacementBias: <float>,
- *
- *  wireframe: <boolean>,
- *  wireframeLinewidth: <float>
- *
- *  skinning: <bool>,
- *  morphTargets: <bool>,
- *  morphNormals: <bool>
- * }
- */
+public class MeshNormalMaterial extends Material {
+	Texture _bumpMap;
+
+	double _bumpScale;
+
+	Texture _normalMap;
+
+	int _normalMapType;
+
+	Vector2 _normalScale;
+
+	Texture _displacementMap;
+
+	double _displacementScale;
+
+	double _displacementBias;
+
+	boolean _wireframe;
+
+	double _wireframeLinewidth;
+
+	boolean _skinning;
+
+	boolean _morphTargets;
+
+	boolean _morphNormals;
+
+//	class MeshNormalMaterialParameters extends MaterialParameters {
+//		Texture _bumpMap;
+//
+//		double _bumpScale;
+//
+//		Texture _normalMap;
+//
+//		int _normalMapType;
+//
+//		Vector2 _normalScale;
+//
+//		Texture _displacementMap;
+//
+//		double _dispacementScale;
+//
+//		double _displacementBias;
+//
+//		boolean _wireframe;
+//
+//		double _wireframeLineWidth;
+//
+//		boolean _skinning;
+//
+//		boolean _morphTargets;
+//
+//		boolean _morphNormals;
+//
+//		public MeshNormalMaterialParameters(net.three4j.THREE.KV[] parameters) {
+//			this._type = "MeshNormalMaterial";
+//
+//			this._bumpMap = null;
+//			this._bumpScale = 1;
+//
+//			this._normalMap = null;
+//			this._normalMapType = TangentSpaceNormalMap;
+//			this._normalScale = new Vector2( 1, 1 );
+//
+//			this._displacementMap = null;
+//			this._displacementScale = 1;
+//			this._displacementBias = 0;
+//
+//			this._wireframe = false;
+//			this._wireframeLinewidth = 1;
+//
+//			this._fog = false;
+//
+//			this._skinning = false;
+//			this._morphTargets = false;
+//			this._morphNormals = false;
+//
+//			this._setValues( parameters );
+//		}
+//	}
+
 	public MeshNormalMaterial() {
-		
+		this(null);
 	}
 
-	
+
 //	function MeshNormalMaterial( parameters ) {
-	public MeshNormalMaterial(net.three4j.THREE.KV[] parameters) {
-//	
-//		Material.call( this );
-//	
-//		this.type = 'MeshNormalMaterial';
-//	
-//		this.bumpMap = null;
-//		this.bumpScale = 1;
-//	
-//		this.normalMap = null;
-//		this.normalMapType = TangentSpaceNormalMap;
-//		this.normalScale = new Vector2( 1, 1 );
-//	
-//		this.displacementMap = null;
-//		this.displacementScale = 1;
-//		this.displacementBias = 0;
-//	
-//		this.wireframe = false;
-//		this.wireframeLinewidth = 1;
-//	
-//		this.fog = false;
-//	
-//		this.skinning = false;
-//		this.morphTargets = false;
-//		this.morphNormals = false;
-//	
-//		this.setValues( parameters );
-//	
-//	}
+	public MeshNormalMaterial(net.three4j.KV parameters) {
+		this._type = "MeshNormalMaterial";
+
+		this._bumpMap = null;
+		this._bumpScale = 1;
+
+		this._normalMap = null;
+		this._normalMapType = TangentSpaceNormalMap;
+		this._normalScale = new Vector2( 1, 1 );
+
+		this._displacementMap = null;
+		this._displacementScale = 1;
+		this._displacementBias = 0;
+
+		this._wireframe = false;
+		this._wireframeLinewidth = 1;
+
+		this._fog = false;
+
+		this._skinning = false;
+		this._morphTargets = false;
+		this._morphNormals = false;
+
+		this.setValues( parameters );
+
 	}
+
 //
 //MeshNormalMaterial.prototype = Object.create( Material.prototype );
 //MeshNormalMaterial.prototype.constructor = MeshNormalMaterial;
@@ -95,8 +154,5 @@ public class MeshNormalMaterial extends net.three4j.materials.Material {
 //	return this;
 //
 //};
-//
-//
-//export { MeshNormalMaterial };
-	
+
 }

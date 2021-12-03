@@ -9,6 +9,7 @@ import static net.three4j.constants.NormalBlending;
 import static net.three4j.constants.OneMinusSrcAlphaFactor;
 import static net.three4j.constants.SrcAlphaFactor;
 
+import net.three4j.KV;
 import net.three4j.core.Event;
 import net.three4j.core.EventDispatcher;
 import net.three4j.math.MathUtils;
@@ -29,9 +30,9 @@ public class Material extends EventDispatcher {
 	private String _uuid = MathUtils.generateUUID();
 
 	private String _name = "";
-	private String _type = "Material";
+	protected String _type = "Material";
 
-	private boolean _fog = true;
+	protected boolean _fog = true;
 
 	private int _blending = NormalBlending;
 	private int _side = FrontSide;
@@ -102,21 +103,22 @@ public class Material extends EventDispatcher {
 
 	}
 
-//	public setValues  ( values ) {
-//
-//		if ( values === undefined ) return;
-//
-//		for ( const key in values ) {
-//
-//			const newValue = values[ key ];
-//
-//			if ( newValue === undefined ) {
-//
-//				console.warn( 'THREE.Material: \'' + key + '\' parameter is undefined.' );
-//				continue;
-//
-//			}
-//
+	public void setValues( KV values ) {
+
+		if ( values == null )
+			return;
+
+		for ( String key : values.keySet() ) {
+
+			Object newValue = values.get(key);
+
+			if ( newValue == null ) {
+
+				// console.warn( 'THREE.Material: \'' + key + '\' parameter is undefined.' );
+				continue;
+
+			}
+
 //			// for backward compatability if shading is set in the constructor
 //			if ( key === 'shading' ) {
 //
@@ -125,7 +127,7 @@ public class Material extends EventDispatcher {
 //				continue;
 //
 //			}
-//
+
 //			const currentValue = this[ key ];
 //
 //			if ( currentValue === undefined ) {
@@ -148,10 +150,10 @@ public class Material extends EventDispatcher {
 //				this[ key ] = newValue;
 //
 //			}
-//
-//		}
-//
-//	}
+
+		}
+
+	}
 
 //	public toJSON  ( meta ) {
 //
