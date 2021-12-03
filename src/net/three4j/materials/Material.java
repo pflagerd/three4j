@@ -9,6 +9,9 @@ import static net.three4j.constants.NormalBlending;
 import static net.three4j.constants.OneMinusSrcAlphaFactor;
 import static net.three4j.constants.SrcAlphaFactor;
 
+import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.Three4jToStringStyle;
+
 import net.three4j.KV;
 import net.three4j.core.Event;
 import net.three4j.core.EventDispatcher;
@@ -85,7 +88,7 @@ public class Material extends EventDispatcher {
 
 	private boolean _toneMapped = true;
 
-	Object userData = new Object();
+	Object _userData = new Object();
 
 	private double _version = 0;
 
@@ -447,6 +450,12 @@ public class Material extends EventDispatcher {
 
 	public void dispose  () {
 		this.dispatchEvent( new Event(this, "dispose") );
+	}
+
+	public String toString() {
+		SortedReflectionToStringBuilder sortedReflectionToStringBuilder = new SortedReflectionToStringBuilder(this, Three4jToStringStyle.THREE4J_STYLE);
+		sortedReflectionToStringBuilder.setExcludeFieldNames("isMeshNormalMaterial", "listeners", "id");
+		return sortedReflectionToStringBuilder.toString();
 	}
 
 }
