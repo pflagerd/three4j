@@ -133,12 +133,12 @@ public class WebGLRenderer {
 	  return this;
 	}
 
-//	let currentRenderList = null;
-//	let currentRenderState = null;
-//
+	Object currentRenderList = null;  // DPP: Need more specific class than Object
+	Object currentRenderState = null; // DPP: Need more specific class than Object
+
 //	// render() can be called from within a callback triggered by another render.
 //	// We track this so that the nested render call gets its state isolated from the parent render call.
-//
+
 //	const renderStateStack = [];
 
 	private HTMLCanvasElement _domElement = (HTMLCanvasElement)_canvas;
