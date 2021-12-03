@@ -10,24 +10,24 @@ public class THREE {
 ////	import './polyfills.js';
 //	public static class OpenGL11Renderer {
 //		public OpenGL11Renderer(KV... kvs) {
-//			
+//
 //		}
-//		
-//		public OpenGL11Renderer setSize(double width, double height) {			
+//
+//		public OpenGL11Renderer setSize(double width, double height) {
 //			return this;
 //		}
 //
-//		public void render(Scene scene, PerspectiveCamera camera /*, WebGLRenderTarget webGLRenderTarget, boolean forceClear*/) {	
+//		public void render(Scene scene, PerspectiveCamera camera /*, WebGLRenderTarget webGLRenderTarget, boolean forceClear*/) {
 //		}
-//		
+//
 //		public interface AnimationLoopFunc {
 //			void animate(double time);
 //		}
 //
 //		public void setAnimationLoop(AnimationLoopFunc animationLoopFun) {
-//			
+//
 //		}
-//		
+//
 //	}
 //
 ////	export { WebGLRenderTargetCube } from './renderers/WebGLRenderTargetCube.js';
@@ -35,24 +35,24 @@ public class THREE {
 ////	export { WebGLRenderer } from './renderers/WebGLRenderer.js';
 //	public static class WebGLRenderer {
 //		public WebGLRenderer(KV... kvs) {
-//			
+//
 //		}
-//		
-//		public WebGLRenderer setSize(double width, double height) {			
+//
+//		public WebGLRenderer setSize(double width, double height) {
 //			return this;
 //		}
 //
-//		public void render(Scene scene, PerspectiveCamera camera /*, WebGLRenderTarget webGLRenderTarget, boolean forceClear*/) {	
+//		public void render(Scene scene, PerspectiveCamera camera /*, WebGLRenderTarget webGLRenderTarget, boolean forceClear*/) {
 //		}
-//		
+//
 //		public interface AnimationLoopFunc {
 //			void animate(double time);
 //		}
 //
 //		public void setAnimationLoop(AnimationLoopFunc animationLoopFun) {
-//			
+//
 //		}
-//		
+//
 //	}
 ////	export { ShaderLib } from './renderers/shaders/ShaderLib.js';
 ////	export { UniformsLib } from './renderers/shaders/UniformsLib.js';
@@ -96,46 +96,39 @@ public class THREE {
 //		public BoxGeometry( double width, double height, double depth) {
 //			// super(width, height, depth, 1, 1, 1);
 //		}
-//		
+//
 //		public BoxGeometry( double width, double height, double depth, double widthSegments, double heightSegments, double depthSegments ) {
 //			//super(width, height, depth, widthSegments, heightSegments, depthSegments);
 //		}
 //
 //	}
-	
-	public static class KV {
-		public KV(String key, int value) {			
-		}
-		public KV(String key, boolean value) {			
-		}
-	}		
-	
+
 ////	export * from './materials/Materials.js';
 //	public static class Material extends net.three4j.materials.Material {
 //		public Material() {
 //			super();
 //		}
 //	}
-//	
+//
 //	public static class MeshBasicMaterial extends Material {
 //		public MeshBasicMaterial(int color) {
 ////			super( new KV[] { new KV("color", color) });
 //		}
-//		
+//
 //		public MeshBasicMaterial(KV[] kvs) {
 ////			super(kvs);
 //		}
 //	}
-//	
+//
 //	public static class MeshNormalMaterial extends Material {
 //		public MeshNormalMaterial() {
 //			super();
 //		}
-//		
+//
 //		public MeshNormalMaterial(int color) {
 ////			super( new KV[] { new KV("color", color) });
 //		}
-//		
+//
 //		public MeshNormalMaterial(KV[] kvs) {
 ////			super(kvs);
 //		}
@@ -258,7 +251,7 @@ public class THREE {
 //			this.y = y;
 //			this.z = z;
 //		}
-//		
+//
 //		public double x;
 //		public double y;
 //		public double z;
