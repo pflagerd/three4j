@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.mozilla.types.Float32Array;
+import org.mozilla.types.Float64Array;
 import org.mozilla.types.Uint16Array;
 
 import net.three4j.core.BufferAttribute;
@@ -66,7 +66,7 @@ public class BufferAttributeTests {
 	@Test
 	public void copy() {
 
-		BufferAttribute attr = new BufferAttribute(new Float32Array(new double[] { 1, 2, 3, 4, 5, 6 }), 3);
+		BufferAttribute attr = new BufferAttribute(new Float64Array(new double[] { 1, 2, 3, 4, 5, 6 }), 3);
 		attr.setUsage(DynamicDrawUsage);
 		attr.needsUpdate(true);
 
@@ -83,15 +83,15 @@ public class BufferAttributeTests {
 	@Test
 	public void copyAt() {
 
-		BufferAttribute attr = new BufferAttribute(new Float32Array(new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }), 3);
-		BufferAttribute attr2 = new BufferAttribute(new Float32Array(9), 3);
+		BufferAttribute attr = new BufferAttribute(new Float64Array(new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }), 3);
+		BufferAttribute attr2 = new BufferAttribute(new Float64Array(9), 3);
 
 		attr2.copyAt(1, attr, 2);
 		attr2.copyAt(0, attr, 1);
 		attr2.copyAt(2, attr, 0);
 
-		double[] i = ((Float32Array) attr.array()).array();
-		double[] i2 = ((Float32Array) attr2.array()).array(); // should be new double[] {4, 5, 6, 7, 8, 9, 1, 2, 3}
+		double[] i = attr.array().array();
+		double[] i2 = attr2.array().array(); // should be new double[] {4, 5, 6, 7, 8, 9, 1, 2, 3}
 
 		assertTrue(i2[0] == i[3] && i2[1] == i[4] && i2[2] == i[5], "chunck copied to correct place");
 		assertTrue(i2[3] == i[6] && i2[4] == i[7] && i2[5] == i[8], "chunck copied to correct place");
@@ -102,23 +102,23 @@ public class BufferAttributeTests {
 	@Test
 	public void copyArray() {
 
-		Float32Array f32a = new Float32Array(new double[] { 5, 6, 7, 8 });
-		BufferAttribute a = new BufferAttribute(new Float32Array(new double[] { 1, 2, 3, 4 }), 2, false);
+		Float64Array f64a = new Float64Array(new double[] { 5, 6, 7, 8 });
+		BufferAttribute a = new BufferAttribute(new Float64Array(new double[] { 1, 2, 3, 4 }), 2, false);
 
-		a.copyArray(f32a);
+		a.copyArray(f64a);
 
-		assertArrayEquals(f32a.array(), ((Float32Array) a.array()).array(), "Check array has new values");
+		assertArrayEquals(f64a.array(), ((Float64Array) a.array()).array(), "Check array has new values");
 
 	}
 
 	@Test
 	public void copyColorsArray() {
 
-		BufferAttribute attr = new BufferAttribute(new Float32Array(6), 3);
+		BufferAttribute attr = new BufferAttribute(new Float64Array(6), 3);
 
 		attr.copyColorsArray(new Color[] { new Color(0, 0.5, 1), new Color(0.25, 1, 0) });
 
-		double[] i = ((Float32Array) attr.array()).array();
+		double[] i = ((Float64Array) attr.array()).array();
 		assertTrue(i[0] == 0 && i[1] == 0.5 && i[2] == 1, "first color was copied correctly");
 		assertTrue(i[3] == 0.25 && i[4] == 1 && i[5] == 0, "second color was copied correctly");
 
@@ -127,11 +127,11 @@ public class BufferAttributeTests {
 	@Test
 	public void copyVector2sArray() {
 
-		BufferAttribute attr = new BufferAttribute(new Float32Array(4), 2);
+		BufferAttribute attr = new BufferAttribute(new Float64Array(4), 2);
 
 		attr.copyVector2sArray(new Vector2[] { new Vector2(1, 2), new Vector2(4, 5) });
 
-		double[] i = ((Float32Array) attr.array()).array();
+		double[] i = ((Float64Array) attr.array()).array();
 		assertTrue(i[0] == 1 && i[1] == 2, "first vector was copied correctly");
 		assertTrue(i[2] == 4 && i[3] == 5, "second vector was copied correctly");
 
@@ -140,11 +140,11 @@ public class BufferAttributeTests {
 	@Test
 	public void copyVector3sArray() {
 
-		BufferAttribute attr = new BufferAttribute(new Float32Array(6), 2);
+		BufferAttribute attr = new BufferAttribute(new Float64Array(6), 2);
 
 		attr.copyVector3sArray(new Vector3[] { new Vector3(1, 2, 3), new Vector3(10, 20, 30) });
 
-		double[] i = ((Float32Array) attr.array()).array();
+		double[] i = ((Float64Array) attr.array()).array();
 		assertTrue(i[0] == 1 && i[1] == 2 && i[2] == 3, "first vector was copied correctly");
 		assertTrue(i[3] == 10 && i[4] == 20 && i[5] == 30, "second vector was copied correctly");
 
@@ -153,11 +153,11 @@ public class BufferAttributeTests {
 	@Test
 	public void copyVector4sArray() {
 
-		BufferAttribute attr = new BufferAttribute(new Float32Array(8), 2);
+		BufferAttribute attr = new BufferAttribute(new Float64Array(8), 2);
 
 		attr.copyVector4sArray(new Vector4[] { new Vector4(1, 2, 3, 4), new Vector4(10, 20, 30, 40) });
 
-		double[] i = ((Float32Array) attr.array()).array();
+		double[] i = ((Float64Array) attr.array()).array();
 		assertTrue(i[0] == 1 && i[1] == 2 && i[2] == 3 && i[3] == 4, "first vector was copied correctly");
 		assertTrue(i[4] == 10 && i[5] == 20 && i[6] == 30 && i[7] == 40, "second vector was copied correctly");
 
@@ -166,14 +166,14 @@ public class BufferAttributeTests {
 	@Test
 	public void set() {
 
-		Float32Array f32a = new Float32Array(new double[] { 1, 2, 3, 4 });
+		Float64Array f32a = new Float64Array(new double[] { 1, 2, 3, 4 });
 		BufferAttribute a = new BufferAttribute(f32a, 2, false);
-		Float32Array expected = new Float32Array(new double[] { 9, 2, 8, 4 });
+		Float64Array expected = new Float64Array(new double[] { 9, 2, 8, 4 });
 
 		a.set(new double[] { 9 });
 		a.set(new double[] { 8 }, 2);
 
-		assertArrayEquals(expected.array(), ((Float32Array) a.array()).array(), "Check array has expected values");
+		assertArrayEquals(expected.array(), ((Float64Array) a.array()).array(), "Check array has expected values");
 
 	}
 
@@ -195,39 +195,39 @@ public class BufferAttributeTests {
 	@Test
 	public void setXY() {
 
-			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4 } );
+			Float64Array f32a = new Float64Array( new double[] { 1, 2, 3, 4 } );
 			BufferAttribute a = new BufferAttribute( f32a, 2, false );
-			Float32Array expected = new Float32Array( new double[] { - 1, - 2, 3, 4 } );
+			Float64Array expected = new Float64Array( new double[] { - 1, - 2, 3, 4 } );
 
 			a.setXY( 0, - 1, - 2 );
 
-			assertArrayEquals( expected.array(), ((Float32Array) a.array()).array(), "Check for the correct values" );
+			assertArrayEquals( expected.array(), ((Float64Array) a.array()).array(), "Check for the correct values" );
 
 		}
 
 	@Test
 	public void setXYZ() {
 
-			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } );
+			Float64Array f32a = new Float64Array( new double[] { 1, 2, 3, 4, 5, 6 } );
 			BufferAttribute a = new BufferAttribute( f32a, 3, false );
-			Float32Array expected = new Float32Array( new double[] { 1, 2, 3, - 4, - 5, - 6 } );
+			Float64Array expected = new Float64Array( new double[] { 1, 2, 3, - 4, - 5, - 6 } );
 
 			a.setXYZ( 1, - 4, - 5, - 6 );
 
-			assertArrayEquals( expected.array(), ((Float32Array) a.array()).array(), "Check for the correct values" );
+			assertArrayEquals( expected.array(), ((Float64Array) a.array()).array(), "Check for the correct values" );
 
 		}
 
 	@Test
 	public void setXYZW() {
 
-			Float32Array f32a = new Float32Array( new double[] { 1, 2, 3, 4 } );
+			Float64Array f32a = new Float64Array( new double[] { 1, 2, 3, 4 } );
 			BufferAttribute a = new BufferAttribute( f32a, 4, false );
-			Float32Array expected = new Float32Array( new double[] { - 1, - 2, - 3, - 4 } );
+			Float64Array expected = new Float64Array( new double[] { - 1, - 2, - 3, - 4 } );
 
 			a.setXYZW( 0, - 1, - 2, - 3, - 4 );
 
-			assertArrayEquals( expected.array(), ((Float32Array) a.array()).array(), "Check for the correct values" );
+			assertArrayEquals( expected.array(), ((Float64Array) a.array()).array(), "Check for the correct values" );
 
 		}
 
@@ -246,13 +246,13 @@ public class BufferAttributeTests {
 	@Test
 	public void $clone() {
 
-			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 0.12, - 12 } ), 2 );
+			BufferAttribute attr = new BufferAttribute( new Float64Array( new double[] { 1, 2, 3, 4, 0.12, - 12 } ), 2 );
 			BufferAttribute attrCopy = attr.clone();
 
 			assertTrue( attr.array().length == attrCopy.array().length, "attribute was cloned" );
 			for ( int i = 0; i < attr.array().length; i ++ ) {
 
-				assertTrue( ((Float32Array)attr.array()).array()[ i ] == ((Float32Array)attrCopy.array()).array()[ i ], "array item is equal" );
+				assertTrue( ((Float64Array)attr.array()).array()[ i ] == ((Float64Array)attrCopy.array()).array()[ i ], "array item is equal" );
 
 			}
 
@@ -262,7 +262,7 @@ public class BufferAttributeTests {
 	public void count() {
 
 			assertTrue(
-				new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4, 5, 6 } ), 3 ).count() == 2,
+				new BufferAttribute( new Float64Array( new double[] { 1, 2, 3, 4, 5, 6 } ), 3 ).count() == 2,
 				"count is equal to the number of chunks"
 			);
 
@@ -410,7 +410,7 @@ public class BufferAttributeTests {
 //
 //	}
 //
-//	QUnit.module( "Float32BufferAttribute", () => {
+//	QUnit.module( "Float64BufferAttribute", () => {
 //
 //		// INHERITANCE
 //			@Test

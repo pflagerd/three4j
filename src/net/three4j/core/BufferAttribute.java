@@ -6,6 +6,7 @@ import static net.three4j.constants.StaticDrawUsage;
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.Three4jToStringStyle;
 import org.mozilla.types.Float32Array;
+import org.mozilla.types.Float64Array;
 import org.mozilla.types.Int32Array;
 import org.mozilla.types.TypedArray;
 import org.mozilla.types.Uint16Array;
@@ -96,6 +97,18 @@ public class BufferAttribute {
 		this._count = array.length / _itemSize;
 	}
 
+	public BufferAttribute(Float64Array array, int itemSize) {
+		this(array, itemSize, false);
+		this._count = array.length / _itemSize;
+	}
+
+	public BufferAttribute(Float64Array array, int itemSize, boolean normalized) {
+		this._array = array;
+		this._itemSize = itemSize;
+		this._normalized = normalized;
+		this._count = array.length / _itemSize;
+	}
+
 	public BufferAttribute(Int32Array array, int itemSize) {
 		this(array, itemSize, false);
 		this._count = array.length / _itemSize;
@@ -176,9 +189,9 @@ public class BufferAttribute {
 
 		for ( int i = 0, l = this._itemSize; i < l; i ++ ) {
 
-			if (_array instanceof Float32Array) {
-				((Float32Array)this._array).array()[ index1 + i ] =
-						((Float32Array)attribute._array).array()[ index2 + i ];
+			if (_array instanceof Float64Array) {
+				((Float64Array)this._array).array()[ index1 + i ] =
+						((Float64Array)attribute._array).array()[ index2 + i ];
 			}
 			// DPP: TODO: Add more here.
 
@@ -189,7 +202,7 @@ public class BufferAttribute {
 	}
 
 	// DPP: TODO: More like this.
-	public BufferAttribute copyArray( Float32Array array ) {
+	public BufferAttribute copyArray( Float64Array array ) {
 
 		this._array = array;
 
@@ -199,7 +212,7 @@ public class BufferAttribute {
 
 	public BufferAttribute copyColorsArray( Color[] colors ) {
 
-		final double[] array = ((Float32Array)this._array).array();
+		final double[] array = this._array.array();
 		int offset = 0;
 
 		for ( int i = 0, l = colors.length; i < l; i ++ ) {
@@ -225,7 +238,7 @@ public class BufferAttribute {
 
 	public BufferAttribute copyVector2sArray( Vector2[] vectors ) {
 
-		double[] array = ((Float32Array)this._array).array();
+		double[] array = this._array.array();
 		int offset = 0;
 
 		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
@@ -250,7 +263,7 @@ public class BufferAttribute {
 
 	public BufferAttribute copyVector3sArray( Vector3[] vectors ) {
 
-		final double[] array = ((Float32Array)this._array).array();
+		final double[] array = this._array.array();
 		int offset = 0;
 
 		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
@@ -276,7 +289,7 @@ public class BufferAttribute {
 
 	public BufferAttribute copyVector4sArray( Vector4[] vectors ) {
 
-		final double[] array = ((Float32Array)this._array).array();
+		final double[] array = this._array.array();
 		int offset = 0;
 
 		for ( int i = 0, l = vectors.length; i < l; i ++ ) {
@@ -385,19 +398,19 @@ public class BufferAttribute {
 
 	public BufferAttribute set( double[] value, int offset ) {
 
-		((Float32Array)this._array).set( value, offset );
+		((Float64Array)this._array).set( value, offset );
 
 		return this;
 
 	}
 
 	public double getX(int index) {
-		return ((Float32Array)this.array()).array()[ index * this._itemSize ];
+		return ((Float64Array)this.array()).array()[ index * this._itemSize ];
 	}
 
 	public BufferAttribute setX( int index, double x ) {
 
-		((Float32Array)this.array()).array()[ index * this._itemSize ] = x;
+		((Float64Array)this.array()).array()[ index * this._itemSize ] = x;
 
 		return this;
 
@@ -417,13 +430,13 @@ public class BufferAttribute {
 
 	public double getY(int index) {
 
-		return ((Float32Array)this.array()).array()[ index * this._itemSize + 1 ];
+		return ((Float64Array)this.array()).array()[ index * this._itemSize + 1 ];
 
 	}
 
 	public BufferAttribute setY( int index, double y ) {
 
-		((Float32Array)this.array()).array()[ index * this._itemSize + 1 ] = y;
+		((Float64Array)this.array()).array()[ index * this._itemSize + 1 ] = y;
 
 		return this;
 
@@ -443,13 +456,13 @@ public class BufferAttribute {
 
 	public double getZ(int index) {
 
-		return ((Float32Array)this.array()).array()[ index * this._itemSize + 2 ];
+		return ((Float64Array)this.array()).array()[ index * this._itemSize + 2 ];
 
 	}
 
 	public BufferAttribute setZ( int index, double z ) {
 
-		((Float32Array)this.array()).array()[ index * this._itemSize + 2 ] = z;
+		((Float64Array)this.array()).array()[ index * this._itemSize + 2 ] = z;
 
 		return this;
 
@@ -469,13 +482,13 @@ public class BufferAttribute {
 
 	public double getW(int index) {
 
-		return ((Float32Array)this.array()).array()[ index * this._itemSize + 3 ];
+		return ((Float64Array)this.array()).array()[ index * this._itemSize + 3 ];
 
 	}
 
 	public BufferAttribute setW( int index, double w ) {
 
-		((Float32Array)this.array()).array()[ index * this._itemSize + 3 ] = w;
+		((Float64Array)this.array()).array()[ index * this._itemSize + 3 ] = w;
 
 		return this;
 
@@ -497,8 +510,8 @@ public class BufferAttribute {
 
 		index *= this._itemSize;
 
-		((Float32Array)this.array()).array()[ index + 0 ] = x;
-		((Float32Array)this.array()).array()[ index + 1 ] = y;
+		((Float64Array)this.array()).array()[ index + 0 ] = x;
+		((Float64Array)this.array()).array()[ index + 1 ] = y;
 
 		return this;
 
@@ -508,9 +521,9 @@ public class BufferAttribute {
 
 		index *= this._itemSize;
 
-		((Float32Array)this.array()).array()[ index + 0 ] = x;
-		((Float32Array)this.array()).array()[ index + 1 ] = y;
-		((Float32Array)this.array()).array()[ index + 2 ] = z;
+		((Float64Array)this.array()).array()[ index + 0 ] = x;
+		((Float64Array)this.array()).array()[ index + 1 ] = y;
+		((Float64Array)this.array()).array()[ index + 2 ] = z;
 
 		return this;
 
@@ -520,10 +533,10 @@ public class BufferAttribute {
 
 		index *= this._itemSize;
 
-		((Float32Array)this.array()).array()[ index + 0 ] = x;
-		((Float32Array)this.array()).array()[ index + 1 ] = y;
-		((Float32Array)this.array()).array()[ index + 2 ] = z;
-		((Float32Array)this.array()).array()[ index + 3 ] = w;
+		((Float64Array)this.array()).array()[ index + 0 ] = x;
+		((Float64Array)this.array()).array()[ index + 1 ] = y;
+		((Float64Array)this.array()).array()[ index + 2 ] = z;
+		((Float64Array)this.array()).array()[ index + 3 ] = w;
 
 		return this;
 
@@ -539,7 +552,7 @@ public class BufferAttribute {
 
 	public BufferAttribute clone() {
 
-		return new BufferAttribute( (Float32Array)this._array, this._itemSize );
+		return new BufferAttribute( (Float64Array)this._array, this._itemSize );
 
 	}
 

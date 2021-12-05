@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.mozilla.types.Float32Array;
+import org.mozilla.types.Float64Array;
 
 import net.three4j.core.BufferAttribute;
 import net.three4j.math.Matrix3;
@@ -524,7 +524,7 @@ public class Vector2Tests {
 	public void fromBufferAttribute() {
 
 			Vector2 a = new Vector2();
-			BufferAttribute attr = new BufferAttribute( new Float32Array( new double[] { 1, 2, 3, 4 } ), 2 );
+			BufferAttribute attr = new BufferAttribute( new Float64Array( new double[] { 1, 2, 3, 4 } ), 2 );
 
 			a.fromBufferAttribute( attr, 0 );
 			assertEquals( a.x(), 1, "Offset 0: check x" );

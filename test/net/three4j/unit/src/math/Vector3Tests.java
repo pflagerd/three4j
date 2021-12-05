@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.mozilla.types.Float32Array;
+import org.mozilla.types.Float64Array;
 
 import net.three4j.cameras.PerspectiveCamera;
 import net.three4j.core.BufferAttribute;
@@ -807,7 +807,7 @@ public class Vector3Tests {
 	public void fromBufferAttribute() {
 
 		Vector3 a = new Vector3();
-		BufferAttribute attr = new BufferAttribute(new Float32Array(new double[] { 1, 2, 3, 4, 5, 6 }), 3);
+		BufferAttribute attr = new BufferAttribute(new Float64Array(new double[] { 1, 2, 3, 4, 5, 6 }), 3);
 
 		a.fromBufferAttribute(attr, 0);
 		assertEquals(a.x(), 1, "Offset 0: check x");

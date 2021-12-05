@@ -237,7 +237,7 @@ public class Color {
 	}
 
 	public Color() {
-		this._r = this._g = this._b = Double.NEGATIVE_INFINITY;
+		this._r = this._g = this._b = 1.;
 	}
 
 	public Color(Color color) {
