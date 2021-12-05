@@ -4,8 +4,10 @@ import org.mozilla.types.Float32Array;
 
 import net.three4j.core.BufferGeometry;
 import net.three4j.core.InterleavedBuffer;
+import net.three4j.core.InterleavedBufferAttribute;
 import net.three4j.core.Object3D;
 import net.three4j.materials.Material;
+import net.three4j.materials.SpriteMaterial;
 import net.three4j.math.Matrix4;
 import net.three4j.math.Vector2;
 import net.three4j.math.Vector3;
@@ -24,6 +26,8 @@ public class Sprite extends Object3D {
 	public final boolean isSprite = true;
 
 	BufferGeometry _geometry;
+	Material _material = new SpriteMaterial();
+	Vector2 _center = new Vector2();
 
 	Vector3 _intersectPoint = new Vector3();
 	Vector3 _worldScale = new Vector3();
@@ -46,8 +50,6 @@ public class Sprite extends Object3D {
 	public Sprite( Material material ) {
 		super();
 
-//		Object3D.call( this );
-
 		this._type = "Sprite";
 
 		if ( _geometry == null ) {
@@ -62,15 +64,12 @@ public class Sprite extends Object3D {
 
 			InterleavedBuffer interleavedBuffer = new InterleavedBuffer( float32Array, 5 );
 
-//			_geometry.setIndex( [ 0, 1, 2,	0, 2, 3 ] );
-//			_geometry.setAttribute( "position", new InterleavedBufferAttribute( interleavedBuffer, 3, 0, false ) );
-//			_geometry.setAttribute( "uv", new InterleavedBufferAttribute( interleavedBuffer, 2, 3, false ) );
+			_geometry.setIndex( new int[] { 0, 1, 2, 0, 2, 3 } );
+			_geometry.setAttribute( "position", new InterleavedBufferAttribute( interleavedBuffer, 3, 0, false ) );
+			_geometry.setAttribute( "uv", new InterleavedBufferAttribute( interleavedBuffer, 2, 3, false ) );
 		}
 
-//		this.geometry = _geometry;
-//		this.material = ( material !== undefined ) ? material : new SpriteMaterial();
-
-//		this.center = new Vector2( 0.5, 0.5 );
+		_center = new Vector2( 0.5, 0.5 );
 
 	}
 

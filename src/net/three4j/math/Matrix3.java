@@ -2,8 +2,6 @@ package net.three4j.math;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.Three4jToStringStyle;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.UnsortedReflectionToStringBuilder;
 
 public class Matrix3 {
 

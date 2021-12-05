@@ -2,7 +2,6 @@ package net.three4j.math;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.Three4jToStringStyle;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 //import { Quaternion } from './Quaternion.js';
 //import { Vector3 } from './Vector3.js';

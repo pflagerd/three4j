@@ -1,22 +1,23 @@
 package net.three4j.core;
 
+import net.three4j.math.Vector3;
+
 //import { Vector3 } from '../math/Vector3.js';
 //import { BufferAttribute } from './BufferAttribute.js';
 //
-//const _vector = new Vector3();
 public class InterleavedBufferAttribute {
-//function InterleavedBufferAttribute( interleavedBuffer, itemSize, offset, normalized ) {
+	public InterleavedBufferAttribute( InterleavedBuffer interleavedBuffer, int itemSize, int offset, boolean normalized ) {
+
+//		this.name = "";
 //
-//	this.name = '';
+//		this.data = interleavedBuffer;
+//		this.itemSize = itemSize;
+//		this.offset = offset;
 //
-//	this.data = interleavedBuffer;
-//	this.itemSize = itemSize;
-//	this.offset = offset;
-//
-//	this.normalized = normalized === true;
-//
-//}
-//
+//		this.normalized = normalized === true;
+
+	}
+
 //Object.defineProperties( InterleavedBufferAttribute.prototype, {
 //
 //	count: {
@@ -109,9 +110,9 @@ public class InterleavedBufferAttribute {
 
 //		return this.data.array[ index * this.data.stride + this.offset ];
 		return 0;
-		
+
 	}
-	
+
 	public double getY( int index ) {
 
 //		return this.data.array[ index * this.data.stride + this.offset + 1 ];
@@ -265,4 +266,5 @@ public class InterleavedBufferAttribute {
 //
 //	}
 //
+	static final Vector3 _vector = new Vector3();
 }

@@ -1,6 +1,5 @@
 package net.three4j.core;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.mozilla.types.Float64Array;
 import org.mozilla.types.Int8Array;
 

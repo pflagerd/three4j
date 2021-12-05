@@ -1,7 +1,5 @@
 package net.three4j.core;
 
-import static net.three4j.utils.arrayMax;
-
 import java.util.HashMap;
 
 import org.apache.commons.lang3.ArrayUtils;

@@ -7,8 +7,6 @@ import static net.three4j.THREE.console;
 
 import org.apache.commons.lang3.builder.SortedReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.Three4jToStringStyle;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.commons.lang3.builder.UnsortedReflectionToStringBuilder;
 
 import net.three4j.cameras.Camera;
 import net.three4j.core.BufferAttribute;
