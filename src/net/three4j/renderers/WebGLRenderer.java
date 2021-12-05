@@ -17,9 +17,6 @@ public class WebGLRenderer {
 
 	}
 
-	public WebGLRenderer() {
-	}
-
 	private HTMLCanvasElement _canvas = createCanvasElement();
 
 	public HTMLCanvasElement canvas() {
@@ -33,8 +30,8 @@ public class WebGLRenderer {
 
 	private HTMLCanvasElement createCanvasElement() {
 
-		_canvas = new HTMLCanvasElement(document.createElementNS( "http://www.w3.org/1999/xhtml", "canvas" ));
-		((HTMLCanvasElement)_canvas).style.display = "block";
+		_canvas = new HTMLCanvasElement(document.createElementNS("http://www.w3.org/1999/xhtml", "canvas"));
+		((HTMLCanvasElement) _canvas).style.display = "block";
 		return (HTMLCanvasElement) _canvas;
 
 	}
@@ -64,81 +61,81 @@ public class WebGLRenderer {
 	private boolean _depth = true;
 
 	public boolean depth() {
-	  return _depth;
+		return _depth;
 	}
 
 	public WebGLRenderer depth(boolean depth) {
-	  this._depth = depth;
-	  return this;
+		this._depth = depth;
+		return this;
 	}
 
 	private boolean _stencil = true;
 
 	public boolean stencil() {
-	  return _stencil;
+		return _stencil;
 	}
 
 	public WebGLRenderer stencil(boolean stencil) {
-	  this._stencil = stencil;
-	  return this;
+		this._stencil = stencil;
+		return this;
 	}
 
 	private boolean _antialias;
 
 	public boolean antialias() {
-	  return _antialias;
+		return _antialias;
 	}
 
 	public WebGLRenderer antialias(boolean antialias) {
-	  this._antialias = antialias;
-	  return this;
+		this._antialias = antialias;
+		return this;
 	}
 
 	private boolean _premultipliedAlpha = true;
 
 	public boolean premultipliedAlpha() {
-	  return _premultipliedAlpha;
+		return _premultipliedAlpha;
 	}
 
 	public WebGLRenderer premultipliedAlpha(boolean premultipliedAlpha) {
-	  this._premultipliedAlpha = premultipliedAlpha;
-	  return this;
+		this._premultipliedAlpha = premultipliedAlpha;
+		return this;
 	}
 
 	private boolean _preserveDrawingBuffer;
 
 	public boolean preserveDrawingBuffer() {
-	  return _preserveDrawingBuffer;
+		return _preserveDrawingBuffer;
 	}
 
 	public WebGLRenderer preserveDrawingBuffer(boolean preserveDrawingBuffer) {
-	  this._preserveDrawingBuffer = preserveDrawingBuffer;
-	  return this;
+		this._preserveDrawingBuffer = preserveDrawingBuffer;
+		return this;
 	}
 
 	private String _powerPreference = "default";
 
 	public String powerPreference() {
-	  return _powerPreference;
+		return _powerPreference;
 	}
 
 	public WebGLRenderer powerPreference(String powerPreference) {
-	  this._powerPreference = powerPreference;
-	  return this;
+		this._powerPreference = powerPreference;
+		return this;
 	}
 
 	private boolean _failIfMajorPerformanceCaveat;
 
 	public boolean failIfMajorPerformanceCaveat() {
-	  return _failIfMajorPerformanceCaveat;
+		return _failIfMajorPerformanceCaveat;
 	}
 
 	public WebGLRenderer failIfMajorPerformanceCaveat(boolean failIfMajorPerformanceCaveat) {
-	  this._failIfMajorPerformanceCaveat = failIfMajorPerformanceCaveat;
-	  return this;
+		this._failIfMajorPerformanceCaveat = failIfMajorPerformanceCaveat;
+		return this;
 	}
 
-	Object currentRenderList = null;  // DPP: Need more specific class than Object
+	Object currentRenderList = null; // DPP: Need more specific class than Object
 	Object currentRenderState = null; // DPP: Need more specific class than Object
 
 //	// render() can be called from within a callback triggered by another render.
@@ -146,7 +143,7 @@ public class WebGLRenderer {
 
 //	const renderStateStack = [];
 
-	private HTMLCanvasElement _domElement = (HTMLCanvasElement)_canvas;
+	private HTMLCanvasElement _domElement = (HTMLCanvasElement) _canvas;
 
 	class WebGLDebug {
 		public WebGLDebug(boolean checkShaderErrors) {
@@ -156,12 +153,12 @@ public class WebGLRenderer {
 		private boolean _checkShaderErrors;
 
 		public boolean checkShaderErrors() {
-		  return _checkShaderErrors;
+			return _checkShaderErrors;
 		}
 
 		public WebGLDebug checkShaderErrors(boolean checkShaderErrors) {
-		  this._checkShaderErrors = checkShaderErrors;
-		  return this;
+			this._checkShaderErrors = checkShaderErrors;
+			return this;
 		}
 	}
 
@@ -170,56 +167,56 @@ public class WebGLRenderer {
 	private boolean _autoClear;
 
 	public boolean autoClear() {
-	  return _autoClear;
+		return _autoClear;
 	}
 
 	public WebGLRenderer autoClear(boolean autoClear) {
-	  this._autoClear = autoClear;
-	  return this;
+		this._autoClear = autoClear;
+		return this;
 	}
 
 	private boolean _autoClearColor;
 
 	public boolean autoClearColor() {
-	  return _autoClearColor;
+		return _autoClearColor;
 	}
 
 	public WebGLRenderer autoClearColor(boolean autoClearColor) {
-	  this._autoClearColor = autoClearColor;
-	  return this;
+		this._autoClearColor = autoClearColor;
+		return this;
 	}
 
 	private boolean _autoClearDepth;
 
 	public boolean autoClearDepth() {
-	  return _autoClearDepth;
+		return _autoClearDepth;
 	}
 
 	public WebGLRenderer autoClearDepth(boolean autoClearDepth) {
-	  this._autoClearDepth = autoClearDepth;
-	  return this;
+		this._autoClearDepth = autoClearDepth;
+		return this;
 	}
 
 	private boolean _autoClearStencil;
 
 	public boolean autoClearStencil() {
-	  return _autoClearStencil;
+		return _autoClearStencil;
 	}
 
 	public WebGLRenderer autoClearStencil(boolean autoClearStencil) {
-	  this._autoClearStencil = autoClearStencil;
-	  return this;
+		this._autoClearStencil = autoClearStencil;
+		return this;
 	}
 
 	private boolean _sortObjects;
 
 	public boolean sortObjects() {
-	  return _sortObjects;
+		return _sortObjects;
 	}
 
 	public WebGLRenderer sortObjects(boolean sortObjects) {
-	  this._sortObjects = sortObjects;
-	  return this;
+		this._sortObjects = sortObjects;
+		return this;
 	}
 
 //	this.clippingPlanes = [];
@@ -227,128 +224,127 @@ public class WebGLRenderer {
 	private boolean _localClippingEnabled;
 
 	public boolean localClippingEnabled() {
-	  return _localClippingEnabled;
+		return _localClippingEnabled;
 	}
 
 	public WebGLRenderer localClippingEnabled(boolean localClippingEnabled) {
-	  this._localClippingEnabled = localClippingEnabled;
-	  return this;
+		this._localClippingEnabled = localClippingEnabled;
+		return this;
 	}
 
 	private double _gammaFactor = 2.0;
 
 	public double gammaFactor() {
-	  return _gammaFactor;
+		return _gammaFactor;
 	}
 
 	public WebGLRenderer gammaFactor(double gammaFactor) {
-	  this._gammaFactor = gammaFactor;
-	  return this;
+		this._gammaFactor = gammaFactor;
+		return this;
 	}
-
 
 	private int _outputEncoding = LinearEncoding;
 
 	public int outputEncoding() {
-	  return _outputEncoding;
+		return _outputEncoding;
 	}
 
 	public WebGLRenderer outputEncoding(int outputEncoding) {
-	  this._outputEncoding = outputEncoding;
-	  return this;
+		this._outputEncoding = outputEncoding;
+		return this;
 	}
 
 	private boolean _physicallyCorrectLights;
 
 	public boolean physicallyCorrectLights() {
-	  return _physicallyCorrectLights;
+		return _physicallyCorrectLights;
 	}
 
 	public WebGLRenderer physicallyCorrectLights(boolean physicallyCorrectLights) {
-	  this._physicallyCorrectLights = physicallyCorrectLights;
-	  return this;
+		this._physicallyCorrectLights = physicallyCorrectLights;
+		return this;
 	}
 
 	private int _toneMapping = NoToneMapping;
 
 	public int toneMapping() {
-	  return _toneMapping;
+		return _toneMapping;
 	}
 
 	public WebGLRenderer toneMapping(int toneMapping) {
-	  this._toneMapping = toneMapping;
-	  return this;
+		this._toneMapping = toneMapping;
+		return this;
 	}
 
 	private double _toneMappingExposure = 1.0;
 
 	public double toneMappingExposure() {
-	  return _toneMappingExposure;
+		return _toneMappingExposure;
 	}
 
 	public WebGLRenderer toneMappingExposure(double toneMappingExposure) {
-	  this._toneMappingExposure = toneMappingExposure;
-	  return this;
+		this._toneMappingExposure = toneMappingExposure;
+		return this;
 	}
 
 	private int _maxMorphTargets = 8;
 
 	public int maxMorphTargets() {
-	  return _maxMorphTargets;
+		return _maxMorphTargets;
 	}
 
 	public WebGLRenderer maxMorphTargets(int maxMorphTargets) {
-	  this._maxMorphTargets = maxMorphTargets;
-	  return this;
+		this._maxMorphTargets = maxMorphTargets;
+		return this;
 	}
 
 	private int _maxMorphNormals = 4;
 
 	public int maxMorphNormals() {
-	  return _maxMorphNormals;
+		return _maxMorphNormals;
 	}
 
 	public WebGLRenderer maxMorphNormals(int maxMorphNormals) {
-	  this._maxMorphNormals = maxMorphNormals;
-	  return this;
+		this._maxMorphNormals = maxMorphNormals;
+		return this;
 	}
 
-	//	const _this = this;
+	// const _this = this;
 
 	private boolean _isContextLost;
 
 	public boolean isContextLost() {
-	  return _isContextLost;
+		return _isContextLost;
 	}
 
 	public WebGLRenderer isContextLost(boolean isContextLost) {
-	  this._isContextLost = isContextLost;
-	  return this;
+		this._isContextLost = isContextLost;
+		return this;
 	}
 
 // internal state cache
 
-	//	let _framebuffer = null;
+	// let _framebuffer = null;
 	private int _currentActiveCubeFace = 0;
 
 	public int currentActiveCubeFace() {
-	  return _currentActiveCubeFace;
+		return _currentActiveCubeFace;
 	}
 
 	public WebGLRenderer currentActiveCubeFace(int currentActiveCubeFace) {
-	  this._currentActiveCubeFace = currentActiveCubeFace;
-	  return this;
+		this._currentActiveCubeFace = currentActiveCubeFace;
+		return this;
 	}
 
 	private int _currentActiveMipmapLevel;
 
 	public int currentActiveMipmapLevel() {
-	  return _currentActiveMipmapLevel;
+		return _currentActiveMipmapLevel;
 	}
 
 	public WebGLRenderer currentActiveMipmapLevel(int currentActiveMipmapLevel) {
-	  this._currentActiveMipmapLevel = currentActiveMipmapLevel;
-	  return this;
+		this._currentActiveMipmapLevel = currentActiveMipmapLevel;
+		return this;
 	}
 
 //	let _currentRenderTarget = null;
@@ -356,12 +352,12 @@ public class WebGLRenderer {
 	private int _CurrentMaterialId;
 
 	public int CurrentMaterialId() {
-	  return _CurrentMaterialId;
+		return _CurrentMaterialId;
 	}
 
 	public WebGLRenderer CurrentMaterialId(int CurrentMaterialId) {
-	  this._CurrentMaterialId = CurrentMaterialId;
-	  return this;
+		this._CurrentMaterialId = CurrentMaterialId;
+		return this;
 	}
 
 //	let _currentCamera = null;
@@ -369,26 +365,26 @@ public class WebGLRenderer {
 	private Vector4 _currentViewport = new Vector4();
 
 	public Vector4 currentViewport() {
-	  return _currentViewport;
+		return _currentViewport;
 	}
 
 	public WebGLRenderer currentViewport(Vector4 currentViewport) {
-	  this._currentViewport = currentViewport;
-	  return this;
+		this._currentViewport = currentViewport;
+		return this;
 	}
 
 	private Vector4 _currentScissor = new Vector4();
 
 	public Vector4 currentScissor() {
-	  return _currentScissor;
+		return _currentScissor;
 	}
 
 	public WebGLRenderer currentScissor(Vector4 currentScissor) {
-	  this._currentScissor = currentScissor;
-	  return this;
+		this._currentScissor = currentScissor;
+		return this;
 	}
 
-	//	let _currentScissorTest = null;
+	// let _currentScissorTest = null;
 
 	int _width = _canvas.width();
 	int _height = _canvas.height();
@@ -396,85 +392,85 @@ public class WebGLRenderer {
 	private double _pixelRatio;
 
 	public double pixelRatio() {
-	  return _pixelRatio;
+		return _pixelRatio;
 	}
 
 	public WebGLRenderer pixelRatio(double pixelRatio) {
-	  this._pixelRatio = pixelRatio;
-	  return this;
+		this._pixelRatio = pixelRatio;
+		return this;
 	}
 
 //	let _opaqueSort = null;
 //	let _transparentSort = null;
 //
 
-	private Vector4 _viewPort = new Vector4( 0, 0, _width, _height );
+	private Vector4 _viewPort = new Vector4(0, 0, _width, _height);
 
 	public Vector4 viewPort() {
-	  return _viewPort;
+		return _viewPort;
 	}
 
 	public WebGLRenderer viewPort(Vector4 viewPort) {
-	  this._viewPort = viewPort;
-	  return this;
+		this._viewPort = viewPort;
+		return this;
 	}
 
 	private Vector4 _scissor = new Vector4();
 
 	public Vector4 scissor() {
-	  return _scissor;
+		return _scissor;
 	}
 
 	public WebGLRenderer scissor(Vector4 scissor) {
-	  this._scissor = scissor;
-	  return this;
+		this._scissor = scissor;
+		return this;
 	}
 
 	private boolean _scissorTest;
 
 	public boolean scissorTest() {
-	  return _scissorTest;
+		return _scissorTest;
 	}
 
 	public WebGLRenderer scissorTest(boolean scissorTest) {
-	  this._scissorTest = scissorTest;
-	  return this;
+		this._scissorTest = scissorTest;
+		return this;
 	}
 
 	private Frustum _frustum = new Frustum();
 
 	public Frustum frustum() {
-	  return _frustum;
+		return _frustum;
 	}
 
 	public WebGLRenderer frustum(Frustum frustum) {
-	  this._frustum = frustum;
-	  return this;
+		this._frustum = frustum;
+		return this;
 	}
 
 	private boolean _clippingEnabled;
 
 	public boolean clippingEnabled() {
-	  return _clippingEnabled;
+		return _clippingEnabled;
 	}
 
 	public WebGLRenderer clippingEnabled(boolean clippingEnabled) {
-	  this._clippingEnabled = clippingEnabled;
-	  return this;
+		this._clippingEnabled = clippingEnabled;
+		return this;
 	}
 
 	// DPP: Duplicate?
-	// 	let _localClippingEnabled = false;
+	// let _localClippingEnabled = false;
 
 	private Matrix4 _projScreenMatrix = new Matrix4();
 
 	public Matrix4 projScreenMatrix() {
-	  return _projScreenMatrix;
+		return _projScreenMatrix;
 	}
 
 	public WebGLRenderer projScreenMatrix(Matrix4 projScreenMatrix) {
-	  this._projScreenMatrix = projScreenMatrix;
-	  return this;
+		this._projScreenMatrix = projScreenMatrix;
+		return this;
 	}
 
 //	const _vector3 = new Vector3();
@@ -488,9 +484,9 @@ public class WebGLRenderer {
 //	}
 //
 //	// initialize
-//
-//	let _gl = _context;
-//
+
+	WebGLRenderingContext _gl = _context;
+
 //	public getContext( contextNames, contextAttributes ) {
 //
 //		for ( let i = 0; i < contextNames.length; i ++ ) {
@@ -505,8 +501,10 @@ public class WebGLRenderer {
 //
 //	}
 //
-//	try {
-//
+	public WebGLRenderer() {
+
+		try {
+
 //		const contextAttributes = {
 //			alpha: _alpha,
 //			depth: _depth,
@@ -563,12 +561,12 @@ public class WebGLRenderer {
 //
 //		}
 //
-//	} catch ( error ) {
-//
-//		console.error( 'THREE.WebGLRenderer: ' + error.message );
-//		throw error;
-//
-//	}
+		} catch (Exception exception) {
+
+			throw new RuntimeException("THREE.WebGLRenderer: " + exception.getMessage());
+
+		}
+	}
 //
 //	let extensions, capabilities, state, info;
 //	let properties, textures, cubemaps, attributes, geometries, objects;
@@ -707,20 +705,19 @@ public class WebGLRenderer {
 //
 //	};
 
-	public WebGLRenderer size( int width, int height) {
+	public WebGLRenderer size(int width, int height) {
 		return setSize(width, height, false);
 	}
 
-	public WebGLRenderer size( int width, int height, boolean updateStyle ) {
+	public WebGLRenderer size(int width, int height, boolean updateStyle) {
 		return setSize(width, height, updateStyle);
 	}
 
-	public WebGLRenderer setSize( int width, int height) {
+	public WebGLRenderer setSize(int width, int height) {
 		return setSize(width, height, true);
 	}
 
-
-	public WebGLRenderer setSize( int width, int height, boolean updateStyle ) {
+	public WebGLRenderer setSize(int width, int height, boolean updateStyle) {
 
 //		if ( xr.isPresenting ) {
 //
@@ -1290,7 +1287,7 @@ public class WebGLRenderer {
 		public void callback(long time);
 	}
 
-	public WebGLRenderer setAnimationLoop( AnimationCallback callback ) {
+	public WebGLRenderer setAnimationLoop(AnimationCallback callback) {
 
 //		onAnimationFrameCallback = callback;
 //		xr.setAnimationLoop( callback );
@@ -1299,10 +1296,11 @@ public class WebGLRenderer {
 		return this;
 
 	}
+
 //
 //	// Rendering
 //
-	public void render( Scene scene, Camera camera ) {
+	public void render(Scene scene, Camera camera) {
 
 //		let renderTarget, forceClear;
 //
@@ -2334,4 +2332,3 @@ public class WebGLRenderer {
 //	}
 
 }
-
