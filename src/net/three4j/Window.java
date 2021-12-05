@@ -2,7 +2,7 @@ package net.three4j;
 
 import com.pflager.glut;
 
-public class Window extends glut {
+public class Window /* extends glut */ {
 
 	public int innerWidth;
 	public int innerHeight;

@@ -12,6 +12,7 @@ import net.three4j.math.Color;
 import net.three4j.math.MathUtils;
 import net.three4j.math.Matrix3;
 import net.three4j.math.Matrix4;
+import net.three4j.math.Sphere;
 import net.three4j.math.Vector2;
 //import net.three4j.math.Sphere;
 //import net.three4j.math.Box3;
@@ -38,67 +39,76 @@ public class Geometry extends EventDispatcher {
 	private Object[] _skinIndices = new Object[0]; // DPP: TODO:
 	private Object[] _lineDistances = new Object[0]; // DPP: TODO:
 	private Box3 _boundingBox;
-	private Object _boundingSphere;
+	private Sphere _boundingSphere;
 
-	private final boolean _elementsNeedUpdate = false;
-	private final boolean _verticesNeedUpdate = false;
-	private final boolean _uvsNeedUpdate = false;
-	private final boolean _normalsNeedUpdate = false;
-	private final boolean _colorsNeedUpdate = false;
-	private final boolean _lineDistancesNeedUpdate = false;
-	private final boolean _groupsNeedUpdate = false;
+	private boolean _elementsNeedUpdate = false;
+	private boolean _verticesNeedUpdate = false;
+	private boolean _uvsNeedUpdate = false;
+	private boolean _normalsNeedUpdate = false;
+	private boolean _colorsNeedUpdate = false;
+	private boolean _lineDistancesNeedUpdate = false;
+	private boolean _groupsNeedUpdate = false;
 
 	public Geometry() {
 		super();
 	}
 
 	public Box3 boundingBox() {
-	  return _boundingBox;
+		return _boundingBox;
 	}
 
 	public Geometry boundingBox(Box3 boundingBox) {
-	  this._boundingBox = boundingBox;
-	  return this;
+		this._boundingBox = boundingBox;
+		return this;
 	}
 
-	public Geometry applyMatrix4  ( Matrix4 matrix ) {
+	public Sphere boundingSphere() {
+		return _boundingSphere;
+	}
 
-			final Matrix3 normalMatrix = new Matrix3().getNormalMatrix( matrix );
+	public Geometry boundingSphere(Sphere boundingSphere) {
+		this._boundingSphere = boundingSphere;
+		return this;
+	}
 
-			for ( int i = 0, il = _vertices.length; i < il; i ++ ) {
+	public Geometry applyMatrix4(Matrix4 matrix) {
 
-				final Vector3 vertex = _vertices[i];
-				vertex.applyMatrix4( matrix );
+		final Matrix3 normalMatrix = new Matrix3().getNormalMatrix(matrix);
 
-			}
+		for (int i = 0, il = _vertices.length; i < il; i++) {
 
-			for ( int i = 0, il = _faces.length; i < il; i ++ ) {
-
-				final Face3 face = _faces[i];
-				face.normal().applyMatrix3( normalMatrix ).normalize();
-
-				for ( int j = 0, jl = face.vertexNormals().length; j < jl; j ++ ) {
-
-					face.vertexNormals()[ j ].applyMatrix3( normalMatrix ).normalize();
-
-				}
-
-			}
-
-			this.computeBoundingBox();
-
-//			if ( this.boundingSphere !== null ) {
-//
-//				this.computeBoundingSphere();
-//
-//			}
-//
-//			this.verticesNeedUpdate = true;
-//			this.normalsNeedUpdate = true;
-
-			return this;
+			final Vector3 vertex = _vertices[i];
+			vertex.applyMatrix4(matrix);
 
 		}
+
+		for (int i = 0, il = _faces.length; i < il; i++) {
+
+			final Face3 face = _faces[i];
+			face.normal().applyMatrix3(normalMatrix).normalize();
+
+			for (int j = 0, jl = face.vertexNormals().length; j < jl; j++) {
+
+				face.vertexNormals()[j].applyMatrix3(normalMatrix).normalize();
+
+			}
+
+		}
+
+		this.computeBoundingBox();
+
+		if ( this._boundingSphere != null ) {
+
+			this.computeBoundingSphere();
+		}
+
+		this._verticesNeedUpdate = true;
+		this._normalsNeedUpdate = true;
+
+		return this;
+
+	}
+
 //
 //	public rotateX  ( angle ) {
 //
@@ -172,158 +182,145 @@ public class Geometry extends EventDispatcher {
 //
 //		},
 //
-	public Geometry fromBufferGeometry  ( BufferGeometry geometry ) {
+	public Geometry fromBufferGeometry(BufferGeometry geometry) {
 
-			Geometry scope = this;
+		Geometry scope = this;
 
-			BufferAttribute index = geometry._index;
+		BufferAttribute index = geometry._index;
 
-			HashMap<String, Object> attributes = geometry.attributes();
+		HashMap<String, Object> attributes = geometry.attributes();
 
-			if ( attributes.get("position") == null ) {
+		if (attributes.get("position") == null) {
 
-				throw new RuntimeException( "THREE.Geometry.fromBufferGeometry(): Position attribute required for conversion." );
+			throw new RuntimeException("THREE.Geometry.fromBufferGeometry(): Position attribute required for conversion.");
+
+		}
+
+		Float32BufferAttribute position = (Float32BufferAttribute) attributes.get("position");
+		Float32BufferAttribute normal = (Float32BufferAttribute) attributes.get("normal");
+		BufferAttribute color = (BufferAttribute) attributes.get("color"); // TODO: Might be a BufferAttribute subclass, or even primitive type
+		Float32BufferAttribute uv = (Float32BufferAttribute) attributes.get("uv");
+		BufferAttribute uv2 = (BufferAttribute) attributes.get("uv2"); // TODO: Might be a BufferAttribute subclass, or even primitive type
+
+		if (uv2 != null) {
+			this._faceVertexUvs = new Vector2[2][1][]; // this._faceVertexUvs[ 1 ] = [];
+			this._faceVertexUvs[1] = new Vector2[1][];
+		}
+
+		for (int i = 0; i < position.count(); i++) {
+
+			scope._vertices = ArrayUtils.add(scope._vertices, new Vector3().fromBufferAttribute(position, i)); // scope.vertices.push( new Vector3().fromBufferAttribute( position, i ) );
+
+			if (color != null) {
+
+				scope._colors = ArrayUtils.add(scope._colors, new Color().fromBufferAttribute(color, i)); // scope.colors.push( new Color().fromBufferAttribute( color, i ) );
 
 			}
 
-			Float32BufferAttribute position = (Float32BufferAttribute) attributes.get("position");
-			Float32BufferAttribute normal = (Float32BufferAttribute) attributes.get("normal");
-			BufferAttribute color = (BufferAttribute) attributes.get("color");  // TODO: Might be a BufferAttribute subclass, or even primitive type
-			Float32BufferAttribute uv = (Float32BufferAttribute) attributes.get("uv");
-			BufferAttribute uv2 = (BufferAttribute) attributes.get("uv2");		// TODO: Might be a BufferAttribute subclass, or even primitive type
+		}
 
-			if ( uv2 != null ) {
-				this._faceVertexUvs = new Vector2[2][1][]; // this._faceVertexUvs[ 1 ] = [];
-				this._faceVertexUvs[1] = new Vector2[1][];
+		class NestedFunction {
+			// DPP: This was a nested function, which meant that color, scope, normal, and
+			// all the other locals
+			public void addFace(int a, int b, int c, int materialIndex) {
+
+				Color[] vertexColors = (color == null) ? new Color[0] : new Color[] { scope._colors[a].clone(), scope._colors[b].clone(), scope._colors[c].clone() };
+
+				Vector3[] vertexNormals = (normal == null) ? new Vector3[0] : new Vector3[] { new Vector3().fromBufferAttribute(normal, a), new Vector3().fromBufferAttribute(normal, b), new Vector3().fromBufferAttribute(normal, c) };
+
+				Face3 face = new Face3(a, b, c, vertexNormals, vertexColors, materialIndex);
+
+				scope._faces = ArrayUtils.add(scope._faces, face); // scope._faces.push( face );
+
+				if (uv != null) {
+					// DPP: Java cannot figure out that the generic T of scope._faceVertexUvs[0] is
+					// Vector2[]
+					scope._faceVertexUvs[0] = (Vector2[][]) ArrayUtils.addAll(scope._faceVertexUvs[0], new Vector2[][] { { new Vector2().fromBufferAttribute(uv, a), new Vector2().fromBufferAttribute(uv, b), new Vector2().fromBufferAttribute(uv, c) } });
+
+				}
+
+				if (uv2 != null) {
+
+					scope._faceVertexUvs[1] = (Vector2[][]) ArrayUtils.addAll(scope._faceVertexUvs[1], new Vector2[][] { { new Vector2().fromBufferAttribute(uv2, a), new Vector2().fromBufferAttribute(uv2, b), new Vector2().fromBufferAttribute(uv2, c) } });
+
+				}
+
 			}
+		}
+		NestedFunction nestedFunction = new NestedFunction(); // just so we have a class instance to work with.
 
-			for ( int i = 0; i < position.count(); i ++ ) {
+		Group[] groups = geometry.groups();
 
-				scope._vertices = ArrayUtils.add(scope._vertices, new Vector3().fromBufferAttribute( position, i )); // scope.vertices.push( new Vector3().fromBufferAttribute( position, i ) );
+		if (groups.length > 0) {
 
-				if ( color != null ) {
+			for (int i = 0; i < groups.length; i++) {
 
-					scope._colors = ArrayUtils.add(scope._colors, new Color().fromBufferAttribute( color, i )); // scope.colors.push( new Color().fromBufferAttribute( color, i ) );
+				Group group = groups[i];
+
+				int start = group.start();
+				int count = group.count();
+
+				for (int j = start, jl = start + count; j < jl; j += 3) {
+
+					if (index != null) {
+
+						// DPP: Somehow index.getX( j ) should return an integer instead of a double.
+						// Maybe index.getX() needs to be generic?
+						// Then I wouldn't need these (int) casts.
+						nestedFunction.addFace(index.getX(j, 0), index.getX(j + 1, 0), index.getX(j + 2, 0), group.materialIndex());
+
+					} else {
+
+						nestedFunction.addFace(j, j + 1, j + 2, group.materialIndex());
+
+					}
 
 				}
 
 			}
 
-			class NestedFunction {
-				// DPP: This was a nested function, which meant that color, scope, normal, and all the other locals
-				public void addFace( int a, int b, int c, int materialIndex ) {
+		} else {
 
-							Color[] vertexColors = ( color == null ) ? new Color[0] : new Color[] {
-								scope._colors[ a ].clone(),
-								scope._colors[ b ].clone(),
-								scope._colors[ c ].clone()
-							};
+			if (index != null) {
 
-
-							Vector3[] vertexNormals = ( normal == null ) ? new Vector3[0] : new Vector3[] {
-								new Vector3().fromBufferAttribute( normal, a ),
-								new Vector3().fromBufferAttribute( normal, b ),
-								new Vector3().fromBufferAttribute( normal, c )
-							};
-
-							Face3 face = new Face3( a, b, c, vertexNormals, vertexColors, materialIndex );
-
-							scope._faces = ArrayUtils.add(scope._faces, face); // scope._faces.push( face );
-
-							if ( uv != null ) {
-								// DPP: Java cannot figure out that the generic T of scope._faceVertexUvs[0] is Vector2[]
-								scope._faceVertexUvs[0] = (Vector2[][]) ArrayUtils.addAll(scope._faceVertexUvs[0], new Vector2[][] {{
-									new Vector2().fromBufferAttribute( uv, a ),
-									new Vector2().fromBufferAttribute( uv, b ),
-									new Vector2().fromBufferAttribute( uv, c )
-								}} );
-
-							}
-
-							if ( uv2 != null ) {
-
-								scope._faceVertexUvs[1] = (Vector2[][]) ArrayUtils.addAll(scope._faceVertexUvs[ 1 ], new Vector2[][] {{
-									new Vector2().fromBufferAttribute( uv2, a ),
-									new Vector2().fromBufferAttribute( uv2, b ),
-									new Vector2().fromBufferAttribute( uv2, c )
-								}} );
-
-							}
-
-						}
-			}
-			NestedFunction nestedFunction = new NestedFunction(); // just so we have a class instance to work with.
-
-			Group[] groups = geometry.groups();
-
-			if ( groups.length > 0 ) {
-
-				for ( int i = 0; i < groups.length; i ++ ) {
-
-					Group group = groups[ i ];
-
-					int start = group.start();
-					int count = group.count();
-
-					for ( int j = start, jl = start + count; j < jl; j += 3 ) {
-
-						if ( index != null ) {
-
-							// DPP: Somehow index.getX( j ) should return an integer instead of a double.
-							//      Maybe index.getX() needs to be generic?
-							//      Then I wouldn't need these (int) casts.
-							nestedFunction.addFace( index.getX( j, 0 ), index.getX( j + 1, 0 ), index.getX( j + 2, 0 ), group.materialIndex() );
-
-						} else {
-
-							nestedFunction.addFace( j, j + 1, j + 2, group.materialIndex() );
-
-						}
-
-					}
+				for (int i = 0; i < index.count(); i += 3) {
+					// DPP: Using -1 for undefined is designed to emulate the behavior of addFace()
+					// and Face() when material is passed
+					// as "undefined" (which is what happens if no material parameter is passed to
+					// addFace() or Face().
+					nestedFunction.addFace(index.getX(i, 0), index.getX(i + 1, 0), index.getX(i + 2, 0), -1 /* undefined */ );
 
 				}
 
 			} else {
 
-				if ( index != null ) {
+				for (int i = 0; i < position.count(); i += 3) {
 
-					for ( int i = 0; i < index.count(); i += 3 ) {
-						// DPP: Using -1 for undefined is designed to emulate the behavior of addFace() and Face() when material is passed
-						//      as "undefined" (which is what happens if no material parameter is passed to addFace() or Face().
-						nestedFunction.addFace( index.getX( i, 0 ), index.getX( i + 1, 0 ), index.getX( i + 2, 0 ), -1 /* undefined */ );
-
-					}
-
-				} else {
-
-					for ( int i = 0; i < position.count(); i += 3 ) {
-
-						nestedFunction.addFace( i, i + 1, i + 2, -1 /* undefined */ );
-
-					}
+					nestedFunction.addFace(i, i + 1, i + 2, -1 /* undefined */ );
 
 				}
 
 			}
 
-			this.computeFaceNormals();
+		}
 
-			if ( geometry.boundingBox() != null ) {
+		this.computeFaceNormals();
 
-				this._boundingBox = geometry.boundingBox().clone();
+		if (geometry.boundingBox() != null) {
 
-			}
-
-			if ( geometry.boundingSphere() != null ) {
-
-				this._boundingSphere = geometry.boundingSphere().clone();
-
-			}
-
-			return this;
+			this._boundingBox = geometry.boundingBox().clone();
 
 		}
+
+		if (geometry.boundingSphere() != null) {
+
+			this._boundingSphere = geometry.boundingSphere().clone();
+
+		}
+
+		return this;
+
+	}
 
 //	public center  () {
 //
@@ -360,29 +357,29 @@ public class Geometry extends EventDispatcher {
 //
 //		},
 
-	public void computeFaceNormals  () {
+	public void computeFaceNormals() {
 
-			Vector3 cb = new Vector3(), ab = new Vector3();
+		Vector3 cb = new Vector3(), ab = new Vector3();
 
-			for ( int f = 0, fl = this._faces.length; f < fl; f ++ ) {
+		for (int f = 0, fl = this._faces.length; f < fl; f++) {
 
-				Face3 face = this._faces[ f ];
+			Face3 face = this._faces[f];
 
-				Vector3 vA = this._vertices[ face.a() ];
-				Vector3 vB = this._vertices[ face.b() ];
-				Vector3 vC = this._vertices[ face.c() ];
+			Vector3 vA = this._vertices[face.a()];
+			Vector3 vB = this._vertices[face.b()];
+			Vector3 vC = this._vertices[face.c()];
 
-				cb.subVectors( vC, vB );
-				ab.subVectors( vA, vB );
-				cb.cross( ab );
+			cb.subVectors(vC, vB);
+			ab.subVectors(vA, vB);
+			cb.cross(ab);
 
-				cb.normalize();
+			cb.normalize();
 
-				face.normal().copy( cb );
-
-			}
+			face.normal().copy(cb);
 
 		}
+
+	}
 
 //	public computeVertexNormals  ( areaWeighted = true ) {
 //
@@ -618,24 +615,23 @@ public class Geometry extends EventDispatcher {
 
 	public void computeBoundingBox() {
 
-			this._boundingBox = new Box3();
+		this._boundingBox = new Box3();
 
-			this._boundingBox.setFromPoints( _vertices );
+		this._boundingBox.setFromPoints(_vertices);
+
+	}
+
+	public void computeBoundingSphere() {
+
+			if ( this._boundingSphere == null ) {
+
+				this._boundingSphere = new Sphere();
+			}
+
+			this._boundingSphere.setFromPoints( this._vertices );
 
 		}
 
-//	public computeBoundingSphere  () {
-//
-//			if ( this.boundingSphere === null ) {
-//
-//				this.boundingSphere = new Sphere();
-//
-//			}
-//
-//			this.boundingSphere.setFromPoints( this.vertices );
-//
-//		},
-//
 //	public merge  ( geometry, matrix, materialIndexOffset = 0 ) {
 //
 //			if ( ! ( geometry && geometry.isGeometry ) ) {
@@ -770,95 +766,95 @@ public class Geometry extends EventDispatcher {
 //
 //		},
 
-		/*
-		 * Checks for duplicate vertices with hashmap.
-		 * Duplicated vertices are removed
-		 * and faces' vertices are updated.
-		 */
+	/*
+	 * Checks for duplicate vertices with hashmap. Duplicated vertices are removed
+	 * and faces' vertices are updated.
+	 */
 
 	public void mergeVertices() {
 		this.mergeVertices(4);
 	}
 
-	public int mergeVertices( int precisionPoints) {
+	public int mergeVertices(int precisionPoints) {
 
-			HashMap<String, Integer> verticesMap = new HashMap<>(); // Hashmap for looking up vertices by position coordinates (and making sure they are unique)
-			Vector3[] unique = new Vector3[0];
-			int[] changes = new int[this._vertices.length];
+		HashMap<String, Integer> verticesMap = new HashMap<>(); // Hashmap for looking up vertices by position coordinates (and making sure they
+																// are unique)
+		Vector3[] unique = new Vector3[0];
+		int[] changes = new int[this._vertices.length];
 
-			double precision = Math.pow( 10, precisionPoints );
+		double precision = Math.pow(10, precisionPoints);
 
-			for ( int i = 0, il = this._vertices.length; i < il; i ++ ) {
+		for (int i = 0, il = this._vertices.length; i < il; i++) {
 
-				Vector3 v = this._vertices[ i ];
-				String key = "" + Math.round( v.x() * precision ) + '_' + Math.round( v.y() * precision ) + '_' + Math.round( v.z() * precision );
+			Vector3 v = this._vertices[i];
+			String key = "" + Math.round(v.x() * precision) + '_' + Math.round(v.y() * precision) + '_' + Math.round(v.z() * precision);
 
-				if ( verticesMap.get(key) == null ) {
+			if (verticesMap.get(key) == null) {
 
-					verticesMap.put(key, i);
-					unique = ArrayUtils.add(unique, this._vertices[i]); // unique.push( _vertices[ i ] );
-					changes[ i ] = unique.length - 1;
+				verticesMap.put(key, i);
+				unique = ArrayUtils.add(unique, this._vertices[i]); // unique.push( _vertices[ i ] );
+				changes[i] = unique.length - 1;
 
-				} else {
+			} else {
 
-					//console.log('Duplicate vertex found. ', i, ' could be using ', verticesMap[key]);
-					changes[ i ] = changes[ verticesMap.get(key) ];
-
-				}
-
-			}
-
-
-			// if faces are completely degenerate after merging vertices, we
-			// have to remove them from the geometry.
-			int[] faceIndicesToRemove = new int[0];
-
-			for ( int i = 0, il = _faces.length; i < il; i ++ ) {
-
-				Face3 face = _faces[ i ];
-
-				face.a(changes[ face.a() ]);
-				face.b(changes[ face.b() ]);
-				face.c(changes[ face.c() ]);
-
-				int[] indices = new int[] { face.a(), face.b(), face.c() };
-
-				// if any duplicate vertices are found in a Face3
-				// we have to remove the face as nothing can be saved
-				for ( int n = 0; n < 3; n ++ ) {
-
-					if ( indices[ n ] == indices[ ( n + 1 ) % 3 ] ) {
-
-						faceIndicesToRemove = ArrayUtils.add(faceIndicesToRemove, i); // faceIndicesToRemove.push( i );
-						break;
-
-					}
-
-				}
+				// console.log('Duplicate vertex found. ', i, ' could be using ',
+				// verticesMap[key]);
+				changes[i] = changes[verticesMap.get(key)];
 
 			}
-
-			for ( int i = faceIndicesToRemove.length - 1; i >= 0; i -- ) {
-
-				int idx = faceIndicesToRemove[ i ];
-
-				_faces = ArrayUtils.remove(_faces, idx); // _faces.splice( idx, 1 );
-
-				for ( int j = 0, jl = _faceVertexUvs.length; j < jl; j ++ ) {
-
-					_faceVertexUvs[j] = ArrayUtils.remove(_faceVertexUvs[ j ], idx); // _faceVertexUvs[ j ].splice( idx, 1 );
-
-				}
-
-			}
-
-			// Use unique set of vertices
-
-			int diff = _vertices.length - unique.length;
-			this._vertices = unique;
-			return diff;
 
 		}
+
+		// if faces are completely degenerate after merging vertices, we
+		// have to remove them from the geometry.
+		int[] faceIndicesToRemove = new int[0];
+
+		for (int i = 0, il = _faces.length; i < il; i++) {
+
+			Face3 face = _faces[i];
+
+			face.a(changes[face.a()]);
+			face.b(changes[face.b()]);
+			face.c(changes[face.c()]);
+
+			int[] indices = new int[] { face.a(), face.b(), face.c() };
+
+			// if any duplicate vertices are found in a Face3
+			// we have to remove the face as nothing can be saved
+			for (int n = 0; n < 3; n++) {
+
+				if (indices[n] == indices[(n + 1) % 3]) {
+
+					faceIndicesToRemove = ArrayUtils.add(faceIndicesToRemove, i); // faceIndicesToRemove.push( i );
+					break;
+
+				}
+
+			}
+
+		}
+
+		for (int i = faceIndicesToRemove.length - 1; i >= 0; i--) {
+
+			int idx = faceIndicesToRemove[i];
+
+			_faces = ArrayUtils.remove(_faces, idx); // _faces.splice( idx, 1 );
+
+			for (int j = 0, jl = _faceVertexUvs.length; j < jl; j++) {
+
+				_faceVertexUvs[j] = ArrayUtils.remove(_faceVertexUvs[j], idx); // _faceVertexUvs[ j ].splice( idx, 1 );
+
+			}
+
+		}
+
+		// Use unique set of vertices
+
+		int diff = _vertices.length - unique.length;
+		this._vertices = unique;
+		return diff;
+
+	}
 
 //	public setFromPoints  ( points ) {
 //
@@ -1379,7 +1375,7 @@ public class Geometry extends EventDispatcher {
 //
 	public void dispose() {
 
-		this.dispatchEvent( new Event(this, "dispose") );
+		this.dispatchEvent(new Event(this, "dispose"));
 
 	}
 
@@ -1388,7 +1384,5 @@ public class Geometry extends EventDispatcher {
 		sortedReflectionToStringBuilder.setExcludeFieldNames("_depth", "_depthSegments", "_height", "_heightSegments", "_id", "_m1", "_obj", "_offset", "listeners", "_width", "_widthSegments");
 		return sortedReflectionToStringBuilder.toString();
 	}
-
-
 
 }

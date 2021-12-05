@@ -15,6 +15,11 @@ public class TypedArray {
 		this.length = array.length;
 	}
 
+	public TypedArray(float[] array) {
+		this._farray = ArrayUtils.clone(array);
+		this.length = array.length;
+	}
+
 	public TypedArray(int length) {
 		this._darray = new double[length];
 		this.length = length;
@@ -55,6 +60,7 @@ public class TypedArray {
 	// Only one of these may be non-null
 	protected double[] _darray;
 	protected int[] _iarray;
+	protected float[] _farray;
 
 	public int length;
 

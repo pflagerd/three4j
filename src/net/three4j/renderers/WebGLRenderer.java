@@ -1,9 +1,14 @@
 package net.three4j.renderers;
 
-import net.three4j.Canvas;
 import static net.three4j.Document.document;
+import static net.three4j.constants.LinearEncoding;
+import static net.three4j.constants.NoToneMapping;
+
 import net.three4j.HTMLCanvasElement;
 import net.three4j.cameras.Camera;
+import net.three4j.math.Frustum;
+import net.three4j.math.Matrix4;
+import net.three4j.math.Vector4;
 import net.three4j.scenes.Scene;
 
 public class WebGLRenderer {
@@ -15,13 +20,13 @@ public class WebGLRenderer {
 	public WebGLRenderer() {
 	}
 
-	private Canvas _canvas = createCanvasElement();
+	private HTMLCanvasElement _canvas = createCanvasElement();
 
-	public Canvas canvas() {
+	public HTMLCanvasElement canvas() {
 		return _canvas;
 	}
 
-	public WebGLRenderer canvas(Canvas canvas) {
+	public WebGLRenderer canvas(HTMLCanvasElement canvas) {
 		_canvas = canvas;
 		return this;
 	}
@@ -143,99 +148,335 @@ public class WebGLRenderer {
 
 	private HTMLCanvasElement _domElement = (HTMLCanvasElement)_canvas;
 
-//	// Debug configuration container
-//	this.debug = {
-//
-//		/**
-//		 * Enables error checking and reporting when shader programs are being compiled
-//		 * @type {boolean}
-//		 */
-//		checkShaderErrors: true
-//	};
-//
-//	// clearing
-//
-//	private boolean _autoClear = true;
-//	private boolean _autoClearColor = true;
-//	private boolean _autoClearDepth = true;
-//	private boolean _autoClearStencil = true;
-//
-//	// scene graph
-//
-//	private boolean _sortObjects = true;
-//
-//	// user-defined clipping
-//
+	class WebGLDebug {
+		public WebGLDebug(boolean checkShaderErrors) {
+			this._checkShaderErrors = checkShaderErrors;
+		}
+
+		private boolean _checkShaderErrors;
+
+		public boolean checkShaderErrors() {
+		  return _checkShaderErrors;
+		}
+
+		public WebGLDebug checkShaderErrors(boolean checkShaderErrors) {
+		  this._checkShaderErrors = checkShaderErrors;
+		  return this;
+		}
+	}
+
+	public final WebGLDebug debug = new WebGLDebug(true);
+
+	private boolean _autoClear;
+
+	public boolean autoClear() {
+	  return _autoClear;
+	}
+
+	public WebGLRenderer autoClear(boolean autoClear) {
+	  this._autoClear = autoClear;
+	  return this;
+	}
+
+	private boolean _autoClearColor;
+
+	public boolean autoClearColor() {
+	  return _autoClearColor;
+	}
+
+	public WebGLRenderer autoClearColor(boolean autoClearColor) {
+	  this._autoClearColor = autoClearColor;
+	  return this;
+	}
+
+	private boolean _autoClearDepth;
+
+	public boolean autoClearDepth() {
+	  return _autoClearDepth;
+	}
+
+	public WebGLRenderer autoClearDepth(boolean autoClearDepth) {
+	  this._autoClearDepth = autoClearDepth;
+	  return this;
+	}
+
+	private boolean _autoClearStencil;
+
+	public boolean autoClearStencil() {
+	  return _autoClearStencil;
+	}
+
+	public WebGLRenderer autoClearStencil(boolean autoClearStencil) {
+	  this._autoClearStencil = autoClearStencil;
+	  return this;
+	}
+
+	private boolean _sortObjects;
+
+	public boolean sortObjects() {
+	  return _sortObjects;
+	}
+
+	public WebGLRenderer sortObjects(boolean sortObjects) {
+	  this._sortObjects = sortObjects;
+	  return this;
+	}
+
 //	this.clippingPlanes = [];
-//	private boolean _localClippingEnabled = false;
-//
-//	// physically based shading
-//
-//	private double _gammaFactor = 2.0;	// for backwards compatibility
-//	private int _outputEncoding = LinearEncoding;
-//
-//	// physical lights
-//
-//	private boolean _physicallyCorrectLights = false;
-//
-//	// tone mapping
-//
-//	private int _toneMapping = NoToneMapping;
-//	private double _toneMappingExposure = 1.0;
-//
-//	// morphs
-//
-//	private double _maxMorphTargets = 8;
-//	private double _maxMorphNormals = 4;
-//
-//	// internal properties
-//
-//	const _this = this;
-//
-//	let _isContextLost = false;
-//
-//	// internal state cache
-//
-//	let _framebuffer = null;
-//
-//	double _currentActiveCubeFace = 0;
-//	double _currentActiveMipmapLevel = 0;
+
+	private boolean _localClippingEnabled;
+
+	public boolean localClippingEnabled() {
+	  return _localClippingEnabled;
+	}
+
+	public WebGLRenderer localClippingEnabled(boolean localClippingEnabled) {
+	  this._localClippingEnabled = localClippingEnabled;
+	  return this;
+	}
+
+	private double _gammaFactor = 2.0;
+
+	public double gammaFactor() {
+	  return _gammaFactor;
+	}
+
+	public WebGLRenderer gammaFactor(double gammaFactor) {
+	  this._gammaFactor = gammaFactor;
+	  return this;
+	}
+
+
+	private int _outputEncoding = LinearEncoding;
+
+	public int outputEncoding() {
+	  return _outputEncoding;
+	}
+
+	public WebGLRenderer outputEncoding(int outputEncoding) {
+	  this._outputEncoding = outputEncoding;
+	  return this;
+	}
+
+	private boolean _physicallyCorrectLights;
+
+	public boolean physicallyCorrectLights() {
+	  return _physicallyCorrectLights;
+	}
+
+	public WebGLRenderer physicallyCorrectLights(boolean physicallyCorrectLights) {
+	  this._physicallyCorrectLights = physicallyCorrectLights;
+	  return this;
+	}
+
+	private int _toneMapping = NoToneMapping;
+
+	public int toneMapping() {
+	  return _toneMapping;
+	}
+
+	public WebGLRenderer toneMapping(int toneMapping) {
+	  this._toneMapping = toneMapping;
+	  return this;
+	}
+
+	private double _toneMappingExposure = 1.0;
+
+	public double toneMappingExposure() {
+	  return _toneMappingExposure;
+	}
+
+	public WebGLRenderer toneMappingExposure(double toneMappingExposure) {
+	  this._toneMappingExposure = toneMappingExposure;
+	  return this;
+	}
+
+	private int _maxMorphTargets = 8;
+
+	public int maxMorphTargets() {
+	  return _maxMorphTargets;
+	}
+
+	public WebGLRenderer maxMorphTargets(int maxMorphTargets) {
+	  this._maxMorphTargets = maxMorphTargets;
+	  return this;
+	}
+
+	private int _maxMorphNormals = 4;
+
+	public int maxMorphNormals() {
+	  return _maxMorphNormals;
+	}
+
+	public WebGLRenderer maxMorphNormals(int maxMorphNormals) {
+	  this._maxMorphNormals = maxMorphNormals;
+	  return this;
+	}
+
+	//	const _this = this;
+
+	private boolean _isContextLost;
+
+	public boolean isContextLost() {
+	  return _isContextLost;
+	}
+
+	public WebGLRenderer isContextLost(boolean isContextLost) {
+	  this._isContextLost = isContextLost;
+	  return this;
+	}
+
+// internal state cache
+
+	//	let _framebuffer = null;
+	private int _currentActiveCubeFace = 0;
+
+	public int currentActiveCubeFace() {
+	  return _currentActiveCubeFace;
+	}
+
+	public WebGLRenderer currentActiveCubeFace(int currentActiveCubeFace) {
+	  this._currentActiveCubeFace = currentActiveCubeFace;
+	  return this;
+	}
+
+	private int _currentActiveMipmapLevel;
+
+	public int currentActiveMipmapLevel() {
+	  return _currentActiveMipmapLevel;
+	}
+
+	public WebGLRenderer currentActiveMipmapLevel(int currentActiveMipmapLevel) {
+	  this._currentActiveMipmapLevel = currentActiveMipmapLevel;
+	  return this;
+	}
+
 //	let _currentRenderTarget = null;
 //	let _currentFramebuffer = null;
-//	let _currentMaterialId = - 1;
-//
+	private int _CurrentMaterialId;
+
+	public int CurrentMaterialId() {
+	  return _CurrentMaterialId;
+	}
+
+	public WebGLRenderer CurrentMaterialId(int CurrentMaterialId) {
+	  this._CurrentMaterialId = CurrentMaterialId;
+	  return this;
+	}
+
 //	let _currentCamera = null;
-//
-//	const _currentViewport = new Vector4();
-//	const _currentScissor = new Vector4();
-//	let _currentScissorTest = null;
-//
-//	//
-//
-//	let _width = _canvas.width;
-//	let _height = _canvas.height;
-//
-//	double _pixelRatio = 1;
+
+	private Vector4 _currentViewport = new Vector4();
+
+	public Vector4 currentViewport() {
+	  return _currentViewport;
+	}
+
+	public WebGLRenderer currentViewport(Vector4 currentViewport) {
+	  this._currentViewport = currentViewport;
+	  return this;
+	}
+
+	private Vector4 _currentScissor = new Vector4();
+
+	public Vector4 currentScissor() {
+	  return _currentScissor;
+	}
+
+	public WebGLRenderer currentScissor(Vector4 currentScissor) {
+	  this._currentScissor = currentScissor;
+	  return this;
+	}
+
+	//	let _currentScissorTest = null;
+
+	int _width = _canvas.width();
+	int _height = _canvas.height();
+
+	private double _pixelRatio;
+
+	public double pixelRatio() {
+	  return _pixelRatio;
+	}
+
+	public WebGLRenderer pixelRatio(double pixelRatio) {
+	  this._pixelRatio = pixelRatio;
+	  return this;
+	}
+
 //	let _opaqueSort = null;
 //	let _transparentSort = null;
 //
-//	const _viewport = new Vector4( 0, 0, _width, _height );
-//	const _scissor = new Vector4( 0, 0, _width, _height );
-//	let _scissorTest = false;
-//
-//	// frustum
-//
-//	const _frustum = new Frustum();
-//
-//	// clipping
-//
-//	let _clippingEnabled = false;
-//	let _localClippingEnabled = false;
-//
-//	// camera matrices cache
-//
-//	const _projScreenMatrix = new Matrix4();
-//
+
+	private Vector4 _viewPort = new Vector4( 0, 0, _width, _height );
+
+	public Vector4 viewPort() {
+	  return _viewPort;
+	}
+
+	public WebGLRenderer viewPort(Vector4 viewPort) {
+	  this._viewPort = viewPort;
+	  return this;
+	}
+
+	private Vector4 _scissor = new Vector4();
+
+	public Vector4 scissor() {
+	  return _scissor;
+	}
+
+	public WebGLRenderer scissor(Vector4 scissor) {
+	  this._scissor = scissor;
+	  return this;
+	}
+
+	private boolean _scissorTest;
+
+	public boolean scissorTest() {
+	  return _scissorTest;
+	}
+
+	public WebGLRenderer scissorTest(boolean scissorTest) {
+	  this._scissorTest = scissorTest;
+	  return this;
+	}
+
+	private Frustum _frustum = new Frustum();
+
+	public Frustum frustum() {
+	  return _frustum;
+	}
+
+	public WebGLRenderer frustum(Frustum frustum) {
+	  this._frustum = frustum;
+	  return this;
+	}
+
+	private boolean _clippingEnabled;
+
+	public boolean clippingEnabled() {
+	  return _clippingEnabled;
+	}
+
+	public WebGLRenderer clippingEnabled(boolean clippingEnabled) {
+	  this._clippingEnabled = clippingEnabled;
+	  return this;
+	}
+
+	// DPP: Duplicate?
+	// 	let _localClippingEnabled = false;
+
+	private Matrix4 _projScreenMatrix = new Matrix4();
+
+	public Matrix4 projScreenMatrix() {
+	  return _projScreenMatrix;
+	}
+
+	public WebGLRenderer projScreenMatrix(Matrix4 projScreenMatrix) {
+	  this._projScreenMatrix = projScreenMatrix;
+	  return this;
+	}
+
 //	const _vector3 = new Vector3();
 //
 //	const _emptyScene = { background: null, fog: null, environment: null, overrideMaterial: null, isScene: true };
